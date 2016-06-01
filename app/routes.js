@@ -49,7 +49,7 @@ router.get('/EEAjob', function (req, res) {
   if (job == "false"){
 
     // redirect to the relevant page
-    res.redirect("EEAnojob");
+    res.redirect("EEAnoJob");
 
   } else {
 
