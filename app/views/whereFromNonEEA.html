@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="form-title heading-large" id="thirdparty">
+    Where are you from?
+  </h1>
+
+  <form action="country" method="post" class="form" id="theForm">
+
+    <input type="hidden" name="page_name" value="start"/>
+
+    <!-- YOUR CONDITION -->
+    <div class="form-group" style="margin-bottom:45px">
+      <!-- <label class="form-label-bold" for="conditions-and-dis" id="">What's your condition or disability?</label> -->
+      <input name="my-condition" id="conditions" class="form-control full"/>
+    </div>
+
+    <fieldset class="primary-nav form-group">
+      <input type="submit" value="Continue" class="button" id="submitButton"/>
+    </fieldset>
+
+  </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

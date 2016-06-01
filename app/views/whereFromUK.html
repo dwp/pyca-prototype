@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Over 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+        <h1 class="heading-xlarge">
+          You're a UK citizen
+        </h1>
+
+        <p>
+          You need to bring your passport and proof of employment (wage slip or similar) to a jobcentre so it can be verified.</p>
+          <p>Book an appointment on 0800 900 1900.
+        </p>
+
+        <p>
+          <a href="/examples/branching">Back to the branching example</a>
+        </p>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
