@@ -20,7 +20,7 @@ router.get('/examples/template-data', function (req, res) {
 
 // Branching
 
-router.get('/whereFrom', function (req, res) {
+router.get('/areyourefugee', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var citizen = req.query.citizen;
@@ -29,6 +29,25 @@ router.get('/whereFrom', function (req, res) {
 
     // redirect to the relevant page
     res.redirect("whereFromUK");
+
+  } else {
+
+    // if over18 is any other value (or is missing) render the page requested
+    res.render('areyourefugee');
+
+  }
+
+});
+
+router.get('/whereFrom', function (req, res) {
+
+  // get the answer from the query string (eg. ?over18=false)
+  var refugee = req.query.refugee;
+
+  if (refugee == "true"){
+
+    // redirect to the relevant page
+    res.redirect("refugee");
 
   } else {
 
@@ -55,6 +74,25 @@ router.get('/EEAjob', function (req, res) {
 
     // if over18 is any other value (or is missing) render the page requested
     res.render('EEAjob');
+
+  }
+
+});
+
+router.get('/EEAprevjob', function (req, res) {
+
+  // get the answer from the query string (eg. ?over18=false)
+  var prevJob = req.query.prevJob;
+
+  if (prevJob == "false"){
+
+    // redirect to the relevant page
+    res.redirect("EEAnoprevjob");
+
+  } else {
+
+    // if over18 is any other value (or is missing) render the page requested
+    res.render('EEAprevjob');
 
   }
 
