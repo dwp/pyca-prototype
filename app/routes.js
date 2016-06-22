@@ -68,7 +68,7 @@ router.get('/EEA/job/job', function (req, res) {
   if (job == "false"){
 
     // redirect to the relevant page
-    res.redirect("/EEA/nojob/nojob");
+    res.redirect("/EEA/nojob/noJob");
 
   } else {
 
