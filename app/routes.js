@@ -79,7 +79,7 @@ router.get('/EEA/job/job', function (req, res) {
 
 });
 
-router.get('/EEA/noJob/prevjob', function (req, res) {
+router.get('/EEA/nojob/prevjob', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var prevJob = req.query.prevJob;
@@ -92,13 +92,13 @@ router.get('/EEA/noJob/prevjob', function (req, res) {
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('EEA/noJob/prevjob');
+    res.render('EEA/nojob/prevjob');
 
   }
 
 });
 
-router.get('/EEA/noJob/family', function (req, res) {
+router.get('/EEA/nojob/family', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var naturalised = req.query.naturalised;
@@ -111,7 +111,7 @@ router.get('/EEA/noJob/family', function (req, res) {
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('EEA/noJob/family');
+    res.render('EEA/nojob/family');
 
   }
 
