@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="form-title heading-large" id="thirdparty">
+    How long have you lived in the UK?
+  </h1>
+
+  <form action="/EEA/noJob/family" method="get" class="form" id="theForm">
+
+    <input type="hidden" name="page_name" value="start"/>
+
+    <!-- Job -->
+        <div class="form-group">
+          <fieldset class="">
+            <!--
+            <legend class="visuallyhidden">Are you 18 or over?</legend>
+            -->
+            <label for="naturalisedTrue" class="block-label">
+              <input type="radio" name="naturalised" value="true" id="naturalisedTrue">
+              More than 5 years
+            </label>
+
+            <label for="naturalisedFalse" class="block-label">
+              <input type="radio" name="naturalised" value="false" id="naturalisedFalse">
+              Less than 5 years
+            </label>
+
+          </fieldset>
+        </div>
+    <fieldset class="primary-nav form-group">
+      <input type="submit" value="Continue" class="button" id="submitButton"/>
+    </fieldset>
+
+  </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

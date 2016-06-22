@@ -28,7 +28,7 @@ router.get('/areyourefugee', function (req, res) {
   if (citizen == "true"){
 
     // redirect to the relevant page
-    res.redirect("whereFromUK");
+    res.redirect("UK");
 
   } else {
 
@@ -60,7 +60,7 @@ router.get('/whereFrom', function (req, res) {
 
 // add your routes here
 
-router.get('/EEAjob', function (req, res) {
+router.get('/EEA/job/job', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var job = req.query.job;
@@ -68,18 +68,18 @@ router.get('/EEAjob', function (req, res) {
   if (job == "false"){
 
     // redirect to the relevant page
-    res.redirect("EEAnoJob");
+    res.redirect("/EEA/nojob/nojob");
 
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('EEAjob');
+    res.render('EEA/job/job');
 
   }
 
 });
 
-router.get('/EEAprevjob', function (req, res) {
+router.get('/EEA/noJob/prevjob', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var prevJob = req.query.prevJob;
@@ -87,12 +87,31 @@ router.get('/EEAprevjob', function (req, res) {
   if (prevJob == "false"){
 
     // redirect to the relevant page
-    res.redirect("EEAnoprevjob");
+    res.redirect("/EEA/fiveYears");
 
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('EEAprevjob');
+    res.render('EEA/noJob/prevjob');
+
+  }
+
+});
+
+router.get('/EEA/noJob/family', function (req, res) {
+
+  // get the answer from the query string (eg. ?over18=false)
+  var naturalised = req.query.naturalised;
+
+  if (naturalised == "true"){
+
+    // redirect to the relevant page
+    res.redirect("/EEA/naturalised");
+
+  } else {
+
+    // if over18 is any other value (or is missing) render the page requested
+    res.render('EEA/noJob/family');
 
   }
 
