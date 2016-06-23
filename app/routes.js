@@ -20,7 +20,7 @@ router.get('/examples/template-data', function (req, res) {
 
 // Branching
 
-router.get('/areyourefugee', function (req, res) {
+router.get('/citizen/wherefrom', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var citizen = req.query.citizen;
@@ -28,18 +28,18 @@ router.get('/areyourefugee', function (req, res) {
   if (citizen == "true"){
 
     // redirect to the relevant page
-    res.redirect("UK");
+    res.redirect("outcomes/UK");
 
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('areyourefugee');
+    res.render('citizen/wherefrom');
 
   }
 
 });
 
-router.get('/whereFrom', function (req, res) {
+router.get('/citizen/areyouarefugee', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var refugee = req.query.refugee;
@@ -47,12 +47,12 @@ router.get('/whereFrom', function (req, res) {
   if (refugee == "true"){
 
     // redirect to the relevant page
-    res.redirect("refugee");
+    res.redirect("outcomes/refugee");
 
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('whereFrom');
+    res.render('citizen/areyouarefugee');
 
   }
 
@@ -60,7 +60,7 @@ router.get('/whereFrom', function (req, res) {
 
 // add your routes here
 
-router.get('/EEA/job/job', function (req, res) {
+router.get('/citizen/EEA/job/job', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var job = req.query.job;
@@ -68,18 +68,18 @@ router.get('/EEA/job/job', function (req, res) {
   if (job == "false"){
 
     // redirect to the relevant page
-    res.redirect("/EEA/nojob/noJob");
+    res.redirect("/citizen/EEA/haveaprevjob");
 
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('EEA/job/job');
+    res.render('citizen/EEA/job/job');
 
   }
 
 });
 
-router.get('/EEA/nojob/prevjob', function (req, res) {
+router.get('/citizen/EEA/prevjob', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var prevJob = req.query.prevJob;
@@ -87,18 +87,18 @@ router.get('/EEA/nojob/prevjob', function (req, res) {
   if (prevJob == "false"){
 
     // redirect to the relevant page
-    res.redirect("/EEA/fiveYears");
+    res.redirect("/citizen/EEA/fiveYears");
 
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('EEA/nojob/prevjob');
+    res.render('citizen/EEA/nojob/prevjob');
 
   }
 
 });
 
-router.get('/EEA/nojob/family', function (req, res) {
+router.get('/citizen/EEA/nojob/family', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var naturalised = req.query.naturalised;
@@ -106,12 +106,12 @@ router.get('/EEA/nojob/family', function (req, res) {
   if (naturalised == "true"){
 
     // redirect to the relevant page
-    res.redirect("/EEA/naturalised");
+    res.redirect("/citizen/outcomes/naturalised");
 
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('EEA/nojob/family');
+    res.render('citizen/EEA/nojob/family');
 
   }
 
