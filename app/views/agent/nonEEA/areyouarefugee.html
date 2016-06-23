@@ -11,15 +11,13 @@
 
   <div class="grid-row">
     <div class="column-two-thirds">
-        <h1 class="heading-large">
-          Are you a UK citizen?
+              <h1 class="heading-large">
+            Are you a refugee?
         </h1>
-      <form action="wherefrom" method="get" class="form">
+      <form action="visa" method="get" class="form">
 
         <!--
-        <h1 class="heading-xlarge">
-          
-        </h1>
+
 
         <p>
           You may want to show a user different pages, depending on how they've answered a question.
@@ -34,19 +32,19 @@
           /app/views/examples/branching.html
         </div>
         -->
-        <p>You're a UK citizen if you have a British or Channel Islands passport, or live in the UK and have applied for and been given nationality since arriving.</p>
+
         <div class="form-group">
           <fieldset class="inline">
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="citizenTrue" class="block-label">
-              <input type="radio" name="citizen" value="true" id="citizenTrue">
+            <label for="refugeeTrue" class="block-label">
+              <input type="radio" name="refugee" value="true" id="refugeeTrue">
               Yes
             </label>
 
-            <label for="citizenFalse" class="block-label">
-              <input type="radio" name="citizen" value="false" id="citizenFalse">
+            <label for="refugeeFalse" class="block-label">
+              <input type="radio" name="refugee" value="false" id="refugeeFalse">
               No
             </label>
 

@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  EEA citizen
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+        <h1 class="heading-xlarge">
+          You're a naturalised UK citizen
+        </h1>
+        <p>Because you've lived in the UK for more than 5 years you should be able to apply for benefits.</p>
+        <p>
+          You need to bring the following items to a jobcentre to prove your right to live in the UK:</p>
+          <ul class='list list-bullet'>
+          <li>your passport</li>
+          <li>proof of where you live, eg rental agreement</li>
+        </ul>
+          <p>You will then have a short interview about whether you live and intend to live in the UK for the 
+            forseeable future. This will cover where you live and details of your life, for example your doctor or dentist.</p>
+          <h2>If you have family in the UK</h2>
+            <p>You'll be asked questions about your children, partner or any other family you have in the UK. This will include the dates they arrived, the school they go to and the work they do.</p>
+            <p>You don't have to give evidence of this, but you may find it handy to have these details to hand.<p>
+            <p>
+          <h2 class="heading-medium">What to do next</h2>
+          <p>Once you have your evidence call 0800 900 1900 to make an appointment at your local jobcentre.</p>
+
+        <p>
+          <a href="/examples/branching">Back to the branching example</a>
+        </p>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

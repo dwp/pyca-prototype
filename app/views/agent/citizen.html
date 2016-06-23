@@ -11,9 +11,7 @@
 
   <div class="grid-row">
     <div class="column-two-thirds">
-        <h1 class="heading-large">
-          Are you a UK citizen?
-        </h1>
+
       <form action="wherefrom" method="get" class="form">
 
         <!--
@@ -34,20 +32,29 @@
           /app/views/examples/branching.html
         </div>
         -->
-        <p>You're a UK citizen if you have a British or Channel Islands passport, or live in the UK and have applied for and been given nationality since arriving.</p>
+        <h1 class="heading-large">
+          Ask the person: "Are you a UK citizen?""
+        </h1>
+        <p>They're a UK citizen if they have a British or Channel Islands passport, or live in the UK and have applied for and been given nationality since arriving.</p>
         <div class="form-group">
-          <fieldset class="inline">
+          <fieldset>
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="citizenTrue" class="block-label">
+            <label for="citizenTrue" class="block-label" data-target="example_nationality_other">
               <input type="radio" name="citizen" value="true" id="citizenTrue">
-              Yes
+              Yes, they are
             </label>
+
+            <div class="panel panel-border-narrow js-hidden" id="example_nationality_other">
+              <p class="form-label">
+                You should ask them for their passport or photo ID and check their nationality. If not British then change your answer to 'no'.
+              </p>
+            </div>
 
             <label for="citizenFalse" class="block-label">
               <input type="radio" name="citizen" value="false" id="citizenFalse">
-              No
+              No, they're not
             </label>
 
           </fieldset>
