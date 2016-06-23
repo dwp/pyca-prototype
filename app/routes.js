@@ -39,6 +39,67 @@ router.get('/citizen/wherefrom', function (req, res) {
 
 });
 
+// add your routes here
+
+router.get('/citizen/EEA/haveaprevjob', function (req, res) {
+
+  // get the answer from the query string (eg. ?over18=false)
+  var job = req.query.job;
+
+  if (job == "true"){
+
+    // redirect to the relevant page
+    res.redirect("/citizen/outcomes/EEAjob");
+
+  } else {
+
+    // if over18 is any other value (or is missing) render the page requested
+    res.render('citizen/EEA/haveaprevjob');
+
+  }
+
+});
+
+router.get('/citizen/EEA/prevjob', function (req, res) {
+
+  // get the answer from the query string (eg. ?over18=false)
+  var prevJob = req.query.prevJob;
+
+  if (prevJob == "false"){
+
+    // redirect to the relevant page
+    res.redirect("/citizen/EEA/fiveYears");
+
+  } else {
+
+    // if over18 is any other value (or is missing) render the page requested
+    res.render('citizen/EEA/nojob/prevjob');
+
+  }
+
+});
+
+router.get('/citizen/EEA/nojob/family', function (req, res) {
+
+  // get the answer from the query string (eg. ?over18=false)
+  var naturalised = req.query.naturalised;
+
+  if (naturalised == "true"){
+
+    // redirect to the relevant page
+    res.redirect("/citizen/outcomes/naturalised");
+
+  } else {
+
+    // if over18 is any other value (or is missing) render the page requested
+    res.render('citizen/EEA/nojob/family');
+
+  }
+
+});
+
+// non-EEA citizens
+
 router.get('/citizen/nonEEA/visa', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
@@ -110,68 +171,6 @@ router.get('/citizen/outcomes/noteligible', function (req, res) {
 
     // if over18 is any other value (or is missing) render the page requested
     res.render('/citizen/outcomes/noteligible');
-
-  }
-
-});
-
-
-
-
-// add your routes here
-
-router.get('/citizen/haveaprevjob"', function (req, res) {
-
-  // get the answer from the query string (eg. ?over18=false)
-  var job = req.query.job;
-
-  if (job == "true"){
-
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/EEAjob");
-
-  } else {
-
-    // if over18 is any other value (or is missing) render the page requested
-    res.render('citizen/haveaprevjob');
-
-  }
-
-});
-
-router.get('/citizen/EEA/prevjob', function (req, res) {
-
-  // get the answer from the query string (eg. ?over18=false)
-  var prevJob = req.query.prevJob;
-
-  if (prevJob == "false"){
-
-    // redirect to the relevant page
-    res.redirect("/citizen/EEA/fiveYears");
-
-  } else {
-
-    // if over18 is any other value (or is missing) render the page requested
-    res.render('citizen/EEA/nojob/prevjob');
-
-  }
-
-});
-
-router.get('/citizen/EEA/nojob/family', function (req, res) {
-
-  // get the answer from the query string (eg. ?over18=false)
-  var naturalised = req.query.naturalised;
-
-  if (naturalised == "true"){
-
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/naturalised");
-
-  } else {
-
-    // if over18 is any other value (or is missing) render the page requested
-    res.render('citizen/EEA/nojob/family');
 
   }
 
