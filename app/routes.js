@@ -39,7 +39,7 @@ router.get('/citizen/wherefrom', function (req, res) {
 
 });
 
-router.get('/citizen/areyouarefugee', function (req, res) {
+router.get('/citizen/nonEEA/visa', function (req, res) {
 
   // get the answer from the query string (eg. ?over18=false)
   var refugee = req.query.refugee;
@@ -47,33 +47,93 @@ router.get('/citizen/areyouarefugee', function (req, res) {
   if (refugee == "true"){
 
     // redirect to the relevant page
-    res.redirect("outcomes/refugee");
+    res.redirect("/citizen/outcomes/refugee");
 
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('citizen/areyouarefugee');
+    res.render('citizen/nonEEA/visa');
 
   }
 
 });
 
-// add your routes here
 
-router.get('/citizen/EEA/job/job', function (req, res) {
+router.get('/citizen/nonEEA/married', function (req, res) {
 
-  // get the answer from the query string (eg. ?over18=false)
-  var job = req.query.job;
+  // get the answer from the query string
+  var visa = req.query.visa;
 
-  if (job == "false"){
+  if (visa == "true"){
 
     // redirect to the relevant page
-    res.redirect("/citizen/EEA/haveaprevjob");
+    res.redirect("/citizen/outcomes/visa");
+
+  } else {
+
+    res.render('citizen/nonEEA/married');
+
+  }
+
+});
+
+router.get('/citizen/nonEEA/partner', function (req, res) {
+
+  // get the answer from the query string (eg. ?over18=false)
+  var married = req.query.married;
+
+  if (married == "true"){
+
+    // redirect to the relevant page
+    res.redirect("/citizen/outcomes/EEAmarried");
 
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('citizen/EEA/job/job');
+    res.render('citizen/nonEEA/partner');
+
+  }
+
+});
+
+router.get('/citizen/outcomes/noteligible', function (req, res) {
+
+  // get the answer from the query string (eg. ?over18=false)
+  var partner = req.query.partner;
+
+  if (partner == "true"){
+
+    // redirect to the relevant page
+    res.redirect("/citizen/outcomes/EEApartner");
+
+  } else {
+
+    // if over18 is any other value (or is missing) render the page requested
+    res.render('/citizen/outcomes/noteligible');
+
+  }
+
+});
+
+
+
+
+// add your routes here
+
+router.get('/citizen/haveaprevjob"', function (req, res) {
+
+  // get the answer from the query string (eg. ?over18=false)
+  var job = req.query.job;
+
+  if (job == "true"){
+
+    // redirect to the relevant page
+    res.redirect("/citizen/outcomes/EEAjob");
+
+  } else {
+
+    // if over18 is any other value (or is missing) render the page requested
+    res.render('citizen/haveaprevjob');
 
   }
 
