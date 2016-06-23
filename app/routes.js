@@ -170,7 +170,7 @@ router.get('/citizen/outcomes/noteligible', function (req, res) {
   } else {
 
     // if over18 is any other value (or is missing) render the page requested
-    res.render('/citizen/outcomes/noteligible');
+    res.render('citizen/outcomes/noteligible');
 
   }
 
