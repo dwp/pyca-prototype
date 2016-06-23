@@ -45,7 +45,7 @@ router.get('/citizen/EEA/prevjob', function (req, res) {
   var prevJob = req.query.prevJob;
   if (prevJob == "false"){
     // redirect to the relevant page
-    res.redirect("/citizen/EEA/fiveYears");
+    res.redirect("/citizen/EEA/fiveyears");
   } else {
     res.render('citizen/EEA/nojob/prevjob');
   }
@@ -137,7 +137,7 @@ router.get('/agent/EEA/prevjob', function (req, res) {
   var prevJob = req.query.prevJob;
   if (prevJob == "false"){
     // redirect to the relevant page
-    res.redirect("/agent/EEA/fiveYears");
+    res.redirect("/agent/EEA/fiveyears");
   } else {
     res.render('agent/EEA/nojob/prevjob');
   }
