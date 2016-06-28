@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="form-title heading-large" id="thirdparty">
+    Over the last 2 years have you lived in the Channel Islands, Isle of Man or the Republic of Ireland?
+  </h1>
+
+  <form action="haveaprevjob" method="get" class="form" id="theForm">
+
+    <input type="hidden" name="page_name" value="start"/>
+
+    <!-- Job -->
+        <div class="form-group">
+          <fieldset class="">
+            <!--
+            <legend class="visuallyhidden">Are you 18 or over?</legend>
+            -->
+            <label for="jobTrue" class="block-label">
+              <input type="radio" name="job" value="true" id="jobTrue">
+              Yes, for all of that period 
+            </label>
+            <label for="jobTrue" class="block-label">
+              <input type="radio" name="job" value="true" id="jobTrue">
+              Yes, but you also spent some time living elsewhere
+            </label>
+            <label for="jobFalse" class="block-label">
+              <input type="radio" name="job" value="false" id="jobFalse">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+    <fieldset class="primary-nav form-group">
+      <input type="submit" value="Continue" class="button" id="submitButton"/>
+    </fieldset>
+
+  </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -41,13 +41,13 @@ router.get('/citizen/EEA/haveaprevjob', function (req, res) {
 
 });
 
-router.get('/citizen/EEA/prevjob', function (req, res) {
+router.get('/citizen/EEA/fiveyears', function (req, res) {
   var prevJob = req.query.prevJob;
-  if (prevJob == "false"){
+  if (prevJob == "neverworked"){
     // redirect to the relevant page
-    res.redirect("/citizen/EEA/fiveyears");
+    res.render('citizen/EEA/fiveyears');
   } else {
-    res.render('citizen/EEA/nojob/prevjob');
+    res.redirect("/citizen/outcomes/EEAprevjob");
   }
 
 });
@@ -133,13 +133,13 @@ router.get('/agent/EEA/haveaprevjob', function (req, res) {
 
 });
 
-router.get('/agent/EEA/prevjob', function (req, res) {
+router.get('/agent/EEA/fiveyears', function (req, res) {
   var prevJob = req.query.prevJob;
-  if (prevJob == "false"){
+  if (prevJob == "true"){
     // redirect to the relevant page
-    res.redirect("/agent/EEA/fiveyears");
+    res.redirect("/agent/outcomes/EEAprevjob");
   } else {
-    res.render('agent/EEA/nojob/prevjob');
+    res.render('agent/EEA/fiveyears');
   }
 
 });
