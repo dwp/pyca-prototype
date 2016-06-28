@@ -16,7 +16,7 @@
     Over the last 2 years have you lived in the Channel Islands, Isle of Man or the Republic of Ireland?
   </h1>
 
-  <form action="haveaprevjob" method="get" class="form" id="theForm">
+  <form action="/citizen/EEA/nojob/family" method="get" class="form" id="theForm">
 
     <input type="hidden" name="page_name" value="start"/>
 
@@ -26,16 +26,16 @@
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="jobTrue" class="block-label">
-              <input type="radio" name="job" value="true" id="jobTrue">
-              Yes, for all of that period 
+            <label for="cta" class="block-label">
+              <input type="radio" name="cta" value="true" id="cta">
+              Yes, for all of that time 
             </label>
-            <label for="jobTrue" class="block-label">
-              <input type="radio" name="job" value="true" id="jobTrue">
-              Yes, but you also spent some time living elsewhere
+            <label for="somecta" class="block-label">
+              <input type="radio" name="cta" value="false" id="somecta">
+              Yes, for some of that time
             </label>
-            <label for="jobFalse" class="block-label">
-              <input type="radio" name="job" value="false" id="jobFalse">
+            <label for="nocta" class="block-label">
+              <input type="radio" name="cta" value="false" id="nocta">
               No
             </label>
 

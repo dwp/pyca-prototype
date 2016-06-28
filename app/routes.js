@@ -41,27 +41,49 @@ router.get('/citizen/EEA/haveaprevjob', function (req, res) {
 
 });
 
-router.get('/citizen/EEA/fiveyears', function (req, res) {
+router.get('/citizen/EEA/liveincta', function (req, res) {
   var prevJob = req.query.prevJob;
-  if (prevJob == "neverworked"){
+  if (prevJob == "redundant" || prevJob == "ill"){
     // redirect to the relevant page
-    res.render('citizen/EEA/fiveyears');
-  } else {
     res.redirect("/citizen/outcomes/EEAprevjob");
+  } else {
+    res.render('citizen/EEA/liveincta');
   }
 
 });
 
 router.get('/citizen/EEA/nojob/family', function (req, res) {
-  var naturalised = req.query.naturalised;
-  if (naturalised == "true"){
+  var cta = req.query.cta;
+  if (cta == "true"){
     // redirect to the relevant page
-    res.redirect("/citizen/outcomes/naturalised");
+    res.redirect("/citizen/outcomes/cta");
   } else {
     res.render('citizen/EEA/nojob/family');
   }
 
 });
+
+router.get('/citizen/EEA/fiveyears', function (req, res) {
+  var none = req.query.none;
+  if (none == "true"){
+    // redirect to the relevant page
+    res.render("citizen/EEA/fiveyears");
+  } else {
+    res.redirect('/citizen/EEA/nojob/partner');
+  }
+
+});
+router.get('/citizen/outcomes/noteligible', function (req, res) {
+  var naturalised = req.query.naturalised;
+  if (naturalised == "true"){
+    // redirect to the relevant page
+    res.redirect('/citizen/outcomes/naturalised');
+  } else {
+    res.render('/citizen/outcomes/noteligible');
+  }
+
+});
+
 
 // non-EEA citizens
 

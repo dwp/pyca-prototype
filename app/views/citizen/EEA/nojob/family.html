@@ -16,7 +16,7 @@
     What family do you have in the UK?
   </h1>
   <p>You may be able to apply for benefits through your family. Select all that apply to you.</p>
-  <form action="partner" method="get" class="form" id="theForm">
+  <form action="/citizen/EEA/fiveyears" method="get" class="form" id="theForm">
 
     <input type="hidden" name="page_name" value="start"/>
 
@@ -38,6 +38,10 @@
             <label for="other" class="block-label">
               <input type="checkbox" name="other" value="false" id="other">
               Other relations, eg parents, uncles and aunts
+            </label>
+            <label for="none" class="block-label">
+              <input type="checkbox" name="none" value="true" id="none">
+              None
             </label>
           </fieldset>
         </div>
