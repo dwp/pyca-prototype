@@ -1,0 +1,25 @@
+/* Typeahead */
+.tt-menu {
+  width:50%;
+  background-color:$grey-3;
+  border:2px solid $border-colour;
+  box-sizing:border-box;
+}
+.tt-suggestion {
+  @extend .form-control;
+  background:none;
+  border:none;
+  width:100%;
+  cursor:pointer;
+  &:hover {
+    background-color:$link-hover-colour;
+    color:$highlight-colour;
+  }
+}
+.twitter-typeahead {
+  width:100%;
+}
+.tt-cursor {
+  background-color:$link-hover-colour;
+  color:$highlight-colour;
+}
