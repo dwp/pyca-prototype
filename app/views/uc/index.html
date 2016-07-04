@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="form-title heading-large" id="thirdparty">
+    What's the longest single trip you've had outside the UK in the last 2 years?
+  </h1>
+  <p>For example, on holiday or business.</p>
+  <form action="partner" method="get" class="form" id="theForm">
+
+    <input type="hidden" name="page_name" value="start"/>
+
+    <!-- Job -->
+        <div class="form-group">
+          <fieldset>
+            <!--
+            <legend class="visuallyhidden">Are you 18 or over?</legend>
+            -->
+            <label for="lesstwoweeks" class="block-label">
+              <input type="radio" name="timeoutsideUK" value="true" id="lesstwoweeks">
+              Less than 2 weeks
+            </label>
+
+            <label for="lessfourweeks" class="block-label">
+              <input type="radio" name="timeoutsideUK" value="lessfourweeks" id="lessfourweeks">
+              2 to 4 weeks
+            </label>
+            <label for="overfourweeks" class="block-label">
+              <input type="radio" name="timeoutsideUK" value="overfourweeks" id="overfourweeks">
+              More than 4 weeks
+            </label>
+          </fieldset>
+        </div>
+
+    <fieldset class="primary-nav form-group">
+      <input type="submit" value="Continue" class="button" id="submitButton"/>
+    </fieldset>
+
+  </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
