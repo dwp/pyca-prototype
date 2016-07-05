@@ -45,9 +45,12 @@ router.get('/citizen/EEA/haveaprevjob', function (req, res) {
 });
 router.get('/citizen/EEA/liveincta', function (req, res) {
   var emppartner = req.query.emppartner;
+  var partner = req.query.partner;
   if (emppartner == "false"){
     // redirect to the relevant page
     res.redirect("/citizen/outcomes/EEAnointerview");
+  } else if (partner == "true") {
+    res.redirect("/citizen/outcomes/EEApartner");
   } else {
     res.render('citizen/EEA/liveincta');
   }
