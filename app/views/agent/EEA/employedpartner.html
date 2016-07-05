@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="form-title heading-large" id="partner">
+    Do they have a partner?
+  </h1>
+  <p>This means a husband, wife or civil partner, or someone who lives with them and they share a personal life with, eg they may have common bills or share a bank account.</p>
+  <form action="liveincta" method="get" class="form" id="theForm">
+
+    <input type="hidden" name="page_name" value="start"/>
+
+    <!-- Job -->
+        <div class="form-group">
+          <fieldset class="inline">
+            <!--
+            <legend class="visuallyhidden">Are you 18 or over?</legend>
+            -->
+            <label for="emppartnerTrue" class="block-label">
+              <input type="radio" name="emppartner" value="true" id="emppartnerTrue">
+              Yes
+            </label>
+
+            <label for="emppartnerFalse" class="block-label">
+              <input type="radio" name="emppartner" value="false" id="emppartnerFalse">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+    <fieldset class="primary-nav form-group">
+      <input type="submit" value="Continue" class="button" id="submitButton"/>
+    </fieldset>
+
+  </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

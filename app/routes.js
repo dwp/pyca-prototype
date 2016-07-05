@@ -165,6 +165,33 @@ router.get('/agent/EEA/haveaprevjob', function (req, res) {
   var job = req.query.job;
   if (job == "true"){
     // redirect to the relevant page
+    res.redirect("/agent/EEA/employedpartner");
+  } 
+  else if (job == "selfemp"){ 
+    res.redirect("/agent/EEA/partner");
+  } else {
+    res.render('agent/EEA/haveaprevjob');
+  }
+
+});
+router.get('/agent/EEA/liveincta', function (req, res) {
+  var emppartner = req.query.emppartner;
+  var partner = req.query.partner;
+  if (emppartner == "false"){
+    // redirect to the relevant page
+    res.redirect("/agent/outcomes/EEAnointerview");
+  } else if (partner == "true") {
+    res.redirect("/agent/outcomes/EEApartner");
+  } else {
+    res.render('agent/EEA/liveincta');
+  }
+
+});
+
+router.get('/agent/EEA/haveaprevjob', function (req, res) {
+  var job = req.query.job;
+  if (job == "true"){
+    // redirect to the relevant page
     res.redirect("/agent/outcomes/EEAjob");
   } else {
     res.render('agent/EEA/haveaprevjob');
