@@ -13,7 +13,7 @@
     <div class="column-two-thirds">
 
   <h1 class="form-title heading-large" id="thirdparty">
-    Ask the person: "Do you have a job?"
+    Do they have a job?
   </h1>
 
   <form action="haveaprevjob" method="get" class="form" id="theForm">
@@ -26,21 +26,19 @@
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="jobTrue" class="block-label" data-target="example_other">
+            <label for="jobTrue" class="block-label">
               <input type="radio" name="job" value="true" id="jobTrue">
-              Yes, they do
+              Yes, they're employed
             </label>
-            <div class="panel panel-border-narrow js-hidden" id="example_other">
-              <p class="form-label">
-                Ask for wage slips or letter from employer. If they don't have them then change your answer to 'no'.
-              </p>
-            </div>
 
+            <label for="jobselfemp" class="block-label">
+              <input type="radio" name="job" value="selfemp" id="jobselfemp">
+              Yes, they're self-employed (work for themselves)
+            </label>
             <label for="jobFalse" class="block-label">
               <input type="radio" name="job" value="false" id="jobFalse">
-              No, they don't
+              No
             </label>
-
           </fieldset>
         </div>
 
