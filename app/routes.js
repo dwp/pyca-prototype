@@ -34,9 +34,22 @@ router.get('/citizen/EEA/haveaprevjob', function (req, res) {
   var job = req.query.job;
   if (job == "true"){
     // redirect to the relevant page
-    res.redirect("/citizen/outcomes/EEAjob");
+    res.redirect("/citizen/EEA/employedpartner");
+  } 
+  else if (job == "selfemp"){ 
+    res.redirect("/citizen/EEA/partner");
   } else {
     res.render('citizen/EEA/haveaprevjob');
+  }
+
+});
+router.get('/citizen/EEA/liveincta', function (req, res) {
+  var emppartner = req.query.emppartner;
+  if (emppartner == "false"){
+    // redirect to the relevant page
+    res.redirect("/citizen/outcomes/EEAnointerview");
+  } else {
+    res.render('citizen/EEA/liveincta');
   }
 
 });
@@ -46,7 +59,8 @@ router.get('/citizen/EEA/liveincta', function (req, res) {
   if (prevJob == "redundant" || prevJob == "ill"){
     // redirect to the relevant page
     res.redirect("/citizen/outcomes/EEAprevjob");
-  } else {
+  }
+   else {
     res.render('citizen/EEA/liveincta');
   }
 

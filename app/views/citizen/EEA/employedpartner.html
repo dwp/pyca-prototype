@@ -12,11 +12,11 @@
   <div class="grid-row">
     <div class="column-two-thirds">
 
-  <h1 class="form-title heading-large" id="thirdparty">
-    Do you have a job?
+  <h1 class="form-title heading-large" id="partner">
+    Do you have a partner?
   </h1>
-
-  <form action="haveaprevjob" method="get" class="form" id="theForm">
+  <p>This means a husband, wife or civil partner, or someone who lives with you and you share a personal life with, eg you may have common bills or share a bank account.</p>
+  <form action="liveincta" method="get" class="form" id="theForm">
 
     <input type="hidden" name="page_name" value="start"/>
 
@@ -26,19 +26,16 @@
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="jobTrue" class="block-label">
-              <input type="radio" name="job" value="true" id="jobTrue">
-              Yes, you're employed by someone
+            <label for="emppartnerTrue" class="block-label">
+              <input type="radio" name="emppartner" value="true" id="emppartnerTrue">
+              Yes
             </label>
 
-            <label for="jobselfemp" class="block-label">
-              <input type="radio" name="job" value="selfemp" id="jobselfemp">
-              Yes, you're self-employed (work for yourself)
+            <label for="emppartnerFalse" class="block-label">
+              <input type="radio" name="emppartner" value="false" id="emppartnerFalse">
+              No
             </label>
-            <label for="jobFalse" class="block-label">
-              <input type="radio" name="job" value="false" id="jobFalse">
-              No, you don't do any work at the moment
-            </label>
+
           </fieldset>
         </div>
 
