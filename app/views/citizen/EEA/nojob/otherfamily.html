@@ -19,7 +19,8 @@
   <form action="children" method="get" class="form" id="theForm">
 
     <input type="hidden" name="page_name" value="start"/>
-    <h2 class="heading-medium">What family do you have in the UK?</h2> 
+    <h2 class="heading-medium">What family do you have in the UK?</h2>
+    <p>This means how you're related to the family you have in the UK, eg parents, grandparents, uncles or aunts.</p> 
     <!-- YOUR CONDITION -->
     <div class="form-group" style="margin-bottom:45px">
       <!-- <label class="form-label-bold" for="conditions-and-dis" id="">What's your condition or disability?</label> -->
@@ -43,19 +44,37 @@
           </fieldset>
         </div>
         <!-- Job -->
-      <h2 class="heading-medium">Does at least one of them have a job or has previously worked in the UK?</h2>
+      <h2 class="heading-medium">Does at least one of them have a job in the UK?</h2>
         <div class="form-group">
           <fieldset class="inline">
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="schoolUKTrue" class="block-label">
-              <input type="radio" name="schoolUK" value="true" id="schoolUKTrue">
+            <label for="jobUKTrue" class="block-label">
+              <input type="radio" name="jobUK" value="true" id="jobUKTrue">
               Yes
             </label>
 
-            <label for="schoolUKFalse" class="block-label">
-              <input type="radio" name="schoolUK" value="false" id="schoolUKFalse">
+            <label for="jobUKFalse" class="block-label">
+              <input type="radio" name="jobUK" value="false" id="jobUKFalse">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+              <h2 class="heading-medium">Are your family able to support you financially or with a place to live in the UK if needed?</h2>
+        <div class="form-group">
+          <fieldset class="inline">
+            <!--
+            <legend class="visuallyhidden">Are you 18 or over?</legend>
+            -->
+            <label for="supportUKTrue" class="block-label">
+              <input type="radio" name="supportUK" value="true" id="supportUKTrue">
+              Yes
+            </label>
+
+            <label for="supportUKFalse" class="block-label">
+              <input type="radio" name="supportUK" value="false" id="supportUKFalse">
               No
             </label>
 

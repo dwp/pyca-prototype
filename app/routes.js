@@ -86,7 +86,7 @@ router.get('/citizen/EEA/fiveyears', function (req, res) {
     // redirect to the relevant page
     res.render("citizen/EEA/fiveyears");
   } else {
-    res.redirect('/citizen/EEA/nojob/partner');
+    res.redirect('/citizen/EEA/nojob/otherfamily');
   }
 
 });
@@ -96,7 +96,7 @@ router.get('/citizen/outcomes/noteligible', function (req, res) {
     // redirect to the relevant page
     res.redirect('/citizen/outcomes/naturalised');
   } else {
-    res.render('/citizen/outcomes/noteligible');
+    res.render('citizen/outcomes/noteligible');
   }
 
 });
