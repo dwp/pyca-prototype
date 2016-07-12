@@ -37,13 +37,13 @@ router.get('/citizen/EEA/haveaprevjob', function (req, res) {
     res.redirect("/citizen/EEA/employedpartner");
   } 
   else if (job == "selfemp"){ 
-    res.redirect("/citizen/EEA/partner");
+    res.redirect("/citizen/EEA/selfemppartner");
   } else {
     res.render('citizen/EEA/haveaprevjob');
   }
 
 });
-router.get('/citizen/EEA/liveincta', function (req, res) {
+router.get('/citizen/EEA/nojob/liveincta', function (req, res) {
   var emppartner = req.query.emppartner;
   var partner = req.query.partner;
   if (emppartner == "false"){
@@ -52,19 +52,19 @@ router.get('/citizen/EEA/liveincta', function (req, res) {
   } else if (partner == "true") {
     res.redirect("/citizen/outcomes/EEApartner");
   } else {
-    res.render('citizen/EEA/liveincta');
+    res.render('citizen/EEA/nojob/liveincta');
   }
 
 });
 
-router.get('/citizen/EEA/liveincta', function (req, res) {
+router.get('/citizen/EEA/nojob/partner', function (req, res) {
   var prevJob = req.query.prevJob;
   if (prevJob == "redundant" || prevJob == "ill"){
     // redirect to the relevant page
     res.redirect("/citizen/outcomes/EEAprevjob");
   }
    else {
-    res.render('citizen/EEA/liveincta');
+    res.render('citizen/EEA/nojob/partner');
   }
 
 });
@@ -80,23 +80,43 @@ router.get('/citizen/EEA/nojob/family', function (req, res) {
 
 });
 
-router.get('/citizen/EEA/fiveyears', function (req, res) {
-  var none = req.query.none;
-  if (none == "true"){
+router.get('/citizen/EEA/nojob/fiveyears', function (req, res) {
+  var family = req.query.family;
+  if (family == "false"){
     // redirect to the relevant page
-    res.render("citizen/EEA/fiveyears");
+    res.render("citizen/EEA/nojob/fiveyears");
   } else {
-    res.redirect('/citizen/EEA/nojob/otherfamily');
+    res.redirect('/citizen/outcomes/complicated');
   }
 
 });
-router.get('/citizen/outcomes/noteligible', function (req, res) {
+router.get('/citizen/outcomes/complicated', function (req, res) {
+  var schoolUK = req.query.schoolUK;
+  if (schoolUK == "false"){
+    // redirect to the relevant page
+    res.redirect("/citizen/outcomes/noteligible");
+  } else {
+    res.render('citizen/outcomes/complicated');
+  }
+
+});
+router.get('/citizen/EEA/nojob/children', function (req, res) {
   var naturalised = req.query.naturalised;
   if (naturalised == "true"){
     // redirect to the relevant page
     res.redirect('/citizen/outcomes/naturalised');
   } else {
-    res.render('citizen/outcomes/noteligible');
+    res.render('citizen/EEA/nojob/children');
+  }
+
+});
+router.get('/citizen/outcomes/EEAselfemp', function (req, res) {
+  var partner = req.query.partner;
+  if (partner == "true"){
+    // redirect to the relevant page
+    res.redirect('/citizen/outcomes/EEAselfemppartner');
+  } else {
+    res.render('citizen/outcomes/EEAselfemp');
   }
 
 });

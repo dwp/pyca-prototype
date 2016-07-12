@@ -13,16 +13,16 @@
     <div class="column-two-thirds">
 
   <h1 class="form-title heading-large" id="thirdparty">
-    What family do you have in the UK?
+    Do you have family in the UK who are supporting you?
   </h1>
-  <p>You may be able to apply for benefits through your family. Select all that apply to you.</p>
-  <form action="/citizen/EEA/fiveyears" method="get" class="form" id="theForm">
+  <p>You may be able to apply for benefits through family members who are supporting you, eg parents, aunts or cousins.</p>
+  <form action="/citizen/EEA/nojob/fiveyears" method="get" class="form" id="theForm">
 
     <input type="hidden" name="page_name" value="start"/>
 
     <!-- Job -->
         <div class="form-group">
-          <fieldset>
+          <fieldset class='inline'>
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             
@@ -31,19 +31,49 @@
               Partner that you live with, eg civil partner or spouse
             </label>
             -->
-            <label for="children" class="block-label">
-              <input type="checkbox" name="children" value="false" id="children">
-              Children
+            <label for="familyTrue" class="block-label" data-target="familyInfo">
+              <input type="radio" name="family" value="true" id="familyTrue">
+              Yes
             </label>
-            <label for="other" class="block-label">
-              <input type="checkbox" name="other" value="false" id="other">
-              Other relations that could support you if needed
-            </label>
-            <label for="none" class="block-label">
-              <input type="checkbox" name="none" value="true" id="none">
-              None, or none that could support you if needed
+
+            <label for="familyFalse" class="block-label">
+              <input type="radio" name="family" value="false" id="familyFalse">
+              No
             </label>
           </fieldset>
+        </div>
+        <div class="panel panel-border-narrow js-hidden" id="familyInfo">
+                                      <h2 class="heading-medium">
+                How are you related to the person who supports you?
+              </h2>
+
+              <fieldset>
+                  <div class="form-group" style="margin-bottom:45px">
+                    <input name="relationship" id="relationship" class="form-control full"/>
+                  </div>
+              </fieldset>
+                            <h2 class="heading-medium">
+                What's their nationality?
+              </h2>
+
+              <fieldset>
+                  <div class="form-group" style="margin-bottom:45px">
+                    <input name="nationality" id="nationality" class="form-control full"/>
+                  </div>
+              </fieldset>
+                <h2 class="heading-medium">
+                Do they have a job in the UK?
+              </h2>
+            <fieldset class='inline'>
+            <label for="partnerworkingTrue" class="block-label">
+              <input type="radio" name="partnerworking" value="true" id="partnerworkingTrue">
+              Yes
+            </label>
+
+            <label for="partnerworkingFalse" class="block-label">
+              <input type="radio" name="partnerworking" value="false" id="partnerworkingFalse">
+              No
+            </label>
         </div>
 
     <fieldset class="primary-nav form-group">
