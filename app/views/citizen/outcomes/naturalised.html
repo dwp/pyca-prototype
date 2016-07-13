@@ -7,8 +7,6 @@
 {% block content %}
 <main id="content" role="main">
 
-  {% include "includes/breadcrumb_examples.html" %}
-
   <div class="grid-row">
     <div class="column-two-thirds">
 
@@ -20,10 +18,10 @@
         <p>
           <a href='http://www.gov.uk/apply-for-a-uk-residence-card/permanent-residence-card'>Read about permanent residency on GOV.UK</a>.</p>
           <p>If you think you qualify then call 0800 900 1900 to make an appointment to discuss what you need to do with your work coach.</p>
+          
+        {% include "includes/interview.html" %}
 
-        <p>
-          <a href="/examples/branching">Back to the branching example</a>
-        </p>
+        {% include "includes/whattodonext.html" %}
 
     </div>
   </div>
