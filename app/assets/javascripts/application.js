@@ -111,6 +111,51 @@ function ShowHideContent() {
   }
 }
 
+function CheckboxGroup() {
+  var self = this;
+
+  function handle(event) {
+
+    var input = $(this),
+      isChecked = input.is(':checked');
+
+    if (input.data('uncheck')) {
+      var list = input.data('uncheck');
+
+      if (isChecked)
+        uncheckGroup(list);
+    }
+
+    else if (input.data('check')) {
+      var list = input.data('check');
+
+      if (isChecked)
+        checkGroup(list);
+    }
+  }
+
+  function uncheckGroup(list) {
+    update(list, false);
+  }
+
+  function checkGroup(list) {
+    update(list, true);
+  }
+
+  // Update list (defaults to uncheck)
+  function update(list, value) {
+    $.each(list, function(index, id) {
+      $('#' + id).prop('checked', !!value);
+    });
+  }
+
+  return {
+    handle: handle,
+    uncheckGroup: uncheckGroup,
+    checkGroup: checkGroup
+  }
+}
+
 $(document).ready(function() {
 
   // Use GOV.UK selection-buttons.js to set selected
@@ -123,5 +168,12 @@ $(document).ready(function() {
   var toggleContent = new ShowHideContent();
   toggleContent.showHideRadioToggledContent();
   toggleContent.showHideCheckboxToggledContent();
+
+  // Check and uncheck checkbox groups
+  // E.g. When a checkbox is checked, others are un-checked
+  var container = $(document.body);
+  var checkboxGroup = new CheckboxGroup();
+  container.on('click', 'input[type=checkbox][data-check]', checkboxGroup.handle);
+  container.on('click', 'input[type=checkbox][data-uncheck]', checkboxGroup.handle);
 
 });
