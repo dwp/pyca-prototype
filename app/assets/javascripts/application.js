@@ -112,9 +112,9 @@ function ShowHideContent() {
 }
 
 function CheckboxGroup() {
-  var self = this;
+  'use strict';
 
-  function handle(event) {
+  function handle() {
 
     var input = $(this),
       isChecked = input.is(':checked');
@@ -153,8 +153,8 @@ function CheckboxGroup() {
     handle: handle,
     uncheckGroup: uncheckGroup,
     checkGroup: checkGroup
-  }
-}
+  };
+};
 
 $(document).ready(function() {
 
