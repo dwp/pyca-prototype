@@ -22,21 +22,21 @@
 
     <!-- Job -->
         <div class="form-group">
-          <fieldset class="inline">
+          <fieldset>
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="jobTrue" class="block-label">
-              <input type="radio" name="job" value="true" id="jobTrue">
+            <label for="jobEmployed" class="block-label">
+              <input type="checkbox" name="job" value="employed" id="jobEmployed" data-uncheck='["jobNone"]'>
               Yes, you're employed by a company or organisation
             </label>
 
-            <label for="jobselfemp" class="block-label">
-              <input type="radio" name="job" value="selfemp" id="jobselfemp">
+            <label for="jobSelfEmployed" class="block-label">
+              <input type="checkbox" name="job" value="selfemployed" id="jobSelfEmployed" data-uncheck='["jobNone"]'>
               Yes, you're self-employed (work for yourself)
             </label>
-            <label for="jobFalse" class="block-label">
-              <input type="radio" name="job" value="false" id="jobFalse">
+            <label for="jobNone" class="block-label">
+              <input type="checkbox" name="job" value="none" id="jobNone" data-uncheck='["jobEmployed", "jobSelfEmployed"]'>
               No, you don't do any work at the moment
             </label>
           </fieldset>
