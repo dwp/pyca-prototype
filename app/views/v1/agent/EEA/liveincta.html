@@ -13,32 +13,32 @@
     <div class="column-two-thirds">
 
   <h1 class="form-title heading-large" id="thirdparty">
-    Do you have a job?
+    Over the last 2 years have they lived in the Channel Islands, Isle of Man or the Republic of Ireland?
   </h1>
 
-  <form action="haveaprevjob" method="get" class="form" id="theForm">
+  <form action="/agent/EEA/nojob/family" method="get" class="form" id="theForm">
 
     <input type="hidden" name="page_name" value="start"/>
 
     <!-- Job -->
         <div class="form-group">
-          <fieldset>
+          <fieldset class="">
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="employed" class="block-label">
-              <input type="checkbox" name="employed" value="true" id="employed" data-uncheck='["jobNone"]'>
-              Yes, you're employed by a company or organisation
+            <label for="cta" class="block-label">
+              <input type="radio" name="cta" value="true" id="cta">
+              Yes, for all of that time 
+            </label>
+            <label for="somecta" class="block-label">
+              <input type="radio" name="cta" value="false" id="somecta">
+              Yes, for some of that time
+            </label>
+            <label for="nocta" class="block-label">
+              <input type="radio" name="cta" value="false" id="nocta">
+              No
             </label>
 
-            <label for="selfemployed" class="block-label">
-              <input type="checkbox" name="selfemployed" value="true" id="selfemployed" data-uncheck='["jobNone"]'>
-              Yes, you're self-employed (work for yourself)
-            </label>
-            <label for="jobNone" class="block-label">
-              <input type="checkbox" name="job" value="none" id="jobNone" data-uncheck='["employed", "selfemployed"]'>
-              No, you don't do any work at the moment
-            </label>
           </fieldset>
         </div>
 

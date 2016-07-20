@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="form-title heading-large" id="thirdparty">
+    What's their nationality?
+  </h1>
+  <p>This means a country they have a passport for or where they claim nationality, if they have dual nationality then they should pick the most appropriate.</p>
+
+  <form action="EEA/haveajob" method="get" class="form" id="theForm">
+
+    <input type="hidden" name="page_name" value="start"/>
+
+    <!-- YOUR CONDITION -->
+    <div class="form-group" style="margin-bottom:45px">
+      <!-- <label class="form-label-bold" for="conditions-and-dis" id="">What's your condition or disability?</label> -->
+      <input name="nationality" id="conditions" class="form-control full"/>
+    </div>
+
+    <fieldset class="primary-nav form-group">
+      <input type="submit" value="Continue" class="button" id="submitButton"/>
+    </fieldset>
+
+  </form>
+    <p><a href='nonEEA/areyouarefugee'>This is a non-EEA country</a>
+    </div>
+  </div>
+</main>
+{% endblock %}
+{% block body_end %}
+  {% include "includes/scripts.html" %}
+<script type="text/javascript">
+  var substringMatcher = function(strs)
+  {
+     return function findMatches(q, cb)
+     {
+       var matches = [];
+       var substrRegex = new RegExp(q, 'i');
+       $.each(strs, function(i, str) {
+         if (substrRegex.test(str)) {
+           matches.push(str);
+         }
+       });
+       cb(matches);
+     };
+  };
+
+  var nationalities = [
+    "Austrian", 
+    "Belgian", 
+    "Bulgarian",
+    "British", 
+    "Croatian", 
+    "Republic of Cyprus",
+    "Channel Islands", 
+    "Czech Republic", 
+    "Danish",
+    "English", 
+    "Estonian", 
+    "Finnish", 
+    "French",
+    "Guernsey (Channel Islands)",  
+    "German", 
+    "Greek", 
+    "Hungarian", 
+    "Irish", 
+    "Italian",
+    "Jersey (Channel Islands)",  
+    "Latvian", 
+    "Lithuanian", 
+    "Luxembourg", 
+    "Maltese", 
+    "Dutch (Netherlands)", 
+    "Poland", 
+    "Portuese", 
+    "Romanian",
+    "Scottish", 
+    "Slovakian", 
+    "Slovenian", 
+    "Spanish", 
+    "Swedish",
+    "Icelandic",
+    "Liechtensteinian",
+    "Norwegian",
+    "Swiss",
+    "UK",
+    "United Kingdom",
+  ];
+
+  $(document).on('ready',function()
+  {
+    $('#nationality').typeahead(
+      { "hint":true, "highlight":true, "minLength":1 },
+      {
+       name:'nationality',
+       source: substringMatcher(nationalities)
+      }
+    );
+  });
+</script>
+{% endblock %}

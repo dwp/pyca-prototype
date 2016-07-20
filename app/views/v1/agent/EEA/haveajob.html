@@ -13,7 +13,7 @@
     <div class="column-two-thirds">
 
   <h1 class="form-title heading-large" id="thirdparty">
-    Do you have a job?
+    Do they have a job?
   </h1>
 
   <form action="haveaprevjob" method="get" class="form" id="theForm">
@@ -26,18 +26,18 @@
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="employed" class="block-label">
-              <input type="checkbox" name="employed" value="true" id="employed" data-uncheck='["jobNone"]'>
-              Yes, you're employed by a company or organisation
+            <label for="jobTrue" class="block-label">
+              <input type="radio" name="job" value="true" id="jobTrue">
+              Yes, they're employed
             </label>
 
-            <label for="selfemployed" class="block-label">
-              <input type="checkbox" name="selfemployed" value="true" id="selfemployed" data-uncheck='["jobNone"]'>
-              Yes, you're self-employed (work for yourself)
+            <label for="jobselfemp" class="block-label">
+              <input type="radio" name="job" value="selfemp" id="jobselfemp">
+              Yes, they're self-employed (work for themselves)
             </label>
-            <label for="jobNone" class="block-label">
-              <input type="checkbox" name="job" value="none" id="jobNone" data-uncheck='["employed", "selfemployed"]'>
-              No, you don't do any work at the moment
+            <label for="jobFalse" class="block-label">
+              <input type="radio" name="job" value="false" id="jobFalse">
+              No
             </label>
           </fieldset>
         </div>
