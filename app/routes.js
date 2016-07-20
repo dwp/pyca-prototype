@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res) {
-  
+
   res.render('index');
 
 });
@@ -35,8 +35,8 @@ router.get('/citizen/EEA/haveaprevjob', function (req, res) {
   if (job == "true"){
     // redirect to the relevant page
     res.redirect("/citizen/EEA/employedpartner");
-  } 
-  else if (job == "selfemp"){ 
+  }
+  else if (job == "selfemp"){
     res.redirect("/citizen/EEA/selfemppartner");
   } else {
     res.render('citizen/EEA/haveaprevjob');
@@ -186,8 +186,8 @@ router.get('/agent/EEA/haveaprevjob', function (req, res) {
   if (job == "true"){
     // redirect to the relevant page
     res.redirect("/agent/EEA/employedpartner");
-  } 
-  else if (job == "selfemp"){ 
+  }
+  else if (job == "selfemp"){
     res.redirect("/agent/EEA/partner");
   } else {
     res.render('agent/EEA/haveaprevjob');
