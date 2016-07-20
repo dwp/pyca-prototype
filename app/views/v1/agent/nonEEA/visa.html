@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="form-title heading-large" id="thirdparty">
+    Do you have a visa that's stamped 'recourse to public funds'?
+  </h1>
+
+  <form action="married" method="get" class="form" id="theForm">
+
+    <input type="hidden" name="page_name" value="start"/>
+
+    <!-- Job -->
+        <div class="form-group">
+          <fieldset class="inline">
+            <!--
+            <legend class="visuallyhidden">Are you 18 or over?</legend>
+            -->
+            <label for="visaTrue" class="block-label">
+              <input type="radio" name="visa" value="true" id="visaTrue">
+              Yes
+            </label>
+
+            <label for="visaFalse" class="block-label">
+              <input type="radio" name="visa" value="false" id="visaFalse">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+    <fieldset class="primary-nav form-group">
+      <input type="submit" value="Continue" class="button" id="submitButton"/>
+    </fieldset>
+
+  </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

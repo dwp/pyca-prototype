@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-large">
+          Do you have a British passport?
+        </h1>
+      <form action="wherefrom" method="get" class="form">
+
+        <!--
+        <h1 class="heading-xlarge">
+          
+        </h1>
+
+        <p>
+          You may want to show a user different pages, depending on how they've answered a question.
+        </p>
+
+        <p>
+          You can see the code for this example here:
+        </p>
+
+        <div class="code">
+          /app/routes.js
+          /app/views/examples/branching.html
+        </div>
+        -->
+        <div class="form-group">
+          <fieldset class="inline">
+            <!--
+            <legend class="visuallyhidden">Are you 18 or over?</legend>
+            -->
+            <label for="citizenTrue" class="block-label">
+              <input type="radio" name="citizen" value="true" id="citizenTrue">
+              Yes
+            </label>
+
+            <label for="citizenFalse" class="block-label">
+              <input type="radio" name="citizen" value="false" id="citizenFalse">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <input type="submit" class="button" value="Continue">
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

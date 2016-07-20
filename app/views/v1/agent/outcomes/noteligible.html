@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Refugee
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+        <h1 class="heading-xlarge">
+          You may not have to carry out a residency test for this person
+        </h1>
+        <p>This person probably won't be able to apply for benefits in the UK.</p>
+        <h2 class="heading-medium">What to do next</h2>
+          <p>1. Tell the person that dased on the answers you gave it doesn't look like they're eligible to apply for benefits in the UK.</p>
+        <p>2. Ask the person if they have a reason for coming in that isn't to do with claiming - for example their partner is claiming and they've been told to.</p>
+        <h2 class="header-medium">If they have a reason to continue</h2>
+        <p>Carry out a residency test as normal.</p>
+
+        <p>
+          <a href="/examples/branching">Back to the branching example</a>
+        </p>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

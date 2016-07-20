@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/breadcrumb_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="form-title heading-large" id="partner">
+    Do you have a partner?
+  </h1>
+  <p>This means a husband, wife or civil partner, or someone who lives with you and you share a personal life with, eg you may have common bills or share a bank account.</p>
+  <form action="/citizen/outcomes/EEAselfemp" method="get" class="form" id="theForm">
+
+    <input type="hidden" name="page_name" value="start"/>
+
+    <!-- Job -->
+        <div class="form-group">
+          <fieldset class="inline">
+            <!--
+            <legend class="visuallyhidden">Are you 18 or over?</legend>
+            -->
+            <label for="partnerTrue" class="block-label" data-target="partnerInfo">
+              <input type="radio" name="partner" value="true" id="partnerTrue">
+              Yes
+            </label>
+
+            <label for="partnerFalse" class="block-label">
+              <input type="radio" name="partner" value="false" id="partnerFalse">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+            <div class="panel panel-border-narrow js-hidden" id="partnerInfo">
+                            <h2 class="heading-medium">
+                What's their nationality?
+              </h2>
+
+              <fieldset>
+    <div class="form-group" style="margin-bottom:45px">
+      <input name="nationality" id="nationality" class="form-control full"/>
+    </div>
+                            <h2 class="heading-medium">
+                Do they have a job in the UK?
+              </h2>
+
+              <fieldset class='inline'>
+            <label for="partnerworkingTrue" class="block-label">
+              <input type="radio" name="partnerworking" value="true" id="partnerworkingTrue">
+              Yes
+            </label>
+
+            <label for="partnerworkingFalse" class="block-label">
+              <input type="radio" name="partnerworking" value="false" id="partnerworkingFalse">
+              No
+            </label>
+          </div>
+
+              </fieldset>
+
+    <fieldset class="primary-nav form-group">
+      <input type="submit" value="Continue" class="button" id="submitButton"/>
+    </fieldset>
+
+  </form>
+
+
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block body_end %}
+  {% include "includes/scripts.html" %}
+<script type="text/javascript">
+  var substringMatcher = function(strs)
+  {
+     return function findMatches(q, cb)
+     {
+       var matches = [];
+       var substrRegex = new RegExp(q, 'i');
+       $.each(strs, function(i, str) {
+         if (substrRegex.test(str)) {
+           matches.push(str);
+         }
+       });
+       cb(matches);
+     };
+  };
+
+  var nationalities = [
+    "Austrian", 
+    "Belgian", 
+    "Bulgarian",
+    "British", 
+    "Croatian", 
+    "Republic of Cyprus",
+    "Channel Islands", 
+    "Czech Republic", 
+    "Danish",
+    "English", 
+    "Estonian", 
+    "Finnish", 
+    "French",
+    "Guernsey (Channel Islands)",  
+    "German", 
+    "Greek", 
+    "Hungarian", 
+    "Irish", 
+    "Italian",
+    "Jersey (Channel Islands)",  
+    "Latvian", 
+    "Lithuanian", 
+    "Luxembourg", 
+    "Maltese", 
+    "Dutch (Netherlands)", 
+    "Poland", 
+    "Portuese", 
+    "Romanian",
+    "Scottish", 
+    "Slovakian", 
+    "Slovenian", 
+    "Spanish", 
+    "Swedish",
+    "Icelandic",
+    "Liechtensteinian",
+    "Norwegian",
+    "Swiss",
+    "UK",
+    "United Kingdom",
+  ];
+
+  $(document).on('ready',function()
+  {
+    $('#nationality').typeahead(
+      { "hint":true, "highlight":true, "minLength":1 },
+      {
+       name:'nationality',
+       source: substringMatcher(nationalities)
+      }
+    );
+  });
+</script>
+{% endblock %}
