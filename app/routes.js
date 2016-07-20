@@ -31,13 +31,13 @@ router.get('/citizen/wherefrom', function (req, res) {
 });
 
 router.get('/citizen/EEA/haveaprevjob', function (req, res) {
-  var job = req.query.job;
-  if (job == "true"){
+  var selfemployed = req.query.selfemployed;
+  var employed = req.query.employed;
+  if (selfemployed == "true"){ 
+    res.redirect("/citizen/EEA/selfemppartner");
+  } else if (employed == "true"){
     // redirect to the relevant page
     res.redirect("/citizen/EEA/employedpartner");
-  } 
-  else if (job == "selfemp"){ 
-    res.redirect("/citizen/EEA/selfemppartner");
   } else {
     res.render('citizen/EEA/haveaprevjob');
   }
@@ -49,6 +49,8 @@ router.get('/citizen/EEA/nojob/liveincta', function (req, res) {
   if (emppartner == "false"){
     // redirect to the relevant page
     res.redirect("/citizen/outcomes/EEAnointerview");
+  } else if (emppartner == "true") {
+    res.redirect("/citizen/outcomes/EEAjob");
   } else if (partner == "true") {
     res.redirect("/citizen/outcomes/EEApartner");
   } else {
