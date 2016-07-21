@@ -7,18 +7,42 @@ router.get('/', function (req, res) {
 
 });
 
+// Branching for citizens/agents
 
-// Branching for citizens
-
-router.get('/citizen/wherefrom', function (req, res) {
+router.get('/:type/wherefrom', function (req, res) {
+  var type = req.params.type;
   var citizen = req.query.citizen;
-  if (citizen == "true"){
-    // redirect to the relevant page
-    res.redirect("outcomes/UK");
-  } else {
-    res.render('citizen/wherefrom');
+  var nationality = req.query.nationality;
+
+  // List countries, pull out names
+  var listEEA = res.locals.countriesByEEA;
+  var listNonEEA = res.locals.countriesByNonEEA;
+
+  // UK citizen
+  if (citizen == 'true'){
+    res.redirect('/' + type + '/outcomes/UK');
+  }
+
+  // Nationality entered
+  else if (nationality) {
+
+    // EEA nationality
+    if (listEEA.indexOf(nationality) !== -1) {
+      res.redirect('/' + type + '/EEA/haveajob');
+    }
+
+    // Non-EEA nationality
+    else if (listNonEEA.indexOf(nationality) !== -1) {
+      res.redirect('/' + type + '/nonEEA/areyouarefugee');
+    }
+  }
+
+  else {
+    res.render(type + '/wherefrom');
   }
 });
+
+// Branching for citizens
 
 router.get('/citizen/EEA/haveaprevjob', function (req, res) {
   var selfemployed = req.query.selfemployed;
@@ -155,16 +179,6 @@ router.get('/citizen/outcomes/noteligible', function (req, res) {
 });
 
 // Branching for agents
-
-router.get('/agent/wherefrom', function (req, res) {
-  var citizen = req.query.citizen;
-  if (citizen == "true"){
-    // redirect to the relevant page
-    res.redirect("outcomes/UK");
-  } else {
-    res.render('agent/wherefrom');
-  }
-});
 
 router.get('/agent/EEA/haveaprevjob', function (req, res) {
   var selfemployed = req.query.selfemployed;
