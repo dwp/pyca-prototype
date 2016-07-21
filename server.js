@@ -90,7 +90,7 @@ app.use(function(req, res, next) {
   });
 
   // List countries by non-EEA
-  res.locals.countriesByEEA = countries.listByNonEEA().map(function(country) {
+  res.locals.countriesByNonEEA = countries.listByNonEEA().map(function(country) {
     return country.name;
   });
 
