@@ -21,16 +21,18 @@
       <form action="EEA/haveajob" method="get" class="form" id="theForm">
         <input type="hidden" name="page_name" value="start"/>
 
-        <fieldset>
-          <legend class="visuallyhidden">What's their nationality?</legend>
+        <div class="form-group">
+          <fieldset>
+            <legend class="visuallyhidden">What's their nationality?</legend>
 
-          <select name="nationality" class="form-control full autocompleter">
-            <option value="">Select country</option>
-            {%- for country in countries %}
-            <option value="{{country}}">{{country}}</option>
-            {%- endfor %}
-          </select>
-        </fieldset>
+            <select name="nationality" class="form-control full autocompleter">
+              <option value="">Select country</option>
+              {%- for country in countries %}
+              <option value="{{country}}">{{country}}</option>
+              {%- endfor %}
+            </select>
+          </fieldset>
+        </div>
 
         <div class="primary-nav form-group">
           <button type="submit" class="button" id="submitButton">Continue</button>
