@@ -8,6 +8,7 @@ var path = require('path'),
     basicAuth = require('basic-auth'),
     bodyParser = require('body-parser'),
     config = require(__dirname + '/app/config.js'),
+    countries = require(__dirname + '/app/services/country');
     port = (process.env.PORT || config.port),
     utils = require(__dirname + '/lib/utils.js'),
     packageJson = require(__dirname + '/package.json'),
@@ -77,6 +78,27 @@ app.use(function (req, res, next) {
   res.locals.serviceName=config.serviceName;
   res.locals.cookieText=config.cookieText;
   res.locals.releaseVersion="v" + releaseVersion;
+  next();
+});
+
+// Add country list to all views
+app.use(function(req, res, next) {
+
+  // List all countries
+  res.locals.countries = countries.list.map(function(country) {
+    return country.name;
+  });
+
+  // List countries by non-EEA
+  res.locals.countriesByEEA = countries.listByNonEEA().map(function(country) {
+    return country.name;
+  });
+
+  // List countries by EEA
+  res.locals.countriesByEEA = countries.listByEEA().map(function(country) {
+    return country.name;
+  });
+
   next();
 });
 

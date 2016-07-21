@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var countries = require('./services/country');
 
 router.get('/', function (req, res) {
 
@@ -144,9 +143,7 @@ router.get('/citizen/outcomes/noteligible', function (req, res) {
   var nationality = req.query.nationality;
 
   // List countries by EEA, pull out names
-  var list = countries.listByEEA().map(function(country) {
-    return country.name;
-  });
+  var list = res.locals.countriesByEEA;
 
   if (partner == "true" && list.indexOf(nationality) !== -1) {
     // redirect to the relevant page
@@ -182,6 +179,7 @@ router.get('/agent/EEA/haveaprevjob', function (req, res) {
   }
 
 });
+
 router.get('/agent/EEA/liveincta', function (req, res) {
   var emppartner = req.query.emppartner;
   var partner = req.query.partner;
@@ -258,9 +256,7 @@ router.get('/agent/outcomes/noteligible', function (req, res) {
   var nationality = req.query.nationality;
 
   // List countries by EEA, pull out names
-  var list = countries.listByEEA().map(function(country) {
-    return country.name;
-  });
+  var list = res.locals.countriesByEEA;
 
   if (partner == "true" && list.indexOf(nationality) !== -1) {
     // redirect to the relevant page
