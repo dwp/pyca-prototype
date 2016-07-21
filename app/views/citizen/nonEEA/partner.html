@@ -7,25 +7,24 @@
 {% block content %}
 <main id="content" role="main">
 
-  {% include "includes/breadcrumb_examples.html" %}
+  {% include "includes/backlink_examples.html" %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
 
-  <h1 class="form-title heading-large" id="thirdparty">
-    Do you have a partner?
-  </h1>
-  <p>This means a husband, wife or civil partner, or someone who lives with them and they share a personal life with, eg they may have common bills or share a bank account.</p>
-  <form action="/citizen/outcomes/noteligible" method="get" class="form" id="theForm">
+      <h1 class="form-title heading-large" id="thirdparty">
+        Do you have a partner?
+      </h1>
 
-    <input type="hidden" name="page_name" value="start"/>
+      <p>This means a husband, wife or civil partner, or someone who lives with them and they share a personal life with, eg they may have common bills or share a bank account.</p>
 
-    <!-- Job -->
+      <form action="/citizen/outcomes/noteligible" method="get" class="form" id="theForm">
+        <input type="hidden" name="page_name" value="start"/>
+
         <div class="form-group">
           <fieldset class="inline">
-            <!--
-            <legend class="visuallyhidden">Are you 18 or over?</legend>
-            -->
+            <legend class="visuallyhidden">Do you have a partner?</legend>
+
             <label for="partnerTrue" class="block-label" data-target="partnerInfo">
               <input type="radio" name="partner" value="true" id="partnerTrue">
               Yes
@@ -35,25 +34,29 @@
               <input type="radio" name="partner" value="false" id="partnerFalse">
               No
             </label>
-
           </fieldset>
         </div>
 
-        <div class="panel panel-border-narrow js-hidden" id="partnerInfo">
+        <div class="form-group panel panel-border-narrow js-hidden" id="partnerInfo">
           <h2 class="heading-medium">
-            What's the partner's nationality?
+            What's your partner's nationality?
           </h2>
 
           <fieldset>
-            <div class="form-group">
-              <input name="nationality" id="nationality" class="form-control full"/>
-            </div>
+            <legend class="visuallyhidden">What's your partner's nationality?</legend>
+
+            <select name="nationality" class="form-control full autocompleter">
+              <option value="">Select country</option>
+              {%- for country in countries %}
+              <option value="{{country}}">{{country}}</option>
+              {%- endfor %}
+            </select>
           </fieldset>
         </div>
 
-        <fieldset class="primary-nav form-group">
-          <input type="submit" value="Continue" class="button" id="submitButton"/>
-        </fieldset>
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
 
       </form>
 

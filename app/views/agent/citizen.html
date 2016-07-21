@@ -7,40 +7,22 @@
 {% block content %}
 <main id="content" role="main">
 
-  {% include "includes/breadcrumb_examples.html" %}
+  {% include "includes/backlink_examples.html" %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
 
       <form action="wherefrom" method="get" class="form">
-
-        <!--
-        <h1 class="heading-xlarge">
-          
-        </h1>
-
-        <p>
-          You may want to show a user different pages, depending on how they've answered a question.
-        </p>
-
-        <p>
-          You can see the code for this example here:
-        </p>
-
-        <div class="code">
-          /app/routes.js
-          /app/views/examples/branching.html
-        </div>
-        -->
         <h1 class="heading-large">
           Is the person a UK citizen?
         </h1>
+
         <p>They're a UK citizen if they have a British or Channel Islands passport, or live in the UK and have applied for and been given nationality since arriving.</p>
+
         <div class="form-group">
           <fieldset>
-            <!--
-            <legend class="visuallyhidden">Are you 18 or over?</legend>
-            -->
+            <legend class="visuallyhidden">Is the person a UK citizen?</legend>
+
             <label for="citizenTrue" class="block-label" data-target="example_nationality_other">
               <input type="radio" name="citizen" value="true" id="citizenTrue">
               Yes, they are
@@ -56,12 +38,11 @@
               <input type="radio" name="citizen" value="false" id="citizenFalse">
               No, they're not
             </label>
-
           </fieldset>
         </div>
 
-        <div class="form-group">
-          <input type="submit" class="button" value="Continue">
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
         </div>
 
       </form>

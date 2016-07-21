@@ -7,25 +7,22 @@
 {% block content %}
 <main id="content" role="main">
 
-  {% include "includes/breadcrumb_examples.html" %}
+  {% include "includes/backlink_examples.html" %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
 
-  <h1 class="form-title heading-large" id="thirdparty">
-    Do you have a visa that's stamped 'recourse to public funds'?
-  </h1>
+      <h1 class="form-title heading-large" id="thirdparty">
+        Do you have a visa that's stamped 'recourse to public funds'?
+      </h1>
 
-  <form action="partner" method="get" class="form" id="theForm">
+      <form action="partner" method="get" class="form" id="theForm">
+        <input type="hidden" name="page_name" value="start"/>
 
-    <input type="hidden" name="page_name" value="start"/>
-
-    <!-- Job -->
         <div class="form-group">
           <fieldset class="inline">
-            <!--
-            <legend class="visuallyhidden">Are you 18 or over?</legend>
-            -->
+            <legend class="visuallyhidden">Do you have a visa that's stamped 'recourse to public funds'?</legend>
+
             <label for="visaTrue" class="block-label">
               <input type="radio" name="visa" value="true" id="visaTrue">
               Yes
@@ -35,15 +32,14 @@
               <input type="radio" name="visa" value="false" id="visaFalse">
               No
             </label>
-
           </fieldset>
         </div>
 
-    <fieldset class="primary-nav form-group">
-      <input type="submit" value="Continue" class="button" id="submitButton"/>
-    </fieldset>
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
 
-  </form>
+      </form>
 
     </div>
   </div>

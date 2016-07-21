@@ -7,30 +7,34 @@
 {% block content %}
 <main id="content" role="main">
 
-  {% include "includes/breadcrumb_examples.html" %}
+  {% include "includes/backlink_examples.html" %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
 
-  <h1 class="form-title heading-large" id="thirdparty">
-    Where's your partner from?
-  </h1>
+      <h1 class="form-title heading-large" id="thirdparty">
+        Where's your partner from?
+      </h1>
 
-  <form action="otherfamily" method="get" class="form" id="theForm">
+      <form action="otherfamily" method="get" class="form" id="theForm">
+        <input type="hidden" name="page_name" value="start"/>
 
-    <input type="hidden" name="page_name" value="start"/>
+        <fieldset>
+          <legend class="visuallyhidden">Where's your partner from?</legend>
 
-    <!-- YOUR CONDITION -->
-    <div class="form-group" style="margin-bottom:45px">
-      <!-- <label class="form-label-bold" for="conditions-and-dis" id="">What's your condition or disability?</label> -->
-      <input name="nationality" id="conditions" class="form-control full"/>
-    </div>
+          <select name="nationality" class="form-control full autocompleter">
+            <option value="">Select country</option>
+            {%- for country in countries %}
+            <option value="{{country}}">{{country}}</option>
+            {%- endfor %}
+          </select>
+        </fieldset>
 
-    <fieldset class="primary-nav form-group">
-      <input type="submit" value="Continue" class="button" id="submitButton"/>
-    </fieldset>
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
 
-  </form>
+      </form>
 
     </div>
   </div>

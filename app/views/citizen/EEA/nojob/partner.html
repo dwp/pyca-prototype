@@ -7,25 +7,24 @@
 {% block content %}
 <main id="content" role="main">
 
-  {% include "includes/breadcrumb_examples.html" %}
+  {% include "includes/backlink_examples.html" %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
 
-  <h1 class="form-title heading-large" id="partner">
-    Do you have a partner?
-  </h1>
-  <p>This means a husband, wife or civil partner, or someone who lives with you and you share a personal life with, eg you may have common bills or share a bank account.</p>
-  <form action="liveincta" method="get" class="form" id="theForm">
+      <h1 class="form-title heading-large" id="partner">
+        Do you have a partner?
+      </h1>
 
-    <input type="hidden" name="page_name" value="start"/>
+      <p>This means a husband, wife or civil partner, or someone who lives with you and you share a personal life with, eg you may have common bills or share a bank account.</p>
 
-    <!-- Job -->
+      <form action="liveincta" method="get" class="form" id="theForm">
+        <input type="hidden" name="page_name" value="start"/>
+
         <div class="form-group">
           <fieldset class="inline">
-            <!--
-            <legend class="visuallyhidden">Are you 18 or over?</legend>
-            -->
+            <legend class="visuallyhidden">Do you have a partner?</legend>
+
             <label for="partnerTrue" class="block-label" data-target="partnerInfo">
               <input type="radio" name="partner" value="true" id="partnerTrue">
               Yes
@@ -35,24 +34,30 @@
               <input type="radio" name="partner" value="false" id="partnerFalse">
               No
             </label>
-
           </fieldset>
         </div>
 
-            <div class="panel panel-border-narrow js-hidden" id="partnerInfo">
-                            <h2 class="heading-medium">
-                What's your partner's nationality?
-              </h2>
+        <div class="form-group panel panel-border-narrow js-hidden" id="partnerInfo">
+          <h2 class="heading-medium">
+            What's your partner's nationality?
+          </h2>
 
-              <fieldset>
-    <div class="form-group" style="margin-bottom:45px">
-      <input name="nationality" id="nationality" class="form-control full"/>
-    </div>
-                            <h2 class="heading-medium">
-                Does your partner have a job in the UK?
-              </h2>
+          <fieldset>
+            <legend class="visuallyhidden">What's your partner's nationality?</legend>
 
-              <fieldset class='inline'>
+            <select name="nationality" class="form-control full autocompleter">
+              <option value="">Select country</option>
+              {%- for country in countries %}
+              <option value="{{country}}">{{country}}</option>
+              {%- endfor %}
+            </select>
+          </fieldset>
+
+          <h2 class="heading-medium">
+            Does your partner have a job in the UK?
+          </h2>
+
+          <fieldset class="inline">
             <label for="partnerworkingTrue" class="block-label">
               <input type="radio" name="partnerworking" value="true" id="partnerworkingTrue">
               Yes
@@ -62,16 +67,14 @@
               <input type="radio" name="partnerworking" value="false" id="partnerworkingFalse">
               No
             </label>
-          </div>
+          </fieldset>
+        </div>
 
-              </fieldset>
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
 
-    <fieldset class="primary-nav form-group">
-      <input type="submit" value="Continue" class="button" id="submitButton"/>
-    </fieldset>
-
-  </form>
-
+      </form>
 
     </div>
   </div>
@@ -80,73 +83,4 @@
 
 {% block body_end %}
   {% include "includes/scripts.html" %}
-<script type="text/javascript">
-  var substringMatcher = function(strs)
-  {
-     return function findMatches(q, cb)
-     {
-       var matches = [];
-       var substrRegex = new RegExp(q, 'i');
-       $.each(strs, function(i, str) {
-         if (substrRegex.test(str)) {
-           matches.push(str);
-         }
-       });
-       cb(matches);
-     };
-  };
-
-  var nationalities = [
-    "Austrian", 
-    "Belgian", 
-    "Bulgarian",
-    "British", 
-    "Croatian", 
-    "Republic of Cyprus",
-    "Channel Islands", 
-    "Czech Republic", 
-    "Danish",
-    "English", 
-    "Estonian", 
-    "Finnish", 
-    "French",
-    "Guernsey (Channel Islands)",  
-    "German", 
-    "Greek", 
-    "Hungarian", 
-    "Irish", 
-    "Italian",
-    "Jersey (Channel Islands)",  
-    "Latvian", 
-    "Lithuanian", 
-    "Luxembourg", 
-    "Maltese", 
-    "Dutch (Netherlands)", 
-    "Poland", 
-    "Portuese", 
-    "Romanian",
-    "Scottish", 
-    "Slovakian", 
-    "Slovenian", 
-    "Spanish", 
-    "Swedish",
-    "Icelandic",
-    "Liechtensteinian",
-    "Norwegian",
-    "Swiss",
-    "UK",
-    "United Kingdom",
-  ];
-
-  $(document).on('ready',function()
-  {
-    $('#nationality').typeahead(
-      { "hint":true, "highlight":true, "minLength":1 },
-      {
-       name:'nationality',
-       source: substringMatcher(nationalities)
-      }
-    );
-  });
-</script>
 {% endblock %}

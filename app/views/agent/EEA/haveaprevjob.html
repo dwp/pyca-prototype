@@ -7,30 +7,27 @@
 {% block content %}
 <main id="content" role="main">
 
-  {% include "includes/breadcrumb_examples.html" %}
+  {% include "includes/backlink_examples.html" %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
 
-  <h1 class="form-title heading-large" id="thirdparty">
-    Ask "Have you previously had a job but have had to stop work through no fault of your own?"
-  </h1>
+      <h1 class="form-title heading-large" id="thirdparty">
+        Ask "Have you previously had a job but have had to stop work through no fault of your own?"
+      </h1>
 
-  <form action="prevjob" method="get" class="form" id="theForm">
+      <form action="prevjob" method="get" class="form" id="theForm">
+        <input type="hidden" name="page_name" value="start"/>
 
-    <input type="hidden" name="page_name" value="start"/>
-
-    <!-- Job -->
         <div class="form-group">
           <fieldset>
-            <!--
-            <legend class="visuallyhidden">Are you 18 or over?</legend>
-            -->
+            <legend class="visuallyhidden">Ask "Have you previously had a job but have had to stop work through no fault of your own?"</legend>
+
             <label for="prevJobTrue" class="block-label" data-target="example_other">
               <input type="radio" name="prevJob" value="true" id="prevJobTrue" >
               Yes, they have
             </label>
-                        <div class="panel panel-border-narrow js-hidden" id="example_other">
+            <div class="panel panel-border-narrow js-hidden" id="example_other">
               <p class="form-label">
                 Ask for wage slips, P45, redundancy letter from employer or other proof of them being unable to work. You only need to see one. If they don't have any of them then change your answer to 'no'.
               </p>
@@ -39,15 +36,14 @@
               <input type="radio" name="prevJob" value="false" id="prevJobFalse">
               No, they haven't
             </label>
-
           </fieldset>
         </div>
 
-    <fieldset class="primary-nav form-group">
-      <input type="submit" value="Continue" class="button" id="submitButton"/>
-    </fieldset>
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
 
-  </form>
+      </form>
 
     </div>
   </div>

@@ -7,37 +7,21 @@
 {% block content %}
 <main id="content" role="main">
 
-  {% include "includes/breadcrumb_examples.html" %}
+  {% include "includes/backlink_examples.html" %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
-              <h1 class="heading-large">
-            Are you a refugee?
-        </h1>
+
+      <h1 class="heading-large">
+        Are you a refugee?
+      </h1>
+
       <form action="visa" method="get" class="form">
-
-        <!--
-
-
-        <p>
-          You may want to show a user different pages, depending on how they've answered a question.
-        </p>
-
-        <p>
-          You can see the code for this example here:
-        </p>
-
-        <div class="code">
-          /app/routes.js
-          /app/views/examples/branching.html
-        </div>
-        -->
 
         <div class="form-group">
           <fieldset class="inline">
-            <!--
-            <legend class="visuallyhidden">Are you 18 or over?</legend>
-            -->
+            <legend class="visuallyhidden">Are you a refugee?</legend>
+
             <label for="refugeeTrue" class="block-label">
               <input type="radio" name="refugee" value="true" id="refugeeTrue">
               Yes
@@ -47,12 +31,11 @@
               <input type="radio" name="refugee" value="false" id="refugeeFalse">
               No
             </label>
-
           </fieldset>
         </div>
 
-        <div class="form-group">
-          <input type="submit" class="button" value="Continue">
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
         </div>
 
       </form>

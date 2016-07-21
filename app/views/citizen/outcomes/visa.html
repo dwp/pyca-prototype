@@ -7,7 +7,7 @@
 {% block content %}
 <main id="content" role="main">
 
-  {% include "includes/breadcrumb_examples.html" %}
+  {% include "includes/backlink_examples.html" %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
@@ -15,17 +15,19 @@
         <h1 class="heading-xlarge">
           You should be able to apply for benefits in the UK
         </h1>
+
         <p>You have the right to apply for benefits in the UK as long as you can prove this.</p>
-        <p>
-          You need to bring the following items to a jobcentre to prove your right to live in the UK:</p>
-          <ul class='list list-bullet'>
+
+        <p>You need to bring the following items to a jobcentre to prove your right to live in the UK:</p>
+
+        <ul class="list list-bullet">
           <li>your visa with the stamp or information saying you can apply for benefits (this may say 'recourse to public funds' or similar) </li>
           <li>evidence of where you live</li>
         </ul>
-        
-          {% include "includes/interview.html" %}
 
-          {% include "includes/whattodonext.html" %}
+        {% include "includes/interview.html" %}
+
+        {% include "includes/whattodonext.html" %}
 
     </div>
   </div>
