@@ -26,17 +26,17 @@
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="jobEmployed" class="block-label">
-              <input type="checkbox" name="job" value="employed" id="jobEmployed" data-uncheck='["jobNone"]'>
+            <label for="employed" class="block-label">
+              <input type="checkbox" name="employed" value="true" id="employed" data-uncheck='["jobNone"]'>
               Yes, they're employed
             </label>
 
-            <label for="jobSelfEmployed" class="block-label">
-              <input type="checkbox" name="job" value="selfemployed" id="jobSelfEmployed" data-uncheck='["jobNone"]'>
+            <label for="selfemployed" class="block-label">
+              <input type="checkbox" name="selfemployed" value="true" id="selfemployed" data-uncheck='["jobNone"]'>
               Yes, they're self-employed (work for themselves)
             </label>
             <label for="jobNone" class="block-label">
-              <input type="checkbox" name="job" value="none" id="jobNone" data-uncheck='["jobEmployed", "jobSelfEmployed"]'>
+              <input type="checkbox" name="job" value="none" id="jobNone" data-uncheck='["employed", "selfemployed"]'>
               No
             </label>
           </fieldset>

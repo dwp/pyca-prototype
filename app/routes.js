@@ -210,13 +210,13 @@ router.get('/agent/wherefrom', function (req, res) {
 });
 
 router.get('/agent/EEA/haveaprevjob', function (req, res) {
-  var job = req.query.job;
-  if (job == "true"){
+  var selfemployed = req.query.selfemployed;
+  var employed = req.query.employed;
+  if (selfemployed == "true"){
+    res.redirect("/agent/EEA/partner");
+  } else if (employed == "true"){
     // redirect to the relevant page
     res.redirect("/agent/EEA/employedpartner");
-  }
-  else if (job == "selfemp"){
-    res.redirect("/agent/EEA/partner");
   } else {
     res.render('agent/EEA/haveaprevjob');
   }
