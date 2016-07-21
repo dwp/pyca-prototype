@@ -1,0 +1,38 @@
+@import 'jquery-ui/themes/base/core';
+@import 'jquery-ui/themes/base/autocomplete';
+
+.ui-autocomplete {
+  max-height: 342px;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
+  border: 2px solid $grey-1;
+
+  .ui-menu-item-wrapper {
+    position: relative;
+    margin-bottom: -2px;
+    padding: 8px;
+    border: solid $border-colour;
+    border-width: 2px 0;
+
+    &.ui-state-active {
+      z-index: 1;
+      background-color: $link-active-colour;
+      border-color: $link-active-colour;
+      color: white;
+    }
+  }
+
+  .ui-menu-item {
+    display: block;
+    @include bold-19;
+    color: $text-colour;
+    cursor: pointer;
+
+    &:first-child .ui-menu-item-wrapper {
+      border-top: none;
+    }
+  }
+}
