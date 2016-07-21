@@ -1,6 +1,10 @@
 @import 'jquery-ui/themes/base/core';
 @import 'jquery-ui/themes/base/autocomplete';
 
+.js-enabled select.autocompleter {
+  display: none;
+}
+
 .ui-autocomplete {
   max-height: 342px;
   overflow-x: hidden;
