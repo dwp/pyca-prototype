@@ -1,6 +1,43 @@
 var express = require('express');
 var router = express.Router();
 
+// List of EEA countries
+var countries = {
+  EEA: [
+    'Austria',
+    'Belgium',
+    'Bulgaria',
+    'Croatia',
+    'Czech Republic',
+    'Denmark',
+    'Estonia',
+    'Finland',
+    'France',
+    'Germany',
+    'Greece',
+    'Hungary',
+    'Iceland',
+    'Ireland',
+    'Italy',
+    'Latvia',
+    'Liechtenstein',
+    'Lithuania',
+    'Luxembourg',
+    'Malta',
+    'Netherlands',
+    'Norway',
+    'Poland',
+    'Portugal',
+    'Republic of Cyprus',
+    'Romania',
+    'Slovakia',
+    'Slovenia',
+    'Spain',
+    'Sweden',
+    'United Kingdom'
+  ]
+};
+
 router.get('/', function (req, res) {
 
   res.render('index');
@@ -33,7 +70,7 @@ router.get('/citizen/wherefrom', function (req, res) {
 router.get('/citizen/EEA/haveaprevjob', function (req, res) {
   var selfemployed = req.query.selfemployed;
   var employed = req.query.employed;
-  if (selfemployed == "true"){ 
+  if (selfemployed == "true"){
     res.redirect("/citizen/EEA/selfemppartner");
   } else if (employed == "true"){
     // redirect to the relevant page
@@ -137,23 +174,11 @@ router.get('/citizen/nonEEA/visa', function (req, res) {
 
 });
 
-
-router.get('/citizen/nonEEA/married', function (req, res) {
+router.get('/citizen/nonEEA/partner', function (req, res) {
   var visa = req.query.visa;
   if (visa == "true"){
     // redirect to the relevant page
     res.redirect("/citizen/outcomes/visa");
-  } else {
-    res.render('citizen/nonEEA/married');
-  }
-
-});
-
-router.get('/citizen/nonEEA/partner', function (req, res) {
-  var married = req.query.married;
-  if (married == "true"){
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/EEAmarried");
   } else {
     res.render('citizen/nonEEA/partner');
   }
@@ -162,7 +187,8 @@ router.get('/citizen/nonEEA/partner', function (req, res) {
 
 router.get('/citizen/outcomes/noteligible', function (req, res) {
   var partner = req.query.partner;
-  if (partner == "true"){
+  var nationality = req.query.nationality;
+  if (partner == "true" && countries.EEA.indexOf(nationality) !== -1){
     // redirect to the relevant page
     res.redirect("/citizen/outcomes/EEApartner");
   } else {
@@ -256,23 +282,11 @@ router.get('/agent/nonEEA/visa', function (req, res) {
 
 });
 
-
-router.get('/agent/nonEEA/married', function (req, res) {
+router.get('/agent/nonEEA/partner', function (req, res) {
   var visa = req.query.visa;
   if (visa == "true"){
     // redirect to the relevant page
     res.redirect("/agent/outcomes/visa");
-  } else {
-    res.render('agent/nonEEA/married');
-  }
-
-});
-
-router.get('/agent/nonEEA/partner', function (req, res) {
-  var married = req.query.married;
-  if (married == "true"){
-    // redirect to the relevant page
-    res.redirect("/agent/outcomes/EEAmarried");
   } else {
     res.render('agent/nonEEA/partner');
   }
@@ -281,7 +295,8 @@ router.get('/agent/nonEEA/partner', function (req, res) {
 
 router.get('/agent/outcomes/noteligible', function (req, res) {
   var partner = req.query.partner;
-  if (partner == "true"){
+  var nationality = req.query.nationality;
+  if (partner == "true" && countries.EEA.indexOf(nationality) !== -1){
     // redirect to the relevant page
     res.redirect("/agent/outcomes/EEApartner");
   } else {

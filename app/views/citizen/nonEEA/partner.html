@@ -13,9 +13,9 @@
     <div class="column-two-thirds">
 
   <h1 class="form-title heading-large" id="thirdparty">
-    Do you have a partner who comes from the European Economic Area?
+    Do you have a partner?
   </h1>
-
+  <p>This means a husband, wife or civil partner, or someone who lives with them and they share a personal life with, eg they may have common bills or share a bank account.</p>
   <form action="/citizen/outcomes/noteligible" method="get" class="form" id="theForm">
 
     <input type="hidden" name="page_name" value="start"/>
@@ -26,7 +26,7 @@
             <!--
             <legend class="visuallyhidden">Are you 18 or over?</legend>
             -->
-            <label for="partnerTrue" class="block-label">
+            <label for="partnerTrue" class="block-label" data-target="partnerInfo">
               <input type="radio" name="partner" value="true" id="partnerTrue">
               Yes
             </label>
@@ -39,11 +39,23 @@
           </fieldset>
         </div>
 
-    <fieldset class="primary-nav form-group">
-      <input type="submit" value="Continue" class="button" id="submitButton"/>
-    </fieldset>
+        <div class="panel panel-border-narrow js-hidden" id="partnerInfo">
+          <h2 class="heading-medium">
+            What's the partner's nationality?
+          </h2>
 
-  </form>
+          <fieldset>
+            <div class="form-group">
+              <input name="nationality" id="nationality" class="form-control full"/>
+            </div>
+          </fieldset>
+        </div>
+
+        <fieldset class="primary-nav form-group">
+          <input type="submit" value="Continue" class="button" id="submitButton"/>
+        </fieldset>
+
+      </form>
 
     </div>
   </div>
