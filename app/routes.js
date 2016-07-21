@@ -1,42 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
-// List of EEA countries
-var countries = {
-  EEA: [
-    'Austria',
-    'Belgium',
-    'Bulgaria',
-    'Croatia',
-    'Czech Republic',
-    'Denmark',
-    'Estonia',
-    'Finland',
-    'France',
-    'Germany',
-    'Greece',
-    'Hungary',
-    'Iceland',
-    'Ireland',
-    'Italy',
-    'Latvia',
-    'Liechtenstein',
-    'Lithuania',
-    'Luxembourg',
-    'Malta',
-    'Netherlands',
-    'Norway',
-    'Poland',
-    'Portugal',
-    'Republic of Cyprus',
-    'Romania',
-    'Slovakia',
-    'Slovenia',
-    'Spain',
-    'Sweden',
-    'United Kingdom'
-  ]
-};
+var countries = require('./services/country');
 
 router.get('/', function (req, res) {
 
@@ -188,7 +152,13 @@ router.get('/citizen/nonEEA/partner', function (req, res) {
 router.get('/citizen/outcomes/noteligible', function (req, res) {
   var partner = req.query.partner;
   var nationality = req.query.nationality;
-  if (partner == "true" && countries.EEA.indexOf(nationality) !== -1){
+
+  // List countries by EEA, pull out names
+  var list = countries.listByEEA().map(function(country) {
+    return country.name;
+  });
+
+  if (partner == "true" && list.indexOf(nationality) !== -1) {
     // redirect to the relevant page
     res.redirect("/citizen/outcomes/EEApartner");
   } else {
@@ -296,7 +266,13 @@ router.get('/agent/nonEEA/partner', function (req, res) {
 router.get('/agent/outcomes/noteligible', function (req, res) {
   var partner = req.query.partner;
   var nationality = req.query.nationality;
-  if (partner == "true" && countries.EEA.indexOf(nationality) !== -1){
+
+  // List countries by EEA, pull out names
+  var list = countries.listByEEA().map(function(country) {
+    return country.name;
+  });
+
+  if (partner == "true" && list.indexOf(nationality) !== -1) {
     // redirect to the relevant page
     res.redirect("/agent/outcomes/EEApartner");
   } else {
