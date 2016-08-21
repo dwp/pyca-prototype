@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="form-title heading-large" id="thirdparty">
+        Ask: "How long have you lived in the UK?"
+      </h1>
+
+      <form action="nojob/family" method="get" class="form" id="theForm">
+        <input type="hidden" name="page_name" value="start"/>
+
+        <div class="form-group">
+          <fieldset>
+            <legend class="visuallyhidden">Ask: "How long have you lived in the UK?"</legend>
+
+            <label for="naturalisedTrue" class="block-label" data-target="example_other">
+              <input type="radio" name="naturalised" value="true" id="naturalisedTrue">
+              More than 5 years
+            </label>
+            <div class="panel panel-border-narrow js-hidden" id="example_other">
+              <p class="form-label">
+                They need some evidence of where they live, and previous addresses if relevant up to 5 years. If they don't have this then proof of when they entered the country. If they don't have any of these then change your answer to 'no'.
+              </p>
+            </div>
+            <label for="naturalisedFalse" class="block-label">
+              <input type="radio" name="naturalised" value="false" id="naturalisedFalse">
+              Less than 5 years
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

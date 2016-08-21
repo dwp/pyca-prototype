@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="form-title heading-large" id="thirdparty">
+        Do you have a partner?
+      </h1>
+
+      <p>This means a husband, wife or civil partner, or someone who lives with them and they share a personal life with, eg they may have common bills or share a bank account.</p>
+
+      <form action="/citizen/outcomes/noteligible" method="get" class="form" id="theForm">
+        <input type="hidden" name="page_name" value="start"/>
+
+        <div class="form-group">
+          <fieldset class="inline">
+            <legend class="visuallyhidden">Do you have a partner?</legend>
+
+            <label for="partnerTrue" class="block-label" data-target="partnerInfo">
+              <input type="radio" name="partner" value="true" id="partnerTrue">
+              Yes
+            </label>
+
+            <label for="partnerFalse" class="block-label">
+              <input type="radio" name="partner" value="false" id="partnerFalse">
+              No
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="form-group panel panel-border-narrow js-hidden" id="partnerInfo">
+          <h2 class="heading-medium">
+            What's your partner's nationality?
+          </h2>
+
+          <fieldset>
+            <legend class="visuallyhidden">What's your partner's nationality?</legend>
+
+            <select name="nationality" class="form-control full autocompleter">
+              <option value="">Select country</option>
+              {%- for country in countries %}
+              <option value="{{country}}">{{country}}</option>
+              {%- endfor %}
+            </select>
+          </fieldset>
+        </div>
+
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

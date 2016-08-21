@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  EEA citizen
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="heading-xlarge">
+        You must speak to a work coach to find out if you can apply
+      </h1>
+
+      <p>It looks like you don't have the right to apply for benefits in the UK yourself but you may still be able to apply because you have family here.</p>
+
+      <p>You need to bring the following items to a jobcentre to prove your right to live in the UK:</p>
+
+      <ul class="list list-bullet">
+        <li>your passport or identity card</li>
+        <li>proof of where you live, eg rental agreement, mortgage statement or utility bills</li>
+      </ul>
+
+      <h2 class="heading-medium">Your family information</h2>
+      <p>You also need to bring proof of any of the following that applies to you:</p>
+
+      <ul class="list list-bullet">
+        <li>your partner's nationality, eg their passport or identity card</li>
+        <li>your partner's work, eg their wage slips</li>
+        <li>your marriage or civil partnership</li>
+        <li>details of any other family you have living in the UK, including information about where they work and when they entered the UK</li>
+        <li>the school your child goes to</li>
+      </ul>
+
+      {% include "includes/interview.html" %}
+
+      {% include "includes/whattodonext.html" %}
+
+    </div>
+  </div>
+</main>
+{% endblock %}

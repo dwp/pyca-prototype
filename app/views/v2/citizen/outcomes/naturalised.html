@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  EEA citizen
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="heading-xlarge">
+        You may be able to apply
+      </h1>
+
+      <p>Because you've lived in the UK for more than 5 years you may be eligible to apply for benefits. You'll need to prove your right to permanent residency first.</p>
+
+      <h2 class="heading-medium">What to do next</h2>
+
+      <p>
+        <a href='http://www.gov.uk/apply-for-a-uk-residence-card/permanent-residence-card'>Read about permanent residency on GOV.UK</a>.
+      </p>
+      <p>If you think you qualify then call 0800 900 1900 to make an appointment to discuss what you need to do with your work coach.</p>
+
+      {% include "includes/interview.html" %}
+
+      {% include "includes/whattodonext.html" %}
+
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Refugee
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="heading-xlarge">
+        You should be able to apply for benefits in the UK
+      </h1>
+
+      <p>You have the right to apply for benefits in the UK as long as you remain a refugee.</p>
+
+      <p>You need to bring the following items to a jobcentre to prove your right to live in the UK:</p>
+
+      <ul class="list list-bullet">
+        <li>passport or other proof of your identity</p>
+        <li>your letter from the UK Home Office that says you're a refugee</li>
+      </ul>
+
+      {% include "includes/whattodonext.html" %}
+
+    </div>
+  </div>
+</main>
+{% endblock %}

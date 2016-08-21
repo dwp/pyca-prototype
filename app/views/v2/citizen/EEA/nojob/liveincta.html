@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  Example - Branching - Under 18
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="form-title heading-large" id="thirdparty">
+        Over the last 2 years have you lived in the Channel Islands, Isle of Man or the Republic of Ireland?
+      </h1>
+
+      <form action="/citizen/EEA/nojob/family" method="get" class="form" id="theForm">
+        <input type="hidden" name="page_name" value="start"/>
+
+        <div class="form-group">
+          <fieldset>
+            <legend class="visuallyhidden">Over the last 2 years have you lived in the Channel Islands, Isle of Man or the Republic of Ireland?</legend>
+
+            <label for="cta" class="block-label">
+              <input type="radio" name="cta" value="true" id="cta">
+              Yes, for all of that time
+            </label>
+            <label for="somecta" class="block-label">
+              <input type="radio" name="cta" value="false" id="somecta">
+              Yes, for some of that time
+            </label>
+            <label for="nocta" class="block-label">
+              <input type="radio" name="cta" value="false" id="nocta">
+              No
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
