@@ -144,8 +144,8 @@ THE SOFTWARE.
   var public_methods = {
     init: function( customizations ) {
       
-      if ( /msie/.test(navigator.userAgent.toLowerCase()) && parseInt(navigator.appVersion,10) <= 6) {
         
+      if (/MSIE [1-6][\.,]/i.test(navigator.userAgent)) {
         return this;
         
       } else {
