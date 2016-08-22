@@ -1,8 +1,14 @@
-@import 'jquery-ui/themes/base/core';
-@import 'jquery-ui/themes/base/autocomplete';
+@import '../jquery-ui/themes/base/core';
+@import '../jquery-ui/themes/base/autocomplete';
 
-.js-enabled select.autocompleter {
-  display: none;
+@import 'colours';
+@import 'conditionals';
+
+select.autocompleter {
+
+  .js-enabled & {
+    display: none;
+  }
 }
 
 .ui-autocomplete {
