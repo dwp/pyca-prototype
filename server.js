@@ -19,10 +19,10 @@ var path = require('path'),
     password = process.env.PASSWORD,
     env      = process.env.NODE_ENV || 'development',
     useAuth  = process.env.USE_AUTH || config.useAuth,
-    useHttps  = process.env.USE_HTTPS || config.useHttps;
+    useHttps  = process.env.USE_HTTPS || config.useHttps,
 
-    env      = env.toLowerCase();
-    useAuth  = useAuth.toLowerCase();
+    env      = env.toLowerCase(),
+    useAuth  = useAuth.toLowerCase(),
     useHttps   = useHttps.toLowerCase();
 
 // Authenticate against the environment-provided credentials, if running
