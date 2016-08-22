@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_alpha.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="form-title heading-large">
+        What’s your nationality?
+      </h1>
+
+      <form method="post" class="form">
+
+        <div class="form-group">
+          <fieldset>
+            <legend class="visuallyhidden">What’s your nationality?</legend>
+
+            <select name="nationality" class="form-control full autocompleter">
+              <option value="">Select country</option>
+              {%- for country in countries %}
+              <option value="{{country}}">{{country}}</option>
+              {%- endfor %}
+            </select>
+          </fieldset>
+        </div>
+
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block body_end %}
+  {% include "includes/scripts.html" %}
+{% endblock %}

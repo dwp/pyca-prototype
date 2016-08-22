@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_alpha.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="form-title heading-large">
+        Over the last 2 years have they lived in the Channel Islands, Isle of Man or the Republic of Ireland?
+      </h1>
+
+      <form method="post" class="form">
+
+        <div class="form-group">
+          <fieldset>
+            <legend class="visuallyhidden">Over the last 2 years have they lived in the Channel Islands, Isle of Man or the Republic of Ireland?</legend>
+
+            <label for="livedInBritishIsles-lastTwoYears" class="block-label">
+              <input type="radio" name="livedInBritishIsles" value="lastTwoYears" id="livedInBritishIsles-lastTwoYears">
+              Yes, for all of that time
+            </label>
+            <label for="livedInBritishIsles-partOfLastTwoYears" class="block-label">
+              <input type="radio" name="livedInBritishIsles" value="partOfLastTwoYears" id="livedInBritishIsles-partOfLastTwoYears">
+              Yes, for some of that time
+            </label>
+            <label for="livedInBritishIsles-notInLastTwoYears" class="block-label">
+              <input type="radio" name="livedInBritishIsles" value="notInLastTwoYears" id="livedInBritishIsles-notInLastTwoYears">
+              No
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_alpha.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <div class="govuk-box-highlight">
+        <h1 class="bold-large">You can apply for benefits in the UK</h1>
+      </div>
+
+      <p>Based on your answers you’re a single, employed worker from a country in the European Economic Area. This means you can apply for benefits as long as you can prove this.</p>
+
+      <h2 class="heading-medium">What to do next</h2>
+
+      <div class="panel panel-border-wide">
+        <p>Go to the jobcentre on the date of your habitual residency interview and bring the following items with you:</p>
+
+        <ul class="list list-bullet">
+          <li>your passport, identity card or biometric residence permit (BRP)</li>
+          <li>some proof of your employment that shows how much you earn, eg wage slips or employment contract</li>
+          <li>some proof of where you live, eg a rent agreement or mortgage statement dated in the last 3 months</li>
+        </ul>
+      </div>
+
+      {% include "includes/whattodonext.html" %}
+
+    </div>
+  </div>
+</main>
+{% endblock %}

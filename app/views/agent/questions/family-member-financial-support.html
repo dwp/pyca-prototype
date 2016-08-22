@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_alpha.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="form-title heading-large">
+        Do they have family in the UK?
+      </h1>
+
+      <p class="form-hint">They may be able to apply for benefits through eligible family members, eg parents, aunts or cousins.</p>
+
+      <form method="post" class="form">
+
+        <div class="form-group">
+          <fieldset class="inline">
+            <label for="familyMemberFinancialSupport-yes" class="block-label" data-target="familyInfo">
+              <input type="radio" name="familyMemberFinancialSupport" value="yes" id="familyMemberFinancialSupport-yes">
+              Yes
+            </label>
+
+            <label for="familyMemberFinancialSupport-no" class="block-label">
+              <input type="radio" name="familyMemberFinancialSupport" value="no" id="familyMemberFinancialSupport-no">
+              No
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="form-group panel panel-border-narrow js-hidden" id="familyInfo">
+          <h2 class="heading-medium">
+            What’s the nationality of the family member?
+          </h2>
+
+          <fieldset>
+            <legend class="visuallyhidden">What’s the nationality of the family member?</legend>
+
+            <select name="supportingFamilyMemberNationality" class="form-control full autocompleter">
+              <option value="">Select country</option>
+              {%- for country in countries %}
+              <option value="{{country}}">{{country}}</option>
+              {%- endfor %}
+            </select>
+          </fieldset>
+        </div>
+
+        <div class="primary-nav form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

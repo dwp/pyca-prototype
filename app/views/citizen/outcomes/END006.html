@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_alpha.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <div class="govuk-box-highlight">
+        <h1 class="bold-large">Speak to your work coach</h1>
+      </div>
+
+      <p>Because you’ve lived in the UK for more than 5 years you may be eligible to apply for benefits. You’ll first need to prove your right to permanent residency.</p>
+
+      <h2 class="heading-medium">What to do next</h2>
+
+      <div class="panel panel-border-wide">
+        <ul class="list list-bullet">
+          <li><a href="https://www.gov.uk/apply-for-a-uk-residence-card/permanent-residence-card">Read about permanent residency on GOV.UK</a></li>
+          <li>If you think you qualify, go to the jobcentre on the date of your habitual residency interview</li>
+        </ul>
+
+        <p>During your interview the work coach will ask questions about whether you live and intend to stay in the UK. This will cover where you live, when you arrived and details of your daily life, for example your doctor or dentist.</p>
+      </div>
+
+      <h2 class="heading-medium">If you have other family in the UK</h2>
+      <p>At the interview you’ll also be asked questions about your children or any other family you have in the UK. This will include the dates they arrived, the school they go to and the work they do.</p>
+
+      {% include "includes/whattodonext.html" %}
+
+    </div>
+  </div>
+</main>
+{% endblock %}

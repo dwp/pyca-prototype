@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_alpha.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <div class="govuk-box-highlight">
+        <h1 class="bold-large">You have the right to apply for benefits in the UK</h1>
+      </div>
+
+      <p>Based on your answers, as a citizen of a European Economic Area country with a job in the UK you should have the right to apply for benefits in the UK.</p>
+
+      <h2 class="heading-medium">What to do next</h2>
+
+      <div class="panel panel-border-wide">
+        <p>Go to the jobcentre on the date of your habitual residency interview and bring the following items with you:</p>
+
+        <ul class="list list-bullet">
+          <li>your passport or national ID card</li>
+          <li>proof of employment and how much you earn (eg recent wage slips or P60) or an offer of employment if you’ve not started working yet</li>
+          <li>proof of your partner’s nationality</li>
+          <li>details of your partner’s work, if they have a job</li>
+          <li>your marriage certificate, proof of civil partnership or 2 years’ proof of relationship</li>
+        </ul>
+      </div>
+
+      <p>You will then have a short interview about whether you live and intend to stay in the UK. This will cover where you live, when you arrived and details of your daily life, for example your doctor or dentist.</p>
+
+      <h2 class="heading-medium">If you have other family in the UK</h2>
+      <p>You’ll be asked questions about your children or any other family you have in the UK. This will include the dates they arrived, the school they go to and the work they do.</p>
+
+      {% include "includes/whattodonext.html" %}
+
+    </div>
+  </div>
+</main>
+{% endblock %}

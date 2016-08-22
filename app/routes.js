@@ -2,283 +2,330 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res) {
-
   res.render('index');
+});
 
+// Reset session at citizen/agent start
+router.get('/:type', function (req, res, next) {
+  req.session = null;
+  next();
 });
 
 // Branching for citizens/agents
 
-router.get('/:type/wherefrom', function (req, res) {
+router.all('/:type/questions/uk-national', function (req, res, next) {
   var type = req.params.type;
-  var citizen = req.query.citizen;
-  var nationality = req.query.nationality;
+  var ukNational = req.body.ukNational;
 
-  // List countries, pull out names
-  var listEEA = res.locals.countriesByEEA;
-  var listNonEEA = res.locals.countriesByNonEEA;
+  if (ukNational) {
+    req.session.ukNational = ukNational;
 
-  // UK citizen
-  if (citizen == 'true'){
-    res.redirect('/' + type + '/outcomes/UK');
+    // UK national
+    if (ukNational == 'yes') {
+      res.redirect('/' + type + '/outcomes/END001');
+    }
+
+    // Non-UK national
+    else if (ukNational == 'no') {
+      res.redirect('/' + type + '/questions/nationality');
+    }
   }
 
-  // Nationality entered
-  else if (nationality) {
+  next();
+});
+
+router.all('/:type/questions/nationality', function (req, res, next) {
+  var type = req.params.type;
+  var nationality = req.body.nationality;
+
+  if (nationality) {
+    req.session.nationality = nationality;
+
+    // List countries, pull out names
+    var listEEA = res.locals.countriesByEEA;
+    var listNonEEA = res.locals.countriesByNonEEA;
 
     // EEA nationality
     if (listEEA.indexOf(nationality) !== -1) {
-      res.redirect('/' + type + '/EEA/haveajob');
+      req.session.isEEA = true;
+      res.redirect('/' + type + '/questions/employee-status');
     }
 
     // Non-EEA nationality
     else if (listNonEEA.indexOf(nationality) !== -1) {
-      res.redirect('/' + type + '/nonEEA/areyouarefugee');
+      req.session.isEEA = false;
+      res.redirect('/' + type + '/questions/refugee');
     }
   }
 
-  else {
-    res.render(type + '/wherefrom');
-  }
+  next();
 });
 
-// Branching for citizens
+router.all('/:type/questions/employee-status', function (req, res, next) {
+  var type = req.params.type;
+  var employeeStatus = req.body.employeeStatus;
 
-router.get('/citizen/EEA/haveaprevjob', function (req, res) {
-  var selfemployed = req.query.selfemployed;
-  var employed = req.query.employed;
-  if (selfemployed == "true"){
-    res.redirect("/citizen/EEA/selfemppartner");
-  } else if (employed == "true"){
-    // redirect to the relevant page
-    res.redirect("/citizen/EEA/employedpartner");
-  } else {
-    res.render('citizen/EEA/haveaprevjob');
+  if (employeeStatus) {
+    req.session.employeeStatus = employeeStatus;
+
+    // Employed or Self-employed
+    if (employeeStatus.employed === 'true' || employeeStatus.selfEmployed === 'true') {
+      res.redirect('/' + type + '/questions/partner');
+    }
+
+    // Not working
+    else if (employeeStatus.dontWork === 'true') {
+      res.redirect('/' + type + '/questions/reason-out-of-work');
+    }
   }
 
-});
-router.get('/citizen/EEA/nojob/liveincta', function (req, res) {
-  var emppartner = req.query.emppartner;
-  var partner = req.query.partner;
-  if (emppartner == "false"){
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/EEAnointerview");
-  } else if (emppartner == "true") {
-    res.redirect("/citizen/outcomes/EEAjob");
-  } else if (partner == "true") {
-    res.redirect("/citizen/outcomes/EEApartner");
-  } else {
-    res.render('citizen/EEA/nojob/liveincta');
-  }
-
+  next();
 });
 
-router.get('/citizen/EEA/nojob/partner', function (req, res) {
-  var prevJob = req.query.prevJob;
-  if (prevJob == "redundant" || prevJob == "ill"){
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/EEAprevjob");
-  }
-   else {
-    res.render('citizen/EEA/nojob/partner');
+router.all('/:type/questions/refugee', function (req, res, next) {
+  var type = req.params.type;
+  var refugee = req.body.refugee;
+
+  if (refugee) {
+    req.session.refugee = refugee;
+
+    // Refugee
+    if (refugee === 'yes') {
+      res.redirect('/' + type + '/outcomes/END008');
+    }
+
+    // Non-refugee
+    else if (refugee === 'no') {
+      res.redirect('/' + type + '/questions/no-recourse-to-public-funds');
+    }
   }
 
+  next();
 });
 
-router.get('/citizen/EEA/nojob/family', function (req, res) {
-  var cta = req.query.cta;
-  if (cta == "true"){
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/cta");
-  } else {
-    res.render('citizen/EEA/nojob/family');
+router.all('/:type/questions/partner', function (req, res, next) {
+  var type = req.params.type;
+  var partner = req.body.partner;
+  var partnerNationality = req.body.partnerNationality;
+
+  // From session (previously answered)
+  var reasonOutOfWork = req.session.reasonOutOfWork;
+  var employeeStatus = req.session.employeeStatus;
+  var noRecourseToPublicFunds = req.session.noRecourseToPublicFunds;
+
+  if (partner) {
+    req.session.partner = partner;
+
+    // In work
+    if ((!employeeStatus || !reasonOutOfWork) && !noRecourseToPublicFunds) {
+
+      // Partner
+      if (partner === 'yes') {
+        res.redirect('/' + type + '/outcomes/END011');
+      }
+
+      // No partner
+      else if (partner === 'no') {
+        res.redirect('/' + type + '/outcomes/END002');
+      }
+    }
+
+    // Out of work
+    else if (employeeStatus && reasonOutOfWork) {
+
+      // Redundant or Injured
+      if (employeeStatus.dontWork === 'true' && (reasonOutOfWork === 'neverWorked' || reasonOutOfWork === 'fired')) {
+
+        // Partner
+        if (partner === 'yes') {
+          res.redirect('/' + type + '/outcomes/END003');
+        }
+
+        // No partner
+        else if (partner === 'no') {
+          res.redirect('/' + type + '/questions/lived-in-british-isles');
+        }
+      }
+    }
+
+    // Stamped visa
+    else if (noRecourseToPublicFunds === 'yes') {
+
+      // List countries, pull out names
+      var listEEA = res.locals.countriesByEEA;
+      var listNonEEA = res.locals.countriesByNonEEA;
+
+      // Partner and EEA nationality
+      if (partner === 'yes' && listEEA.indexOf(partnerNationality) !== -1) {
+        res.redirect('/' + type + '/outcomes/END003');
+      }
+
+      // No partner or non-EEA nationality
+      else if (partner === 'no' || listNonEEA.indexOf(partnerNationality) !== -1) {
+        res.redirect('/' + type + '/questions/family-member-financial-support');
+      }
+    }
   }
 
+  next();
 });
 
-router.get('/citizen/EEA/nojob/fiveyears', function (req, res) {
-  var family = req.query.family;
-  if (family == "false"){
-    // redirect to the relevant page
-    res.render("citizen/EEA/nojob/fiveyears");
-  } else {
-    res.redirect('/citizen/outcomes/complicated');
+router.all('/:type/questions/reason-out-of-work', function (req, res, next) {
+  var type = req.params.type;
+  var reasonOutOfWork = req.body.reasonOutOfWork;
+
+  // From session (previously answered)
+  var partner = req.session.partner;
+
+  if (reasonOutOfWork) {
+    req.session.reasonOutOfWork = reasonOutOfWork;
+
+    // Redundant or Injured
+    if (reasonOutOfWork === 'redundant' || reasonOutOfWork === 'injury') {
+      res.redirect('/' + type + '/outcomes/END010');
+    }
+
+    // Not working, ask about partner
+    if (reasonOutOfWork === 'neverWorked' || reasonOutOfWork === 'fired') {
+      res.redirect('/' + type + '/questions/partner');
+    }
   }
 
-});
-router.get('/citizen/outcomes/complicated', function (req, res) {
-  var schoolUK = req.query.schoolUK;
-  if (schoolUK == "false"){
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/noteligible");
-  } else {
-    res.render('citizen/outcomes/complicated');
-  }
-
-});
-router.get('/citizen/EEA/nojob/children', function (req, res) {
-  var naturalised = req.query.naturalised;
-  if (naturalised == "true"){
-    // redirect to the relevant page
-    res.redirect('/citizen/outcomes/naturalised');
-  } else {
-    res.render('citizen/EEA/nojob/children');
-  }
-
-});
-router.get('/citizen/outcomes/EEAselfemp', function (req, res) {
-  var partner = req.query.partner;
-  if (partner == "true"){
-    // redirect to the relevant page
-    res.redirect('/citizen/outcomes/EEAselfemppartner');
-  } else {
-    res.render('citizen/outcomes/EEAselfemp');
-  }
-
+  next();
 });
 
+router.all('/:type/questions/lived-in-british-isles', function (req, res, next) {
+  var type = req.params.type;
+  var livedInBritishIsles = req.body.livedInBritishIsles;
 
-// non-EEA citizens
+  if (livedInBritishIsles) {
+    req.session.livedInBritishIsles = livedInBritishIsles;
 
-router.get('/citizen/nonEEA/visa', function (req, res) {
-  var refugee = req.query.refugee;
-  if (refugee == "true"){
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/refugee");
-  } else {
-    res.render('citizen/nonEEA/visa');
+    // Lived in UK last two years
+    if (livedInBritishIsles === 'lastTwoYears') {
+      res.redirect('/' + type + '/outcomes/END004');
+    }
+
+    // Otherwise requires family support
+    else {
+      res.redirect('/' + type + '/questions/family-member-financial-support');
+    }
   }
 
+  next();
 });
 
-router.get('/citizen/nonEEA/partner', function (req, res) {
-  var visa = req.query.visa;
-  if (visa == "true"){
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/visa");
-  } else {
-    res.render('citizen/nonEEA/partner');
+router.all('/:type/questions/family-member-financial-support', function (req, res, next) {
+  var type = req.params.type;
+  var familyMemberFinancialSupport = req.body.familyMemberFinancialSupport;
+  var familyMemberNationality = req.body.supportingFamilyMemberNationality;
+
+  // From session (previously answered)
+  var noRecourseToPublicFunds = req.session.noRecourseToPublicFunds;
+
+  if (familyMemberFinancialSupport) {
+    req.session.familyMemberFinancialSupport = familyMemberFinancialSupport;
+
+    // List countries, pull out names
+    var listEEA = res.locals.countriesByEEA;
+    var listNonEEA = res.locals.countriesByNonEEA;
+
+    // Has family in the UK
+    if (familyMemberFinancialSupport === 'yes') {
+
+      if (familyMemberNationality) {
+
+        // EEA nationality
+        if (listEEA.indexOf(familyMemberNationality) !== -1) {
+          res.redirect('/' + type + '/outcomes/END005');
+        }
+
+        // Non-EEA nationality
+        else if (listNonEEA.indexOf(familyMemberNationality) !== -1) {
+          res.redirect('/' + type + '/outcomes/END007');
+        }
+      }
+    }
+
+    // No family in the UK
+    else {
+
+      // Stamped visa
+      if (noRecourseToPublicFunds && noRecourseToPublicFunds === 'yes') {
+        res.redirect('/' + type + '/outcomes/END007');
+      }
+
+      // No stamped visa
+      else {
+        res.redirect('/' + type + '/questions/lived-in-uk-five-years');
+      }
+    }
   }
 
+  next();
 });
 
-router.get('/citizen/outcomes/noteligible', function (req, res) {
-  var partner = req.query.partner;
-  var nationality = req.query.nationality;
+router.all('/:type/questions/lived-in-uk-five-years', function (req, res, next) {
+  var type = req.params.type;
+  var fiveYearsResidency = req.body.fiveYearsResidency;
 
-  // List countries by EEA, pull out names
-  var list = res.locals.countriesByEEA;
+  if (fiveYearsResidency) {
+    req.session.fiveYearsResidency = fiveYearsResidency;
 
-  if (partner == "true" && list.indexOf(nationality) !== -1) {
-    // redirect to the relevant page
-    res.redirect("/citizen/outcomes/EEApartner");
-  } else {
-    res.render('citizen/outcomes/noteligible');
+    // Lived in UK for five years
+    if (fiveYearsResidency === 'yes') {
+      res.redirect('/' + type + '/outcomes/END006');
+    }
+
+    // Otherwise requires children in education
+    else {
+      res.redirect('/' + type + '/questions/children-in-full-time-education');
+    }
   }
 
+  next();
 });
 
-// Branching for agents
+router.all('/:type/questions/children-in-full-time-education', function (req, res, next) {
+  var type = req.params.type;
+  var childrenInFullTimeEduction = req.body.childrenInFullTimeEduction;
 
-router.get('/agent/EEA/haveaprevjob', function (req, res) {
-  var selfemployed = req.query.selfemployed;
-  var employed = req.query.employed;
-  if (selfemployed == "true"){
-    res.redirect("/agent/EEA/partner");
-  } else if (employed == "true"){
-    // redirect to the relevant page
-    res.redirect("/agent/EEA/employedpartner");
-  } else {
-    res.render('agent/EEA/haveaprevjob');
+  if (childrenInFullTimeEduction) {
+    req.session.childrenInFullTimeEduction = childrenInFullTimeEduction;
+
+    // Children in full time education
+    if (childrenInFullTimeEduction === 'yes') {
+      res.redirect('/' + type + '/outcomes/END005');
+    }
+
+    // Sorry, won't qualify
+    else {
+      res.redirect('/' + type + '/outcomes/END007');
+    }
   }
 
+  next();
 });
 
-router.get('/agent/EEA/liveincta', function (req, res) {
-  var emppartner = req.query.emppartner;
-  var partner = req.query.partner;
-  if (emppartner == "false"){
-    // redirect to the relevant page
-    res.redirect("/agent/outcomes/EEAnointerview");
-  } else if (partner == "true") {
-    res.redirect("/agent/outcomes/EEApartner");
-  } else {
-    res.render('agent/EEA/liveincta');
+router.all('/:type/questions/no-recourse-to-public-funds', function (req, res, next) {
+  var type = req.params.type;
+  var noRecourseToPublicFunds = req.body.noRecourseToPublicFunds;
+
+  if (noRecourseToPublicFunds) {
+    req.session.noRecourseToPublicFunds = noRecourseToPublicFunds;
+
+    // Stamped visa
+    if (noRecourseToPublicFunds === 'yes') {
+      res.redirect('/' + type + '/questions/partner');
+    }
+
+    // No stamped visa
+    else if (noRecourseToPublicFunds === 'no') {
+      res.redirect('/' + type + '/outcomes/END009');
+    }
   }
 
-});
-
-router.get('/agent/EEA/haveaprevjob', function (req, res) {
-  var job = req.query.job;
-  if (job == "true"){
-    // redirect to the relevant page
-    res.redirect("/agent/outcomes/EEAjob");
-  } else {
-    res.render('agent/EEA/haveaprevjob');
-  }
-
-});
-
-router.get('/agent/EEA/fiveyears', function (req, res) {
-  var prevJob = req.query.prevJob;
-  if (prevJob == "true"){
-    // redirect to the relevant page
-    res.redirect("/agent/outcomes/EEAprevjob");
-  } else {
-    res.render('agent/EEA/fiveyears');
-  }
-
-});
-
-router.get('/agent/EEA/nojob/family', function (req, res) {
-  var naturalised = req.query.naturalised;
-  if (naturalised == "true"){
-    // redirect to the relevant page
-    res.redirect("/agent/outcomes/naturalised");
-  } else {
-    res.render('agent/EEA/nojob/family');
-  }
-
-});
-
-// non-EEA citizens
-
-router.get('/agent/nonEEA/visa', function (req, res) {
-  var refugee = req.query.refugee;
-  if (refugee == "true"){
-    // redirect to the relevant page
-    res.redirect("/agent/outcomes/refugee");
-  } else {
-    res.render('agent/nonEEA/visa');
-  }
-
-});
-
-router.get('/agent/nonEEA/partner', function (req, res) {
-  var visa = req.query.visa;
-  if (visa == "true"){
-    // redirect to the relevant page
-    res.redirect("/agent/outcomes/visa");
-  } else {
-    res.render('agent/nonEEA/partner');
-  }
-
-});
-
-router.get('/agent/outcomes/noteligible', function (req, res) {
-  var partner = req.query.partner;
-  var nationality = req.query.nationality;
-
-  // List countries by EEA, pull out names
-  var list = res.locals.countriesByEEA;
-
-  if (partner == "true" && list.indexOf(nationality) !== -1) {
-    // redirect to the relevant page
-    res.redirect("/agent/outcomes/EEApartner");
-  } else {
-    res.render('agent/outcomes/noteligible');
-  }
-
+  next();
 });
 
 module.exports = router;
