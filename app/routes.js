@@ -107,6 +107,11 @@ router.all('/:type/questions/partner', function (req, res, next) {
   var type = req.params.type;
   var partner = req.body.partner;
   var partnerNationality = req.body.partnerNationality;
+  var partnerJobUk = req.body.partnerJobUk;
+
+  // List countries, pull out names
+  var listEEA = res.locals.countriesByEEA;
+  var listNonEEA = res.locals.countriesByNonEEA;
 
   // From session (previously answered)
   var reasonOutOfWork = req.session.reasonOutOfWork;
@@ -115,6 +120,10 @@ router.all('/:type/questions/partner', function (req, res, next) {
 
   if (partner) {
     req.session.partner = partner;
+    req.session.partnerJobUk = partnerJobUk;
+    req.session.partnerNationality = partnerNationality;
+    req.session.isPartnerEEA = listEEA.indexOf(partnerNationality) !== -1;
+    req.session.isPartnerNonEEA = listNonEEA.indexOf(partnerNationality) !== -1;
 
     // In work
     if ((!employeeStatus || !reasonOutOfWork) && !noRecourseToPublicFunds) {
@@ -136,9 +145,24 @@ router.all('/:type/questions/partner', function (req, res, next) {
       // Redundant or Injured
       if (employeeStatus.dontWork === 'true' && (reasonOutOfWork === 'neverWorked' || reasonOutOfWork === 'fired')) {
 
-        // Partner
-        if (partner === 'yes') {
-          res.redirect('/' + type + '/outcomes/END003');
+        console.log('isEEA?', req.session.isEEA);
+        console.log('Partner?', partner);
+        console.log('partnerNationality', partnerNationality);
+        console.log('isPartnerEEA?', req.session.isPartnerEEA);
+        console.log('partnerJobUk?', partnerJobUk);
+
+        // Partner and non-empty partner info
+        if (partner === 'yes' && partnerNationality && partnerJobUk) {
+
+          // EEA national, EEA partner and partner works in UK
+          if (req.session.isEEA && req.session.isPartnerEEA && partnerJobUk === 'yes') {
+            res.redirect('/' + type + '/outcomes/END003');
+          }
+
+          // Otherwise same as no partner
+          else {
+            res.redirect('/' + type + '/questions/lived-in-british-isles');
+          }
         }
 
         // No partner
@@ -151,17 +175,13 @@ router.all('/:type/questions/partner', function (req, res, next) {
     // Stamped visa
     else if (noRecourseToPublicFunds === 'yes') {
 
-      // List countries, pull out names
-      var listEEA = res.locals.countriesByEEA;
-      var listNonEEA = res.locals.countriesByNonEEA;
-
       // Partner and EEA nationality
-      if (partner === 'yes' && listEEA.indexOf(partnerNationality) !== -1) {
+      if (partner === 'yes' && req.session.isPartnerEEA) {
         res.redirect('/' + type + '/outcomes/END003');
       }
 
       // No partner or non-EEA nationality
-      else if (partner === 'no' || listNonEEA.indexOf(partnerNationality) !== -1) {
+      else if (partner === 'no' || req.session.isPartnerNonEEA) {
         res.redirect('/' + type + '/questions/family-member-financial-support');
       }
     }
