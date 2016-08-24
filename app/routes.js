@@ -169,13 +169,22 @@ router.all('/:type/questions/partner', function (req, res, next) {
     // Stamped visa
     else if (noRecourseToPublicFunds === 'yes') {
 
-      // Partner and EEA nationality
-      if (partner === 'yes' && req.session.isPartnerEEA) {
-        res.redirect('/' + type + '/outcomes/END003');
+      // Partner and non-empty partner info
+      if (partner === 'yes' && partnerNationality && partnerJobUk) {
+
+        // Non EEA national, EEA partner and partner works in UK
+        if (!req.session.isEEA && req.session.isPartnerEEA && partnerJobUk === 'yes') {
+          res.redirect('/' + type + '/outcomes/END003');
+        }
+
+        // Otherwise same as no partner
+        else {
+          res.redirect('/' + type + '/questions/family-member-financial-support');
+        }
       }
 
-      // No partner or non-EEA nationality
-      else if (partner === 'no' || req.session.isPartnerNonEEA) {
+      // No partner
+      else if (partner === 'no') {
         res.redirect('/' + type + '/questions/family-member-financial-support');
       }
     }
