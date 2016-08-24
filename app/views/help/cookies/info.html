@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="title heading-large">Cookies</h1>
+
+      <h3 class="heading-small">Service cookies</h3>
+
+      <table class="table-font-xsmall">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Purpose</th>
+            <th scope="col" class="numeric">Expires</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>seen_cookie_message </td>
+            <td>This records if you’ve seen the cookies message at the top of the site when you first come in, so you don’t see it on every visit.</td>
+            <td class="numeric">1 month</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="heading-small">Google Analytics</h3>
+
+      <table class="table-font-xsmall">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Purpose</th>
+            <th scope="col" class="numeric">Expires</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>_ga</td>
+            <td>Counts how many people visit the service by tracking if you’ve visited before.</td>
+            <td class="numeric">2 years</td>
+          </tr>
+          <tr>
+            <td>_gat</td>
+            <td>Used to count how many pages are viewed and how often.</td>
+            <td class="numeric">10 minutes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><a href="/help/cookies">Go back to cookies page</a></p>
+
+    </div>
+  </div>
+</main>
+
+{% endblock %}
