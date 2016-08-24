@@ -145,12 +145,6 @@ router.all('/:type/questions/partner', function (req, res, next) {
       // Redundant or Injured
       if (employeeStatus.dontWork === 'true' && (reasonOutOfWork === 'neverWorked' || reasonOutOfWork === 'fired')) {
 
-        console.log('isEEA?', req.session.isEEA);
-        console.log('Partner?', partner);
-        console.log('partnerNationality', partnerNationality);
-        console.log('isPartnerEEA?', req.session.isPartnerEEA);
-        console.log('partnerJobUk?', partnerJobUk);
-
         // Partner and non-empty partner info
         if (partner === 'yes' && partnerNationality && partnerJobUk) {
 
