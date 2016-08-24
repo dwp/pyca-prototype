@@ -33,27 +33,21 @@
           </fieldset>
         </div>
 
-        <div class="form-group panel panel-border-narrow js-hidden" id="partnerInfo">
-          <h2 class="heading-medium">
-            What’s your partner’s nationality?
-          </h2>
+        <div class="panel panel-border-narrow js-hidden" id="partnerInfo">
+          <div class="form-group">
+            <label class="form-label-bold" for="partnerNationality">What’s your partner’s nationality?</label>
 
-          <fieldset>
-            <legend class="visuallyhidden">What’s your partner’s nationality?</legend>
-
-            <select name="partnerNationality" class="form-control full autocompleter">
+            <select name="partnerNationality" id="partnerNationality" class="form-control full autocompleter">
               <option value="">Select country</option>
               {%- for country in countries %}
               <option value="{{country}}">{{country}}</option>
               {%- endfor %}
             </select>
-          </fieldset>
+          </div>
 
-          <h2 class="heading-medium">
-            Does your partner have a job in the UK?
-          </h2>
+          <fieldset class="form-group inline">
+            <legend class="form-label-bold">Does your partner have a job in the UK?</legend>
 
-          <fieldset class="inline">
             <label for="partnerJobUk-yes" class="block-label">
               <input type="radio" name="partnerJobUk" value="yes" id="partnerJobUk-yes">
               Yes

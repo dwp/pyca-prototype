@@ -19,6 +19,8 @@
 
         <div class="form-group">
           <fieldset class="inline">
+            <legend class="visuallyhidden">Do you have family in the UK?</legend>
+
             <label for="familyMemberFinancialSupport-yes" class="block-label" data-target="familyInfo">
               <input type="radio" name="familyMemberFinancialSupport" value="yes" id="familyMemberFinancialSupport-yes">
               Yes
@@ -31,21 +33,17 @@
           </fieldset>
         </div>
 
-        <div class="form-group panel panel-border-narrow js-hidden" id="familyInfo">
-          <h2 class="heading-medium">
-            What’s the nationality of the family member?
-          </h2>
+        <div class="panel panel-border-narrow js-hidden" id="familyInfo">
+          <div class="form-group">
+            <label class="form-label-bold" for="supportingFamilyMemberNationality">What’s the nationality of the family member?</label>
 
-          <fieldset>
-            <legend class="visuallyhidden">What’s the nationality of the family member?</legend>
-
-            <select name="supportingFamilyMemberNationality" class="form-control full autocompleter">
+            <select name="supportingFamilyMemberNationality" id="supportingFamilyMemberNationality" class="form-control full autocompleter">
               <option value="">Select country</option>
               {%- for country in countries %}
               <option value="{{country}}">{{country}}</option>
               {%- endfor %}
             </select>
-          </fieldset>
+          </div>
         </div>
 
         <div class="primary-nav form-group">
