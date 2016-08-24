@@ -128,8 +128,8 @@ router.all('/:type/questions/partner', function (req, res, next) {
     // In work
     if ((!employeeStatus || !reasonOutOfWork) && !noRecourseToPublicFunds) {
 
-      // Partner
-      if (partner === 'yes') {
+      // Partner and non-empty partner info
+      if (partner === 'yes' && partnerNationality && partnerJobUk) {
         res.redirect('/' + type + '/outcomes/END011');
       }
 
