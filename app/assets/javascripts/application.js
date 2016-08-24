@@ -246,5 +246,17 @@ $(document).ready(function() {
   container.on('click', 'input[type=checkbox][data-uncheck]', checkboxGroup.handle);
 
   // Add country autocomplete
-  $('select.autocompleter').selectToAutocomplete();
+  $('select.autocompleter').each(function() {
+    var select = $(this);
+    var selectId = select.attr('id');
+    var inputId = selectId + 'Input';
+    var label = $('label[for=' + selectId + ']');
+
+    // Enable input
+    select.selectToAutocomplete();
+
+    // Link label to input
+    var input = label.siblings('.ui-autocomplete-input').attr('id', inputId);
+    label.attr('for', inputId);
+  });
 });
