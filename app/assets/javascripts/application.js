@@ -245,4 +245,6 @@ $(document).ready(function() {
   container.on('click', 'input[type=checkbox][data-check]', checkboxGroup.handle);
   container.on('click', 'input[type=checkbox][data-uncheck]', checkboxGroup.handle);
 
+  // Add country autocomplete
+  $('select.autocompleter').selectToAutocomplete();
 });
