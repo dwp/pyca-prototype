@@ -5,7 +5,7 @@
 module.exports = {
 
   // Service name used in header. Eg: 'Renew your passport'
-  serviceName: "Prove you can apply for benefits in the UK",
+  serviceName: "Prove you can apply for benefits in the UK",
 
   // Default port that prototype runs on
   port: '3000',
@@ -20,4 +20,4 @@ module.exports = {
   cookieText: 'GOV.UK uses cookies to make the site simpler. <a href="#" title="Find out more about cookies">Find out more about cookies</a>'
 
 };
-	
+
