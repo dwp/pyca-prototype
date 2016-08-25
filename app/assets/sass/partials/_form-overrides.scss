@@ -1,0 +1,18 @@
+legend,
+.form-label,
+.form-label-bold {
+
+  &.heading-medium {
+    padding-bottom: 0;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 641px) {
+
+    &.heading-medium {
+      font-size: 24px;
+      line-height: 1.25;
+    }
+  }
+}
