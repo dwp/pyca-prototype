@@ -130,7 +130,7 @@ router.all('/:type/questions/partner', function (req, res, next) {
 
       // Partner and non-empty partner info
       if (partner === 'yes' && partnerNationality && partnerJobUk) {
-        res.redirect('/' + type + '/outcomes/END011');
+        res.redirect('/' + type + '/outcomes/END002');
       }
 
       // No partner
