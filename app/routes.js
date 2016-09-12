@@ -69,8 +69,8 @@ router.all('/:type/questions/employee-status', function (req, res, next) {
     req.session.employeeStatus = employeeStatus;
 
     // Employed or Self-employed
-    if (employeeStatus.employed === 'true' || employeeStatus.selfEmployed === 'true') {
-      res.redirect('/' + type + '/questions/partner');
+    if (employeeStatus.employed === 'true' || employeeStatus.selfEmployed === 'true') {    
+      res.redirect('/' + type + '/outcomes/END002');
     }
 
     // Not working
