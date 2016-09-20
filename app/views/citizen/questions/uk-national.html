@@ -5,17 +5,18 @@
 
   {% include "includes/phase_banner_prototype.html" %}
   {% include "includes/backlink_examples.html" %}
+  {% set attributes = '' if isPartnerFlow else ' class="inline"' %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
 
       <h1 class="heading-large">
-        Do you have a British passport?
+        {{ 'Does your partner' if isPartnerFlow else 'Do you' }} have a British passport?
       </h1>
 
       <form method="post" class="form">
         <div class="form-group">
-          <fieldset class="inline">
+          <fieldset{{ attributes | safe }}>
             <legend id="ukNational" class="visuallyhidden">Do you have a British passport?</legend>
 
             <label for="ukNational-yes" class="block-label">
@@ -27,6 +28,13 @@
               <input type="radio" name="ukNational" value="no" id="ukNational-no">
               No
             </label>
+
+            {% if isPartnerFlow %}
+            <label for="ukNational-unknown" class="block-label">
+              <input type="radio" name="ukNational" value="unknown" id="ukNational-unknown">
+              I don’t know
+            </label>
+            {% endif %}
           </fieldset>
         </div>
 

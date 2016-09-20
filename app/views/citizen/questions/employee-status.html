@@ -10,26 +10,26 @@
     <div class="column-two-thirds">
 
       <h1 class="heading-large">
-        Do you currently have a job?
+        {{ 'Does your partner' if isPartnerFlow else 'Do you' }} currently have a job?
       </h1>
 
       <form method="post" class="form">
         <div class="form-group">
           <fieldset>
-            <legend id="employeeStatus" class="visuallyhidden">Do you currently have a job?</legend>
+            <legend id="employeeStatus" class="visuallyhidden">{{ 'Does your partner' if isPartnerFlow else 'Do you' }} currently have a job?</legend>
 
             <label for="employed" class="block-label">
               <input type="checkbox" name="employeeStatus[employed]" value="true" id="employed" data-uncheck='["dontWork"]'>
-              Yes, you’re employed by someone
+              Yes, {{ 'they’re' if isPartnerFlow else 'you’re' }} employed by someone
             </label>
 
             <label for="selfEmployed" class="block-label">
               <input type="checkbox" name="employeeStatus[selfEmployed]" value="true" id="selfEmployed" data-uncheck='["dontWork"]'>
-              Yes, you’re self-employed (work for yourself)
+              Yes, {{ 'they’re' if isPartnerFlow else 'you’re' }} self-employed (work for {{ 'themselves' if isPartnerFlow else 'yourself' }})
             </label>
             <label for="dontWork" class="block-label">
               <input type="checkbox" name="employeeStatus[dontWork]" value="true" id="dontWork" data-uncheck='["employed", "selfEmployed"]'>
-              No, you don’t do any work at the moment
+              No, {{ 'they' if isPartnerFlow else 'you' }} don’t do any work at the moment
             </label>
           </fieldset>
         </div>

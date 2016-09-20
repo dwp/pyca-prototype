@@ -5,18 +5,19 @@
 
   {% include "includes/phase_banner_prototype.html" %}
   {% include "includes/backlink_examples.html" %}
+  {% set attributes = '' if isPartnerFlow else ' class="inline"' %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
 
       <h1 class="heading-large">
-        Are you a refugee?
+        {{ 'Is your partner' if isPartnerFlow else 'Are you' }} a refugee?
       </h1>
 
       <form method="post" class="form">
         <div class="form-group">
-          <fieldset class="inline">
-            <legend id="refugee" class="visuallyhidden">Are you a refugee?</legend>
+          <fieldset{{ attributes | safe }}>
+            <legend id="refugee" class="visuallyhidden">{{ 'Is your partner' if isPartnerFlow else 'Are you' }} a refugee?</legend>
 
             <label for="refugee-yes" class="block-label">
               <input type="radio" name="refugee" value="yes" id="refugee-yes">
@@ -27,6 +28,13 @@
               <input type="radio" name="refugee" value="no" id="refugee-no">
               No
             </label>
+
+            {% if isPartnerFlow %}
+            <label for="refugee-unknown" class="block-label">
+              <input type="radio" name="refugee" value="unknown" id="refugee-unknown">
+              I don’t know
+            </label>
+            {% endif %}
           </fieldset>
         </div>
 
