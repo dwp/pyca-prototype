@@ -183,10 +183,6 @@ var list = [
     EEA: true
   },
   {
-    name: 'Cruise Ship',
-    EEA: false
-  },
-  {
     name: 'Cuba',
     EEA: false
   },
