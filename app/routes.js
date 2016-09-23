@@ -7,7 +7,15 @@ router.get('/', function (req, res) {
 
 // Reset session at citizen/agent start
 router.get('/:type', function (req, res, next) {
-  req.session = {};
+
+  // Session defaults
+  req.session = {
+    answers: {
+      claimant: {},
+      partner: {}
+    }
+  };
+
   next();
 });
 
