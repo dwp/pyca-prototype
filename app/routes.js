@@ -12,12 +12,13 @@ router.get('/:type', function (req, res, next) {
 });
 
 // Set up locals/session for all routes
-router.all('*', function(req, res, next){
-
+router.all('/:type/*', function(req, res, next) {
+  var type = req.params.type;
   var isPartnerFlow = typeof req.query.partner !== 'undefined';
   var claimantType = isPartnerFlow ? 'partner' : 'claimant';
   var answers = req.session.answers || { claimant: {}, partner: {} };
 
+  res.locals.type = type;
   res.locals.isPartnerFlow = isPartnerFlow;
   res.locals.claimantType = claimantType;
   req.session.answers = answers;

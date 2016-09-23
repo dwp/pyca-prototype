@@ -1,1 +1,2 @@
-<a class="link-back" href="/">Back</a>
+{% set link = ('/' + type) if type else '/' %}
+<a class="link-back" href="{{ link | safe}}">Back</a>
