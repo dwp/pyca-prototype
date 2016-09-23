@@ -38,13 +38,56 @@ router.all('/:type/*', function(req, res, next) {
 router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
   var type = req.params.type;
   var isPartnerFlow = res.locals.isPartnerFlow;
+  var outcomeId = req.params.outcomeId;
+  var answers = req.session.answers;
+  var claimantType = res.locals.claimantType;
 
   // Save outcome ID
-  req.session.outcomeId = req.params.outcomeId;
+  req.session.outcomeId = outcomeId;
 
   // No partner or not asked yet
   if (!isPartnerFlow || typeof req.query.partner === 'undefined') {
     res.redirect('/' + type + '/questions/partner');
+  }
+
+  // Override this outcome based on partner
+  else if (answers.claimant.partner === 'yes') {
+
+    // Claimant is a refugee
+    if (outcomeId !== 'END008' && answers.claimant.refugee === 'yes') {
+      res.redirect('/' + type + '/outcomes/END008?' + claimantType);
+      return;
+    }
+
+    // Redirect END001, END008 or END009 outcomes
+    if (outcomeId === 'END001' || outcomeId === 'END008' || outcomeId === 'END009') {
+
+      // Claimant is EEA, in work
+      if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.employed === 'true') {
+        res.redirect('/' + type + '/outcomes/END002?' + claimantType);
+        return;
+      }
+    }
+
+    // Redirect END001, END002 or END008 outcomes
+    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END008') {
+
+      // Claimant is Non-EEA, no recourse to public funds
+      if (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no') {
+        res.redirect('/' + type + '/outcomes/END009?' + claimantType);
+        return;
+      }
+    }
+
+    // Redirect END002, END008 or END009 outcomes
+    if (outcomeId === 'END002' || outcomeId === 'END008' || outcomeId === 'END009') {
+
+      // Claimant is a UK national
+      if (answers.claimant.ukNational === 'yes') {
+        res.redirect('/' + type + '/outcomes/END001?' + claimantType);
+        return;
+      }
+    }
   }
 
   next();
