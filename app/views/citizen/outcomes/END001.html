@@ -10,13 +10,7 @@
     <div class="column-two-thirds">
 
       <div class="govuk-box-highlight">
-        <h1 class="bold-large">Don’t do a HRT with this person </h1>
-      </div>
-
-      <div class="panel panel-border-wide">
-        <p>
-          If you’re not sure whether the claimant has brought the right evidence, before you do anything else make sure you call Petros on 01227 591204 (ext 02715) or Janice on 0161 9684612 (ext 78224)
-        </p>
+        <h1 class="bold-large">Don’t do a HRT with this {{ 'couple' if isPartnerFlow else 'person' }}</h1>
       </div>
 
       <h2 class="heading-medium">Evidence you need</h2>
@@ -24,32 +18,37 @@
         <li>current passport</li>
       </ul>
 
+      <div class="panel panel-border-wide">
+        <h2 class="heading-small">Not sure if you’ve been given the right evidence?</h2>
+        <p>
+          Call Petros on 01227 591204 (ext 02715) or Janice on 0161 9684612 (ext 78224) to check.
+        </p>
+      </div>
+
       <h3 class="heading-medium">What to do next</h3>
 
       <ol class="list list-number">
-        <li>Copy and paste the evidence list in the ‘prove you can apply’ to do</li>
-        <li>Open the HRT entitlement action to do</li>
+        <li>Copy and paste the above evidence list into the ‘prove you can apply’ to do.</li>
+        <li>Open the HRT entitlement action to do.</li>
 
-        <li>In the agent notes box, type in:
+        <li>In the agent notes box, enter the details of the evidence you’ve collected:
           <ul class="list list-bullet">
-            <li>details of the passport (date of issue, expiry date and passport number)</li>
+            <li>passport – number, date of issue and expiry date</li>
             <li>reason for their return to the UK</li>
           </ul>
         </li>
 
-        <li>Download HRT entitlement action ALP and in the final box, type in ‘HRT trial’ (leave the other boxes blank)</li>
-        <li>After you’ve saved and uploaded the pdf, close the HRT entitlement action to do
+        <li>Download HRT entitlement action ALP.</li>
+        <li>Enter ‘HRT trial’ in the final box (leave other boxes blank).</li>
+        <li>Save and upload the edited ALP.</li>
 
-          <div class="panel panel-border-wide">
-            <ul class="list list-bullet">
-              <li>Don’t create agent ‘refer to decision maker (HRT)’ to do</li>
-              <li>For couple claims make a note in the agent notes box of the partner’s HRT Entitlement Action To Do stating ‘Partner part of Stockport Trial therefore the claimant must be referred to Stockport DM’</li>
-            </ul>
-          </div>
-        </li>
+        {%- if isPartnerFlow %}
+        <li>Open the partner’s HRT entitlement action to do.</li>
+        <li>Add a note to the agent notes field stating: ‘Partner part of Stockport Trial, claimant must be referred to Stockport DM’.</li>
+        {% endif -%}
 
-        <li>Email the decision maker at <a href="mailto:stockport.pyca@dwp.gsi.gov.uk">stockport.pyca@dwp.gsi.gov.uk</a> and give the full name of the person claiming</li>
-        <li>Remind the person claiming to check their Universal Credit account later for a decision</li>
+        <li>Email the decision maker at <a href="mailto:stockport.pyca@dwp.gsi.gov.uk">stockport.pyca@dwp.gsi.gov.uk</a> with the full name of the person claiming.</li>
+        <li>Remind the person claiming to check their Universal Credit account for a decision.</li>
       </ol>
 
     </div>
