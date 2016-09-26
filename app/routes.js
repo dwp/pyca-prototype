@@ -22,9 +22,9 @@ router.get('/:type', function (req, res, next) {
 // Set up locals/session for all routes
 router.all('/:type/*', function(req, res, next) {
   var type = req.params.type;
-  var isPartnerFlow = typeof req.query.partner !== 'undefined';
-  var claimantType = isPartnerFlow ? 'partner' : 'claimant';
   var answers = req.session.answers || { claimant: {}, partner: {} };
+  var isPartnerFlow = typeof req.query.partner !== 'undefined' || answers.claimant.partner === 'yes';
+  var claimantType = isPartnerFlow ? 'partner' : 'claimant';
 
   res.locals.type = type;
   res.locals.isPartnerFlow = isPartnerFlow;
@@ -46,7 +46,7 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
   req.session.outcomeId = outcomeId;
 
   // No partner or not asked yet
-  if (!isPartnerFlow || typeof req.query.partner === 'undefined') {
+  if (typeof answers.claimant.partner === 'undefined') {
     res.redirect('/' + type + '/questions/partner');
   }
 
@@ -236,7 +236,7 @@ router.all('/:type/questions/partner', function (req, res, next) {
     }
 
     else if (partner === 'no' && outcomeId) {
-      res.redirect('/' + type + '/outcomes/' + outcomeId + '?partner');
+      res.redirect('/' + type + '/outcomes/' + outcomeId);
     }
   }
 
