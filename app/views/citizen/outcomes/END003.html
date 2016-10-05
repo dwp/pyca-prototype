@@ -13,17 +13,21 @@
         <h1 class="bold-large">You need to book a HRT for this {{ 'couple' if isPartnerFlow else 'person' }}</h1>
       </div>
 
-      <p>This {{ 'couple claim' if isPartnerFlow else 'claim' }} is not eligible for the Stockport trial.</p>
+      <p>This {{ 'couple claim' if isPartnerFlow else 'claim' }} is not eligible for fast-track.</p>
 
       <h3 class="heading-medium">What to do next</h3>
 
       <ol class="list list-number">
         <li>Open the HRT entitlement action to-do.</li>
-        <li>Add a note to the agent notes field stating ‘Not eligible for Stockport Trial, do not use Prove You Can Apply Service, book HRT appointment’.</li>
+        <li>Type a note in the 'agent notes' box which says: ‘Not eligible for fast-track, do not use 'Prove You Can Apply' service, book HRT appointment’.</li>
+
+	<div class="panel panel-border-wide">
+        <h2 class="heading-small">Do not write in the ‘decision notes’  box or select ‘Is this person entitled?’</h2>
+      	</div>
 
         {%- if isPartnerFlow %}
         <li>Open the partner’s ‘verify claimant identity’ to-do.</li>
-        <li>Add a note to the agent notes field stating: ‘Partner not eligible for Stockport Trial, do not use Prove You Can Apply Service, book HRT appointment’.</li>
+        <li>Add a note to the agent notes field stating: ‘Partner not eligible for fast-track, do not use Prove You Can Apply Service, book HRT appointment’.</li>
         {% endif -%}
       </ol>
 

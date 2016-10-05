@@ -13,40 +13,45 @@
         <h1 class="bold-large">Fast-track this {{ 'couple' if isPartnerFlow else 'person' }}</h1>
       </div>
 
-      <div class="panel panel-border-wide">
-        <h2 class="heading-small">Not sure if you’ve been given the right evidence?</h2>
-        <p>
-          Call Petros on 01227 591204 (ext 02715) or Janice on 0161 9684612 (ext 78224) to check.
-        </p>
-      </div>
-
       <h2 class="heading-medium">Evidence you need</h2>
       <ul class="list list-bullet">
-        <li>BRP (biometric residence permit), current passport or Home Office document that says they’re a refugee</li>
+        <li>BRP (biometric residence permit) and current passport (if they have one) or</li>
+	<li>Home Office document that says they’re a refugee</li>
       </ul>
+
+	<div class="panel panel-border-wide">
+        <h2 class="heading-small">Not sure if you’ve been given the right evidence?</h2>
+        <p>Call Petros on 01227 591204 (ext 02715) or Janice on 0161 9684612 (ext 78224) to check.</p>
+      </div>
 
       <h3 class="heading-medium">What to do next</h3>
 
       <ol class="list list-number">
-        <li>Copy and paste the above evidence list into the ‘prove you can apply’ to-do.</li>
-        <li>Open the HRT entitlement action to-do.</li>
-
-        <li>In the agent notes box, enter the details of the evidence you’ve collected:
+        <li>Copy the above evidence list and paste into the 'agent notes' box in 'prove you can apply' to-do. Click ‘done’ to save.</li>
+        <li>Open the ‘HRT entitlement action’ to-do and in the agent notes box, enter the details of the evidence you’ve collected:
           <ul class="list list-bullet">
-            <li>passport – number, date of issue, expiry date and visa status</li>
+            <li>passport (if they have one) – number, nationality, date of issue, expiry date and visa status</li>
             <li>BRP card issue date, unique permit number on the right corner of the card, type of permit and any details at the back of the card or</li>
             <li>date of Home Office document and any refugee status details</li>
           </ul>
         </li>
 
+	<div class="panel panel-border-wide">
+        <h2 class="heading-small">Do not write in the ‘decision notes’  box or select ‘Is this person entitled?’</h2>
+      	</div>
+
+	<li>Email the decision maker at <a href="mailto:stockport.pyca@dwp.gsi.gov.uk">stockport.pyca@dwp.gsi.gov.uk</a> with the full name of the person claiming.</li>
+	<li>Book a mock 'habitual residency test interview’ in the UCFS build (not Booking Bug) using any date and time. Then go to the claimant's to-do list, open ‘Attend your Habitual Residency 	Interview’ to-do, select ‘attended’ and save.</li>
+
+      
+
         {%- if isPartnerFlow %}
         <li>Open the partner’s ‘verify claimant identity’ to-do.</li>
-        <li>Add a note to the agent notes field stating: ‘Partner part of Stockport Trial, claimant must be referred to Stockport DM’.</li>
+        <li>In the agent notes box, write: ‘This claimant is the partner of a fast-tracked HRT claimant and they must also be fast-tracked.’</li>
         {% endif -%}
 
-        <li>Email the decision maker at <a href="mailto:stockport.pyca@dwp.gsi.gov.uk">stockport.pyca@dwp.gsi.gov.uk</a> with the full name of the person claiming.</li>
         <li>Remind the person claiming to check their Universal Credit account for a decision.</li>
-        <li>Book a ‘mock interview’ in the customer account and then immediately delete it so that it no longer appears as an outstanding task. You don’t need to book a slot in Booking Bug, so you can use any date.</li>
+        
       </ol>
 
     </div>
