@@ -28,24 +28,28 @@
       <h3 class="heading-medium">What to do next</h3>
 
       <ol class="list list-number">
-        <li>Copy and paste the above evidence list into the ‘prove you can apply’ to-do.</li>
-        <li>Open the HRT entitlement action to-do.</li>
-
-        <li>In the agent notes box, enter the details of the evidence you’ve collected:
+        <li>In the 'prove you can apply' to-do, copy and paste the above evidence list into the agent notes box, then click 'done' to save.</li>
+        <li>Open the HRT entitlement action to-do and in the agent notes box, enter the details of the evidence documents you’ve collected:
           <ul class="list list-bullet">
-            <li>passport – number, date of issue and expiry date</li>
+            <li>passport – number, nationality, date of issue and expiry date</li>
             <li>reason for their return to the UK</li>
           </ul>
         </li>
+	
+	<div class="panel panel-border-wide">
+        <h2 class="heading-small">Do not write in the 'decision notes' box or select 'is this person entitled?'. Write only in the 'agents notes' box.</h2>
+      </div>
+
+        <li>Email the decision maker at <a href="mailto:stockport.pyca@dwp.gsi.gov.uk">stockport.pyca@dwp.gsi.gov.uk</a> with the full name of the person claiming.</li>
+	<li>Book a mock 'habitual residency test interview’ in UCFS build (not Booking Bug) using any date and time. Then go to the claimant's to-do list, open 'Attend your Habitual Residency Interview' to-do, select 'attended' and save.</li>
 
         {%- if isPartnerFlow %}
         <li>Open the partner’s ‘verify claimant identity’ to-do.</li>
-        <li>Add a note to the agent notes field stating: ‘Partner part of Stockport Trial, claimant must be referred to Stockport DM’.</li>
+        <li>In the agent notes box, write: ‘This claimant is the partner of a fast-tracked HRT claimant and they must also be fast-tracked.'</li>
         {% endif -%}
 
-        <li>Email the decision maker at <a href="mailto:stockport.pyca@dwp.gsi.gov.uk">stockport.pyca@dwp.gsi.gov.uk</a> with the full name of the person claiming.</li>
         <li>Remind the person claiming to check their Universal Credit account for a decision.</li>
-        <li>Book a ‘mock interview’ in the customer account and then immediately delete it so that it no longer appears as an outstanding task. You don't need to book a slot in Booking Bug, so you can use any date.</li>
+        
       </ol>
 
     </div>
