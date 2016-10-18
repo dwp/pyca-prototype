@@ -14,7 +14,7 @@
       </div>
 
       <h2 class="heading-medium">Claimant status</h2>
-      <p>Employed EEA citizen with a qualifying partner</p>
+      <p>Employed EEA {{ 'citizen with a qualifying partner' if isPartnerFlow else 'citizen' }}</p>
 
       <h2 class="heading-medium">Evidence you need</h2>
       <ul class="list list-bullet">
