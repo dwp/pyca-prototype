@@ -162,6 +162,13 @@ router.all('/:type/questions/nationality', function (req, res, next) {
     // EEA nationality
     if (listEEA.indexOf(nationality) !== -1) {
       answers[claimantType].isEEA = true;
+
+      // Croatia straight to outcome
+      if (nationality === 'Croatia') {
+        res.redirect('/' + type + '/outcomes/END003?' + claimantType);
+      }
+
+      // Continue
       res.redirect('/' + type + '/questions/employee-status?' + claimantType);
     }
 
