@@ -10,7 +10,7 @@
     <div class="column-two-thirds">
 
       <h1 class="heading-large">
-        What’s {{ 'your partner’s nationality as shown on their passport?' if isPartnerFlow else 'your nationality as shown on the passport you've brought today?' }}
+        What’s {{ 'your partner’s' if isPartnerFlow else 'your' }} nationality as shown on {{ 'their passport' if isPartnerFlow else 'the passport you've brought today?' }}
       </h1>
 
       <form method="post" class="form">
