@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+﻿{% extends "layout.html" %}
 
 {% block content %}
 <main id="content" role="main">
@@ -10,7 +10,7 @@
     <div class="column-two-thirds">
 
       <h1 class="heading-large">
-        What’s {{ 'your partner’s' if isPartnerFlow else 'your' }} nationality?
+         What’s {{ 'your partner’s nationality as shown on their passport?' if isPartnerFlow else 'your nationality as shown on the passport you've brought today?' }}
       </h1>
 
       <form method="post" class="form">
