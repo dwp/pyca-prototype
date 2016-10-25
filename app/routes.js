@@ -251,11 +251,20 @@ router.all('/:type/questions/partner', function (req, res, next) {
     answers[claimantType].partner = partner;
 
     if (partner === 'yes') {
-      res.redirect('/' + type + '/questions/uk-national?partner');
+
+      // Claimant was actually END003 before partner flow
+      if (outcomeId === 'END003') {
+        res.redirect('/' + type + '/outcomes/END003?partner');
+      }
+
+      // Assume still qualifying
+      else {
+        res.redirect('/' + type + '/questions/uk-national?partner');
+      }
     }
 
     else if (partner === 'no' && outcomeId) {
-      res.redirect('/' + type + '/outcomes/' + outcomeId);
+      res.redirect('/' + type + '/outcomes/' + outcomeId + '?claimant');
     }
   }
 
