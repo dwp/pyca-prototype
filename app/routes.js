@@ -23,7 +23,19 @@ router.get('/:type', function (req, res, next) {
 router.all('/:type/*', function(req, res, next) {
   var type = req.params.type;
   var answers = req.session.answers || { claimant: {}, partner: {} };
-  var isPartnerFlow = typeof req.query.partner !== 'undefined' || answers.claimant.partner === 'yes';
+  var isPartnerFlow = answers.claimant.partner === 'yes';
+
+  // Allow partner override by query string
+  if (typeof req.query.partner !== 'undefined') {
+    isPartnerFlow = true;
+  }
+
+  // Allow claimant override by query string
+  if (typeof req.query.claimant !== 'undefined') {
+    isPartnerFlow = false;
+  }
+
+  // Claimant type suffix
   var claimantType = isPartnerFlow ? 'partner' : 'claimant';
 
   res.locals.type = type;
