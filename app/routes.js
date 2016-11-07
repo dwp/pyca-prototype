@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
+// Route index page
 router.get('/', function (req, res) {
-  res.render('index');
-});
+  res.render('index')
+})
 
 // Reset session at citizen start
 router.get('/:type', function (req, res, next) {
@@ -298,4 +299,4 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res, n
   next();
 });
 
-module.exports = router;
+module.exports = router

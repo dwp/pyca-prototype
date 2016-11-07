@@ -4,13 +4,9 @@
   {% include "includes/head.html" %}
 {% endblock %}
 
-{%- block page_title -%}
-  Prove you can apply for benefits in the UK
-{%- endblock %}
-
-{%- block cookie_message -%}
+{% block cookie_message %}
   <p>{{cookieText | safe }}</p>
-{%- endblock -%}
+{% endblock %}
 
 {% block proposition_header %}
   {% include "includes/propositional_navigation.html" %}
@@ -22,4 +18,5 @@
 
 {% block body_end %}
   {% include "includes/scripts.html" %}
+  <!-- GOV.UK Prototype kit {{releaseVersion}} -->
 {% endblock %}

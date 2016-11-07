@@ -1,194 +1,239 @@
-var path = require('path'),
-    express = require('express'),
-    browserSync = require('browser-sync'),
-    nunjucks = require('express-nunjucks'),
-    routes = require(__dirname + '/app/routes.js'),
-    favicon = require('serve-favicon'),
-    app = express(),
-    basicAuth = require('basic-auth'),
-    bodyParser = require('body-parser'),
-    config = require(__dirname + '/app/config.js'),
-    countries = require(__dirname + '/app/services/country');
-    port = (process.env.PORT || config.port),
-    utils = require(__dirname + '/lib/utils.js'),
-    packageJson = require(__dirname + '/package.json'),
-    cookieSession = require('cookie-session'),
+var path = require('path')
+var express = require('express')
+var session = require('express-session')
+var nunjucks = require('nunjucks')
+var routes = require('./app/routes.js')
+var documentationRoutes = require('./docs/documentation_routes.js')
+var favicon = require('serve-favicon')
+var app = express()
+var basicAuth = require('basic-auth')
+var documentationApp = express()
+var bodyParser = require('body-parser')
+var browserSync = require('browser-sync')
+var config = require('./app/config.js')
+var cookieSession = require('cookie-session')
+var countries = require('./app/services/country')
+var utils = require('./lib/utils.js')
+var packageJson = require('./package.json')
 
 // Grab environment variables specified in Procfile or as Heroku config vars
-    releaseVersion = packageJson.version,
-    username = process.env.USERNAME,
-    password = process.env.PASSWORD,
-    env      = process.env.NODE_ENV || 'development',
-    useAuth  = process.env.USE_AUTH || config.useAuth,
-    useHttps  = process.env.USE_HTTPS || config.useHttps,
+var releaseVersion = packageJson.version
+var username = process.env.USERNAME
+var password = process.env.PASSWORD
+var env = process.env.NODE_ENV || 'development'
+var useAuth = process.env.USE_AUTH || config.useAuth
+var useHttps = process.env.USE_HTTPS || config.useHttps
 
-    env      = env.toLowerCase(),
-    useAuth  = useAuth.toLowerCase(),
-    useHttps   = useHttps.toLowerCase();
+env = env.toLowerCase()
+useAuth = useAuth.toLowerCase()
+useHttps = useHttps.toLowerCase()
 
 // Set up cookie session storage
 app.use(cookieSession({
   name: 'session',
   keys: ['dx72xTwPGKjaBM'],
   httpOnly: true,
-}));
+}))
+
+var useDocumentation = (config.useDocumentation === 'true')
+
+// Promo mode redirects the root to /docs - so our landing page is docs when published on heroku
+var promoMode = process.env.PROMO_MODE || 'false'
+promoMode = promoMode.toLowerCase()
+
+// Disable promo mode if docs aren't enabled
+if (!useDocumentation) promoMode = 'false'
 
 // Authenticate against the environment-provided credentials, if running
 // the app in production (Heroku, effectively)
-if (env === 'production' && useAuth === 'true'){
-    app.use(utils.basicAuth(username, password));
+if (env === 'production' && useAuth === 'true') {
+  app.use(utils.basicAuth(username, password))
 }
 
-// Application settings
-app.set('view engine', 'html');
-app.set('views', [__dirname + '/app/views', __dirname + '/lib/']);
+// Set up App
+var appViews = [path.join(__dirname, '/app/views/'), path.join(__dirname, '/lib/')]
 
-nunjucks.setup({
+var nunjucksAppEnv = nunjucks.configure(appViews, {
   autoescape: true,
-  watch: true,
-  noCache: true
-}, app);
+  express: app,
+  noCache: true,
+  watch: true
+})
 
-// require core and custom filters, merges to one object
-// and then add the methods to nunjucks env obj
-nunjucks.ready(function(nj) {
-  var coreFilters = require(__dirname + '/lib/core_filters.js')(nj),
-    customFilters = require(__dirname + '/app/filters.js')(nj),
-    filters = Object.assign(coreFilters, customFilters);
-  Object.keys(filters).forEach(function(filterName) {
-    nj.addFilter(filterName, filters[filterName]);
-  });
-});
+// Nunjucks filters
+utils.addNunjucksFilters(nunjucksAppEnv)
+
+// Set views engine
+app.set('view engine', 'html')
 
 // Middleware to serve static assets
-app.use('/public', express.static(__dirname + '/public'));
-app.use('/public', express.static(__dirname + '/govuk_modules/govuk_template/assets'));
-app.use('/public', express.static(__dirname + '/govuk_modules/govuk_frontend_toolkit'));
-app.use('/public/images/icons', express.static(__dirname + '/govuk_modules/govuk_frontend_toolkit/images'));
+app.use('/public', express.static(path.join(__dirname, '/public')))
+app.use('/public', express.static(path.join(__dirname, '/govuk_modules/govuk_template/assets')))
+app.use('/public', express.static(path.join(__dirname, '/govuk_modules/govuk_frontend_toolkit')))
+app.use('/public/images/icons', express.static(path.join(__dirname, '/govuk_modules/govuk_frontend_toolkit/images')))
 
 // Elements refers to icon folder instead of images folder
-app.use(favicon(path.join(__dirname, 'govuk_modules', 'govuk_template', 'assets', 'images','favicon.ico')));
+app.use(favicon(path.join(__dirname, 'govuk_modules', 'govuk_template', 'assets', 'images', 'favicon.ico')))
+
+// Set up documentation app
+if (useDocumentation) {
+  var documentationViews = [path.join(__dirname, '/docs/views/'), path.join(__dirname, '/lib/')]
+
+  var nunjucksDocumentationEnv = nunjucks.configure(documentationViews, {
+    autoescape: true,
+    express: documentationApp,
+    noCache: true,
+    watch: true
+  })
+  // Nunjucks filters
+  utils.addNunjucksFilters(nunjucksDocumentationEnv)
+
+  // Set views engine
+  documentationApp.set('view engine', 'html')
+}
 
 // Support for parsing data in POSTs
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
-}));
+}))
+
+// Support session data
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: Math.round(Math.random() * 100000).toString()
+}))
 
 // send assetPath to all views
 app.use(function (req, res, next) {
-  res.locals.asset_path="/public/";
-  next();
-});
+  res.locals.asset_path = '/public/'
+  next()
+})
 
 // Add variables that are available in all views
 app.use(function (req, res, next) {
-  res.locals.serviceName=config.serviceName;
-  res.locals.cookieText=config.cookieText;
-  res.locals.releaseVersion="v" + releaseVersion;
-  next();
-});
+  res.locals.serviceName = config.serviceName
+  res.locals.cookieText = config.cookieText
+  res.locals.releaseVersion = 'v' + releaseVersion
+  next()
+})
 
 // Add country list to all views
 app.use(function(req, res, next) {
 
   // List all countries
   res.locals.countries = countries.list.map(function(country) {
-    return country.name;
-  });
+    return country.name
+  })
 
   // List countries by non-EEA
   res.locals.countriesByNonEEA = countries.listByNonEEA().map(function(country) {
-    return country.name;
-  });
+    return country.name
+  })
 
   // List countries by EEA
   res.locals.countriesByEEA = countries.listByEEA().map(function(country) {
     return country.name;
-  });
+  })
 
-  next();
-});
+  next()
+})
 
 // Force HTTPs on production connections
-if (env === 'production' && useHttps === 'true'){
-  app.use(utils.forceHttps);
+if (env === 'production' && useHttps === 'true') {
+  app.use(utils.forceHttps)
 }
 
 // Disallow search index idexing
 app.use(function (req, res, next) {
   // Setting headers stops pages being indexed even if indexed pages link to them.
-  res.setHeader('X-Robots-Tag', 'noindex');
-  next();
-});
+  res.setHeader('X-Robots-Tag', 'noindex')
+  next()
+})
 
 app.get('/robots.txt', function (req, res) {
-  res.type('text/plain');
-  res.send("User-agent: *\nDisallow: /");
-});
+  res.type('text/plain')
+  res.send('User-agent: *\nDisallow: /')
+})
+
+// Redirect root to /docs when in promo mode.
+if (promoMode === 'true') {
+  console.log('Prototype kit running in promo mode')
+  app.get('/', function (req, res) {
+    res.redirect('/docs')
+  })
+}
 
 // routes (found in app/routes.js)
-if (typeof(routes) != "function"){
-  console.log(routes.bind);
-  console.log("Warning: the use of bind in routes is deprecated - please check the prototype kit documentation for writing routes.")
-  routes.bind(app);
+if (typeof (routes) !== 'function') {
+  console.log(routes.bind)
+  console.log('Warning: the use of bind in routes is deprecated - please check the prototype kit documentation for writing routes.')
+  routes.bind(app)
 } else {
-  app.use("/", routes);
+  app.use('/', routes)
+}
+
+// Returns a url to the zip of the latest release on github
+app.get('/prototype-admin/download-latest', function (req, res) {
+  var url = utils.getLatestRelease()
+  res.redirect(url)
+})
+
+if (useDocumentation) {
+  // Create separate router for docs
+  app.use('/docs', documentationApp)
+
+  // Docs under the /docs namespace
+  documentationApp.use('/', documentationRoutes)
 }
 
 // Strip .html and .htm if provided
-app.get(/\.html?$/i, function (req, res){
-  var path = req.path;
-  var parts = path.split('.');
-  parts.pop();
-  path = parts.join('.');
-  res.redirect(path);
-});
+app.get(/\.html?$/i, function (req, res) {
+  var path = req.path
+  var parts = path.split('.')
+  parts.pop()
+  path = parts.join('.')
+  res.redirect(path)
+})
 
-// auto render any view that exists
-app.all(/^\/([^.]+)$/, function (req, res) {
+// Auto render any view that exists
 
-  var path = (req.params[0]);
+// App folder routes get priority
+app.get(/^\/([^.]+)$/, function (req, res) {
+  utils.matchRoutes(req, res)
+})
 
-  res.render(path, function(err, html) {
-    if (err) {
-      res.render(path + "/index", function(err2, html) {
-        if (err2) {
-          console.log(err);
-          res.status(404).send(err + "<br>" + err2);
-        } else {
-          res.end(html);
-        }
-      });
-    } else {
-      res.end(html);
+if (useDocumentation) {
+  // Documentation  routes
+  documentationApp.get(/^\/([^.]+)$/, function (req, res) {
+    if (!utils.matchMdRoutes(req, res)) {
+      utils.matchRoutes(req, res)
     }
-  });
+  })
+}
 
-});
-
-console.log("\nGOV.UK Prototype kit v" + releaseVersion);
+console.log('\nGOV.UK Prototype kit v' + releaseVersion)
 // Display warning not to use kit for production services.
-console.log("\nNOTICE: the kit is for building prototypes, do not use it for production services.");
+console.log('\nNOTICE: the kit is for building prototypes, do not use it for production services.')
 
 // start the app
-utils.findAvailablePort(app, function(port) {
-  console.log('Listening on port ' + port + '   url: http://localhost:' + port);
+utils.findAvailablePort(app, function (port) {
+  console.log('Listening on port ' + port + '   url: http://localhost:' + port)
   if (env === 'production') {
-    app.listen(port);
+    app.listen(port)
   } else {
-    app.listen(port-50,function()
-    {
+    app.listen(port - 50, function () {
       browserSync({
-        proxy:'localhost:'+(port-50),
-        port:port,
-        ui:false,
-        files:['public/**/*.*','app/views/**/*.*'],
-        ghostmode:false,
-        open:false,
-        notify:false,
-        logLevel: "error"
-      });
-    });
+        proxy: 'localhost:' + (port - 50),
+        port: port,
+        ui: false,
+        files: ['public/**/*.*', 'app/views/**/*.*'],
+        ghostmode: false,
+        open: false,
+        notify: false,
+        logLevel: 'error'
+      })
+    })
   }
-});
+})

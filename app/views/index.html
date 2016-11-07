@@ -1,50 +1,50 @@
 {% extends "layout.html" %}
 
+{% block page_title %}
+	Prove you can apply for benefits in the UK
+{% endblock %}
+
 {% block content %}
 
 <main id="content" role="main">
 
-  {% include "includes/phase_banner_prototype.html" %}
+	{% include "includes/phase_banner_prototype.html" %}
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
+	<div class="grid-row">
+		<div class="column-two-thirds">
 
-      <h1 class="heading-xlarge">
-        {% if serviceName %} {{ serviceName }} {% endif %}
-      </h1>
+			<h1 class="heading-xlarge">
+				{% if serviceName %} {{ serviceName }} {% endif %}
+			</h1>
 
-      <p>
-        It isn’t a live environment – using this at all means you understand you are not interacting with the UK government in any way. No data is stored or sent anywhere.
-      </p>
+			<h2 class="heading-medium">Things on here</h2>
 
-      <h2 class="heading-medium">Things on here</h2>
+			<ul class="list list-bullet">
+				<li><a href="/citizen">Tool to prepare for a residency interview</a></li>
+			</ul>
 
-      <ul class="list list-bullet">
-        <li><a href="/citizen">Tool to prepare for a residency interview</a></li>
-      </ul>
+			<h2 class="heading-medium">Other resources</h2>
 
-      <h2 class="heading-medium">Other resources</h2>
+			<ul class="list list-bullet">
+				<li>
+					<a href="https://govuk-elements.herokuapp.com/snippets/">
+						Guide to GOV.UK Elements
+					</a>
+				</li>
+				<li>
+					<a href="https://www.gov.uk/service-manual">
+						Service design manual
+					</a>
+				</li>
+				<li>
+					<a href="https://www.gov.uk/design-principles">
+						Government Digital Service Design Principles
+					</a>
+				</li>
+			</ul>
 
-      <ul class="list list-bullet">
-        <li>
-          <a href="https://govuk-elements.herokuapp.com/snippets/">
-            Guide to GOV.UK Elements
-          </a>
-        </li>
-        <li>
-          <a href="https://www.gov.uk/service-manual">
-            Service design manual
-          </a>
-        </li>
-        <li>
-          <a href="https://www.gov.uk/design-principles">
-            Government Digital Service Design Principles
-          </a>
-        </li>
-      </ul>
-
-    </div>
-  </div>
+		</div>
+	</div>
 </main>
 
 {% endblock %}
