@@ -5,7 +5,7 @@ router.get('/', function (req, res) {
   res.render('index');
 });
 
-// Reset session at citizen/agent start
+// Reset session at citizen start
 router.get('/:type', function (req, res, next) {
 
   // Session defaults
@@ -125,7 +125,7 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
   next();
 });
 
-// Branching for citizens/agents
+// Branching for citizens
 router.all('/:type/questions/uk-national', function (req, res, next) {
   var type = req.params.type;
   var ukNational = req.body.ukNational;
