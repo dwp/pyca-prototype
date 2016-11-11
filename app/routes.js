@@ -288,6 +288,33 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res, n
 
     // No stamped visa
     else if (noRecourseToPublicFunds === 'no') {
+      res.redirect('/' + type + '/questions/out-of-uk?' + claimantType);
+    }
+
+    else if (res.locals.isPartnerFlow && noRecourseToPublicFunds === 'unknown') {
+      res.redirect('/' + type + '/outcomes/END003?' + claimantType);
+    }
+  }
+
+  next();
+});
+
+router.all('/:type/questions/out-of-uk', function (req, res, next) {
+  var type = req.params.type;
+  var outOfUk = req.body.outOfUk;
+  var answers = req.session.answers;
+  var claimantType = res.locals.claimantType;
+
+  if (outOfUk) {
+    answers[claimantType].outOfUk = outOfUk;
+
+    // Out of UK more than 4 weeks
+    if (outOfUk === 'yes') {
+      res.redirect('/' + type + '/outcomes/END003?' + claimantType);
+    }
+
+    // Out of UK less than 4 weeks
+    else if (outOfUk === 'no') {
       res.redirect('/' + type + '/outcomes/END009?' + claimantType);
     }
 

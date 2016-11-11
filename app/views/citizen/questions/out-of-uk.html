@@ -1,0 +1,50 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+  {% include "includes/backlink_examples.html" %}
+  {% set attributes = '' if isPartnerFlow else ' class="inline"' %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="heading-large">
+        {{ 'Has their partner' if isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?
+      </h1>
+
+      <form method="post" class="form">
+        <div class="form-group">
+          <fieldset{{ attributes | safe }}>
+            <legend id="out-of-uk" class="visuallyhidden">{{ 'Has their partner' if isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?</legend>
+
+            <label for="out-of-uk-yes" class="block-label">
+              <input type="radio" name="outOfUk" value="yes" id="out-of-uk-yes">
+              Yes
+            </label>
+
+            <label for="out-of-uk-no" class="block-label">
+              <input type="radio" name="outOfUk" value="no" id="out-of-uk-no">
+              No
+            </label>
+
+            {% if isPartnerFlow %}
+            <label for="out-of-uk-unknown" class="block-label">
+              <input type="radio" name="outOfUk" value="unknown" id="out-of-uk-unknown">
+              Don’t Know
+            </label>
+            {% endif %}
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button" id="submitButton">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
