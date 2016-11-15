@@ -10,10 +10,57 @@
     <div class="column-two-thirds">
 
       <div class="govuk-box-highlight">
-        <h1 class="bold-large">You need to book a HRT for this person</h1>
+        <h1 class="bold-large">Fast-track this {{ 'couple' if isPartnerFlow else 'person' }}</h1>
       </div>
+
+      <h2 class="heading-medium">Claimant status</h2>
+      <p>Self-employed EEA citizen {{ 'with a qualifying partner' if isPartnerFlow}}</p>
+
+      <h2 class="heading-medium">Evidence to collect now</h2>
+      <ul class="list list-bullet">
+        <li>passport – number, nationality, date of issue and expiry date</li>
+      </ul>
+
+      <div class="panel panel-border-wide">
+        <h2 class="heading-small">Not sure if you’ve been given the right evidence?</h2>
+        <p>Call Petros on 01227 288015 or Janice on 0161 9684612 (ext 78224) to check.</p>
+      </div>
+
+      <h3 class="heading-medium">How to fast-track</h3>
+
+      <ol class="list list-number">
+
+	<li>Go to the ‘prove you can apply’ to-do and in the ‘agent notes’ box, enter: 
+		
+            <ul class="list list-bullet">
+            <li>the claimant status (see the top of this page for claimant status)</li>
+            <li>the details of each evidence you've collected</li>
+          </ul>
+
+        </li>
+
+	<li>Click ‘done’ to complete the ‘prove you can apply’ to-do.</li>
+	
+	<li>Go to the ‘Verify your self-employment interview’ to do. Copy and paste the following in the ‘agent notes’ box: 
+		
+            <ul class="list list-bullet">
+            <li>Gateway work coach should collect and record here details of 1 of these for Prove You Can Apply (PYCA): accounts confirming income, simple cash book showing business activities and receipts, or HMRC letter relating to self-employment</li>
+            <li>Gateway work coach should then email details of the evidence to a decision maker at <a href="mailto:stockport.pyca@dwp.gsi.gov.uk">stockport.pyca@dwp.gsi.gov.uk</a> with the full name of the person claiming</li>
+          </ul>
+
+        </li>
+   
+
+        {%- if isPartnerFlow %}
+        <li>Open the partner’s ‘verify claimant identity’ to-do and in the agent notes box, write: ‘This person is the partner of a fast-tracked HRT claimant and they must also be fast-tracked.’</li>
+        {% endif -%}
+
+        <li>Remind the person claiming to check their Universal Credit account for updates on their claim.</li>
+
+      </ol>
 
     </div>
   </div>
 </main>
 {% endblock %}
+
