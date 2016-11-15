@@ -67,10 +67,10 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
   else if (answers.claimant.partner === 'yes') {
 
     // Redirect END001, END002, END008 or END009 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END008' || outcomeId === 'END009') {
+    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END008' || outcomeId === 'END009') {
 
-      // Claimant is EEA, self employed
-      if (answers.claimant.isEEA && answers.claimant.employeeStatus && (answers.claimant.employeeStatus.selfEmployed === 'true' || answers.claimant.employeeStatus.dontWork === 'true')) {
+      // Claimant is EEA, doesn't work
+      if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.dontWork === 'true') {
         res.redirect('/' + type + '/outcomes/END003?' + claimantType);
         return;
       }
@@ -82,8 +82,8 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       }
     }
 
-    // Redirect END001, END002 or END009 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END009') {
+    // Redirect END001, END002, END006 or END009 outcomes
+    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END009') {
 
       // Claimant is a refugee
       if (answers.claimant.refugee === 'yes') {
@@ -92,8 +92,8 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       }
     }
 
-    // Redirect END001, END008 or END009 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END008' || outcomeId === 'END009') {
+    // Redirect END001, END006, END008 or END009 outcomes
+    if (outcomeId === 'END001' || outcomeId === 'END006' || outcomeId === 'END008' || outcomeId === 'END009') {
 
       // Claimant is EEA, in work
       if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.employed === 'true') {
@@ -102,8 +102,8 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       }
     }
 
-    // Redirect END001, END002 or END008 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END008') {
+    // Redirect END001, END002, END006 or END008 outcomes
+    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END008') {
 
       // Claimant is Non-EEA, no recourse to public funds
       if (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no') {
@@ -112,8 +112,8 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       }
     }
 
-    // Redirect END002, END008 or END009 outcomes
-    if (outcomeId === 'END002' || outcomeId === 'END008' || outcomeId === 'END009') {
+    // Redirect END002, END006, END008 or END009 outcomes
+    if (outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END008' || outcomeId === 'END009') {
 
       // Claimant is a UK national
       if (answers.claimant.ukNational === 'yes') {
