@@ -214,6 +214,10 @@ router.all('/:type/questions/employee-status', function (req, res, next) {
   next();
 });
 
+router.all('/:type/questions/self-employed-proof', function (req, res, next) {
+  next();
+});
+
 router.all('/:type/questions/refugee', function (req, res, next) {
   var type = req.params.type;
   var refugee = req.body.refugee;
