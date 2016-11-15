@@ -200,13 +200,18 @@ router.all('/:type/questions/employee-status', function (req, res, next) {
   if (employeeStatus) {
     answers[claimantType].employeeStatus = employeeStatus;
 
+    // Self-employed
+    if (employeeStatus.selfEmployed === 'true') {
+      res.redirect('/' + type + '/questions/self-employed-proof?' + claimantType);
+    }
+
     // Employed
-    if (employeeStatus.employed === 'true') {
+    else if (employeeStatus.employed === 'true') {
       res.redirect('/' + type + '/outcomes/END002?' + claimantType);
     }
 
-    // Self-employed or Not working
-    else if (employeeStatus.selfEmployed === 'true' || employeeStatus.dontWork === 'true') {
+    // Not working
+    else if (employeeStatus.dontWork === 'true') {
       res.redirect('/' + type + '/outcomes/END003?' + claimantType);
     }
   }
@@ -215,6 +220,25 @@ router.all('/:type/questions/employee-status', function (req, res, next) {
 });
 
 router.all('/:type/questions/self-employed-proof', function (req, res, next) {
+  var type = req.params.type;
+  var selfEmployedProof = req.body.selfEmployedProof;
+  var answers = req.session.answers;
+  var claimantType = res.locals.claimantType;
+
+  if (selfEmployedProof) {
+    answers[claimantType].selfEmployedProof = selfEmployedProof;
+
+    // Self-employed proof can be provided
+    if (selfEmployedProof === 'yes') {
+      res.redirect('/' + type + '/outcomes/END006?' + claimantType);
+    }
+
+    // Self-employed proof can't be provided
+    else if (selfEmployedProof === 'no' || res.locals.isPartnerFlow && selfEmployedProof === 'unknown') {
+      res.redirect('/' + type + '/outcomes/END003?' + claimantType);
+    }
+  }
+
   next();
 });
 
