@@ -11,13 +11,13 @@
     <div class="column-two-thirds">
 
       <h1 class="heading-large">
-        Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of their self‑employed income?
+        Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of self‑employed income?
       </h1>
 
       <form method="post" class="form">
         <div class="form-group">
           <fieldset{{ attributes | safe }}>
-            <legend id="self-employed-proof" class="visuallyhidden">Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of their self‑employed income?</legend>
+            <legend id="self-employed-proof" class="visuallyhidden">Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of self‑employed income?</legend>
             <p class="form-hint">This must be income from the last 3 months.</p>
 
             <label for="self-employed-proof-yes" class="block-label">
