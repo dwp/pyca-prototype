@@ -113,6 +113,9 @@ $(document).ready(function () {
     // Link label to input
     var input = label.siblings('.ui-autocomplete-input').attr('id', inputId)
     label.attr('for', inputId)
+
+    // Fix any unmatched validation jump-links
+    $('[href="#' + selectId + '"]').attr('href', '#' + inputId);
   })
 
   ;(function() {
