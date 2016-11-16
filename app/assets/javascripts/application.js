@@ -114,4 +114,23 @@ $(document).ready(function () {
     var input = label.siblings('.ui-autocomplete-input').attr('id', inputId)
     label.attr('for', inputId)
   })
+
+  ;(function() {
+
+    // Error summary
+    var errorSummary = $('.error-summary')
+
+    // Focus invalid field
+    function focus(event) {
+      event.preventDefault()
+      $($(this).attr('href')).focus()
+    }
+
+    // Check for error summary
+    if (errorSummary.length) {
+      errorSummary.focus()
+      errorSummary.find('a').click(focus)
+    }
+
+  })()
 })

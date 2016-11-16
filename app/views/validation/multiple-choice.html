@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <div class="error-summary" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
+          <h1 class="heading-medium error-summary-heading" id="error-summary-heading">
+            Please fix the following:
+          </h1>
+          <ul class="error-summary-list">
+            <li>
+              <a href="#employed">Does this person currently have a job?</a>
+            </li>
+          </ul>
+        </div>
+
+        <h1 class="heading-large">
+          Does this person currently have a job?
+        </h1>
+
+        <p class="form-hint">They are employed by someone if they can produce evidence of being paid a regular salary in the last 3 months, even if they are on maternity or sick leave.</p>
+
+        <div class="form-group error">
+          <fieldset role="group" aria-required="true" aria-invalid="true">
+
+            <legend>
+              <span class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} currently have a job?</span>
+              <span class="error-message">Select an answer</span>
+            </legend>
+
+            <label for="employed" class="block-label">
+              <input type="checkbox" name="employeeStatus[employed]" value="true" id="employed" data-uncheck='["dontWork"]'>
+              Yes, they’re employed by someone
+            </label>
+
+            <label for="selfEmployed" class="block-label">
+              <input type="checkbox" name="employeeStatus[selfEmployed]" value="true" id="selfEmployed" data-uncheck='["dontWork"]'>
+              Yes, they’re self-employed (work for themselves)
+            </label>
+            <label for="dontWork" class="block-label">
+              <input type="checkbox" name="employeeStatus[dontWork]" value="true" id="dontWork" data-uncheck='["employed", "selfEmployed"]'>
+              No, they don’t do any work at the moment
+            </label>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
