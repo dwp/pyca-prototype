@@ -17,7 +17,7 @@
       <form method="post" class="form">
         <div class="form-group">
           <fieldset{{ attributes | safe }}>
-            <legend id="noRecourseToPublicFunds" class="visuallyhidden">Do you have a visa that’s stamped ‘no recourse to public funds’ or ‘no public funds’?</legend>
+            <legend id="noRecourseToPublicFunds" class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Do they' }} have a visa that’s stamped ‘no recourse to public funds’ or ‘no public funds’?</legend>
             <p class="form-hint">Check their biometric residence permit (BRP), residence card or the visa page on their passport.</p>
 
             <label for="noRecourseToPublicFunds-yes" class="block-label">

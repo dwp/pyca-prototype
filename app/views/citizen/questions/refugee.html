@@ -17,7 +17,7 @@
       <form method="post" class="form">
         <div class="form-group">
           <fieldset{{ attributes | safe }}>
-            <legend id="refugee" class="visuallyhidden">{{ 'Is your partner' if isPartnerFlow else 'Are you' }} a refugee?</legend>
+            <legend id="refugee" class="visuallyhidden">{{ 'Is their partner' if isPartnerFlow else 'Is this person' }} a refugee?</legend>
 
             <label for="refugee-yes" class="block-label">
               <input type="radio" name="refugee" value="yes" id="refugee-yes">
