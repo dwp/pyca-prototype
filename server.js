@@ -198,26 +198,6 @@ app.get(/\.html?$/i, function (req, res) {
 })
 
 // Auto render any view that exists
-app.all(/^\/([^.]+)$/, function (req, res) {
-
-  var path = (req.params[0]);
-
-  res.render(path, function(err, html) {
-    if (err) {
-      res.render(path + "/index", function(err2, html) {
-        if (err2) {
-          console.log(err);
-          res.status(404).send(err).send(err2);
-        } else {
-          res.end(html);
-        }
-      });
-    } else {
-      res.end(html);
-    }
-  });
-
-});
 
 // App folder routes get priority
 app.get(/^\/([^.]+)$/, function (req, res) {
