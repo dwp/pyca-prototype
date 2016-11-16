@@ -21,16 +21,16 @@
 
             <label for="employed" class="block-label">
               <input type="checkbox" name="employeeStatus[employed]" value="true" id="employed" data-uncheck='["dontWork"]'>
-              Yes, {{ 'they’re' if isPartnerFlow else 'they’re' }} employed by someone
+              Yes, they’re employed by someone
             </label>
 
             <label for="selfEmployed" class="block-label">
               <input type="checkbox" name="employeeStatus[selfEmployed]" value="true" id="selfEmployed" data-uncheck='["dontWork"]'>
-              Yes, {{ 'they’re' if isPartnerFlow else 'they’re' }} self-employed (work for {{ 'themselves' if isPartnerFlow else 'themselves' }})
+              Yes, they’re self-employed (work for themselves)
             </label>
             <label for="dontWork" class="block-label">
               <input type="checkbox" name="employeeStatus[dontWork]" value="true" id="dontWork" data-uncheck='["employed", "selfEmployed"]'>
-              No, {{ 'they' if isPartnerFlow else 'they' }} don’t do any work at the moment
+              No, they don’t do any work at the moment
             </label>
           </fieldset>
         </div>
