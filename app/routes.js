@@ -127,7 +127,7 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
 });
 
 // Branching for citizens
-router.all('/:type/questions/uk-national', function (req, res, next) {
+router.all('/:type/questions/uk-national', function (req, res) {
   var type = req.params.type;
   var ukNational = req.body.ukNational;
   var answers = req.session.answers;
@@ -152,10 +152,12 @@ router.all('/:type/questions/uk-national', function (req, res, next) {
     }
   }
 
-  next();
+  else {
+    res.render(`${type}/questions/uk-national`);
+  }
 });
 
-router.all('/:type/questions/nationality', function (req, res, next) {
+router.all('/:type/questions/nationality', function (req, res) {
   var type = req.params.type;
   var nationality = req.body.nationality;
   var answers = req.session.answers;
@@ -188,10 +190,12 @@ router.all('/:type/questions/nationality', function (req, res, next) {
     }
   }
 
-  next();
+  else {
+    res.render(`${type}/questions/nationality`);
+  }
 });
 
-router.all('/:type/questions/employee-status', function (req, res, next) {
+router.all('/:type/questions/employee-status', function (req, res) {
   var type = req.params.type;
   var employeeStatus = req.body.employeeStatus;
   var answers = req.session.answers;
@@ -216,10 +220,12 @@ router.all('/:type/questions/employee-status', function (req, res, next) {
     }
   }
 
-  next();
+  else {
+    res.render(`${type}/questions/employee-status`);
+  }
 });
 
-router.all('/:type/questions/self-employed-proof', function (req, res, next) {
+router.all('/:type/questions/self-employed-proof', function (req, res) {
   var type = req.params.type;
   var selfEmployedProof = req.body.selfEmployedProof;
   var answers = req.session.answers;
@@ -239,10 +245,12 @@ router.all('/:type/questions/self-employed-proof', function (req, res, next) {
     }
   }
 
-  next();
+  else {
+    res.render(`${type}/questions/self-employed-proof`);
+  }
 });
 
-router.all('/:type/questions/refugee', function (req, res, next) {
+router.all('/:type/questions/refugee', function (req, res) {
   var type = req.params.type;
   var refugee = req.body.refugee;
   var answers = req.session.answers;
@@ -266,10 +274,12 @@ router.all('/:type/questions/refugee', function (req, res, next) {
     }
   }
 
-  next();
+  else {
+    res.render(`${type}/questions/refugee`);
+  }
 });
 
-router.all('/:type/questions/partner', function (req, res, next) {
+router.all('/:type/questions/partner', function (req, res) {
   var type = req.params.type;
   var partner = req.body.partner;
   var outcomeId = req.session.outcomeId;
@@ -297,10 +307,12 @@ router.all('/:type/questions/partner', function (req, res, next) {
     }
   }
 
-  next();
+  else {
+    res.render(`${type}/questions/partner`);
+  }
 });
 
-router.all('/:type/questions/no-recourse-to-public-funds', function (req, res, next) {
+router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
   var type = req.params.type;
   var noRecourseToPublicFunds = req.body.noRecourseToPublicFunds;
   var answers = req.session.answers;
@@ -324,10 +336,12 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res, n
     }
   }
 
-  next();
+  else {
+    res.render(`${type}/questions/no-recourse-to-public-funds`);
+  }
 });
 
-router.all('/:type/questions/out-of-uk', function (req, res, next) {
+router.all('/:type/questions/out-of-uk', function (req, res) {
   var type = req.params.type;
   var outOfUk = req.body.outOfUk;
   var answers = req.session.answers;
@@ -351,7 +365,9 @@ router.all('/:type/questions/out-of-uk', function (req, res, next) {
     }
   }
 
-  next();
+  else {
+    res.render(`${type}/questions/out-of-uk`);
+  }
 });
 
 module.exports = router
