@@ -27,6 +27,12 @@
             <p class="form-hint">This must be income from the last 3 months.</p>
 >>>>>>> origin/master
 
+      <form method="post" class="form">
+        <div class="form-group">
+          <fieldset{{ attributes | safe }}>
+            <legend id="self-employed-proof" class="visuallyhidden">Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of self‑employed income?</legend>
+            <p class="form-hint">This must be income from the last 3 months.</p>
+
             <label for="self-employed-proof-yes" class="block-label">
               <input type="radio" name="selfEmployedProof" value="yes" id="self-employed-proof-yes">
               Yes
@@ -35,11 +41,6 @@
             <label for="self-employed-proof-no" class="block-label">
               <input type="radio" name="selfEmployedProof" value="no" id="self-employed-proof-no">
               No
-            </label>
-
-	    <label for="self-employed-proof-Lessthan3months" class="block-label">
-              <input type="radio" name="selfEmployedProof" value="Lessthan3months" id="self-employed-proof-Lessthan3months">
-              Yes, but it's not up to 3 months' income
             </label>
 
             {% if isPartnerFlow %}
