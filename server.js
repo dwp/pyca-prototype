@@ -200,7 +200,7 @@ app.get(/\.html?$/i, function (req, res) {
 // Auto render any view that exists
 
 // App folder routes get priority
-app.get(/^\/([^.]+)$/, function (req, res) {
+app.all(/^\/([^.]+)$/, function (req, res) {
   utils.matchRoutes(req, res)
 })
 

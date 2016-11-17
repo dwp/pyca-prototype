@@ -1,4 +1,4 @@
-﻿{% extends "layout.html" %}
+{% extends "layout.html" %}
 
 {% block content %}
 <main id="content" role="main">
@@ -11,14 +11,30 @@
 
       <form method="post" class="form">
 
+        <div class="error-summary" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
+          <h1 class="heading-medium error-summary-heading" id="error-summary-heading">
+            Please fix the following:
+          </h1>
+          <ul class="error-summary-list">
+            <li>
+              <a href="#employed">Does this person currently have a job?</a>
+            </li>
+          </ul>
+        </div>
+
         <h1 class="heading-large">
-          {{ 'Does their partner' if isPartnerFlow else 'Does this person' }} currently have a job?
+          Does this person currently have a job?
         </h1>
 
-        <div class="form-group">
-          <fieldset>
-            <legend id="employeeStatus" class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} currently have a job?</legend>
-            <p class="form-hint">They are employed by someone if they can produce evidence of being paid a regular salary in the last 3 months, even if they are on maternity or sick leave.</p>
+        <p class="form-hint">They are employed by someone if they can produce evidence of being paid a regular salary in the last 3 months, even if they are on maternity or sick leave.</p>
+
+        <div class="form-group error">
+          <fieldset role="group" aria-required="true" aria-invalid="true">
+
+            <legend>
+              <span class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} currently have a job?</span>
+              <span class="error-message">Select an answer</span>
+            </legend>
 
             <label for="employed" class="block-label">
               <input type="checkbox" name="employeeStatus[employed]" value="true" id="employed" data-uncheck='["dontWork"]'>
@@ -33,6 +49,7 @@
               <input type="checkbox" name="employeeStatus[dontWork]" value="true" id="dontWork" data-uncheck='["employed", "selfEmployed"]'>
               No, they don’t do any work at the moment
             </label>
+
           </fieldset>
         </div>
 

@@ -6,6 +6,11 @@ router.get('/', function (req, res) {
   res.render('index')
 })
 
+// Route validation index
+router.get('/validation', function (req, res) {
+  res.redirect('/')
+})
+
 // Reset session at citizen start
 router.get('/:type', function (req, res, next) {
 

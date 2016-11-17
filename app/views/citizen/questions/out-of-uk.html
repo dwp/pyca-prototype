@@ -10,11 +10,12 @@
   <div class="grid-row">
     <div class="column-two-thirds">
 
-      <h1 class="heading-large">
-        {{ 'Has their partner' if isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?
-      </h1>
-
       <form method="post" class="form">
+
+        <h1 class="heading-large">
+          {{ 'Has their partner' if isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?
+        </h1>
+
         <div class="form-group">
           <fieldset{{ attributes | safe }}>
             <legend id="out-of-uk" class="visuallyhidden">{{ 'Has their partner' if isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?</legend>
@@ -39,7 +40,7 @@
         </div>
 
         <div class="form-group">
-          <button type="submit" class="button" id="submitButton">Continue</button>
+          <button type="submit" class="button">Continue</button>
         </div>
 
       </form>

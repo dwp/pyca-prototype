@@ -10,14 +10,15 @@
   <div class="grid-row">
     <div class="column-two-thirds">
 
-      <h1 class="heading-large">
-        {{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?
-      </h1>
-
       <form method="post" class="form">
+
+        <h1 class="heading-large">
+          {{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?
+        </h1>
+
         <div class="form-group">
           <fieldset{{ attributes | safe }}>
-            <legend id="ukNational" class="visuallyhidden">Do you have a British passport?</legend>
+            <legend id="ukNational" class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?</legend>
 
             <label for="ukNational-yes" class="block-label">
               <input type="radio" name="ukNational" value="yes" id="ukNational-yes">
@@ -39,7 +40,7 @@
         </div>
 
         <div class="form-group">
-          <button type="submit" class="button" id="submitButton">Continue</button>
+          <button type="submit" class="button">Continue</button>
         </div>
 
       </form>
