@@ -21,18 +21,18 @@
             <legend id="self-employed-proof" class="visuallyhidden">Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of self‑employed income?</legend>
             <p class="form-hint">This must be income from the last 3 months.</p>
 
-            <label for="self-employed-proof-yes" class="block-label">
+            <label for="self-employed-proof-yes" class="block-label selection-button-radio">
               <input type="radio" name="selfEmployedProof" value="yes" id="self-employed-proof-yes">
               Yes
             </label>
 
-            <label for="self-employed-proof-no" class="block-label">
+            <label for="self-employed-proof-no" class="block-label selection-button-radio">
               <input type="radio" name="selfEmployedProof" value="no" id="self-employed-proof-no">
               No
             </label>
 
             {% if isPartnerFlow %}
-            <label for="self-employed-proof-unknown" class="block-label">
+            <label for="self-employed-proof-unknown" class="block-label selection-button-radio">
               <input type="radio" name="selfEmployedProof" value="unknown" id="self-employed-proof-unknown">
               Don’t Know
             </label>

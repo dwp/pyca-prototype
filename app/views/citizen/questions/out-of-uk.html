@@ -20,18 +20,18 @@
           <fieldset{{ attributes | safe }}>
             <legend id="out-of-uk" class="visuallyhidden">{{ 'Has their partner' if isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?</legend>
 
-            <label for="out-of-uk-yes" class="block-label">
+            <label for="out-of-uk-yes" class="block-label selection-button-radio">
               <input type="radio" name="outOfUk" value="yes" id="out-of-uk-yes">
               Yes
             </label>
 
-            <label for="out-of-uk-no" class="block-label">
+            <label for="out-of-uk-no" class="block-label selection-button-radio">
               <input type="radio" name="outOfUk" value="no" id="out-of-uk-no">
               No
             </label>
 
             {% if isPartnerFlow %}
-            <label for="out-of-uk-unknown" class="block-label">
+            <label for="out-of-uk-unknown" class="block-label selection-button-radio">
               <input type="radio" name="outOfUk" value="unknown" id="out-of-uk-unknown">
               Don’t Know
             </label>

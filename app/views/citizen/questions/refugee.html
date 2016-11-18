@@ -20,18 +20,18 @@
           <fieldset{{ attributes | safe }}>
             <legend id="refugee" class="visuallyhidden">{{ 'Is their partner' if isPartnerFlow else 'Is this person' }} a refugee?</legend>
 
-            <label for="refugee-yes" class="block-label">
+            <label for="refugee-yes" class="block-label selection-button-radio">
               <input type="radio" name="refugee" value="yes" id="refugee-yes">
               Yes
             </label>
 
-            <label for="refugee-no" class="block-label">
+            <label for="refugee-no" class="block-label selection-button-radio">
               <input type="radio" name="refugee" value="no" id="refugee-no">
               No
             </label>
 
             {% if isPartnerFlow %}
-            <label for="refugee-unknown" class="block-label">
+            <label for="refugee-unknown" class="block-label selection-button-radio">
               <input type="radio" name="refugee" value="unknown" id="refugee-unknown">
               Don’t Know
             </label>

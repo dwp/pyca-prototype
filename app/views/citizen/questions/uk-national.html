@@ -20,18 +20,18 @@
           <fieldset{{ attributes | safe }}>
             <legend id="ukNational" class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?</legend>
 
-            <label for="ukNational-yes" class="block-label">
+            <label for="ukNational-yes" class="block-label selection-button-radio">
               <input type="radio" name="ukNational" value="yes" id="ukNational-yes">
               Yes
             </label>
 
-            <label for="ukNational-no" class="block-label">
+            <label for="ukNational-no" class="block-label selection-button-radio">
               <input type="radio" name="ukNational" value="no" id="ukNational-no">
               No
             </label>
 
             {% if isPartnerFlow %}
-            <label for="ukNational-unknown" class="block-label">
+            <label for="ukNational-unknown" class="block-label selection-button-radio">
               <input type="radio" name="ukNational" value="unknown" id="ukNational-unknown">
               Don’t Know
             </label>
