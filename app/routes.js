@@ -80,7 +80,7 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
         return;
       }
 
-      // Claimant is Non-EEA, recourse to public funds
+      // Claimant is Non-EEA, no recourse to public funds
       if (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'yes') {
         res.redirect(`/${type}/outcomes/END003?${claimantType}`);
         return;
@@ -110,7 +110,7 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
     // Redirect END001, END002, END006 or END008 outcomes
     if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END008') {
 
-      // Claimant is Non-EEA, no recourse to public funds
+      // Claimant is Non-EEA, recourse to public funds
       if (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no') {
         res.redirect(`/${type}/outcomes/END009?${claimantType}`);
         return;
