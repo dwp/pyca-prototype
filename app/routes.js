@@ -333,7 +333,7 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
 
     // No stamped visa
     else if (noRecourseToPublicFunds === 'no') {
-      res.redirect(`/${type}/questions/out-of-uk?${claimantType}`);
+      res.redirect(`/${type}/questions/family-member?${claimantType}`);
     }
 
     else if (res.locals.isPartnerFlow && noRecourseToPublicFunds === 'unknown') {
@@ -343,6 +343,35 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
 
   else {
     res.render(`${type}/questions/no-recourse-to-public-funds`);
+  }
+});
+
+router.all('/:type/questions/family-member', function (req, res) {
+  var type = req.params.type;
+  var familyMember = req.body.familyMember;
+  var answers = req.session.answers;
+  var claimantType = res.locals.claimantType;
+
+  if (familyMember) {
+    answers[claimantType].familyMember = familyMember;
+
+    // Visa says 'family member'
+    if (familyMember === 'yes') {
+      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+    }
+
+    // Visa doesn't say 'family member'
+    else if (familyMember === 'no') {
+      res.redirect(`/${type}/questions/out-of-uk?${claimantType}`);
+    }
+
+    else if (res.locals.isPartnerFlow && familyMember === 'unknown') {
+      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+    }
+  }
+
+  else {
+    res.render(`${type}/questions/family-member`);
   }
 });
 
