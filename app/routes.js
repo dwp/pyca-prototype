@@ -365,7 +365,7 @@ router.all('/:type/questions/out-of-uk', function (req, res) {
       res.redirect(`/${type}/outcomes/END009?${claimantType}`);
     }
 
-    else if (res.locals.isPartnerFlow && noRecourseToPublicFunds === 'unknown') {
+    else if (res.locals.isPartnerFlow && outOfUk === 'unknown') {
       res.redirect(`/${type}/outcomes/END003?${claimantType}`);
     }
   }
