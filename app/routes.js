@@ -82,10 +82,14 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
   // Override this outcome based on partner (if still eligible)
   else if (answers.claimant.partner === 'yes' && outcomeId !== outcomes.ineligible) {
 
-    // Claimant is EEA, doesn't work
-    if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.dontWork === 'true') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
-      return;
+    // Claimant is EEA, provided employee status
+    if (answers.claimant.isEEA && answers.claimant.employeeStatus) {
+
+      // Doesn't work
+      if (answers.claimant.employeeStatus.dontWork === 'true') {
+        res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+        return;
+      }
     }
 
     // Claimant is Non-EEA, no recourse to public funds
@@ -106,23 +110,41 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       return;
     }
 
-    // Not routed to employed EEA
-    if (outcomeId !== outcomes.employedEEA) {
+    // Claimant is EEA, provided employee status
+    if (answers.claimant.isEEA && answers.claimant.employeeStatus) {
 
-      // Claimant is EEA, in work
-      if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.employed === 'true') {
-        res.redirect(`/${type}/outcomes/${outcomes.employedEEA}?${claimantType}`);
-        return;
+      // Not routed to employed EEA
+      if (outcomeId !== outcomes.employedEEA) {
+
+        // Claimant is in work
+        if (answers.claimant.employeeStatus.employed === 'true') {
+          res.redirect(`/${type}/outcomes/${outcomes.employedEEA}?${claimantType}`);
+          return;
+        }
+      }
+
+      // Not routed to self-employed EEA
+      if (outcomeId !== outcomes.selfEmployedEEA) {
+
+        // Claimant is self-employed, can prove income
+        if (answers.claimant.employeeStatus.selfEmployed === 'true' && answers.claimant.selfEmployedProof === 'yes') {
+          res.redirect(`/${type}/outcomes/${outcomes.selfEmployedEEA}?${claimantType}`);
+          return;
+        }
       }
     }
 
-    // Not routed to leave to remain
-    if (outcomeId !== outcomes.leaveToRemain) {
+    // Claimant is Non-EEA
+    else if (!answers.claimant.isEEA) {
 
-      // Claimant is Non-EEA, recourse to public funds
-      if (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no') {
-        res.redirect(`/${type}/outcomes/${outcomes.leaveToRemain}?${claimantType}`);
-        return;
+      // Not routed to leave to remain
+      if (outcomeId !== outcomes.leaveToRemain) {
+
+        // Claimant is Non-EEA, recourse to public funds
+        if (answers.claimant.noRecourseToPublicFunds === 'no') {
+          res.redirect(`/${type}/outcomes/${outcomes.leaveToRemain}?${claimantType}`);
+          return;
+        }
       }
     }
   }
