@@ -1,6 +1,17 @@
 var express = require('express')
 var router = express.Router()
 
+// Readable outcomes
+var outcomes = {
+  british: 'END001',
+  employedEEA: 'END002',
+  ineligible: 'END003',
+  selfEmployedEEA: 'END006',
+  permanentResident: 'END007',
+  refugee: 'END008',
+  leaveToRemain: 'END009'
+}
+
 // Route index page
 router.get('/', function (req, res) {
   res.render('index')
@@ -68,61 +79,49 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
     res.redirect(`/${type}/questions/partner?claimant`);
   }
 
-  // Override this outcome based on partner
-  else if (answers.claimant.partner === 'yes') {
+  // Override this outcome based on partner (if still eligible)
+  else if (answers.claimant.partner === 'yes' && outcomeId !== outcomes.ineligible) {
 
-    // Redirect END001, END002, END006, END007, END008 or END009 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END008' || outcomeId === 'END009') {
-
-      // Claimant is EEA, doesn't work
-      if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.dontWork === 'true') {
-        res.redirect(`/${type}/outcomes/END003?${claimantType}`);
-        return;
-      }
-
-      // Claimant is Non-EEA, no recourse to public funds
-      if (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'yes') {
-        res.redirect(`/${type}/outcomes/END003?${claimantType}`);
-        return;
-      }
+    // Claimant is EEA, doesn't work
+    if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.dontWork === 'true') {
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      return;
     }
 
-    // Redirect END001, END002, END006, END007 or END009 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END009') {
-
-      // Claimant is a refugee
-      if (answers.claimant.refugee === 'yes') {
-        res.redirect(`/${type}/outcomes/END008?${claimantType}`);
-        return;
-      }
+    // Claimant is Non-EEA, no recourse to public funds
+    if (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'yes') {
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      return;
     }
 
-    // Redirect END001, END006, END007, END008 or END009 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END008' || outcomeId === 'END009') {
+    // Not routed to UK national
+    if (outcomeId !== outcomes.british && answers.claimant.ukNational === 'yes') {
+      res.redirect(`/${type}/outcomes/${outcomes.british}?${claimantType}`);
+      return;
+    }
+
+    // Not routed to refugee outcome
+    if (outcomeId !== outcomes.refugee && answers.claimant.refugee === 'yes') {
+      res.redirect(`/${type}/outcomes/${outcomes.refugee}?${claimantType}`);
+      return;
+    }
+
+    // Not routed to employed EEA
+    if (outcomeId !== outcomes.employedEEA) {
 
       // Claimant is EEA, in work
       if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.employed === 'true') {
-        res.redirect(`/${type}/outcomes/END002?${claimantType}`);
+        res.redirect(`/${type}/outcomes/${outcomes.employedEEA}?${claimantType}`);
         return;
       }
     }
 
-    // Redirect END001, END002, END006, END007 or END008 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END008') {
+    // Not routed to leave to remain
+    if (outcomeId !== outcomes.leaveToRemain) {
 
       // Claimant is Non-EEA, recourse to public funds
       if (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no') {
-        res.redirect(`/${type}/outcomes/END009?${claimantType}`);
-        return;
-      }
-    }
-
-    // Redirect END002, END006, END007, END008 or END009 outcomes
-    if (outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END008' || outcomeId === 'END009') {
-
-      // Claimant is a UK national
-      if (answers.claimant.ukNational === 'yes') {
-        res.redirect(`/${type}/outcomes/END001?${claimantType}`);
+        res.redirect(`/${type}/outcomes/${outcomes.leaveToRemain}?${claimantType}`);
         return;
       }
     }
@@ -144,7 +143,7 @@ router.all('/:type/questions/uk-national', function (req, res) {
     // UK national
     if (ukNational == 'yes') {
       answers[claimantType].isEEA = true;
-      res.redirect(`/${type}/outcomes/END001?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.british}?${claimantType}`);
     }
 
     // Non-UK national
@@ -153,7 +152,7 @@ router.all('/:type/questions/uk-national', function (req, res) {
     }
 
     else if (res.locals.isPartnerFlow && ukNational === 'unknown') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
   }
 
@@ -173,7 +172,7 @@ router.all('/:type/questions/permanent-residence', function (req, res) {
 
     // Permanent residence card
     if (permanentResidence === 'yes') {
-      res.redirect(`/${type}/outcomes/END007?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.permanentResident}?${claimantType}`);
     }
 
     // No permanent residence card
@@ -206,7 +205,7 @@ router.all('/:type/questions/nationality', function (req, res) {
 
       // Croatia straight to outcome
       if (nationality === 'Croatia') {
-        res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+        res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
       }
 
       // Continue
@@ -241,12 +240,12 @@ router.all('/:type/questions/employee-status', function (req, res) {
 
     // Employed
     else if (employeeStatus.employed === 'true') {
-      res.redirect(`/${type}/outcomes/END002?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.employedEEA}?${claimantType}`);
     }
 
     // Not working
     else if (employeeStatus.dontWork === 'true') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
   }
 
@@ -266,12 +265,12 @@ router.all('/:type/questions/self-employed-proof', function (req, res) {
 
     // Self-employed proof can be provided
     if (selfEmployedProof === 'yes') {
-      res.redirect(`/${type}/outcomes/END006?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.selfEmployedEEA}?${claimantType}`);
     }
 
     // Self-employed proof can't be provided
     else if (selfEmployedProof === 'no' || res.locals.isPartnerFlow && selfEmployedProof === 'unknown') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
   }
 
@@ -291,7 +290,7 @@ router.all('/:type/questions/refugee', function (req, res) {
 
     // Refugee
     if (refugee === 'yes') {
-      res.redirect(`/${type}/outcomes/END008?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.refugee}?${claimantType}`);
     }
 
     // Non-refugee
@@ -300,7 +299,7 @@ router.all('/:type/questions/refugee', function (req, res) {
     }
 
     else if (res.locals.isPartnerFlow && refugee === 'unknown') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
   }
 
@@ -322,8 +321,8 @@ router.all('/:type/questions/partner', function (req, res) {
     if (partner === 'yes') {
 
       // Claimant was actually END003 before partner flow
-      if (outcomeId === 'END003') {
-        res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      if (outcomeId === outcomes.ineligible) {
+        res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
       }
 
       // Assume still qualifying
@@ -353,7 +352,7 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
 
     // Stamped visa
     if (noRecourseToPublicFunds === 'yes') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
 
     // No stamped visa
@@ -362,7 +361,7 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
     }
 
     else if (res.locals.isPartnerFlow && noRecourseToPublicFunds === 'unknown') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
   }
 
@@ -382,7 +381,7 @@ router.all('/:type/questions/family-member', function (req, res) {
 
     // Visa says 'family member'
     if (familyMember === 'yes') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
 
     // Visa doesn't say 'family member'
@@ -391,7 +390,7 @@ router.all('/:type/questions/family-member', function (req, res) {
     }
 
     else if (res.locals.isPartnerFlow && familyMember === 'unknown') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
   }
 
@@ -411,16 +410,16 @@ router.all('/:type/questions/out-of-uk', function (req, res) {
 
     // Out of UK more than 4 weeks
     if (outOfUk === 'yes') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
 
     // Out of UK less than 4 weeks
     else if (outOfUk === 'no') {
-      res.redirect(`/${type}/outcomes/END009?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.leaveToRemain}?${claimantType}`);
     }
 
     else if (res.locals.isPartnerFlow && outOfUk === 'unknown') {
-      res.redirect(`/${type}/outcomes/END003?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
   }
 
