@@ -10,8 +10,41 @@
     <div class="column-two-thirds">
 
       <div class="govuk-box-highlight">
-        <h1 class="bold-large">You need to book a HRT for this person</h1>
+        <h1 class="bold-large">Fast-track this {{ 'couple' if isPartnerFlow else 'person' }}</h1>
       </div>
+
+      <h2 class="heading-medium">Claimant status</h2>
+      <p>Permanent Resident {{ 'with a qualifying partner' if isPartnerFlow}}</p>
+
+      <h2 class="heading-medium">Evidence to collect</h2>
+      <ul class="list list-bullet">
+        <li>residence card – dates of issue and expiry, unique number on the right corner of the card, type of permit and other details at the back of the card or</li>
+        <li>Home Office residence document– type of document, dates of issue and expiry and other details on the vignette</li>
+      </ul>
+
+      <div class="panel panel-border-wide">
+        <h2 class="heading-small">Not sure if you’ve been given the right evidence?</h2>
+        <p>
+          Call Petros on 01227 288015 or Janice on 0161 9684612 (ext 78224) to check.
+        </p>
+      </div>
+
+      <h3 class="heading-medium">How to fast-track</h3>
+      <ol class="list list-number">
+
+        <li>Go to the ‘prove you can apply’ to-do and in the ‘agent notes’ box, enter:
+          <ul class="list list-bullet">
+            <li>the claimant status (see the top of this page for claimant status)</li>
+            <li>the details of each evidence you've collected</li>
+          </ul>
+        </li>
+
+        <li>Click ‘done’ to complete the ‘prove you can apply’ to-do.</li>
+        <li>Email the decision maker at <a href="mailto:stockport.pyca@dwp.gsi.gov.uk">stockport.pyca@dwp.gsi.gov.uk</a> with the full name of the person claiming.</li>
+        <li>Book a habitual residency test interview in the UCFS build (not Booking Bug) using any date and time.</li>
+        <li>Go to the claimant’s to-do list, open ‘Attend your habitual residency interview’ to-do, select ‘attended’ and save.</li>
+        <li>Remind the person claiming to check their Universal Credit account for updates on their claim.</li>
+      </ol>
 
     </div>
   </div>
