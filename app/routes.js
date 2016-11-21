@@ -71,8 +71,8 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
   // Override this outcome based on partner
   else if (answers.claimant.partner === 'yes') {
 
-    // Redirect END001, END002, END008 or END009 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END008' || outcomeId === 'END009') {
+    // Redirect END001, END002, END006, END007, END008 or END009 outcomes
+    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END008' || outcomeId === 'END009') {
 
       // Claimant is EEA, doesn't work
       if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.dontWork === 'true') {
@@ -87,8 +87,8 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       }
     }
 
-    // Redirect END001, END002, END006 or END009 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END009') {
+    // Redirect END001, END002, END006, END007 or END009 outcomes
+    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END009') {
 
       // Claimant is a refugee
       if (answers.claimant.refugee === 'yes') {
@@ -97,8 +97,8 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       }
     }
 
-    // Redirect END001, END006, END008 or END009 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END006' || outcomeId === 'END008' || outcomeId === 'END009') {
+    // Redirect END001, END006, END007, END008 or END009 outcomes
+    if (outcomeId === 'END001' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END008' || outcomeId === 'END009') {
 
       // Claimant is EEA, in work
       if (answers.claimant.isEEA && answers.claimant.employeeStatus && answers.claimant.employeeStatus.employed === 'true') {
@@ -107,8 +107,8 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       }
     }
 
-    // Redirect END001, END002, END006 or END008 outcomes
-    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END008') {
+    // Redirect END001, END002, END006, END007 or END008 outcomes
+    if (outcomeId === 'END001' || outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END008') {
 
       // Claimant is Non-EEA, recourse to public funds
       if (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no') {
@@ -117,8 +117,8 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       }
     }
 
-    // Redirect END002, END006, END008 or END009 outcomes
-    if (outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END008' || outcomeId === 'END009') {
+    // Redirect END002, END006, END007, END008 or END009 outcomes
+    if (outcomeId === 'END002' || outcomeId === 'END006' || outcomeId === 'END007' || outcomeId === 'END008' || outcomeId === 'END009') {
 
       // Claimant is a UK national
       if (answers.claimant.ukNational === 'yes') {
@@ -149,7 +149,7 @@ router.all('/:type/questions/uk-national', function (req, res) {
 
     // Non-UK national
     else if (ukNational == 'no') {
-      res.redirect(`/${type}/questions/nationality?${claimantType}`);
+      res.redirect(`/${type}/questions/permanent-residence?${claimantType}`);
     }
 
     else if (res.locals.isPartnerFlow && ukNational === 'unknown') {
@@ -159,6 +159,31 @@ router.all('/:type/questions/uk-national', function (req, res) {
 
   else {
     res.render(`${type}/questions/uk-national`);
+  }
+});
+
+router.all('/:type/questions/permanent-residence', function (req, res) {
+  var type = req.params.type;
+  var permanentResidence = req.body.permanentResidence;
+  var answers = req.session.answers;
+  var claimantType = res.locals.claimantType;
+
+  if (permanentResidence) {
+    answers[claimantType].permanentResidence = permanentResidence;
+
+    // Permanent residence card
+    if (permanentResidence === 'yes') {
+      res.redirect(`/${type}/outcomes/END007?${claimantType}`);
+    }
+
+    // No permanent residence card
+    else if (permanentResidence === 'no') {
+      res.redirect(`/${type}/questions/nationality?${claimantType}`);
+    }
+  }
+
+  else {
+    res.render(`${type}/questions/permanent-residence`);
   }
 });
 
