@@ -11,7 +11,7 @@ var documentationApp = express()
 var bodyParser = require('body-parser')
 var browserSync = require('browser-sync')
 var config = require('./app/config.js')
-var cookieSession = require('cookie-session')
+var clientSessions = require('client-sessions')
 var countries = require('./app/services/country')
 var utils = require('./lib/utils.js')
 var packageJson = require('./package.json')
@@ -29,10 +29,12 @@ useAuth = useAuth.toLowerCase()
 useHttps = useHttps.toLowerCase()
 
 // Set up cookie session storage
-app.use(cookieSession({
-  name: 'session',
-  keys: ['dx72xTwPGKjaBM'],
-  httpOnly: true,
+app.use(clientSessions({
+  cookieName: 'session',
+  secret: 'dx72xTwPGKjaBM',
+  cookie: {
+    httpOnly: true
+  }
 }))
 
 var useDocumentation = (config.useDocumentation === 'true')
