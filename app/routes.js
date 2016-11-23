@@ -6,6 +6,7 @@ var outcomes = {
   british: 'END001',
   employedEEA: 'END002',
   ineligible: 'END003',
+  noRecourseToPublicFunds: 'END004',
   selfEmployedEEA: 'END006',
   permanentResident: 'END007',
   refugee: 'END008',
@@ -324,7 +325,7 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
 
     // Stamped visa
     if (noRecourseToPublicFunds === 'yes') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.noRecourseToPublicFunds}?${claimantType}`);
     }
 
     // No stamped visa
