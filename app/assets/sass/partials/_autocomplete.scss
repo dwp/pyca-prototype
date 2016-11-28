@@ -1,6 +1,3 @@
-@import '../jquery-ui/themes/base/core';
-@import '../jquery-ui/themes/base/autocomplete';
-
 @import 'colours';
 @import 'conditionals';
 
@@ -11,7 +8,13 @@ select.autocompleter {
   }
 }
 
-.ui-autocomplete {
+.twitter-typeahead {
+  width: 100%;
+}
+
+.tt-menu {
+  width: 100%;
+  width: calc(100% - 4px);
   max-height: 342px;
   overflow-x: hidden;
   margin: 0;
@@ -19,30 +22,45 @@ select.autocompleter {
   list-style: none;
   background-color: #fff;
   border: 2px solid $grey-1;
+}
 
-  .ui-menu-item-wrapper {
-    position: relative;
-    margin-bottom: -2px;
-    padding: 8px;
-    border: solid $border-colour;
-    border-width: 2px 0;
+.tt-hint {
+  color: $border-colour;
+}
 
-    &.ui-state-active {
-      z-index: 1;
-      background-color: $link-active-colour;
-      border-color: $link-active-colour;
-      color: white;
-    }
+.tt-suggestion {
+  position: relative;
+  display: block;
+  margin-bottom: -2px;
+  padding: 8px;
+
+  border: solid $border-colour;
+  border-width: 2px 0;
+  @include bold-19;
+  color: $text-colour;
+  cursor: pointer;
+
+  &:first-of-type {
+    border-top-width: 0;
   }
 
-  .ui-menu-item {
-    display: block;
-    @include bold-19;
-    color: $text-colour;
-    cursor: pointer;
+  &:hover,
+  &.tt-cursor {
+    z-index: 1;
+    background-color: $link-active-colour;
+    border-color: $link-active-colour;
+    color: white;
+  }
+}
 
-    &:first-child .ui-menu-item-wrapper {
-      border-top: none;
-    }
+.tt-highlight {
+  font-weight: 700;
+}
+
+@media (min-width: 641px) {
+
+  .tt-menu {
+    width: 50%;
+    width: calc(50% - 4px);
   }
 }
