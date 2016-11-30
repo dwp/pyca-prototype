@@ -122,7 +122,7 @@ router.all('/:type/questions/uk-national', function (req, res) {
 
     // Non-UK national
     else if (ukNational == 'no') {
-      res.redirect(`/${type}/questions/permanent-residence?${claimantType}`);
+      res.redirect(`/${type}/questions/refugee?${claimantType}`);
     }
 
     else if (res.locals.isPartnerFlow && ukNational === 'unknown') {
@@ -132,6 +132,35 @@ router.all('/:type/questions/uk-national', function (req, res) {
 
   else {
     res.render(`${type}/questions/uk-national`);
+  }
+});
+
+router.all('/:type/questions/refugee', function (req, res) {
+  var type = req.params.type;
+  var refugee = req.body.refugee;
+  var answers = req.session.answers;
+  var claimantType = res.locals.claimantType;
+
+  if (refugee) {
+    answers[claimantType].refugee = refugee;
+
+    // Refugee
+    if (refugee === 'yes') {
+      res.redirect(`/${type}/outcomes/${outcomes.refugee}?${claimantType}`);
+    }
+
+    // Non-refugee
+    else if (refugee === 'no') {
+      res.redirect(`/${type}/questions/permanent-residence?${claimantType}`);
+    }
+
+    else if (res.locals.isPartnerFlow && refugee === 'unknown') {
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+    }
+  }
+
+  else {
+    res.render(`${type}/questions/refugee`);
   }
 });
 
@@ -189,7 +218,7 @@ router.all('/:type/questions/nationality', function (req, res) {
     // Non-EEA nationality
     else if (listNonEEA.indexOf(nationality) !== -1) {
       answers[claimantType].isEEA = false;
-      res.redirect(`/${type}/questions/refugee?${claimantType}`);
+      res.redirect(`/${type}/questions/no-recourse-to-public-funds?${claimantType}`);
     }
   }
 
@@ -250,35 +279,6 @@ router.all('/:type/questions/self-employed-proof', function (req, res) {
 
   else {
     res.render(`${type}/questions/self-employed-proof`);
-  }
-});
-
-router.all('/:type/questions/refugee', function (req, res) {
-  var type = req.params.type;
-  var refugee = req.body.refugee;
-  var answers = req.session.answers;
-  var claimantType = res.locals.claimantType;
-
-  if (refugee) {
-    answers[claimantType].refugee = refugee;
-
-    // Refugee
-    if (refugee === 'yes') {
-      res.redirect(`/${type}/outcomes/${outcomes.refugee}?${claimantType}`);
-    }
-
-    // Non-refugee
-    else if (refugee === 'no') {
-      res.redirect(`/${type}/questions/no-recourse-to-public-funds?${claimantType}`);
-    }
-
-    else if (res.locals.isPartnerFlow && refugee === 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
-    }
-  }
-
-  else {
-    res.render(`${type}/questions/refugee`);
   }
 });
 
