@@ -12,10 +12,12 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          Do they have a partner?
+          {{ 'Are they married or in a civil partnership?' if isDerivedRightsFlow else 'Do they have a partner?' }}
         </h1>
 
+        {%- if not isDerivedRightsFlow %}
         <p class="form-hint">This means a husband, wife or civil partner, or someone who lives with them and they share a personal life with, for example they may have common bills or share a bank account.</p>
+        {% endif -%}
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true" class="inline">

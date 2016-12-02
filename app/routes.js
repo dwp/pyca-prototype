@@ -18,7 +18,7 @@ var outcomes = {
 }
 
 var config = {
-  isPartnerFlowEnabled: false
+  isPartnerFlowEnabled: true
 }
 
 // Route index page
@@ -89,9 +89,18 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       // Save outcome
       answers.claimant.outcomeId = outcomeId;
 
-      // Redirect to partner flow
-      res.redirect(`/${type}/questions/partner?claimant`);
-      return;
+      // Ineligible claimant (but might qualify for derived rights)
+      if (outcomeId === outcomes.ineligible &&
+        ((answers.claimant.isEEA && answers.claimant.dontWorkReason === 'other') ||
+          (!answers.claimant.isEEA && answers.claimant.familyMember === 'yes'))) {
+
+        // Mark as derived rights flow
+        answers.claimant.isDerivedRightsFlow = true;
+
+        // Redirect to partner flow
+        res.redirect(`/${type}/questions/partner?claimant`);
+        return;
+      }
     }
 
     // Has partner, override outcome based on claimant
@@ -100,11 +109,39 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       // Save outcome
       answers.partner.outcomeId = outcomeId;
 
-      // Does claimant outcome differ?
-      if (answers.claimant.outcomeId !== answers.partner.outcomeId) {
+      // Does claimant outcome differ? Partner must be eligible
+      if (answers.claimant.outcomeId !== outcomeId && outcomeId !== outcomes.ineligible) {
 
-        // Redirect only if claimant and partner reached elligble outcome
-        if (answers.claimant.outcomeId !== outcomes.ineligible && answers.partner.outcomeId !== outcomes.ineligible) {
+        // Ineligible claimant (derived rights)
+        if (answers.claimant.outcomeId === outcomes.ineligible) {
+
+          // Skip if already on derived rights outcome
+          if (outcomeId !== outcomes.derivedRightsNonEEA && outcomeId !== outcomes.derivedRightsEEA) {
+
+            // Ineligible claimant + derived rights partner
+            if (outcomeId === outcomes.employedEEA ||
+              outcomeId === outcomes.sickEEA ||
+              outcomeId === outcomes.redundantEEA) {
+
+              // Force outcome to derived rights
+              answers.partner.outcomeId = answers.claimant.isEEA ?
+                outcomes.derivedRightsEEA : outcomes.derivedRightsNonEEA;
+
+              // Redirect to derived rights
+              res.redirect(`/${type}/outcomes/${answers.partner.outcomeId}?${claimantType}`);
+              return;
+            }
+
+            // Otherwise still ineligible
+            else {
+              res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+              return;
+            }
+          }
+        }
+
+        // Both reached eligible outcome
+        else {
           res.redirect(`/${type}/outcomes/${answers.claimant.outcomeId}?${claimantType}`);
           return;
         }
@@ -245,6 +282,12 @@ router.all('/:type/questions/employee-status', function (req, res) {
   var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
 
+  // Ineligible claimant (derived rights), UK straight to outcome
+  if (answers.claimant.isDerivedRightsFlow && answers.partner.nationality === 'United Kingdom') {
+    res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+    return;
+  }
+
   if (employeeStatus) {
     answers[claimantType].employeeStatus = employeeStatus;
 
@@ -274,6 +317,12 @@ router.all('/:type/questions/employee-status-self-employed', function (req, res)
   var selfEmployedProof = req.body.selfEmployedProof;
   var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
+
+  // Ineligible claimant (derived rights), self-employed straight to outcome
+  if (answers.claimant.isDerivedRightsFlow && answers.partner.employeeStatus.selfEmployed === 'true') {
+    res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+    return;
+  }
 
   if (selfEmployedProof) {
     answers[claimantType].selfEmployedProof = selfEmployedProof;
@@ -330,6 +379,9 @@ router.all('/:type/questions/partner', function (req, res) {
   var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
 
+  // Mark as derived rights flow (updates question text)
+  res.locals.isDerivedRightsFlow = answers.claimant.isDerivedRightsFlow;
+
   if (partner && answers.claimant.outcomeId) {
     answers[claimantType].partner = partner;
 
@@ -341,9 +393,9 @@ router.all('/:type/questions/partner', function (req, res) {
     // Has a partner
     else if (partner === 'yes') {
 
-      // Claimant was actually END003 before partner flow
-      if (answers.claimant.outcomeId === outcomes.ineligible) {
-        res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      // Ineligible claimant (derived rights), skip to nationality
+      if (answers.claimant.isDerivedRightsFlow) {
+        res.redirect(`/${type}/questions/nationality?partner`);
       }
 
       // Assume still qualifying
@@ -363,6 +415,12 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
   var noRecourseToPublicFunds = req.body.noRecourseToPublicFunds;
   var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
+
+  // Ineligible claimant (derived rights), partner must be EEA
+  if (answers.claimant.isDerivedRightsFlow && !answers.partner.isEEA) {
+    res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+    return;
+  }
 
   if (noRecourseToPublicFunds) {
     answers[claimantType].noRecourseToPublicFunds = noRecourseToPublicFunds;
