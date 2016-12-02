@@ -10,7 +10,9 @@ var outcomes = {
   selfEmployedEEA: 'END006',
   permanentResident: 'END007',
   refugee: 'END008',
-  leaveToRemain: 'END009'
+  leaveToRemain: 'END009',
+  redundantEEA: 'END010',
+  sickEEA: 'END011',
 }
 
 var config = {
@@ -256,7 +258,7 @@ router.all('/:type/questions/employee-status', function (req, res) {
 
     // Not working
     else if (employeeStatus.dontWork === 'true') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/questions/employee-status-dont-work?${claimantType}`);
     }
   }
 
@@ -287,6 +289,35 @@ router.all('/:type/questions/employee-status-self-employed', function (req, res)
 
   else {
     res.render(`${type}/questions/employee-status-self-employed`);
+  }
+});
+
+router.all('/:type/questions/employee-status-dont-work', function (req, res) {
+  var type = req.params.type;
+  var dontWorkReason = req.body.dontWorkReason;
+  var answers = req.session.answers;
+  var claimantType = res.locals.claimantType;
+
+  if (dontWorkReason) {
+    answers[claimantType].dontWorkReason = dontWorkReason;
+
+    // Redundant
+    if (dontWorkReason === 'redundant') {
+      res.redirect(`/${type}/outcomes/${outcomes.redundantEEA}?${claimantType}`);
+    }
+
+    if (dontWorkReason === 'sick') {
+      res.redirect(`/${type}/outcomes/${outcomes.sickEEA}?${claimantType}`);
+    }
+
+    // Other or Partner reason unknown
+    else if (dontWorkReason === 'other' || res.locals.isPartnerFlow && dontWorkReason === 'unknown') {
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+    }
+  }
+
+  else {
+    res.render(`${type}/questions/employee-status-dont-work`);
   }
 });
 
