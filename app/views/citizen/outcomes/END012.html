@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <div class="govuk-box-highlight">
+        <h1 class="bold-large">Fast-track this person</h1>
+      </div>
+
+      <h2 class="heading-medium">Claimant status</h2>
+      <p>EEA Deriving Rights from EEA Spouse</p>
+
+      <h2 class="heading-medium">Evidence to collect</h2>
+      <ul class="list list-bullet">
+        <li>To do</li>
+      </ul>
+
+      {% include "citizen/outcomes/includes/outcome_footer.html" %}
+
+    </div>
+  </div>
+</main>
+{% endblock %}

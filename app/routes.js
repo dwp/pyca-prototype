@@ -13,6 +13,8 @@ var outcomes = {
   leaveToRemain: 'END009',
   redundantEEA: 'END010',
   sickEEA: 'END011',
+  derivedRightsEEA: 'END012',
+  derivedRightsNonEEA: 'END013'
 }
 
 var config = {
