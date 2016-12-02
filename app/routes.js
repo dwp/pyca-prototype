@@ -14,7 +14,7 @@ var outcomes = {
 }
 
 var config = {
-  isPartnerFlowEnabled: true
+  isPartnerFlowEnabled: false
 }
 
 // Route index page
