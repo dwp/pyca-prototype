@@ -16,8 +16,10 @@
         </h1>
 
         <div class="form-group">
-          <fieldset>
-            <legend id="self-employed-proof" class="visuallyhidden">Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of self‑employed income?</legend>
+          <fieldset role="radiogroup" aria-required="true">
+            <legend>
+              <span class="visuallyhidden">Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of self‑employed income?</span>
+            </legend>
 
             <label for="self-employed-proof-yes" class="block-label selection-button-radio">
               <input type="radio" name="selfEmployedProof" value="yes" id="self-employed-proof-yes">

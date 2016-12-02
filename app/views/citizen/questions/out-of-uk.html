@@ -17,8 +17,10 @@
         </h1>
 
         <div class="form-group">
-          <fieldset{{ attributes | safe }}>
-            <legend id="out-of-uk" class="visuallyhidden">{{ 'Has their partner' if isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?</legend>
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">{{ 'Has their partner' if isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?</span>
+            </legend>
 
             <label for="out-of-uk-yes" class="block-label selection-button-radio">
               <input type="radio" name="outOfUk" value="yes" id="out-of-uk-yes">

@@ -16,12 +16,15 @@
           Is ‘family member’ written on {{ 'their partner’s' if isPartnerFlow else 'their' }} visa?
         </h1>
 
+        {%- if not isPartnerFlow %}
+        <p class="form-hint">Check their biometric residence permit (BRP), residence card or the visa page on their passport.</p>
+        {% endif -%}
+
         <div class="form-group">
-          <fieldset{{ attributes | safe }}>
-            <legend id="family-member" class="visuallyhidden">Is 'family member' written on {{ 'their partner’s' if isPartnerFlow else 'their' }} visa?</legend>
-            {%- if not isPartnerFlow %}
-            <p class="form-hint">Check their biometric residence permit (BRP), residence card or the visa page on their passport.</p>
-            {% endif -%}
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Is ‘family member’ written on {{ 'their partner’s' if isPartnerFlow else 'their' }} visa?</span>
+            </legend>
 
             <label for="family-member-yes" class="block-label selection-button-radio">
               <input type="radio" name="familyMember" value="yes" id="family-member-yes">

@@ -17,8 +17,10 @@
         </h1>
 
         <div class="form-group">
-          <fieldset{{ attributes | safe }}>
-            <legend id="ukNational" class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?</legend>
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?</span>
+            </legend>
 
             <label for="ukNational-yes" class="block-label selection-button-radio">
               <input type="radio" name="ukNational" value="yes" id="ukNational-yes">

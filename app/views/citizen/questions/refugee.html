@@ -17,8 +17,10 @@
         </h1>
 
         <div class="form-group">
-          <fieldset{{ attributes | safe }}>
-            <legend id="refugee" class="visuallyhidden">{{ 'Is their partner' if isPartnerFlow else 'Is this person' }} a refugee?</legend>
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">{{ 'Is their partner' if isPartnerFlow else 'Is this person' }} a refugee?</span>
+            </legend>
 
             <label for="refugee-yes" class="block-label selection-button-radio">
               <input type="radio" name="refugee" value="yes" id="refugee-yes">

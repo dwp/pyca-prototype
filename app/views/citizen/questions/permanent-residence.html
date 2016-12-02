@@ -17,8 +17,10 @@
         </h1>
 
         <div class="form-group">
-          <fieldset{{ attributes | safe }}>
-            <legend id="permanent-residence" class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Do they' }} have a residence card or Home Office residence documentation which says ‘permanent residence’?</legend>
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">{{ 'Has their partner got anything' if isPartnerFlow else 'Have they brought anything' }} which says ‘permanent residence’?</span>
+            </legend>
 
             <label for="permanent-residence-yes" class="block-label selection-button-radio">
               <input type="radio" name="permanentResidence" value="yes" id="permanent-residence-yes">
@@ -35,8 +37,8 @@
               <input type="radio" name="permanentResidence" value="unknown" id="permanent-residence-unknown">
               Don’t know
             </label>
-	    {% endif %}
-            
+      	    {% endif %}
+
           </fieldset>
         </div>
 
