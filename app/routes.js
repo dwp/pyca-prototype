@@ -13,6 +13,10 @@ var outcomes = {
   leaveToRemain: 'END009'
 }
 
+var config = {
+  isPartnerFlowEnabled: true
+}
+
 // Route index page
 router.get('/', function (req, res) {
   res.render('index')
@@ -72,30 +76,34 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
   var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
 
-  // Not asked about partner yet
-  if (typeof answers.claimant.partner === 'undefined') {
+  // Skip if partner flow disabled
+  if (config.isPartnerFlowEnabled) {
 
-    // Save outcome
-    answers.claimant.outcomeId = outcomeId;
+    // Not asked about partner yet
+    if (typeof answers.claimant.partner === 'undefined') {
 
-    // Redirect to partner flow
-    res.redirect(`/${type}/questions/partner?claimant`);
-    return;
-  }
+      // Save outcome
+      answers.claimant.outcomeId = outcomeId;
 
-  // Has partner, override outcome based on claimant
-  else if (answers.claimant.partner === 'yes' && answers.claimant.outcomeId) {
+      // Redirect to partner flow
+      res.redirect(`/${type}/questions/partner?claimant`);
+      return;
+    }
 
-    // Save outcome
-    answers.partner.outcomeId = outcomeId;
+    // Has partner, override outcome based on claimant
+    else if (answers.claimant.partner === 'yes' && answers.claimant.outcomeId) {
 
-    // Does claimant outcome differ?
-    if (answers.claimant.outcomeId !== answers.partner.outcomeId) {
+      // Save outcome
+      answers.partner.outcomeId = outcomeId;
 
-      // Redirect only if claimant and partner reached elligble outcome
-      if (answers.claimant.outcomeId !== outcomes.ineligible && answers.partner.outcomeId !== outcomes.ineligible) {
-        res.redirect(`/${type}/outcomes/${answers.claimant.outcomeId}?${claimantType}`);
-        return;
+      // Does claimant outcome differ?
+      if (answers.claimant.outcomeId !== answers.partner.outcomeId) {
+
+        // Redirect only if claimant and partner reached elligble outcome
+        if (answers.claimant.outcomeId !== outcomes.ineligible && answers.partner.outcomeId !== outcomes.ineligible) {
+          res.redirect(`/${type}/outcomes/${answers.claimant.outcomeId}?${claimantType}`);
+          return;
+        }
       }
     }
   }
@@ -288,10 +296,16 @@ router.all('/:type/questions/partner', function (req, res) {
   var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
 
-  if (partner) {
+  if (partner && answers.claimant.outcomeId) {
     answers[claimantType].partner = partner;
 
-    if (partner === 'yes') {
+    // No partner or partner flow disabled
+    if (partner === 'no' || !config.isPartnerFlowEnabled) {
+      res.redirect(`/${type}/outcomes/${answers.claimant.outcomeId}?claimant`);
+    }
+
+    // Has a partner
+    else if (partner === 'yes') {
 
       // Claimant was actually END003 before partner flow
       if (answers.claimant.outcomeId === outcomes.ineligible) {
@@ -302,10 +316,6 @@ router.all('/:type/questions/partner', function (req, res) {
       else {
         res.redirect(`/${type}/questions/uk-national?partner`);
       }
-    }
-
-    else if (partner === 'no' && answers.claimant.outcomeId) {
-      res.redirect(`/${type}/outcomes/${answers.claimant.outcomeId}?claimant`);
     }
   }
 
