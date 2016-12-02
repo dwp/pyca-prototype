@@ -126,7 +126,7 @@ app.use(function(req, res, next) {
 
   // List all countries
   res.locals.countries = countries.list.map(function(country) {
-    return country.name
+    return country
   })
 
   // List countries by non-EEA

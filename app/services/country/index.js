@@ -672,7 +672,8 @@ var list = [
   },
   {
     name: 'Spain',
-    EEA: true
+    EEA: true,
+    aliases: ['España'],
   },
   {
     name: 'Sri Lanka',
@@ -712,7 +713,8 @@ var list = [
   },
   {
     name: 'Switzerland',
-    EEA: false
+    EEA: false,
+    aliases: ['Swiss Confederation', 'Schweiz', 'Suisse', 'Svizzera', 'Svizra'],
   },
   {
     name: 'Syria',
@@ -780,6 +782,7 @@ var list = [
   },
   {
     name: 'United Kingdom',
+    aliases: ['Great Britain', 'England', 'UK', 'Wales', 'Scotland', 'Northern Ireland'],
     EEA: true
   },
   {
