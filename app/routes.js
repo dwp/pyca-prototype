@@ -306,6 +306,7 @@ router.all('/:type/questions/employee-status-dont-work', function (req, res) {
       res.redirect(`/${type}/outcomes/${outcomes.redundantEEA}?${claimantType}`);
     }
 
+    // Sick
     if (dontWorkReason === 'sick') {
       res.redirect(`/${type}/outcomes/${outcomes.sickEEA}?${claimantType}`);
     }
