@@ -379,14 +379,17 @@ router.all('/:type/questions/fitnote', function(req, res) {
   var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
 
-  res.locals.isDerivedRightsFlow = answers.claimant.isDerivedRightsFlow;
-
   if(hasFitNote) {
     if(hasFitNote == 'yes') {
       res.redirect(`/${type}/outcomes/${outcomes.sickEEA}?${claimantType}`);
     } else if (hasFitNote == 'no') {
-      answers.claimant.isDerivedRightsFlow = true;
-      res.redirect(`/${type}/questions/partner?${claimantType}`);
+      if(!!answers.claimant.outcomeId) {
+        res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      } else {
+        answers.claimant.isDerivedRightsFlow = true;
+        answers.claimant.outcomeId = outcomes.ineligible;
+        res.redirect(`/${type}/questions/partner?${claimantType}`);
+      }
     } else if (hasFitNote == 'unknown') {
       res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
@@ -414,7 +417,6 @@ router.all('/:type/questions/partner', function (req, res) {
 
     // Has a partner
     else if (partner === 'yes') {
-
       // Ineligible claimant (derived rights), skip to nationality
       if (answers.claimant.isDerivedRightsFlow) {
         res.redirect(`/${type}/questions/nationality?partner`);
