@@ -378,11 +378,14 @@ router.all('/:type/questions/fitnote', function(req, res) {
   var hasFitNote = req.body.hasFitNote;
   var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
+
+  res.locals.isDerivedRightsFlow = answers.claimant.isDerivedRightsFlow;
+
   if(hasFitNote) {
     if(hasFitNote == 'yes') {
       res.redirect(`/${type}/outcomes/${outcomes.sickEEA}?${claimantType}`);
     } else if (hasFitNote == 'no') {
-      res.locals.isDerivedRightsFlow = answers.claimant.isDerivedRightsFlow;
+      answers.claimant.isDerivedRightsFlow = true;
       res.redirect(`/${type}/questions/partner?${claimantType}`);
     } else if (hasFitNote == 'unknown') {
       res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
