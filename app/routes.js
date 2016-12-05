@@ -359,8 +359,7 @@ router.all('/:type/questions/employee-status-dont-work', function (req, res) {
 
     // Sick
     if (dontWorkReason === 'sick') {
-      console.log('[employee-status-dont-work]  reason : ' + dontWorkReason);
-      res.render(`${type}/questions/sicknote`);
+      res.redirect(`/${type}/questions/fitnote?${claimantType}`);
     }
 
     // Other or Partner reason unknown
@@ -371,6 +370,18 @@ router.all('/:type/questions/employee-status-dont-work', function (req, res) {
 
   else {
     res.render(`${type}/questions/employee-status-dont-work`);
+  }
+});
+
+router.all('/:type/questions/fitnote', function(req, res) {
+  var type = req.params.type;
+  var hasFitNotes = req.params.ukNational;
+  // var answers = req.session.answers;
+//  var claimantType = req.locals.claimantType;
+  if(hasFitNotes) {
+    console.log('has fit notes : ' + hasFitNotes);
+  } else {
+    res.render(`${type}/questions/fitnote`);
   }
 });
 

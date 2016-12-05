@@ -13,13 +13,13 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          {{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a sicknote, or whatever?
+          {{ 'Has their partner' if isPartnerFlow else 'Have they' }} had fit notes constantly since they stopped working?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
-              <span class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a sicknote, or whatever?</span>
+              <span class="visuallyhidden">{{ 'Has their partner' if isPartnerFlow else 'Have they' }} had fit notes constantly since they stopped working?</span>
             </legend>
 
             <label for="ukNational-yes" class="block-label selection-button-radio">
