@@ -376,11 +376,13 @@ router.all('/:type/questions/employee-status-dont-work', function (req, res) {
 router.all('/:type/questions/fitnote', function(req, res) {
   var type = req.params.type;
   var hasFitNote = req.body.hasFitNote;
+  var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
   if(hasFitNote) {
     if(hasFitNote == 'yes') {
       res.redirect(`/${type}/outcomes/${outcomes.sickEEA}?${claimantType}`);
     } else if (hasFitNote == 'no') {
+      res.locals.isDerivedRightsFlow = answers.claimant.isDerivedRightsFlow;
       res.redirect(`/${type}/questions/partner?${claimantType}`);
     } else if (hasFitNote == 'unknown') {
       res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
