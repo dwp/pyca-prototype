@@ -1,0 +1,53 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+  {% include "includes/backlink_examples.html" %}
+  {% set attributes = '' if isPartnerFlow else ' class="inline"' %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          {{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a sicknote, or whatever?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a sicknote, or whatever?</span>
+            </legend>
+
+            <label for="ukNational-yes" class="block-label selection-button-radio">
+              <input type="radio" name="ukNational" value="yes" id="ukNational-yes">
+              Yes
+            </label>
+
+            <label for="ukNational-no" class="block-label selection-button-radio">
+              <input type="radio" name="ukNational" value="no" id="ukNational-no">
+              No
+            </label>
+
+            {% if isPartnerFlow %}
+            <label for="ukNational-unknown" class="block-label selection-button-radio">
+              <input type="radio" name="ukNational" value="unknown" id="ukNational-unknown">
+              Don’t know
+            </label>
+            {% endif %}
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

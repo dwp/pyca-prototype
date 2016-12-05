@@ -110,35 +110,35 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       answers.partner.outcomeId = outcomeId;
 
       // Does claimant outcome differ? Partner must be eligible
-      if (answers.claimant.outcomeId !== outcomeId && outcomeId !== outcomes.ineligible) {
+        if (answers.claimant.outcomeId !== outcomeId && outcomeId !== outcomes.ineligible) {
 
-        // Ineligible claimant (derived rights)
-        if (answers.claimant.outcomeId === outcomes.ineligible) {
+          // Ineligible claimant (derived rights)
+          if (answers.claimant.outcomeId === outcomes.ineligible) {
 
-          // Skip if already on derived rights outcome
-          if (outcomeId !== outcomes.derivedRightsNonEEA && outcomeId !== outcomes.derivedRightsEEA) {
+            // Skip if already on derived rights outcome
+            if (outcomeId !== outcomes.derivedRightsNonEEA && outcomeId !== outcomes.derivedRightsEEA) {
 
-            // Ineligible claimant + derived rights partner
-            if (outcomeId === outcomes.employedEEA ||
-              outcomeId === outcomes.sickEEA ||
-              outcomeId === outcomes.redundantEEA) {
+              // Ineligible claimant + derived rights partner
+              if (outcomeId === outcomes.employedEEA ||
+                outcomeId === outcomes.sickEEA ||
+                outcomeId === outcomes.redundantEEA) {
 
-              // Force outcome to derived rights
-              answers.partner.outcomeId = answers.claimant.isEEA ?
-                outcomes.derivedRightsEEA : outcomes.derivedRightsNonEEA;
+                // Force outcome to derived rights
+                answers.partner.outcomeId = answers.claimant.isEEA ?
+                  outcomes.derivedRightsEEA : outcomes.derivedRightsNonEEA;
 
-              // Redirect to derived rights
-              res.redirect(`/${type}/outcomes/${answers.partner.outcomeId}?${claimantType}`);
-              return;
-            }
+                // Redirect to derived rights
+                res.redirect(`/${type}/outcomes/${answers.partner.outcomeId}?${claimantType}`);
+                return;
+              }
 
-            // Otherwise still ineligible
-            else {
-              res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
-              return;
+              // Otherwise still ineligible
+              else {
+                res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+                return;
+              }
             }
           }
-        }
 
         // Both reached eligible outcome
         else {
@@ -359,7 +359,8 @@ router.all('/:type/questions/employee-status-dont-work', function (req, res) {
 
     // Sick
     if (dontWorkReason === 'sick') {
-      res.redirect(`/${type}/outcomes/${outcomes.sickEEA}?${claimantType}`);
+      console.log('[employee-status-dont-work]  reason : ' + dontWorkReason);
+      res.render(`${type}/questions/sicknote`);
     }
 
     // Other or Partner reason unknown
