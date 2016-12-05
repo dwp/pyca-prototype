@@ -375,11 +375,15 @@ router.all('/:type/questions/employee-status-dont-work', function (req, res) {
 
 router.all('/:type/questions/fitnote', function(req, res) {
   var type = req.params.type;
-  var hasFitNotes = req.params.ukNational;
+  var hasFitNote = req.body.hasFitNote;
   // var answers = req.session.answers;
-//  var claimantType = req.locals.claimantType;
-  if(hasFitNotes) {
-    console.log('has fit notes : ' + hasFitNotes);
+  var claimantType = res.locals.claimantType;
+  if(hasFitNote) {
+    if(hasFitNote == 'yes') {
+      res.redirect(`/${type}/outcomes/${outcomes.sickEEA}?${claimantType}`);
+    } else if (hasFitNote == 'no' || hasFitNote == 'unknown') {
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+    }
   } else {
     res.render(`${type}/questions/fitnote`);
   }
