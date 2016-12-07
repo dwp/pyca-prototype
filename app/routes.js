@@ -82,17 +82,17 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
 
   // Skip if partner flow disabled
   if (config.isPartnerFlowEnabled) {
-
     // Not asked about partner yet
     if (typeof answers.claimant.partner === 'undefined') {
-
       // Save outcome
       answers.claimant.outcomeId = outcomeId;
 
       // Ineligible claimant (but might qualify for derived rights)
       if (outcomeId === outcomes.ineligible &&
         ((answers.claimant.isEEA && answers.claimant.dontWorkReason === 'other') ||
-          (!answers.claimant.isEEA && answers.claimant.familyMember === 'yes'))) {
+          (!answers.claimant.isEEA && answers.claimant.familyMember === 'yes')) ||
+          (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no'
+           && answers.claimant.familyMember === 'no' && answers.claimant.outOfUk === 'yes')) {
 
         // Mark as derived rights flow
         answers.claimant.isDerivedRightsFlow = true;
@@ -293,7 +293,6 @@ router.all('/:type/questions/employee-status', function (req, res) {
 
     // Self-employed
     if (employeeStatus.selfEmployed === 'true') {
-      //res.redirect(`/${type}/questions/employee-status-self-employed?${claimantType}`);
       res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
 
