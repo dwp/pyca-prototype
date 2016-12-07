@@ -293,7 +293,8 @@ router.all('/:type/questions/employee-status', function (req, res) {
 
     // Self-employed
     if (employeeStatus.selfEmployed === 'true') {
-      res.redirect(`/${type}/questions/employee-status-self-employed?${claimantType}`);
+      //res.redirect(`/${type}/questions/employee-status-self-employed?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
     }
 
     // Employed
