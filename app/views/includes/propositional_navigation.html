@@ -2,7 +2,9 @@
   <div class="content">
     <nav id="proposition-menu">
       <a href="/" id="proposition-name">{% if serviceName %} {{ serviceName }} {% endif %}</a>
-      <span class="phase-tag">Prototype</span>
+      <p id="proposition-link">
+        <a href="/citizen"{% if url == '/citizen' %} class="active"{% endif %}>Home</a>
+      </p>
     </nav>
   </div>
 </div>
