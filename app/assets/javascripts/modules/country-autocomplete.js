@@ -93,7 +93,7 @@
           var info = countries[i];
 
           // Exact matches only
-          if (info.text === keywords) {
+          if (info.text.toLowerCase() === keywords.toLowerCase()) {
             value = info.value;
           }
         });
