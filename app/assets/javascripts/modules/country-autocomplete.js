@@ -155,6 +155,9 @@
 
         // Fix any unmatched validation jump-links
         $('[href="#' + selectId + '"]').attr('href', '#' + inputId);
+
+        // Fix any unmatched input label for/id pairs
+        $('[for="' + selectId + '"]').attr('for', inputId);
       }
     };
 
