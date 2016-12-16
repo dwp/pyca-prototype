@@ -144,7 +144,6 @@
         input.removeAttr('name');
         input.attr({
           id: inputId,
-          for: inputId,
           value: select.val() && select.children('option:selected').text(),
           autocorrect: 'off',
           autocomplete: 'off'
