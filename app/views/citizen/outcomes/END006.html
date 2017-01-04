@@ -7,14 +7,8 @@
   {% include "includes/backlink_examples.html" %}
 
   <div class="grid-row">
-    <div class="column-two-thirds">
-
-      <div class="govuk-box-highlight">
-        <h1 class="bold-large">Fast-track this {{ 'couple' if isPartnerFlow else 'person' }}</h1>
-      </div>
-
-      <h2 class="heading-medium">Claimant status</h2>
-      <p>Self-employed EEA citizen {{ 'with a qualifying partner' if isPartnerFlow}}</p>
+    <div class="column-two-thirds outcome">
+      {% include "citizen/outcomes/includes/header.html" %}
 
       <h2 class="heading-medium">Evidence to collect</h2>
       <ul class="list list-bullet">

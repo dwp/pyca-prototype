@@ -116,6 +116,13 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
   var answers = req.session.answers;
   var claimantType = res.locals.claimantType;
 
+  for (outcome in outcomes) {
+    if (outcomes[outcome].id === outcomeId) {
+      res.locals.claimantStatus = outcomes[outcome].status;
+      break;
+    }
+  }
+
   // Skip if partner flow disabled
   if (config.isPartnerFlowEnabled) {
 

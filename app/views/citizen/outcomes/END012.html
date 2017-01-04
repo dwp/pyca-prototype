@@ -8,13 +8,7 @@
 
   <div class="grid-row">
     <div class="column-two-thirds">
-
-      <div class="govuk-box-highlight">
-        <h1 class="bold-large">Fast-track this person</h1>
-      </div>
-
-      <h2 class="heading-medium">Claimant status</h2>
-      <p>Spouse of EEA Citizen</p>
+      {% include "citizen/outcomes/includes/header.html" %}
 
       <h2 class="heading-medium">Evidence to collect</h2>
       <ul class="list list-bullet">
@@ -22,7 +16,7 @@
         <li>marriage or civil partnership certificate - couple's names, date of marriage, country of marriage</li>
       </ul>
 
-      {% include "citizen/outcomes/includes/outcome_footer.html" %}
+      {% include "citizen/outcomes/includes/footer.html" %}
 
     </div>
   </div>

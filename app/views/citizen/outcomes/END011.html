@@ -8,13 +8,7 @@
 
   <div class="grid-row">
     <div class="column-two-thirds">
-
-      <div class="govuk-box-highlight">
-        <h1 class="bold-large">Fast-track this {{ 'couple' if isPartnerFlow else 'person' }}</h1>
-      </div>
-
-      <h2 class="heading-medium">Claimant status</h2>
-      <p>Temporarily Sick EEA Citizen {{ 'with a qualifying partner' if isPartnerFlow}}</p>
+      {% include "citizen/outcomes/includes/header.html" %}
 
       <h2 class="heading-medium">Evidence to collect</h2>
       <ul class="list list-bullet">
@@ -26,7 +20,7 @@
         <li>details from current fit note - start and end dates, type of sickness </li>
       </ul>
 
-      {% include "citizen/outcomes/includes/outcome_footer.html" %}
+      {% include "citizen/outcomes/includes/footer.html" %}
 
     </div>
   </div>

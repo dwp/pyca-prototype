@@ -1,4 +1,8 @@
 .govuk-box-highlight {
   padding: 2em;
   text-align: left;
+
+  :last-child {
+      margin-bottom: 0;
+  }
 }
