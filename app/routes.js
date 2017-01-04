@@ -3,18 +3,54 @@ var router = express.Router()
 
 // Readable outcomes
 var outcomes = {
-  british: 'END001',
-  employedEEA: 'END002',
-  ineligible: 'END003',
-  noRecourseToPublicFunds: 'END004',
-  selfEmployedEEA: 'END006',
-  permanentResident: 'END007',
-  refugee: 'END008',
-  leaveToRemain: 'END009',
-  redundantEEA: 'END010',
-  sickEEA: 'END011',
-  derivedRightsEEA: 'END012',
-  derivedRightsNonEEA: 'END013'
+  british: {
+      id: 'END001',
+      status: 'British citizen'
+  },
+  employedEEA: {
+      id: 'END002',
+      status: 'Employed EEA citizen'
+  },
+  ineligible: {
+      id: 'END003',
+      status: 'Ineligible'
+  },
+  noRecourseToPublicFunds: {
+      id: 'END004',
+      status: 'Person with no recourse to public funds'
+  },
+  selfEmployedEEA: {
+      id: 'END006',
+      status: 'Self-employed EEA citizen'
+  },
+  permanentResident: {
+      id: 'END007',
+      status: 'Permanent resident'
+  },
+  refugee: {
+      id: 'END008',
+      status: 'Refugee'
+  },
+  leaveToRemain: {
+      id: 'END009',
+      status: 'Person with indefinite or limited leave to remain'
+  },
+  redundantEEA: {
+      id: 'END010',
+      status: 'Redundant EEA citizen'
+  },
+  sickEEA: {
+      id: 'END011',
+      status: 'Sick EEA retained worker'
+  },
+  derivedRightsEEA: {
+      id: 'END012',
+      status: 'EEA deriving rights from EEA spouse'
+  },
+  derivedRightsNonEEA: {
+      id: 'END013',
+      status: 'Non-EEA deriving rights from EEA spouse'
+  }
 }
 
 var config = {
@@ -82,13 +118,15 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
 
   // Skip if partner flow disabled
   if (config.isPartnerFlowEnabled) {
+
     // Not asked about partner yet
     if (typeof answers.claimant.partner === 'undefined') {
+
       // Save outcome
       answers.claimant.outcomeId = outcomeId;
 
       // Ineligible claimant (but might qualify for derived rights)
-      if (outcomeId === outcomes.ineligible &&
+      if (outcomeId === outcomes.ineligible.id &&
         ((answers.claimant.isEEA && answers.claimant.dontWorkReason === 'other') ||
           (!answers.claimant.isEEA && answers.claimant.familyMember === 'yes')) ||
           (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no'
@@ -110,22 +148,22 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
       answers.partner.outcomeId = outcomeId;
 
       // Does claimant outcome differ? Partner must be eligible
-        if (answers.claimant.outcomeId !== outcomeId && outcomeId !== outcomes.ineligible) {
+        if (answers.claimant.outcomeId !== outcomeId && outcomeId !== outcomes.ineligible.id) {
 
           // Ineligible claimant (derived rights)
-          if (answers.claimant.outcomeId === outcomes.ineligible) {
+          if (answers.claimant.outcomeId === outcomes.ineligible.id) {
 
             // Skip if already on derived rights outcome
-            if (outcomeId !== outcomes.derivedRightsNonEEA && outcomeId !== outcomes.derivedRightsEEA) {
+            if (outcomeId !== outcomes.derivedRightsNonEEA.id && outcomeId !== outcomes.derivedRightsEEA.id) {
 
               // Ineligible claimant + derived rights partner
-              if (outcomeId === outcomes.employedEEA ||
-                outcomeId === outcomes.sickEEA ||
-                outcomeId === outcomes.redundantEEA) {
+              if (outcomeId === outcomes.employedEEA.id ||
+                outcomeId === outcomes.sickEEA.id ||
+                outcomeId === outcomes.redundantEEA.id) {
 
                 // Force outcome to derived rights
                 answers.partner.outcomeId = answers.claimant.isEEA ?
-                  outcomes.derivedRightsEEA : outcomes.derivedRightsNonEEA;
+                  outcomes.derivedRightsEEA.id : outcomes.derivedRightsNonEEA.id;
 
                 // Redirect to derived rights
                 res.redirect(`/${type}/outcomes/${answers.partner.outcomeId}?${claimantType}`);
@@ -134,7 +172,7 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
 
               // Otherwise still ineligible
               else {
-                res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+                res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
                 return;
               }
             }
@@ -166,7 +204,7 @@ router.all('/:type/questions/uk-national', function (req, res) {
     // UK national
     if (ukNational == 'yes') {
       answers[claimantType].isEEA = true;
-      res.redirect(`/${type}/outcomes/${outcomes.british}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.british.id}?${claimantType}`);
     }
 
     // Non-UK national
@@ -175,7 +213,7 @@ router.all('/:type/questions/uk-national', function (req, res) {
     }
 
     else if (res.locals.isPartnerFlow && ukNational === 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
   }
 
@@ -195,7 +233,7 @@ router.all('/:type/questions/refugee', function (req, res) {
 
     // Refugee
     if (refugee === 'yes') {
-      res.redirect(`/${type}/outcomes/${outcomes.refugee}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.refugee.id}?${claimantType}`);
     }
 
     // Non-refugee
@@ -204,7 +242,7 @@ router.all('/:type/questions/refugee', function (req, res) {
     }
 
     else if (res.locals.isPartnerFlow && refugee === 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
   }
 
@@ -224,7 +262,7 @@ router.all('/:type/questions/permanent-residence', function (req, res) {
 
     // Permanent residence card
     if (permanentResidence === 'yes') {
-      res.redirect(`/${type}/outcomes/${outcomes.permanentResident}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.permanentResident.id}?${claimantType}`);
     }
 
     // No permanent residence card
@@ -257,7 +295,7 @@ router.all('/:type/questions/nationality', function (req, res) {
 
       // Croatia straight to outcome
       if (nationality === 'Croatia') {
-        res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+        res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
       }
 
       // Continue
@@ -284,7 +322,7 @@ router.all('/:type/questions/employee-status', function (req, res) {
 
   // Ineligible claimant (derived rights), UK straight to outcome
   if (answers.claimant.isDerivedRightsFlow && answers.partner.nationality === 'United Kingdom') {
-    res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+    res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     return;
   }
 
@@ -293,12 +331,12 @@ router.all('/:type/questions/employee-status', function (req, res) {
 
     // Self-employed
     if (employeeStatus.selfEmployed === 'true') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
 
     // Employed
     else if (employeeStatus.employed === 'true') {
-      res.redirect(`/${type}/outcomes/${outcomes.employedEEA}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
     }
 
     // Not working
@@ -320,7 +358,7 @@ router.all('/:type/questions/employee-status-self-employed', function (req, res)
 
   // Ineligible claimant (derived rights), self-employed straight to outcome
   if (answers.claimant.isDerivedRightsFlow && answers.partner.employeeStatus.selfEmployed === 'true') {
-    res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+    res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     return;
   }
 
@@ -329,12 +367,12 @@ router.all('/:type/questions/employee-status-self-employed', function (req, res)
 
     // Self-employed proof can be provided
     if (selfEmployedProof === 'yes') {
-      res.redirect(`/${type}/outcomes/${outcomes.selfEmployedEEA}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.selfEmployedEEA.id}?${claimantType}`);
     }
 
     // Self-employed proof can't be provided
     else if (selfEmployedProof === 'no' || res.locals.isPartnerFlow && selfEmployedProof === 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
   }
 
@@ -354,7 +392,7 @@ router.all('/:type/questions/employee-status-dont-work', function (req, res) {
 
     // Redundant
     if (dontWorkReason === 'redundant') {
-      res.redirect(`/${type}/outcomes/${outcomes.redundantEEA}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.redundantEEA.id}?${claimantType}`);
     }
 
     // Sick
@@ -364,7 +402,7 @@ router.all('/:type/questions/employee-status-dont-work', function (req, res) {
 
     // Other or Partner reason unknown
     else if (dontWorkReason === 'other' || res.locals.isPartnerFlow && dontWorkReason === 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
   }
 
@@ -381,17 +419,17 @@ router.all('/:type/questions/fitnote', function(req, res) {
 
   if(hasFitNote) {
     if(hasFitNote == 'yes') {
-      res.redirect(`/${type}/outcomes/${outcomes.sickEEA}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
     } else if (hasFitNote == 'no') {
       if(!!answers.claimant.outcomeId) {
-        res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+        res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
       } else {
         answers.claimant.isDerivedRightsFlow = true;
-        answers.claimant.outcomeId = outcomes.ineligible;
+        answers.claimant.outcomeId = outcomes.ineligible.id;
         res.redirect(`/${type}/questions/partner?${claimantType}`);
       }
     } else if (hasFitNote == 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
   } else {
     res.render(`${type}/questions/fitnote`);
@@ -442,7 +480,7 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
 
   // Ineligible claimant (derived rights), partner must be EEA
   if (answers.claimant.isDerivedRightsFlow && !answers.partner.isEEA) {
-    res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+    res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     return;
   }
 
@@ -451,7 +489,7 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
 
     // Stamped visa
     if (noRecourseToPublicFunds === 'yes') {
-      res.redirect(`/${type}/outcomes/${outcomes.noRecourseToPublicFunds}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.noRecourseToPublicFunds.id}?${claimantType}`);
     }
 
     // No stamped visa
@@ -460,7 +498,7 @@ router.all('/:type/questions/no-recourse-to-public-funds', function (req, res) {
     }
 
     else if (res.locals.isPartnerFlow && noRecourseToPublicFunds === 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
   }
 
@@ -480,7 +518,7 @@ router.all('/:type/questions/family-member', function (req, res) {
 
     // Visa says 'family member'
     if (familyMember === 'yes') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
 
     // Visa doesn't say 'family member'
@@ -489,7 +527,7 @@ router.all('/:type/questions/family-member', function (req, res) {
     }
 
     else if (res.locals.isPartnerFlow && familyMember === 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
   }
 
@@ -509,16 +547,16 @@ router.all('/:type/questions/out-of-uk', function (req, res) {
 
     // Out of UK more than 4 weeks
     if (outOfUk === 'yes') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
 
     // Out of UK less than 4 weeks
     else if (outOfUk === 'no') {
-      res.redirect(`/${type}/outcomes/${outcomes.leaveToRemain}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.leaveToRemain.id}?${claimantType}`);
     }
 
     else if (res.locals.isPartnerFlow && outOfUk === 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible}?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
     }
   }
 
