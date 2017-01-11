@@ -157,6 +157,11 @@
 
         // Fix any unmatched input label for/id pairs
         $('[for="' + selectId + '"]').attr('for', inputId);
+
+        // Fix auto-focus on <select>, use input
+        if (location.hash && location.hash === '#' + selectId) {
+          setTimeout(function() { input.focus().typeahead('close'); }, 0);
+        }
       }
     };
 
