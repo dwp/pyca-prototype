@@ -530,7 +530,7 @@ router.all('/:type/questions/family-member', function (req, res) {
 
     // Visa doesn't say 'family member'
     else if (familyMember === 'no') {
-      res.redirect(`/${type}/questions/out-of-uk?${claimantType}`);
+      res.redirect(`/${type}/outcomes/${outcomes.leaveToRemain.id}?${claimantType}`);
     }
 
     else if (res.locals.isPartnerFlow && familyMember === 'unknown') {
