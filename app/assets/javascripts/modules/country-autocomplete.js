@@ -103,6 +103,18 @@
       input.typeahead('close');
     };
 
+    // Steal focus from <select> menu
+    self.stealFocus = function(event) {
+      var selectId = event.data.id;
+      var input = event.data.input;
+
+      if (location.hash && location.hash === '#' + selectId) {
+        setTimeout(function() {
+          input.focus().typeahead('close');
+        }, 0);
+      }
+    };
+
     // Initialise an autocomplete field
     self.init = function(select) {
 
@@ -159,9 +171,8 @@
         $('[for="' + selectId + '"]').attr('for', inputId);
 
         // Fix auto-focus on <select>, use input
-        if (location.hash && location.hash === '#' + selectId) {
-          setTimeout(function() { input.focus().typeahead('close'); }, 0);
-        }
+        $(window).on('hashchange', { id: selectId, input: input }, self.stealFocus);
+        self.stealFocus({ data: { id: selectId, input: input } });
       }
     };
 
