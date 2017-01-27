@@ -120,6 +120,7 @@
 
       // Check it exists
       if (select && select.length) {
+        select = select.first();
 
         var selectId = select.attr('id');
         var inputId = selectId + 'Input';

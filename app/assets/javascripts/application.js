@@ -33,9 +33,10 @@ $(document).ready(function () {
   container.on('click', 'input[type=checkbox][data-check]', checkboxGroup.handle)
   container.on('click', 'input[type=checkbox][data-uncheck]', checkboxGroup.handle)
 
-  // Add country autocomplete
-  var selectToAutocomplete = new GOVUK.SelectToAutocomplete()
-  selectToAutocomplete.init($('select.autocompleter'))
+  // Add country autocompletes
+  $('select.autocompleter').each(function() {
+    new GOVUK.SelectToAutocomplete().init($(this))
+  })
 
   ;(function() {
 
