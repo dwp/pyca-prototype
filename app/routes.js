@@ -229,36 +229,6 @@ router.all('/:type/questions/uk-national', function (req, res) {
   }
 });
 
-router.all('/:type/questions/uk-national2', function (req, res) {
-  var type = req.params.type;
-  var ukNational = req.body.ukNational;
-  var answers = req.session.answers;
-  var claimantType = res.locals.claimantType;
-
-  if (ukNational) {
-    answers[claimantType].ukNational = ukNational;
-
-    // UK national
-    if (ukNational == 'yes') {
-      answers[claimantType].isEEA = true;
-      res.redirect(`/${type}/questions/british-passport-today?${claimantType}`);
-    }
-
-    // Non-UK national
-    else if (ukNational == 'no') {
-      res.redirect(`/${type}/questions/refugee?${claimantType}`);
-    }
-
-    else if (res.locals.isPartnerFlow && ukNational === 'unknown') {
-      res.redirect(`/${type}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-    }
-  }
-
-  else {
-    res.render(`${type}/questions/uk-national`);
-  }
-});
-
 router.all('/:type/questions/refugee', function (req, res) {
   var type = req.params.type;
   var refugee = req.body.refugee;
