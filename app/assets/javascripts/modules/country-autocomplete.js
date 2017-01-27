@@ -116,68 +116,63 @@
     };
 
     // Initialise an autocomplete field
-    self.init = function(selects) {
+    self.init = function(select) {
 
       // Check it exists
-      if (selects && selects.length) {
+      if (select && select.length) {
 
-        // Loop each select menu
-        selects.each(function() {
-          var select = $(this);
+        var selectId = select.attr('id');
+        var inputId = selectId + 'Input';
 
-          var selectId = select.attr('id');
-          var inputId = selectId + 'Input';
+        // Extract select menu options
+        select.find('option').each(function() {
 
-          // Extract select menu options
-          select.find('option').each(function() {
+          var option = $(this);
+          var value = option.val();
 
-            var option = $(this);
-            var value = option.val();
-
-            if (value) {
-              countries.push({
-                value: value,
-                aliases: option.data('aliases'),
-                text: option.text()
-              });
-            }
-          });
-
-          // Create input field
-          var input = $('<input type="text" />');
-          input.on('typeahead:select keypress blur', self.select);
-          input.data('select', select);
-
-          // Copy select menu attributes onto input
-          $.each(select.get(0).attributes, function(i, attr) {
-            input.attr(attr.name, attr.value);
-          });
-
-          // Insert input after select
-          select.after(input).hide();
-
-          // Set up input
-          input.removeAttr('name');
-          input.attr({
-            id: inputId,
-            value: select.val() && select.children('option:selected').text(),
-            autocorrect: 'off',
-            autocomplete: 'off'
-          });
-
-          // Start typeahead
-          input.typeahead(options, data);
-
-          // Fix any unmatched validation jump-links
-          $('[href="#' + selectId + '"]').attr('href', '#' + inputId);
-
-          // Fix any unmatched input label for/id pairs
-          $('[for="' + selectId + '"]').attr('for', inputId);
-
-          // Fix auto-focus on <select>, use input
-          $(window).on('hashchange', { id: selectId, input: input }, self.stealFocus);
-          self.stealFocus({ data: { id: selectId, input: input } });
+          if (value) {
+            countries.push({
+              value: value,
+              aliases: option.data('aliases'),
+              text: option.text()
+            });
+          }
         });
+
+        // Create input field
+        var input = $('<input type="text" />');
+        input.on('typeahead:select keypress blur', self.select);
+        input.data('select', select);
+
+        // Copy select menu attributes onto input
+        $.each(select.get(0).attributes, function(i, attr) {
+          input.attr(attr.name, attr.value);
+        });
+
+        // Insert input after select
+        select.after(input).hide();
+
+        // Set up input
+        input.removeAttr('name');
+        input.attr({
+          id: inputId,
+          value: select.val() && select.children('option:selected').text(),
+          autocorrect: 'off',
+          autocomplete: 'off'
+        });
+
+        // Start typeahead
+        input.typeahead(options, data);
+
+        // Fix any unmatched validation jump-links
+        $('[href="#' + selectId + '"]').attr('href', '#' + inputId);
+
+        // Fix any unmatched input label for/id pairs
+        $('[for="' + selectId + '"]').attr('for', inputId);
+
+        // Fix auto-focus on <select>, use input
+        $(window).on('hashchange', { id: selectId, input: input }, self.stealFocus);
+        self.stealFocus({ data: { id: selectId, input: input } });
       }
     };
 
