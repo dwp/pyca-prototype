@@ -1,0 +1,47 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+  {% include "includes/backlink_examples.html" %}
+  {% set attributes = '' if isPartnerFlow else ' class="inline"' %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          {{ 'Does their partner' if isPartnerFlow else 'Have they' }} brought their British passport today?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?</span>
+            </legend>
+
+            <label for="britishPassportToday-yes" class="block-label selection-button-radio">
+              <input type="radio" name="britishPassportToday" value="yes" id="britishPassportToday-yes">
+              Yes
+            </label>
+
+            <label for="britishPassportToday-no" class="block-label selection-button-radio">
+              <input type="radio" name="britishPassportToday" value="no" id="britishPassportToday-no">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
