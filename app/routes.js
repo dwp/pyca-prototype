@@ -245,7 +245,8 @@ router.all('/:type/questions/refugee', function (req, res) {
 
     // Non-refugee
     else if (refugee === 'no') {
-      res.redirect(`/${type}/questions/permanent-residence?${claimantType}`);
+      // res.redirect(`/${type}/questions/permanent-residence?${claimantType}`);
+      res.redirect(`/${type}/questions/nationality?${claimantType}`);
     }
 
     else if (res.locals.isPartnerFlow && refugee === 'unknown') {
