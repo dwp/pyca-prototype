@@ -50,6 +50,10 @@ var outcomes = {
   derivedRightsNonEEA: {
       id: 'END013',
       status: 'Non-EEA deriving rights from EEA spouse'
+  },
+  bookFurtherEvidenceInterview: {
+    id: 'END014',
+    status: 'Returning British national with no passport on the day of initial interview'
   }
 }
 
@@ -211,7 +215,7 @@ router.all('/:type/questions/uk-national', function (req, res) {
     // UK national
     if (ukNational == 'yes') {
       answers[claimantType].isEEA = true;
-      res.redirect(`/${type}/outcomes/${outcomes.british.id}?${claimantType}`);
+      res.redirect(`/${type}/questions/british-passport-today?${claimantType}`);
     }
 
     // Non-UK national
@@ -227,6 +231,36 @@ router.all('/:type/questions/uk-national', function (req, res) {
   else {
     res.render(`${type}/questions/uk-national`);
   }
+	
+});
+
+// Branching for citizens with a passport on the day
+router.all('/:type/questions/british-passport-today', function (req, res) {
+  var type = req.params.type;
+  var hasBritishPassportToday = req.body.britishPassportToday;
+  var answers = req.session.answers;
+  var claimantType = res.locals.claimantType;
+
+  if (hasBritishPassportToday) {
+    answers[claimantType].hasBritishPassportToday = hasBritishPassportToday;
+
+    // UK national
+    if (hasBritishPassportToday == 'yes') {
+      answers[claimantType].isEEA = true;
+      res.redirect(`/${type}/outcomes/${outcomes.british.id}?${claimantType}`);
+    }
+
+    // Non-UK national
+    else if (hasBritishPassportToday == 'no') {
+      res.redirect(`/${type}/outcomes/${outcomes.bookFurtherEvidenceInterview.id}?${claimantType}`);
+    }
+
+  }
+
+  else {
+    res.render(`${type}/questions/british-passport-today`);
+  }
+	
 });
 
 router.all('/:type/questions/refugee', function (req, res) {

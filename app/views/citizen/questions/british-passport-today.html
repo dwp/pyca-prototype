@@ -22,22 +22,16 @@
               <span class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?</span>
             </legend>
 
-            <label for="ukNational-yes" class="block-label selection-button-radio">
-              <input type="radio" name="ukNational" value="yes" id="ukNational-yes">
+            <label for="britishPassportToday-yes" class="block-label selection-button-radio">
+              <input type="radio" name="britishPassportToday" value="yes" id="britishPassportToday-yes">
               Yes
             </label>
 
-            <label for="ukNational-no" class="block-label selection-button-radio">
-              <input type="radio" name="ukNational" value="no" id="ukNational-no">
+            <label for="britishPassportToday-no" class="block-label selection-button-radio">
+              <input type="radio" name="britishPassportToday" value="no" id="britishPassportToday-no">
               No
             </label>
 
-            {% if isPartnerFlow %}
-            <label for="ukNational-unknown" class="block-label selection-button-radio">
-              <input type="radio" name="ukNational" value="unknown" id="ukNational-unknown">
-              Don’t know
-            </label>
-            {% endif %}
           </fieldset>
         </div>
 
