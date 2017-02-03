@@ -1,4 +1,4 @@
-# Prove You Can Apply - Prototype
+# Prove You Can Apply - Prototype.
 
 A prototype for a new service that will allow people to be fast-tracked and not take a Habitual Residence Test.
 
