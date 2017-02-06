@@ -9,7 +9,7 @@ var outcomes = {
   },
   employedEEA: {
       id: 'END002',
-      status: 'Employed EEA citizen'
+      status: 'EEA worker'
   },
   ineligible: {
       id: 'END003',
@@ -17,7 +17,7 @@ var outcomes = {
   },
   noRecourseToPublicFunds: {
       id: 'END004',
-      status: 'Person with no recourse to public funds'
+      status: 'No recourse to public funds'
   },
   selfEmployedEEA: {
       id: 'END006',
@@ -33,7 +33,7 @@ var outcomes = {
   },
   leaveToRemain: {
       id: 'END009',
-      status: 'Person with indefinite or limited leave to remain'
+      status: 'Settlement, indefinite or limited leave to remain'
   },
   redundantEEA: {
       id: 'END010',
@@ -41,15 +41,15 @@ var outcomes = {
   },
   sickEEA: {
       id: 'END011',
-      status: 'Sick EEA retained worker'
+      status: 'Temporary sick EEA citizen'
   },
   derivedRightsEEA: {
       id: 'END012',
-      status: 'EEA deriving rights from EEA spouse'
+      status: 'Spouse of EEA citizen'
   },
   derivedRightsNonEEA: {
       id: 'END013',
-      status: 'Non-EEA deriving rights from EEA spouse'
+      status: 'Spouse of EEA citizen'
   },
   bookFurtherEvidenceInterview: {
     id: 'END014',
@@ -231,7 +231,7 @@ router.all('/:type/questions/uk-national', function (req, res) {
   else {
     res.render(`${type}/questions/uk-national`);
   }
-	
+
 });
 
 // Branching for citizens with a passport on the day
@@ -260,7 +260,7 @@ router.all('/:type/questions/british-passport-today', function (req, res) {
   else {
     res.render(`${type}/questions/british-passport-today`);
   }
-	
+
 });
 
 router.all('/:type/questions/refugee', function (req, res) {
