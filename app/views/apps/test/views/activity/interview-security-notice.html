@@ -1,0 +1,14 @@
+{% set page = { 
+	section: 'Diary',
+	title: 'Security fail'
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+
+	<h1 class="heading-large">Security fail</h1>
+	
+	<p>Suspect has failed security questions. Rebook another appointment</p>
+	
+	<p><a href="{{ currentApp.urlPaths.root }}activity/appointment-book" class="button">Book another appointment</a></p>
+
+{% endblock %}

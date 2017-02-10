@@ -1,0 +1,60 @@
+{% set page = { 
+	section: 'Diary', title: 'Interview - Office' 
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+
+<h1 class="heading-large">Interviewing in the office</h1>
+
+<p>Which form of identity is the suspect providing?</p>
+
+<div class="grid-row">
+	<div class="column-full">
+
+		<form action="interview-record" method="post">
+			<div class="form-group">
+				<fieldset>
+
+					<legend class="visually-hidden">Which form of identity is the suspect providing?</legend>
+
+					<label class="block-label" for="passport">
+            <input id="passport" type="radio" name="radio" value="Passport">
+            Passport
+          </label>
+						
+					<label class="block-label" for="driving">
+            <input id="driving" type="radio" name="radio" value="driving-l">
+            Driving licence
+          </label>
+						
+					<label class="block-label" for="council">
+            <input id="council" type="radio" name="radio" value="Council-tex">
+            Council tax
+          </label>
+						
+					<label class="block-label" for="tenancy">
+            <input id="tenancy" type="radio" name="radio" value="tenancy">
+            Tenancy agreement
+          </label>
+						
+					<label class="block-label" for="none">
+            <input id="none" type="radio" name="radio" value="none">
+            None of the above
+          </label>
+
+				</fieldset>
+
+			</div>
+			
+			<div class="form-group">
+				<legend class="visuallyhidden">Validate customer</legend>
+				<input type="submit" value="Validate customer" class="button" id="submitButton" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+			</div>
+
+		</form>
+		
+		<a href="{{ currentApp.urlPaths.root }}work-list">Abort interview</a>
+
+	</div>
+
+	{% endblock %}

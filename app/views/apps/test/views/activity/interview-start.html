@@ -1,0 +1,34 @@
+{% set page = { 
+	section: 'Diary',
+	title: 'Interviewing'
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+
+	<h1 class="heading-large">Interviewing</h1>
+
+	<form action="interview_route" method="post">
+
+		<div class="form-group">
+			<p class="heading-small">What type of interview are you doing?</p>
+		</div>
+
+		<div class="form-group">
+
+			<label class="block-label" for="radio-inline-1">
+				<input id="radio-inline-1" type="radio" name="interview_type" value="telephone">
+				Telephone interview
+			</label>
+
+			<label class="block-label" for="radio-inline-2">
+				<input id="radio-inline-2" type="radio" name="interview_type" value="office">
+				Office inteview
+			</label>
+		
+		</div>
+
+		<input type="submit" value="Continue" class="button" id="submitButton" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+
+	</form>
+
+{% endblock %}

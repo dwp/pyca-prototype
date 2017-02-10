@@ -1,0 +1,156 @@
+{% set page = {
+	section: "work list",
+	subsection: "case view"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "case.html" %}
+
+{% block subsection_primary %}
+
+	<h1 class="heading-large mt-0">Case view</h1>
+	
+	<table class="data-table data-table--case">
+
+				<thead>
+					<tr>
+						<th scope="col">Suspect details</th>
+						<th scope="col">&nbsp;</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td>Title:</td>
+						<td>Mr</td>
+					</tr>
+					<tr>
+						<td>First name:</td>
+						<td>Jason</td>
+					</tr>
+					<tr>
+						<td>Last name:</td>
+						<td>Farrowash</td>
+					</tr>
+					<tr>
+						<td>Gender:</td>
+						<td>Male</td>
+					</tr>
+					<tr>
+						<td>Date of birth:</td>
+						<td>25 Mar 1974</td>
+					</tr>
+					<tr>
+						<td>N.I. </td>
+						<td>PG515593</td>
+					</tr>
+					<tr>
+						<td>Telephone: </td>
+						<td>07985 999466</td>
+					</tr>
+					<tr>
+						<td>Email:</td>
+						<td><a href="eldia.helsel@gmail.com">jason.farrowash@gmail.com</a></td>
+					</tr>
+					<tr>
+						<td>PV:</td>
+						<td>Yes</td>
+					</tr>
+					<tr>
+						<td>Vulnerable:</td>
+						<td>Yes</td>
+					</tr>
+					<tr>
+						<td>Address:</td>
+						<td>
+							3 Golf Road, Shelf, Halifax. HX6 2QW
+						</td>
+					</tr>
+					<tr>
+						<td>Address commenced:</td>
+						<td>21 Nov 2011</td>
+					</tr>
+
+				</tbody>
+
+			</table>
+
+		<details class="appointee">
+
+			<summary><span class="summary">Appointee details</span></summary>
+
+			<div class="">
+				<table class="data-table data-table--case">
+
+					<tbody>
+						<tr>
+							<td>Title:</td>
+							<td>Mr</td>
+						</tr>
+						<tr>
+							<td>First name: </td>
+							<td>Mathews</td>
+						</tr>
+						<tr>
+							<td>Telephone:</td>
+							<td>07985 999466</td>
+						</tr>
+						<tr>
+							<td>Email:</td>
+							<td><a href="eldia.helsel@gmail.com">eldia.helsel@gmail.com</a></td>
+						</tr>
+						<tr>
+							<td>Address:</td>
+							<td>14 Essex Rd, Little Roundabout, Essex. EX2 2BT</td>
+						</tr>
+
+					</tbody>
+
+				</table>
+			</div>
+
+	</details>
+
+	<details class="appointee">
+
+		<summary><span class="summary">Partner details</span></summary>
+
+		<div>
+
+
+			<table class="data-table data-table--case">
+				
+				<tbody>
+					<tr>
+						<td>Title:</td>
+						<td>Miss</td>
+					</tr>
+					<tr>
+						<td>First name: </td>
+						<td>Liza</td>
+					</tr>
+					<tr>
+						<td>Last name:</td>
+						<td>Doomglory</td>
+					</tr>
+					<tr>
+						<td>Telephone:</td>
+						<td>07995 5646858</td>
+					</tr>
+					<tr>
+						<td>Address:</td>
+						<td>12 Golf Road, Shelf, Halifax. HX6 2QW</td>
+					</tr>
+					<tr>
+
+
+				</tbody>
+
+			</table>
+
+
+
+		</div>
+
+	</details>	
+
+{% endblock %}

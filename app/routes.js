@@ -1,5 +1,10 @@
 var express = require('express')
 var router = express.Router()
+var path = require('path')
+var config = require(path.join(__dirname + '/config.js'))
+
+// include sub-application routing if enabled in the configuration file
+if (config.useSubapplications) router.use('/', require(path.join(__dirname + '/subapps.js')))
 
 // Readable outcomes
 var outcomes = {

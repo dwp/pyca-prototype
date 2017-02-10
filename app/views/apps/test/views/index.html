@@ -1,0 +1,40 @@
+{% set page = {
+	hide: {
+		globalnav: true
+	}
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+	
+	<div class="c-focal-pane">
+		
+		<h1 class="heading-large">Sign in</h1>
+	  
+		<p>Enter your email address and password to access your allocated cases.</p>
+	  
+	  <form action="login" method="post">
+	    
+	    <div class="form-group">
+	  	  <label class="form-label" for="username">Email address</label>
+	  	  <input class="form-control form-control-1-1" id="username" name="username" type="text" autocomplete="off">
+	  	</div>
+	    
+	  	<div class="form-group">
+	  	  <label class="form-label" for="password">Password</label>
+	  	  <input class="form-control form-control-1-1" id="password" name="password" type="password" autocomplete="off">
+	  	</div>
+
+	    <fieldset class="primary-nav form-group">
+	      <legend class="visuallyhidden">Form Navigation</legend>
+	      <input type="submit" value="Continue" class="button" id="submitButton" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+	    </fieldset>
+
+	    <p><a href="forgot-password" title="Forgot your password?">Forgotten your password?</a></p>
+
+	  </form>
+		
+	</div>
+	
+{% endblock %}

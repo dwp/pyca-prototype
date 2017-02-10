@@ -1,0 +1,53 @@
+{% set page = {
+	section: "work list",
+	subsection: "Notes (1 new)"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "case.html" %}
+
+{% block subsection_primary %}
+	
+<h3 class="heading-large mt-0">Notes</h3>
+
+<p class="text">Case notes are a great way of adding extra information for a case, just remember keep it brief and notify the case owner if applicable.</p>
+
+<form>
+    <fieldset>
+
+        <div class="form-group">
+            <legend class="visually-hidden">Your note</legend>
+            <label class="form-label" for="add-comment">Your note</label>
+            <textarea class="form-control form-control-1-1 span-width" id="add-comment" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <legend class="visuallyhidden">Form Navigation</legend>
+            <input type="submit" value="Post note" class="button" id="submitButton" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
+
+    </fieldset>
+</form>
+
+<hr>
+<h4 class="heading-small">James wicker - 16 Nov 2016</h4>
+<p class="">
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
+    sit aspernatur aut odit aut fugit, sed quia
+</p>
+
+<hr>
+<h4 class="heading-small">Larissa wilson - 5 Nov 2016</h4>
+<p class="">
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
+    sit aspernatur aut odit aut fugit, sed quia
+</p>
+
+<hr>
+<h4 class="heading-small">Finley Davies - 30 Oct 2016</h4>
+<p class="">
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
+    sit aspernatur aut odit aut fugit, sed quia
+</p>
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% set page = {
+	section: "diary",
+	subsection: "Book appointment"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+<h1 class="heading-large">Confirm appointment</h1>
+
+<br>
+
+<div class="grid-row">
+	
+	<div class="column-one-third">
+		
+		<dl class="meta-data">
+			<dt class="meta-data__key">Case number</dt>
+			<dd class="meta-data__val">{{ currentApp.session['appointment-case-number'] | d('12939030') }}</dd>
+		</dl>
+		
+	</div>
+	
+	<div class="column-two-thirds">
+		
+		<h2 class="heading-medium mt-0">Appointment details</h2>
+
+		<p>Confirm the booking of a {{ currentApp.session['appointment-type'] }} appointment with:</p><p>{{ currentApp.session['appointment-name'] }}.</p>
+		
+		<dl class="meta-data meta-data--vertical">
+			<dt class="meta-data__key">Date</dt>
+			<dd class="meta-data__val">{{ currentApp.session['appointment-day'] }} {{ currentApp.session['appointment-month'] }}</dd>
+			<dt class="meta-data__key">Start time</dt>
+			<dd class="meta-data__val">{{ currentApp.session['appointment-start'] }}</dd>
+			<dt class="meta-data__key">End time</dt>
+			<dd class="meta-data__val">{{ currentApp.session['appointment-end'] }}</dd>
+		</dl>
+		
+		{% if currentApp.session['appointment-type'] == 'visit' %}
+			<h2 class="heading-small">Address</h2>
+			
+			<p>
+				{{ currentApp.session['appointment-address-line1'] }}<br> 
+				{{ currentApp.session['appointment-address-line2'] }}<br>
+				{{ currentApp.session['appointment-address-town'] }}<br>
+				{{ currentApp.session['appointment-address-postcode'] | upper }}
+			</p>
+			
+		{% endif %}
+		
+		<div class="form-group">
+			<a href="{{ currentApp.urlPaths.root + 'case/' }}" class="button">Book appointment</a>
+			<a href="{{ currentApp.urlPaths.root + 'activity/appointment-book' }}" class="button button--link">Edit this appointment</a>
+		</div>
+
+	</div>
+	
+</div>
+	
+{% endblock %}

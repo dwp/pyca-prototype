@@ -1,0 +1,63 @@
+{% set page = { 
+	section: 'Work list',
+	title: 'Case close'
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+
+	<h1 class="heading-large">Reroute case</h1>
+	
+  <form>
+    <div class="form-group">
+
+          <label class="block-label" for="business" data-target="business-opt">
+            <input id="business" name="case-reroute" type="radio" value="Face">
+            Another business area
+          </label>
+
+          <div class="panel panel-border-narrow form-group js-hidden" id="business-opt">
+
+              <p>Select a business area</p>
+              <label class="block-label" for="radio-1">
+                <input id="radio-1" type="radio" name="case-reroute-business-area" value="compliance">
+                Compliance
+              </label>
+              
+              <label class="block-label" for="radio-2">
+                <input id="radio-2" type="radio" name="case-reroute-business-area" value="organised">
+                Organised
+              </label>
+              
+              <label class="block-label" for="radio-3">
+                <input id="radio-3" type="radio" name="case-reroute-business-area" value="investigation">
+                Investigation
+              </label>
+
+          </div>
+
+          <label class="block-label" for="user" data-target="user-opt">
+            <input id="user" name="case-reroute" type="radio" value="decision-maker">
+            Decision maker
+          </label>
+
+
+          <label class="block-label" for="crt" data-target="">
+            <input id="crt" name="case-reroute" type="radio" value="crt">
+            Central recovery team (CRT)
+          </label>
+          
+          <label class="block-label" for="processing-team" datastarget="">
+            <input id="processing-team" name="case-reroute" type="radio" value="processing-team">
+            Processing team
+          </label>
+      
+      </div>
+
+    <div class="form-group">
+        <legend class="visuallyhidden">Re-route case</legend>
+        <input type="submit" value="Re-route case" class="button" id="submitButton" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    </div>
+        
+  </form>
+
+{% endblock %}

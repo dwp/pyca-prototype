@@ -1,0 +1,314 @@
+// name spacing this very poor css and placing here in it's own sass
+// partial. :( TODO: REPLACE THIS!
+
+.c-diary {
+
+	.diary {
+		
+		font-size: 16px;
+		position: relative;
+
+		.cal-nav {
+			padding: 15px 0;
+			/*border-top: 1px solid $border-colour;*/
+			margin-bottom: 15px 0 20px 0;
+			position: relative;
+
+			li {
+				float: left;
+				width: 33%;
+			}
+			font-size: 19px;
+
+			.prev {
+				display: block;
+
+				span {
+					font-size: 14px;
+				}
+			}
+
+			.next {
+				display: block;
+				text-align: right;
+
+				span {
+					font-size: 14px;
+				}
+			}
+
+			.date {
+				text-align: center;
+				display: block;
+			}
+
+			&:after {
+				visibility: hidden;
+				display: block;
+				font-size: 0;
+				content: " ";
+				clear: both;
+				height: 0;
+			}
+		}
+
+		.cal-container {
+			float: left;
+
+			&:after {
+				visibility: hidden;
+				display: block;
+				font-size: 0;
+				content: " ";
+				clear: both;
+				height: 0;
+			}
+
+			ul {
+				float: left;
+				width: 16.6%;
+				position: relative;
+				min-width: 159px;
+			}
+
+			li {
+				height: 80px;
+				position: relative;
+				border-right: 1px solid $border-colour;
+				border-bottom: 1px solid $border-colour;
+
+				span {
+					display: block;
+					position: relative;
+					height: 80px;
+				}
+
+				.odd {
+					background: $highlight-colour;
+					position: relative;
+				}
+
+				.time {
+					position: absolute;
+					width: 100%;
+					text-align: center;
+					padding-top: 11px;
+					color: $secondary-text-colour;
+				}
+
+				.blank {
+					position: relative;
+					height: 40px;
+					position: relative;
+				}
+			}
+
+			.dayrow {
+				height: 40px;
+				position: relative;
+			}
+
+			.day {
+				font-weight: bold;
+				text-align: center;
+				border-top: 1px solid $border-colour;
+				padding-top: 10px;
+				background: $panel-colour;
+				height: 29px;
+				position: relative;
+			}
+
+			.face,
+			.interview {
+				font-size: 14px;
+				padding-left: 5px;
+				position: relative;
+				padding-top: 4px;
+				display: block;
+				border-radius: 3px;
+				background: lighten($govuk-blue, 55%);
+				color: $text-colour;
+				line-height: 16px;
+				height: 35px;
+				position: relative;
+				margin-bottom: 1px;
+				cursor: default;
+			}
+
+			.face {
+				background: lighten($yellow, 25%);
+				height: 75px;
+				position: relative;
+			}
+		}
+
+		.border-fix {
+			border-left: 1px solid $border-colour;
+		}
+	}
+
+	.diary-detail {
+		.long,
+		.notes,
+		.short {
+			display: block;
+		}
+
+		td {
+			font-size: 16px;
+		}
+	}
+
+	.dayview {
+		td {
+			font-size: 16px;
+			margin-right: -15px;
+		}
+
+		.address,
+		.interview,
+		.notes {
+			display: block;
+			padding-bottom: 5px;
+		}
+
+		.interview {
+			font-weight: bold;
+		}
+
+		.open-case {
+			vertical-align: top;
+			border-top: 1px solid $border-colour;
+			text-align: right;
+		}
+
+		.notes {}
+
+		.address {}
+
+		.appoint {
+			width: 115px;
+			vertical-align: top;
+		}
+
+		&:after {
+			visibility: hidden;
+			display: block;
+			font-size: 0;
+			content: " ";
+			clear: both;
+			height: 0;
+		}
+	}
+
+	.wrapper {
+		position: absolute;
+		z-index: 1;
+		opacity: 1;
+		-webkit-transform: translateZ(0);
+		/* webkit flicker fix */
+		-webkit-font-smoothing: antialiased;
+		/* webkit text rendering fix */
+	}
+
+	.wrapper .tooltip {
+		background: lighten($yellow, 15%);
+		bottom: 100%;
+		z-index: 100;
+		color: #fff;
+		display: block;
+		left: -20px;
+		margin-bottom: 15px;
+		opacity: 0;
+		padding: 20px;
+		pointer-events: none;
+		position: absolute;
+		width: 127px;
+		-webkit-transform: translateY(10px);
+		-moz-transform: translateY(10px);
+		-ms-transform: translateY(10px);
+		-o-transform: translateY(10px);
+		transform: translateY(10px);
+		-webkit-transition: all 0.25s ease-out;
+		-moz-transition: all 0.25s ease-out;
+		-ms-transition: all 0.25s ease-out;
+		-o-transition: all 0.25s ease-out;
+		transition: all 0.25s ease-out;
+		-webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+		-moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+		-ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+		-o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+		box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+	}
+
+	.wrapper {
+		.tooltip {
+			span {
+				color: $text-colour;
+				font-size: 14px;
+				padding-bottom: 10px;
+			}
+
+			.name {
+				font-weight: bold;
+				height: auto;
+			}
+
+			.tel {
+				height: auto;
+			}
+
+			.interview-address {
+				height: auto;
+			}
+
+			a {
+				display: block;
+				color: $text-colour;
+				padding-bottom: 7px;
+			}
+		}
+	}
+	/* This bridges the gap so you can mouse into the tooltip without it disappearing */
+	.wrapper .tooltip:before {
+		bottom: -20px;
+		content: " ";
+		display: block;
+		height: 20px;
+		left: 0;
+		position: absolute;
+		width: 100%;
+	}
+	/* CSS Triangles */
+	.wrapper .tooltip:after {
+		border-left: solid transparent 10px;
+		border-right: solid transparent 10px;
+		border-top: solid #ffda94 10px;
+		bottom: -10px;
+		content: " ";
+		height: 0;
+		left: 50%;
+		margin-left: -13px;
+		position: absolute;
+		width: 0;
+	}
+
+	.wrapper:hover .tooltip {
+		opacity: 1;
+		pointer-events: auto;
+		-webkit-transform: translateY(0px);
+		-moz-transform: translateY(0px);
+		-ms-transform: translateY(0px);
+		-o-transform: translateY(0px);
+		transform: translateY(0px);
+	}
+	/* IE can just show/hide with no transition */
+	.lte8 .wrapper .tooltip {
+		display: none;
+	}
+
+	.lte8 .wrapper:hover .tooltip {
+		display: block;
+	}
+	
+}

@@ -1,0 +1,73 @@
+{% set page = { 
+	section: 'Find a case' 
+} %} 
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+	
+		
+		<h1 class="heading-large">Find a case</h1>
+		
+		<form action="index" method="post">
+					
+			<div class="form-group">
+				<label class="form-label" for="search">To find another colleagues case, or one of your own, simply enter a search term. </label>
+			</div>
+			
+			<div class="form-group">				
+				<div class="c-search-pattern">
+					
+					<div class="c-search-pattern__field">
+						<input class="form-control form-control-1-1 c-search-pattern__input" id="search" type="text" name="searchTerm">
+					</div>
+					
+					<div class="c-search-pattern__action">
+						<input type="submit" value="Find" class="button c-search-pattern__button" id="submitButton" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+					</div>
+					
+				</div>
+			</div>
+			
+		</form>
+		
+		{% if postData.searchTerm %}
+		
+		<p>You searched for: {{ postData.searchTerm }}</p>
+		
+		<h3 class="heading-medium">Cases found</h3>
+			
+		<table class="data-table">
+		  <thead>
+		    <tr>
+		      <th scope="col">Case owner</th>
+		      <th scope="col">Case No</th>
+		      <th scope="col">Last name</th>
+		      <th scope="col">First name</th>
+		      <th scope="col">Offence type</th>
+		      <th scope="col">Stage</th>
+		      <th scope="col">Activity</th>
+		      <th scope="col">Due date</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+
+		  	<tr>
+		      <td>Andy Houghton</td>
+		      <td><a href="{{ currentApp.urlPaths.root }}case/index" title="View case">122560023</a></td>
+		      <td>Dusttrap</td>
+		      <td>Nuno</td>
+		      <td>Living together</td>
+		      <td>Info gathering</td>
+		      <td>Book appoinment</td>
+		      <td>10 Nov 2016</td>
+		    </tr>
+		  
+		  </tbody>
+		</table>
+			
+		{% endif %}
+		
+	
+	
+{% endblock %}

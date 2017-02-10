@@ -1,0 +1,87 @@
+{% set page = {
+	section: "work list",
+	subsection: "third parties (3)"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "case.html" %}
+
+{% block subsection_primary %}
+	
+		<h1 class="heading-large mt-0">Third parties</h1>
+
+    <!-- Employment details -->
+    <h3 class="heading-medium ">Employment details</h3>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th scope="col">Current employer</th>
+                <th scope="col">Employment dates</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>
+                    Argos<br> Crown Street<br> Halifax
+                    <br> West Yorkshire<br> HX4 5TA<br>
+
+                </td>
+                <td>Start: 1 Nov 2015<br> To: Current</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Bank details -->
+    <h3 class="heading-medium">Bank details</h3>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th scope="col">Information</th>
+                <th scope="col">Current details</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>Bank name</td>
+                <td>Santander</td>
+            </tr>
+            <tr>
+                <td>Sort code</td>
+                <td>11-45-66</td>
+            </tr>
+            <tr>
+                <td>Account number</td>
+                <td>56765763</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Pension details -->
+    <h3 class="heading-medium">Pension</h3>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th scope="col">Information</th>
+                <th scope="col">Current details</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>Company</td>
+                <td>Standard life</td>
+            </tr>
+            <tr>
+                <td>Account number</td>
+                <td>456889789</td>
+            </tr>
+            <tr>
+                <td>In payment</td>
+                <td>£55.22 per week</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

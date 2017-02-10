@@ -1,0 +1,32 @@
+{% set page = { 
+	section: 'Work list',
+	title: 'Case close',
+	hide: {
+		section_nav: true
+	}
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "admin-subsection.html" %}
+{# {% extends "layouts/layout.html" %} #}
+
+{% block subsection_primary %}
+
+<form class="" action="index.html" method="post">
+
+	<h1 class="heading-large mt-0">Abandon case</h1>
+	
+		<div class="form-group">
+      <label class="form-label" for="select-box">Reason for rejection</label>
+      <select class="form-control" id="select-box">
+        <option>Duplicate referral</option>
+        <option>Already investigated – case updated</option>
+      </select>
+    </div>
+
+    <legend class="visuallyhidden">Form Navigation</legend>
+    <!-- <input type="submit" value="Reject case" class="button" id="submitButton" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"> -->
+		<a href="{{ currentApp.urlPaths.root }}work-list" class="button">Reject case</a>
+	
+</form>
+
+{% endblock %}

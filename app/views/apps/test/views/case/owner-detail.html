@@ -1,0 +1,36 @@
+{% set page = {
+	section: "work list"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "case.html" %}
+
+{% block subsection_content %}
+		
+	<br>
+	
+	<a href="javascript:history.back();" class="link-back">Back</a>
+		
+	<h3 class="heading-large">Case owner</h3>
+	
+	<table class="data-table">
+	  <thead>
+	    <tr>
+	      <th scope="col">Name</th>
+	      <th scope="col">Job title</th>
+	      <th scope="col">Location</th>
+	      <th scope="col">Telephone</th>
+	      <th scope="col">Email</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	 <tr>
+	      <td>Andy Houghton</td>
+	      <td>Investigations officer</td>
+	      <td>Stockport</td>
+	      <td>0161 612 5111</td>
+	      <td><a href="mailto:name@email.com">andy.houghton@dwp.gsi.gov.uk</a></td>
+	    </tr>
+	  </tbody>
+	</table>
+
+{% endblock %}
