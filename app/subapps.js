@@ -7,7 +7,7 @@ const app = express()
 const glob = require('globby')
 const _ = require('lodash')
 const appsDir = 'apps'
-const baseSubAppPath = __dirname + '/views/'
+const baseSubAppPath = `${__dirname}/views/`
 const sentenceCase = require('sentence-case')
 let subApps = new Array()
 
@@ -35,9 +35,9 @@ let getSubAppData = function(currentPath) {
 	// gets the sub directory name
 	let appDirName = computedPath.split('/')[1]
 	// the 'absolute' path of the app e.g '/apps/version-1/'
-	let appAbsolutePath = '/' + appsDir + '/' + appDirName + '/'
+	let appAbsolutePath = `/${appsDir}/${appDirName}`
 	// the 'absolute' path of the app view directory e.g '/apps/version-1/views/'
-	let appRouteString = appAbsolutePath + 'views/'
+	let appRouteString = `${appAbsolutePath}/views/`
 	// the title based on the app's directory/folder name. Set to be sentance-case
 	let title = sentenceCase(appDirName)
 	
@@ -56,11 +56,11 @@ let getSubAppData = function(currentPath) {
 		// url paths constructed from the passed in subapp path
 		urlPaths: {
 			appRoot: appAbsolutePath,
-      root: appAbsolutePath  + 'views/',
-			assetsPath: appAbsolutePath + 'assets/',
-			scriptsPath: appAbsolutePath + 'assets/javascripts/',
-			stylesPath: appAbsolutePath + 'assets/sass/',
-			imagesPath: appAbsolutePath + 'assets/images/'
+      root: `${appAbsolutePath}/views/`,
+			assetsPath: `${appAbsolutePath}/assets/`,
+			scriptsPath: `${appAbsolutePath}/assets/javascripts/`,
+			stylesPath: `${appAbsolutePath}/assets/sass/`,
+			imagesPath: `${appAbsolutePath}/assets/images/`
 		},
 		
 		// file paths, to be used primarily by nunjucks for rendering layouts,
@@ -68,10 +68,10 @@ let getSubAppData = function(currentPath) {
 		filePaths: {
 			routesFile: computedPath,
 			subAppDir: path.dirname(computedPath),
-			layoutsDir: path.dirname(computedPath) + '/layouts/',
-			includesDir: path.dirname(computedPath) + '/includes/',
-			coreLayoutsDirPathRel: path.relative(path.dirname(currentPath + '/layouts/'), __dirname + '/views/layouts/'),
-			configFile: path.dirname(computedPath) + '/config.js'
+			layoutsDir: `${path.dirname(computedPath)}/layouts/`,
+			includesDir: `${path.dirname(computedPath)}/includes/`,
+			coreLayoutsDirPathRel: path.relative(path.dirname(currentPath + '/layouts/'), `${__dirname}/views/layouts/`),
+			configFile: `${path.dirname(computedPath)}/config.js`
 		},
 		
 		// route strings
@@ -91,7 +91,7 @@ let getSubAppData = function(currentPath) {
  *  using static middleware.
  */
 router.get('/apps/:subapp*/assets/:type/:file*', function(req, res){
-	let requestedFile = __dirname + '/views/apps/' + req.params.subapp + '/assets/' + req.params.type + '/' + req.params.file
+	let requestedFile = `${__dirname}/views/apps/${req.params.subapp}/assets/${req.params.type}/${req.params.file}`
   // Don't let them peek at /etc/passwd
   if (req.params.file.indexOf('..') === -1) {
     return res.sendFile(requestedFile)
@@ -110,47 +110,16 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 	let appData = getSubAppData(currentPath)
 	
 	// add specific subApp config (can override some of app/config)
-	appData.config = require(baseSubAppPath + appData.filePaths.subAppDir + "/config.js")
+	appData.config = require(`${baseSubAppPath + appData.filePaths.subAppDir}/config.js`)
 	
 	// push that to a collection of all the subapps
 	subApps.push(appData)
-	
-	// let subRoutes = [
-  //   appData.urlPaths.appRoot + ':page',
-  //   appData.urlPaths.appRoot + 'views/:page*',
-  //   appData.urlPaths.appRoot + 'views/**/:page*'
-  // ]
-	// 
-	// subRoutes.forEach(function(path){
-	// 	
-	// 	router.all(path, function(req,res,next){
-	// 		
-	// 	  if (!appData.session){
-	// 	    appData.session = {};
-	// 	  }
-	// 
-	// 	  for (var i in req.body){
-	// 	    // any input where the name starts with _ is ignored
-	// 	    if (i.indexOf("_") != 0){
-	// 	      appData.session[i] = req.body[i];
-	// 	    }
-	// 	  }
-	// 		
-	// 	  _.merge(res.locals, {
-	// 	    currentApp: appData,
-	// 			postData: (req.body ? req.body : false)
-	// 	  }, appData.config.overrides);
-	// 	  
-	// 		next();
-  //     
-	// 	})
-	// })
 
 	let subRoutes = [
     appData.urlPaths.appRoot,
-    appData.urlPaths.appRoot + ':page',
-    appData.urlPaths.appRoot + 'views/:page*',
-    appData.urlPaths.appRoot + 'views/**/:page*'
+    `${appData.urlPaths.appRoot}/:page`,
+    `${appData.urlPaths.appRoot}/views/:page*`,
+    `${appData.urlPaths.appRoot}/views/**/:page*`
   ]
 		
 	router.all(subRoutes, function(req,res,next){

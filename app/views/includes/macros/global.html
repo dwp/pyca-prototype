@@ -1,0 +1,9 @@
+{% macro subapps_list(subapps) %}
+	{% if subapps.length %}
+		<ul class="list-bullet list-bullet--medium">
+		{% for subapp in subapps %}
+			<li><a href="{{ subapp.urlPaths.appRoot }}">{{ subapp.title }}</a></li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+{% endmacro %}

@@ -1,0 +1,188 @@
+// Path to assets for use with the file-url function
+// in the govuk frontend toolkit's url-helpers partial
+$path: "/public/images/";
+
+// Import GOV.UK elements from /govuk-modules/, this will import the frontend toolkit and some base styles.
+// Take a look in /govuk-modules/_govuk-elements.scss to see which files are imported. 
+@import 'govuk-elements'; 
+
+// Take a look at in app/assets/sass/patterns/ to see which files are imported.
+@import 'patterns/check-your-answers';
+@import 'partials/autocomplete';
+@import 'partials/form-overrides';
+@import 'partials/outcome';
+@import 'partials/table';
+
+// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+li .panel:first-child {
+  margin-top: 10px;
+}
+
+$dwp-colour: $department-for-work-pensions;
+$dwp-active-colour: #28a197;
+
+$media-breakpoints:(
+  mobile: 641px - 1,
+  tablet: 641px,
+  desktop: 769px
+);
+
+// generate a ta alignment class and if require a modifier version for 
+// each breakpoint.
+$alignments: left, right, center;
+
+@each $alignment in $alignments {
+  .ta--#{$alignment} {
+    text-align: $alignment;
+    @each $breakpoint in map-keys($media-breakpoints) {
+      @include media($breakpoint) {
+        &--#{$breakpoint} {
+          text-align: $alignment;
+        }  
+      }
+    }
+  }
+}
+
+.column-mobile-one-half {
+  @include grid-column(1/2, $full-width: mobile);
+}
+.column-mobile-one-third {
+  @include grid-column(1/3, $full-width: mobile);
+}
+.column-mobile-two-thirds {
+  @include grid-column(2/3, $full-width: mobile);
+}
+
+.column-mobile-full {
+  @include grid-column(1/1, $full-width: mobile);
+}
+
+.column-tablet-one-third {
+  @include grid-column(1/3, $full-width: tablet);
+}
+
+.column-tablet-two-thirds {
+  @include grid-column(2/3, $full-width: tablet);
+}
+
+.column-tablet-two-thirds {
+  @include grid-column(2/3, $full-width: tablet);
+}
+
+.column-tablet-three-quarters {
+  @include grid-column(3/4, $full-width: tablet);
+}
+
+// Related items
+// (These styles will be moved to GOV.UK elements, duplicating here for now.)
+.govuk-related-items {
+  margin-top: $gutter;
+  border-top: 10px solid $govuk-blue;
+  padding-top: 5px;
+
+  .heading-medium {
+    margin-top: 0.3em;
+    margin-bottom: 0.5em;
+  }
+
+  li {
+    margin-bottom: 10px;
+    list-style-type: none;
+  }
+}
+
+.mono-inline {
+	font-family: courier, mono;
+	display: inline-block;
+	background: $grey-4;
+	padding: 0.15em 0.25em;
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  color: $govuk-blue;
+  font-size: 0.85em;
+}
+
+.mono-block {
+	font-family: courier, mono;
+	display: block;
+	background: $grey-4;
+	padding: 1em;
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  color: $green;
+  font-size: 1em;
+	overflow: auto;
+}
+
+.list-block {
+	margin-bottom: 1.5em;
+  li:not(:last-of-type) {
+    margin-bottom: 0.5em;
+  }
+}
+
+.form-control-1-1 {
+  width: 100%;
+  @include media(tablet) {
+    width: 100%;
+  }  
+}
+
+.mt {
+  &-0 {
+    margin-top: 0!important;
+  }
+}
+
+.mb {
+	&-0 {
+		margin-bottom: 0!important;
+	}
+}
+
+.meta-data {
+	
+	margin-bottom: 1.5em;
+	
+	&__key {
+		font-weight: bold;
+	}
+	
+	&__val {
+			
+	}
+	
+	&__val + &__key {
+		margin-top: 1em;
+	}
+	
+}
+
+.button--block {
+  display: block;
+}
+
+.button-secondary {
+	@include button($grey-3);
+}
+
+.inline-button-text {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 2;
+}
+
+.button + .inline-button-text {
+	margin-left: 10px;
+}
+
+.list-bullet {
+  &--medium {
+    li {
+      font-size: 22px;
+    }
+  }
+}
