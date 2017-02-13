@@ -12,13 +12,18 @@
 
 {% extends "layouts/layout.html" %}
 
+{% block page_title %}{{ page.title }} &ndash; {{ serviceName}}{% endblock %}
+
 {% block head %}
 	{# swap out the default 'application.css' for this sub-application specific file #}
 	<link href="{{ currentApp.urlPaths.stylesPath + currentApp.config.cssFile | d('sub-application.css') }}" media="screen" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}
-	<main id="content">
+	<main id="content" role="main">
+		
+		{% include "includes/phase_banner_prototype.html" %}
+		
 		{# 
 			a block to ensure the pages are always wrapped in the main content
 			element. override content block if you don't want this.
@@ -26,6 +31,7 @@
 		{% block main_content %}
 			<p>lorem</p>
 		{% endblock %}
+		
 	</main>
 {% endblock %}
 

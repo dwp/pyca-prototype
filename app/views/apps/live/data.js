@@ -8,7 +8,7 @@ module.exports = {
 	
 	subnavs: {
 	
-		case: [
+		questions: [
 			{ href: "case/", text: "Case view" },
 			{ href: "case/documents", text: "Documents" },
 			{ href: "case/linked-cases", text: "Linked cases (1)" },
