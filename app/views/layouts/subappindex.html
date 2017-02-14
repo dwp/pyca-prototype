@@ -16,7 +16,7 @@
 				<span class="heading-secondary">Details of this prototype</span>
 			</h1>
 			
-			<p><a href="{{ currentApp.startURL | d('views/') }}" class="button button-start">Launch {{ (currentApp.title) if currentApp.title }} prototype</a></p>
+			<p><a href="{{ currentApp.startURL | d(page.startURL | d('views/')) }}" class="button button-start">Launch {{ (currentApp.title) if currentApp.title }} prototype</a></p>
 
 			{% block description %}
 				<h2 class="heading-medium">Description</h2>

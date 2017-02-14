@@ -205,6 +205,7 @@ router.all('/:type/outcomes/:outcomeId', function (req, res, next) {
 
   // Render requested outcome
   res.render(`${type}/outcomes/${outcomeId}`);
+  
 });
 
 // Branching for citizens

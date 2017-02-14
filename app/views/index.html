@@ -16,6 +16,10 @@
 			<h1 class="heading-xlarge">
 				{% if serviceName %} {{ serviceName }} {% endif %}
 			</h1>
+			
+			<h2 class="heading-medium">Versions</h2>
+			
+			{{ macros.subapps_list(apps) }}
 
 			<h2 class="heading-medium">Things on here</h2>
 

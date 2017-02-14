@@ -34,8 +34,12 @@ let getSubAppData = function(currentPath) {
 	
 	// gets the sub directory name
 	let appDirName = computedPath.split('/')[1]
+  
+  let appRelativePath = `${appsDir}/${appDirName}`
+  
 	// the 'absolute' path of the app e.g '/apps/version-1/'
 	let appAbsolutePath = `/${appsDir}/${appDirName}`
+
 	// the 'absolute' path of the app view directory e.g '/apps/version-1/views/'
 	let appRouteString = `${appAbsolutePath}/views`
 	// the title based on the app's directory/folder name. Set to be sentance-case
@@ -54,6 +58,7 @@ let getSubAppData = function(currentPath) {
 		// a string used to give the app a unique body class
 		body_class: title.replace(/\s+/g, '-').toLowerCase(),
 		slug: titleSlug,
+    startURL: `${appAbsolutePath}/views/`,
 		
 		// url paths constructed from the passed in subapp path
 		urlPaths: {
@@ -80,6 +85,7 @@ let getSubAppData = function(currentPath) {
 		// route strings
 		route: {
 			root: appRouteString,
+			rootRel: appRouteString.substr(1),
 			page: appRouteString + '/:page'
 		}
 		
