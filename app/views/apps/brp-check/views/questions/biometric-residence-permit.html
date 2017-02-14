@@ -1,5 +1,5 @@
-﻿{% set page = {
-	title: "UK Passport"
+{% set page = {
+	title: "Biometric Residence Permit"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -14,22 +14,27 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          {{ 'Does their partner' if currentApp.isPartnerFlow else 'Have they' }} brought their British passport today?
+          Do they have a biometric residence permit?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
-              <span class="visuallyhidden">{{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} have a British passport?</span>
+              <span class="visuallyhidden">Do they have a biometric residence permit?</span>
             </legend>
 
-            <label for="britishPassportToday-yes" class="block-label selection-button-radio">
-              <input type="radio" name="britishPassportToday" value="yes" id="britishPassportToday-yes">
+            <label for="brp-yes-today" class="block-label selection-button-radio">
+              <input type="radio" name="brp" value="yes" id="brp-yes-today">
               Yes
             </label>
 
-            <label for="britishPassportToday-no" class="block-label selection-button-radio">
-              <input type="radio" name="britishPassportToday" value="no" id="britishPassportToday-no">
+            <label for="brp-yes-not-today" class="block-label selection-button-radio">
+              <input type="radio" name="brp" value="not today" id="brp-yes-not-today">
+              Yes, but they haven't brought it today
+            </label>
+
+            <label for="brp-no" class="block-label selection-button-radio">
+              <input type="radio" name="brp" value="no" id="brp-no">
               No
             </label>
 
@@ -41,6 +46,7 @@
         </div>
 
       </form>
+
     </div>
   </div>
 {% endblock %}
