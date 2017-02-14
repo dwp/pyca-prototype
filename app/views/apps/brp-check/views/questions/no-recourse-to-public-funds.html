@@ -1,0 +1,55 @@
+﻿{% extends "layouts/layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+  {% include "includes/backlink_examples.html" %}
+  {% set attributes = '' if isPartnerFlow else ' class="inline"' %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          {{ 'Does their partner' if isPartnerFlow else 'Do they' }} have a visa that’s stamped ‘no recourse to public funds’ or ‘no public funds’?
+        </h1>
+
+        <p class="form-hint">Check their residence permit, residence card or the visa page on their passport.</p>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Do they' }} have a visa that’s stamped ‘no recourse to public funds’ or ‘no public funds’?</span>
+            </legend>
+
+            <label for="noRecourseToPublicFunds-yes" class="block-label selection-button-radio">
+              <input type="radio" name="noRecourseToPublicFunds" value="yes" id="noRecourseToPublicFunds-yes">
+              Yes
+            </label>
+
+            <label for="noRecourseToPublicFunds-no" class="block-label selection-button-radio">
+              <input type="radio" name="noRecourseToPublicFunds" value="no" id="noRecourseToPublicFunds-no">
+              No
+            </label>
+
+            {% if isPartnerFlow %}
+            <label for="noRecourseToPublicFunds-unknown" class="block-label selection-button-radio">
+              <input type="radio" name="noRecourseToPublicFunds" value="unknown" id="noRecourseToPublicFunds-unknown">
+              Don’t know
+            </label>
+            {% endif %}
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

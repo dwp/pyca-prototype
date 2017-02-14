@@ -1,0 +1,50 @@
+﻿{% extends "layouts/layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+					Why {{ 'isn’t their partner' if isPartnerFlow else 'aren’t they' }} working?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true">
+            <legend>
+              <span class="visuallyhidden">Why {{ 'isn’t their partner' if isPartnerFlow else 'aren’t they' }} working?</span>
+            </legend>
+
+            <label for="dont-work-reason-redundant" class="block-label selection-button-radio">
+              <input type="radio" name="dontWorkReason" value="redundant" id="dont-work-reason-redundant">
+              They were made redundant recently
+            </label>
+
+            <label for="dont-work-reason-sick" class="block-label selection-button-radio">
+              <input type="radio" name="dontWorkReason" value="sick" id="dont-work-reason-sick">
+              They stopped working recently due to an illness
+            </label>
+
+            <label for="dont-work-reason-other" class="block-label selection-button-radio">
+              <input type="radio" name="dontWorkReason" value="other" id="dont-work-reason-other">
+              Other reason
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
