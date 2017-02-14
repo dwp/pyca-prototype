@@ -1,57 +1,59 @@
-﻿{% extends "layouts/layout.html" %}
+{% set page = {
+	title: "Employee status &ndash; self employed"
+} %}
 
-{% block content %}
-<main id="content" role="main">
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
-  {% include "includes/phase_banner_prototype.html" %}
-  {% include "includes/backlink_examples.html" %}
+{% block main_content %}
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
+<div class="grid-row">
+	<div class="column-two-thirds">
+		
+		<form method="post" class="form">
+			
+			<h1 class="heading-large">
+				Can {{ 'their partner' if currentApp.isPartnerFlow else 'they' }} bring proof of self‑employed income?
+			</h1>
+			
+			<div class="form-group">
+				<fieldset role="radiogroup" aria-required="true">
+					<legend>
+						<span class="visuallyhidden">Can {{ 'their partner' if currentApp.isPartnerFlow else 'they' }} bring proof of self‑employed income?</span>
+					</legend>
+					
+					<label for="self-employed-proof-yes" class="block-label selection-button-radio">
+						<input type="radio" name="selfEmployedProof" value="yes" id="self-employed-proof-yes">
+						Yes
+					</label>
+					
+					<label for="self-employed-proof-partial" class="block-label selection-button-radio">
+						<input type="radio" name="selfEmployedProof" value="no" id="self-employed-proof-partial">
+						Yes, but not income from the last 3 months
+					</label>
+					
+					<label for="self-employed-proof-no" class="block-label selection-button-radio">
+						<input type="radio" name="selfEmployedProof" value="no" id="self-employed-proof-no">
+						No
+					</label>
+					
+					{% if currentApp.isPartnerFlow %}
+					<label for="self-employed-proof-unknown" class="block-label selection-button-radio">
+						<input type="radio" name="selfEmployedProof" value="unknown" id="self-employed-proof-unknown">
+						Don’t know
+					</label>
+					{% endif %}
+				</fieldset>
+			</div>
+			
+			<div class="form-group">
+				<button type="submit" class="button">Continue</button>
+			</div>
+			
+		</form>
+		
+	</div>
+</div>
 
-      <form method="post" class="form">
+{% endblock %}﻿
 
-        <h1 class="heading-large">
-          Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of self‑employed income?
-        </h1>
 
-        <div class="form-group">
-          <fieldset role="radiogroup" aria-required="true">
-            <legend>
-              <span class="visuallyhidden">Can {{ 'their partner' if isPartnerFlow else 'they' }} bring proof of self‑employed income?</span>
-            </legend>
-
-            <label for="self-employed-proof-yes" class="block-label selection-button-radio">
-              <input type="radio" name="selfEmployedProof" value="yes" id="self-employed-proof-yes">
-              Yes
-            </label>
-
-            <label for="self-employed-proof-partial" class="block-label selection-button-radio">
-              <input type="radio" name="selfEmployedProof" value="no" id="self-employed-proof-partial">
-              Yes, but not income from the last 3 months
-            </label>
-
-            <label for="self-employed-proof-no" class="block-label selection-button-radio">
-              <input type="radio" name="selfEmployedProof" value="no" id="self-employed-proof-no">
-              No
-            </label>
-
-            {% if isPartnerFlow %}
-            <label for="self-employed-proof-unknown" class="block-label selection-button-radio">
-              <input type="radio" name="selfEmployedProof" value="unknown" id="self-employed-proof-unknown">
-              Don’t know
-            </label>
-            {% endif %}
-          </fieldset>
-        </div>
-
-        <div class="form-group">
-          <button type="submit" class="button">Continue</button>
-        </div>
-
-      </form>
-
-    </div>
-  </div>
-</main>
-{% endblock %}

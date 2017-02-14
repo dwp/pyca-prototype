@@ -1,13 +1,12 @@
 ﻿{% set page = {
-	title: "UK Passport"
+	title: "UK National"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
 {% block main_content %}
 
-  {% include "includes/backlink_examples.html" %}
-  {% set attributes = '' if isPartnerFlow else ' class="inline"' %}
+  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
@@ -15,13 +14,13 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          {{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?
+          {{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} have a British passport?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
-              <span class="visuallyhidden">{{ 'Does their partner' if isPartnerFlow else 'Does this person' }} have a British passport?</span>
+              <span class="visuallyhidden">{{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} have a British passport?</span>
             </legend>
 
             <label for="ukNational-yes" class="block-label selection-button-radio">
@@ -34,7 +33,7 @@
               No
             </label>
 
-            {% if isPartnerFlow %}
+            {% if currentApp.isPartnerFlow %}
             <label for="ukNational-unknown" class="block-label selection-button-radio">
               <input type="radio" name="ukNational" value="unknown" id="ukNational-unknown">
               Don’t know
