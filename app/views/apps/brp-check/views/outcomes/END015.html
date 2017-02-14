@@ -1,18 +1,18 @@
-﻿{% extends "layouts/layout.html" %}
+{% set page = {
+	title: "END014"
+} %}
 
-{% block content %}
-<main id="content" role="main">
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
-  {% include "includes/phase_banner_prototype.html" %}
-  {% include "includes/backlink_examples.html" %}
+{% block main_content %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
-
+			
       <h1 class="heading-large">Book a further evidence interview</h1>
       <p>Tell the person to bring their:</p>
       <ul class="list list-bullet">
-        <li>current British passport</li>
+        <li>biometric residence permit</li>
       </ul>
 
       <div class="panel panel-border-narrow">
@@ -21,9 +21,7 @@
         </p>
       </div>
 
-			<!--{% include "citizen/outcomes/includes/unsure-of-evidence.html" %}-->
-
     </div>
   </div>
-</main>
+
 {% endblock %}

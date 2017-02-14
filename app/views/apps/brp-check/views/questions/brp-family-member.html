@@ -1,0 +1,46 @@
+{% set page = {
+	title: "BRP family member"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Are the words 'FAMILY MEMBER' or 'EU RIGHT TO RESIDE' on the biometric residence permit?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Do the words 'FAMILY MEMBER' or 'EU RIGHT TO RESIDE' appear on the biometric residence permit?</span>
+            </legend>
+
+            <label for="family-member-yes" class="block-label selection-button-radio">
+              <input type="radio" name="familyMember" value="yes" id="family-member-yes">
+              Yes
+            </label>
+
+            <label for="family-member-no" class="block-label selection-button-radio">
+              <input type="radio" name="familyMember" value="no" id="family-member-no">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

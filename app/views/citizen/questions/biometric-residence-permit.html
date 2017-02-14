@@ -1,0 +1,52 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+  {% include "includes/backlink_examples.html" %}
+  {% set attributes = '' if isPartnerFlow else ' class="inline"' %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Do they have a biometric residence permit?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Do they have a biometric residence permit?</span>
+            </legend>
+
+            <label for="brp-yes-today" class="block-label selection-button-radio">
+              <input type="radio" name="brp" value="yes" id="brp-yes-today">
+              Yes
+            </label>
+
+            <label for="brp-yes-not-today" class="block-label selection-button-radio">
+              <input type="radio" name="brp" value="not today" id="brp-yes-not-today">
+              Yes, but they haven't brought it today
+            </label>
+
+            <label for="brp-no" class="block-label selection-button-radio">
+              <input type="radio" name="brp" value="no" id="brp-no">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

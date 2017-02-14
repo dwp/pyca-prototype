@@ -157,8 +157,11 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 	      req.session[appData.slug][i] = req.body[i];
 	    }
 	  }
+    
+    appData.session = req.session[appData.slug]
 		
 	  _.merge(res.locals, {
+      session: req.session,
 	    currentApp: appData,
 			postData: (req.body ? req.body : false)
 	  }, appData.config.overrides)
