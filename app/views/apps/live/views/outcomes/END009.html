@@ -1,0 +1,26 @@
+﻿{% extends "layouts/layout.html" %}
+
+{% block content %}
+<main id="content" role="main">
+
+  {% include "includes/phase_banner_prototype.html" %}
+  {% include "includes/backlink_examples.html" %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      {% include "citizen/outcomes/includes/header.html" %}
+
+      <h2 class="heading-medium">Evidence to collect</h2>
+      <ul class="list list-bullet">
+        <li>passport – number, nationality, date of issue, expiry date and visa status</li>
+        <li>residence permit or residence card – issue date, unique permit number on the right corner of the card, type of permit, remark and comments at the back of the card</li>
+        <li>start and end date of visa if their card or passport says ‘limited leave to remain’</li>
+        <li>date they came to live in the UK (exact date, otherwise month and year, or just year)</li>
+      </ul>
+
+      {% include "citizen/outcomes/includes/footer.html" %}
+
+    </div>
+  </div>
+</main>
+{% endblock %}

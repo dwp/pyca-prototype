@@ -1,0 +1,68 @@
+{% extends "layouts/layout.html" %}
+
+{% block content %}
+
+	{{ currentApp | log }}
+
+	<main id="content">
+			
+	  <div class="grid-row">
+	    <div class="column-two-thirds">
+				
+			<p><a href="/" class="link-back">Back</a></p>
+				
+			<h1 class="heading-xlarge" style="margin-bottom: 20px;">
+				{{ currentApp.title }}
+				<span class="heading-secondary">Details of this prototype</span>
+			</h1>
+			
+			<p><a href="{{ currentApp.startURL | d(page.startURL | d('views/')) }}" class="button button-start">Launch {{ (currentApp.title) if currentApp.title }} prototype</a></p>
+
+			{% block description %}
+				<h2 class="heading-medium">Description</h2>
+				<p>To add your own description edit: <span class="mono-inline">{{ currentApp.filePaths.subAppDir }}/index.html</span>. The contents of the 'description' block will be displayed here.<p>
+				<h3 class="heading-small">For example</h3>
+				<p><div class="mono-block">
+					<div>
+					{% filter escape %}
+					{% raw %}
+					{% block description %}
+					{% endraw %}
+					{% endfilter %}
+					</div>
+					<div>
+					{% filter escape %}
+					{% raw %}
+						<p>Your content</p>
+					{% endraw %}
+					{% endfilter %}
+					</div>
+					<div>
+					{% filter escape %}
+					{% raw %}
+						{% endblock %}
+					{% endraw %}
+					{% endfilter %}
+					</div>
+				</div></p>
+			{% endblock %}
+
+	    </div>
+	  </div>
+		
+		<hr>
+		
+		<h3 class="heading-medium">Technical details</h3>
+		
+		<ul class="list-bullet list-block">
+			<li>Node/Express routes file location: <span class="mono-inline">{{ currentApp.filePaths.routesFile }}</span></li>
+			<li>Sub-application configuration file is located: <span class="mono-inline">{{ currentApp.filePaths.configFile }}</span></li>
+			<li>'Sub application' specific data can be accessed in the templates with <span class="mono-inline">{% raw %}{{ currentApp }}{% endraw %}</span></li>
+			<li>Layouts are located: <span class="mono-inline">{{ currentApp.filePaths.layoutsDir }}</span></li>
+			<li>Session data can be accessed in the templates with <span class="mono-inline">{% raw %}{{ currentApp.session }}{% endraw %}</span></li>
+			<li>'Post' data can be accessed in the templates with <span class="mono-inline">{% raw %}{{ postData }}{% endraw %}</span></li>
+		</ul>
+		
+	</main>
+	
+{% endblock %}
