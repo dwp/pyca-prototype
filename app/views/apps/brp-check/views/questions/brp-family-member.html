@@ -7,14 +7,28 @@
 {% block main_content %}
 
   <div class="grid-row">
-    <div class="column-two-thirds">
+    <div class="column-full">
 
       <form method="post" class="form">
 
-        <h1 class="heading-large">
-          Are the words 'FAMILY MEMBER' or 'EU RIGHT TO RESIDE' on the biometric residence permit?
-        </h1>
+				
+				<div class="grid-row">
+					
+					<div class="column-full">
+						<!-- <h1 class="heading-large">
+							Are the words 'FAMILY MEMBER' or 'EU RIGHT TO RESIDE' on the biometric residence permit?
+						</h1> -->
+						
+					</div>
+					
+					<div class="column-one-half">
+						
 
+						
+										<h1 class="heading-large">
+											Are the words 'FAMILY MEMBER' or 'EU RIGHT TO RESIDE' on the biometric residence permit?
+										</h1>						
+						
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
@@ -37,6 +51,18 @@
         <div class="form-group">
           <button type="submit" class="button">Continue</button>
         </div>
+						
+					</div>
+					<div class="column-one-half">
+						
+						<figure class="figure figure--brp">
+							<img src="{{ currentApp.urlPaths.imagesPath }}brp-with-words.jpg" alt="">
+							<p class="figure__caption" aria-hidden="true">Where to find family member wording.</p>
+						</figure>						
+						
+					</div>
+				</div>
+
 
       </form>
 
