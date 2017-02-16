@@ -7,15 +7,15 @@
 {% block main_content %}
 
   <div class="grid-row">
-		
+
 		<div class="column-full">
 
 		</div>
-		
+
     <div class="column-one-half">
 
       <form method="post" class="form">
-				
+
 	      <h1 class="heading-large">
 	        Do they have a biometric residence permit?
 	      </h1>
@@ -29,11 +29,6 @@
             <label for="brp-yes-today" class="block-label selection-button-radio">
               <input type="radio" name="brp" value="yes" id="brp-yes-today">
               Yes
-            </label>
-
-            <label for="brp-yes-not-today" class="block-label selection-button-radio">
-              <input type="radio" name="brp" value="not today" id="brp-yes-not-today">
-              Yes, but they haven't brought it today
             </label>
 
             <label for="brp-no" class="block-label selection-button-radio">
@@ -51,15 +46,15 @@
       </form>
 
     </div>
-		
+
 		<div class="column-one-half">
 			<figure class="figure figure--brp">
 				<img src="{{ currentApp.urlPaths.imagesPath }}brp-front.jpg" alt="">
 				<p class="figure__caption" aria-hidden="true">Example of a biometric residence permit.</p>
 			</figure>
 		</div>
-		
-		
-		
+
+
+
   </div>
 {% endblock %}
