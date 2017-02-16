@@ -7,3 +7,22 @@
 		margin-bottom: 20px;
 	}
 }
+
+.figure {
+	&__caption {
+		text-align: center;
+		font-size: 0.9em;
+		color: $grey-1;
+	}
+	&--brp {
+		margin-top: 2.5em;
+		img {
+			max-width: 100%;
+		}
+	}
+}
+
+.mw-100 {
+	max-width: 100%;
+	display: block;
+}
