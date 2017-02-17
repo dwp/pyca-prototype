@@ -13,7 +13,10 @@
 
         <h1 class="heading-large">
            What nationality is on {{ 'their partner’s passport?' if currentApp.isPartnerFlow else 'the ID document they’ve brought today?' }}
-        </h1>
+					 <span class="form-hint">
+			 			<br />This can be a passport, national identity card, biometric residence permit or travel document.
+			 		</span>
+		    </h1>
 
         <div class="form-group">
           <fieldset>
