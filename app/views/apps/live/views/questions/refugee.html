@@ -1,11 +1,8 @@
-﻿{% extends "layouts/layout.html" %}
+﻿{% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
-{% block content %}
-<main id="content" role="main">
+{% block main_content %}
 
-  {% include "includes/phase_banner_prototype.html" %}
-  {% include "includes/backlink_examples.html" %}
-  {% set attributes = '' if isPartnerFlow else ' class="inline"' %}
+  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
@@ -13,13 +10,13 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          {{ 'Is their partner' if isPartnerFlow else 'Is this person' }} a refugee?
+          {{ 'Is their partner' if currentApp.isPartnerFlow else 'Is this person' }} a refugee?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
-              <span class="visuallyhidden">{{ 'Is their partner' if isPartnerFlow else 'Is this person' }} a refugee?</span>
+              <span class="visuallyhidden">{{ 'Is their partner' if currentApp.isPartnerFlow else 'Is this person' }} a refugee?</span>
             </legend>
 
             <label for="refugee-yes" class="block-label selection-button-radio">
@@ -32,7 +29,7 @@
               No
             </label>
 
-            {% if isPartnerFlow %}
+            {% if currentApp.isPartnerFlow %}
             <label for="refugee-unknown" class="block-label selection-button-radio">
               <input type="radio" name="refugee" value="unknown" id="refugee-unknown">
               Don’t know
@@ -49,5 +46,5 @@
 
     </div>
   </div>
-</main>
+
 {% endblock %}
