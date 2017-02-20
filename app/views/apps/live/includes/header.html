@@ -1,7 +1,15 @@
 
       <div class="govuk-box-highlight">
-        <h1 class="bold-large">Fast-track this {{ 'couple' if isPartnerFlow else 'person' }}</h1>
+        {% if currentApp.claimantStatus == 'Ineligible' %}
+          <h1 class="bold-large">Book a HRT for this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
+        {% else %}
+          <h1 class="bold-large">Fast-track this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
+        {% endif %}
       </div>
 
-      <h2 class="heading-medium">Claimant status</h2>
-      <p>{{ currentApp.claimantStatus }} {{ 'with a qualifying partner' if isPartnerFlow}}</p>
+      {% if currentApp.claimantStatus == 'Ineligible' %}
+        <p>This claim is not eligible for fast-track.</p>
+      {% else %}
+        <h2 class="heading-medium">Claimant status</h2>
+        <p>{{ currentApp.claimantStatus }} {{ 'with a qualifying partner' if isPartnerFlow}}</p>
+      {% endif %}
