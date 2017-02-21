@@ -283,16 +283,38 @@ module.exports = (router, config) => {
 		if (job) {
 			answers[claimantType].job = job;
 
-			if (job){
+			if (job == "yes"){
 				res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
 			} else {
 				// Temp until new 'Have they stopped employment in the last month' Q is implemented
-				res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
+				res.redirect(`${appRoot}/questions/stopped-working-in-last-month?${claimantType}`);
 			}
 		} else {
 			res.render(`${appRootRel}/questions/job`);
 		}
 	});
+
+	// ####################################################################
+	// Stopped working in the last month
+	// ####################################################################
+	router.all(`${appRoot}/questions/stopped-working-in-last-month`, function (req, res) {
+		var stoppedWorkingInTheLastMonth = req.body.stoppedWorkingInTheLastMonth;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (stoppedWorkingInTheLastMonth) {
+			answers[claimantType].stoppedWorkingInTheLastMonth = stoppedWorkingInTheLastMonth;
+
+			if (stoppedWorkingInTheLastMonth == "yes"){
+				res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		} else {
+			res.render(`${appRootRel}/questions/stopped-working-in-last-month`);
+		}
+	});
+
 
 	// // ####################################################################
 	// // refuge
@@ -411,10 +433,6 @@ module.exports = (router, config) => {
 	      res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
 	    }
 
-	    // Not working
-	    else if (employeeStatus.dontWork === 'true') {
-	      res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
-	    }
 	  }
 
 	  else {
