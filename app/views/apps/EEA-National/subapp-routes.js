@@ -227,7 +227,7 @@ module.exports = (router, config) => {
 
 	    // Non-UK national
 	    else if (ukNational == 'no') {
-	      res.redirect(`${appRoot}/questions/refugee?${claimantType}`);
+	      res.redirect(`${appRoot}/questions/nationality?${claimantType}`);
 	    }
 
 	    else if (res.locals.currentApp.isPartnerFlow && ukNational === 'unknown') {
@@ -273,36 +273,58 @@ module.exports = (router, config) => {
 	});
 
 	// ####################################################################
-	// refuge
+	// job
 	// ####################################################################
-	router.all(`${appRoot}/questions/refugee`, function (req, res) {
-	  var refugee = req.body.refugee;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
+	router.all(`${appRoot}/questions/job`, function (req, res) {
+		var job = req.body.job;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
 
-	  if (refugee) {
-	    answers[claimantType].refugee = refugee;
+		if (job) {
+			answers[claimantType].job = job;
 
-	    // Refugee
-	    if (refugee === 'yes') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.refugee.id}?${claimantType}`);
-	    }
-
-	    // Non-refugee
-	    else if (refugee === 'no') {
-	      // res.redirect(`${appRoot}/questions/permanent-residence?${claimantType}`);
-	      res.redirect(`${appRoot}/questions/nationality?${claimantType}`);
-	    }
-
-	    else if (res.locals.currentApp.isPartnerFlow && refugee === 'unknown') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    }
-	  }
-
-	  else {
-	    res.render(`${appRootRel}/questions/refugee`);
-	  }
+			if (job){
+				res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
+			} else {
+				// Temp until new 'Have they stopped employment in the last month' Q is implemented
+				res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
+			}
+		} else {
+			res.render(`${appRootRel}/questions/job`);
+		}
 	});
+
+	// // ####################################################################
+	// // refuge
+	// // ####################################################################
+	// router.all(`${appRoot}/questions/refugee`, function (req, res) {
+	//   var refugee = req.body.refugee;
+	//   var answers = req.session[config.slug].answers;
+	//   var claimantType = res.locals.currentApp.claimantType;
+	//
+	//   if (refugee) {
+	//     answers[claimantType].refugee = refugee;
+	//
+	//     // Refugee
+	//     if (refugee === 'yes') {
+	//       res.redirect(`${appRoot}/outcomes/${outcomes.refugee.id}?${claimantType}`);
+	//     }
+	//
+	//     // Non-refugee
+	//     else if (refugee === 'no') {
+	//       // res.redirect(`${appRoot}/questions/permanent-residence?${claimantType}`);
+	//       res.redirect(`${appRoot}/questions/nationality?${claimantType}`);
+	//     }
+	//
+	//     else if (res.locals.currentApp.isPartnerFlow && refugee === 'unknown') {
+	//       res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+	//     }
+	//   }
+	//
+	//   else {
+	//     res.render(`${appRootRel}/questions/refugee`);
+	//   }
+	// });
 
 	router.all(`${appRoot}/questions/permanent-residence`, function (req, res) {
 	  var permanentResidence = req.body.permanentResidence;
@@ -350,7 +372,7 @@ module.exports = (router, config) => {
 	      }
 
 	      // Continue
-	      res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
+	      res.redirect(`${appRoot}/questions/job?${claimantType}`);
 	    }
 
 	    // Non-EEA nationality
