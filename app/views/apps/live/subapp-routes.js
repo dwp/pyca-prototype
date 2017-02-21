@@ -118,8 +118,8 @@ module.exports = (router, config) => {
 
 		var isPartnerFlow = res.locals.currentApp.isPartnerFlow;
 	  var outcomeId = req.params.outcomeId;
+    var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
-	  var answers = req.session[config.slug].answers;
 
 	  for (outcome in outcomes) {
 	    if (outcomes[outcome].id === outcomeId) {
@@ -137,20 +137,22 @@ module.exports = (router, config) => {
 	      // Save outcome
 	      answers.claimant.outcomeId = outcomeId;
 
-	      // Ineligible claimant (but might qualify for derived rights)
-	      if (outcomeId === outcomes.ineligible.id &&
-	        ((answers.claimant.isEEA && answers.claimant.dontWorkReason === 'other') ||
-	          (!answers.claimant.isEEA && answers.claimant.familyMember === 'yes')) ||
-	          (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no'
-	           && answers.claimant.familyMember === 'no' && answers.claimant.outOfUk === 'yes')) {
+        // Ineligible claimant (but might qualify for derived rights)
+        if (outcomeId === outcomes.ineligible.id &&
+          ((answers.claimant.isEEA && answers.claimant.dontWorkReason === 'other') ||
+            (!answers.claimant.isEEA && answers.claimant.familyMember === 'yes')) ||
+            (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no'
+             && answers.claimant.familyMember === 'no' && answers.claimant.outOfUk === 'yes')) {
 
-	        // Mark as derived rights flow
-	        answers.claimant.isDerivedRightsFlow = true;
+          // Mark as derived rights flow
+          answers.claimant.isDerivedRightsFlow = true;
 
-	        // Redirect to partner flow
-	        res.redirect(`${appRoot}/questions/partner?claimant`);
-	        return;
-	      }
+          // Redirect to partner flow
+          res.redirect(`/${type}/questions/partner?claimant`);
+          return;
+
+        }
+
 	    }
 
 	    // Has partner, override outcome based on claimant
@@ -195,6 +197,7 @@ module.exports = (router, config) => {
 	          res.redirect(`${appRoot}/outcomes/${answers.claimant.outcomeId}?${claimantType}`);
 	          return;
 	        }
+
 	      }
 	    }
 	  }
@@ -213,6 +216,7 @@ module.exports = (router, config) => {
 	  var claimantType = res.locals.currentApp.claimantType;
 
 	  if (ukNational) {
+
 	    answers[claimantType].ukNational = ukNational;
 
 	    // UK national
@@ -229,6 +233,7 @@ module.exports = (router, config) => {
 	    else if (res.locals.currentApp.isPartnerFlow && ukNational === 'unknown') {
 	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 	    }
+
 	  }
 
 	  else {
@@ -461,20 +466,32 @@ module.exports = (router, config) => {
 
 	  if(hasFitNote) {
 	    if(hasFitNote == 'yes') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
+
+				res.redirect(`${appRoot}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
+
 	    } else if (hasFitNote == 'no') {
-	      if(!!answers.claimant.outcomeId) {
-	        res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	      } else {
-	        answers.claimant.isDerivedRightsFlow = true;
+
+				if(!!answers.claimant.outcomeId) {
+
+					 res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+
+				} else {
+
+					answers.claimant.isDerivedRightsFlow = true;
 	        answers.claimant.outcomeId = outcomes.ineligible.id;
 	        res.redirect(`${appRoot}/questions/partner?${claimantType}`);
-	      }
+
+				}
+
 	    } else if (hasFitNote == 'unknown') {
+
 	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+
 	    }
 	  } else {
+
 	    res.render(`${appRootRel}/questions/fitnote`);
+
 	  }
 	});
 
