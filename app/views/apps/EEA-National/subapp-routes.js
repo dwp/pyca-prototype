@@ -480,12 +480,12 @@ module.exports = (router, config) => {
 
 	    // Redundant
 	    if (dontWorkReason === 'redundant') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.redundantEEA.id}?${claimantType}`);
+	      res.redirect(`${appRoot}/questions/passport-with-them?${claimantType}`);
 	    }
 
 	    // Sick
 	    if (dontWorkReason === 'sick') {
-	      res.redirect(`${appRoot}/questions/fitnote?${claimantType}`);
+	      res.redirect(`${appRoot}/questions/passport-with-them?${claimantType}`);
 	    }
 
 	    // Other or Partner reason unknown
