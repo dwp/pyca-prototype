@@ -3,5 +3,3 @@
         <h1 class="bold-large">Fast-track this {{ 'couple' if isPartnerFlow else 'person' }}</h1>
         <p>{{ currentApp.claimantStatus }} {{ 'with a qualifying partner' if currentApp.isPartnerFlow }}</p>
       </div>
-			
-			{{ currentApp | log }}

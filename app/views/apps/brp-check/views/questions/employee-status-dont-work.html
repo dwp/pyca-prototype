@@ -12,13 +12,13 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-					Why {{ 'isn’t their partner' if isPartnerFlow else 'aren’t they' }} working?
+					Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true">
             <legend>
-              <span class="visuallyhidden">Why {{ 'isn’t their partner' if isPartnerFlow else 'aren’t they' }} working?</span>
+              <span class="visuallyhidden">Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?</span>
             </legend>
 
             <label for="dont-work-reason-redundant" class="block-label selection-button-radio">

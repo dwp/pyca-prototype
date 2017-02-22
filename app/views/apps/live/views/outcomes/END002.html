@@ -1,14 +1,14 @@
-﻿{% extends "layouts/layout.html" %}
+{% set page = {
+	title: "END002"
+} %}
 
-{% block content %}
-<main id="content" role="main">
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
-  {% include "includes/phase_banner_prototype.html" %}
-  {% include "includes/backlink_examples.html" %}
+{% block main_content %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
-      {% include "citizen/outcomes/includes/header.html" %}
+      {% include currentApp.filePaths.includesDir + "header.html" %}
 
       <h2 class="heading-medium">Evidence to collect</h2>
       <ul class="list list-bullet">
@@ -18,9 +18,9 @@
         <li>contract or letter from employer confirming type and duration of contract, hours of work and earnings</li>
       </ul>
 
-      {% include "citizen/outcomes/includes/footer.html" %}
+      {% include currentApp.filePaths.includesDir + "footer.html" %}
 
     </div>
   </div>
-</main>
+
 {% endblock %}
