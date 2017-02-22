@@ -1,0 +1,46 @@
+﻿{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+			Does this person have 3 months of payslips with them today?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true">
+            <legend>
+              <span class="visuallyhidden">Does this person have 3 months of payslips with them today?</span>
+            </legend>
+
+            <label for="payslips-today-yes" class="block-label selection-button-radio">
+              <input type="radio" name="payslipsToday" value="yes" id="payslips-today-yes">
+              Yes
+            </label>
+
+            <label for="payslips-today-under-3-months" class="block-label selection-button-radio">
+              <input type="radio" name="payslipsToday" value="under3Months" id="payslips-today-under-3-months">
+              Less than 3 months
+            </label>
+
+            <label for="payslips-today-no" class="block-label selection-button-radio">
+              <input type="radio" name="payslipsToday" value="no" id="payslips-today-no">
+              No
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -78,6 +78,10 @@ module.exports = (router, config) => {
         bookFurtherEvidenceInterview: {
             id: 'END014',
             status: 'Returning British national with no passport on the day of initial interview'
+        },
+        bookFurtherEvidenceInterviewMarriageCert: {
+            id: 'END099',
+            status: "Temporary: EEA National, recently stopped work for 'other' reason. Married to working EEA national. Need to bring passport/ID and possibly a marriage certificate"
         }
     }
 
@@ -146,7 +150,7 @@ module.exports = (router, config) => {
                         (!answers.claimant.isEEA && answers.claimant.familyMember === 'yes')) ||
                     (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no' &&
                         answers.claimant.familyMember === 'no' && answers.claimant.outOfUk === 'yes')) {
-
+console.log('this is firing');
                     // Mark as derived rights flow
                     answers.claimant.isDerivedRightsFlow = true;
 
@@ -161,22 +165,33 @@ module.exports = (router, config) => {
             // Has partner, override outcome based on claimant
             else if (answers.claimant.partner === 'yes' && answers.claimant.outcomeId) {
 
+              console.log('this is firing!');
+
                 // Save outcome
                 answers.partner.outcomeId = outcomeId;
 
                 // Does claimant outcome differ? Partner must be eligible
                 if (answers.claimant.outcomeId !== outcomeId && outcomeId !== outcomes.ineligible.id) {
 
+                  console.log('Partner is eligible');
+
                     // Ineligible claimant (derived rights)
                     if (answers.claimant.outcomeId === outcomes.ineligible.id) {
 
+                      console.log('Ineligible claimant (derived rights)');
+
                         // Skip if already on derived rights outcome
                         if (outcomeId !== outcomes.derivedRightsNonEEA.id && outcomeId !== outcomes.derivedRightsEEA.id) {
+
+                            console.log(`Skip if already on derived rights outcome`);
+                            console.log(`The outcomeId is: ${outcomeId}`);
 
                             // Ineligible claimant + derived rights partner
                             if (outcomeId === outcomes.employedEEA.id ||
                                 outcomeId === outcomes.sickEEA.id ||
                                 outcomeId === outcomes.redundantEEA.id) {
+
+                                  console.log(`Ineligible claimant + derived rights partner`);
 
                                 // Force outcome to derived rights
                                 answers.partner.outcomeId = answers.claimant.isEEA ?
@@ -187,11 +202,22 @@ module.exports = (router, config) => {
                                 return;
                             }
 
+                            else if (outcomeId === outcomes.bookFurtherEvidenceInterviewMarriageCert.id){
+                              // Catch ineligible EEA claimant with EEA partner who needs to bring in passport/ID card and
+                              // (optional) a marriage certificate
+                              // Temporary fix until we look at the routing overall
+                              //res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
+                              res.render(`${appRootRel}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}`);
+                              return;
+                             }
+
                             // Otherwise still ineligible
                             else {
-                                res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+                                console.log(`Otherwise still ineligible`);
+                                //res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
                                 return;
                             }
+
                         }
                     }
 
@@ -345,15 +371,14 @@ module.exports = (router, config) => {
 								if (res.locals.currentApp.isPartnerFlow){
 									res.redirect(`${appRoot}/outcomes/${outcomes.derivedRightsEEA.id}?${claimantType}`);
 								} else {
-                  // TODO
-                  // yes but not the partner flow
+                  res.redirect(`${appRoot}/questions/payslips?${claimantType}`);
                 }
 						} else {
               // Answered 'no' to if they have a passport/ID card with them today
               if (res.locals.currentApp.isPartnerFlow) {
                 res.redirect(`${appRoot}/questions/id-at-future-appt?${claimantType}`);
               } else {
-								// Something else here for Answered no and no partner
+								res.redirect(`${appRoot}/questions/payslips?${claimantType}`);
               }
             }
 				} else {
@@ -372,7 +397,9 @@ module.exports = (router, config) => {
         if (idAtFutureAppt) {
             answers[claimantType].idAtFutureAppt = idAtFutureAppt;
             if (idAtFutureAppt == "yes") {
-                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterview.id}?${claimantType}`);
+              console.log("idAtFutureAppt fires");
+              console.log(`I want to send you to: ${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
+                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
             } else {
                 res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
             }
@@ -388,7 +415,7 @@ module.exports = (router, config) => {
         var marriageCertAtFutureAppt = req.body.marriageCertAtFutureAppt;
         var answers = req.session[config.slug].answers;
         var claimantType = res.locals.currentApp.claimantType;
-        
+
         if (marriageCertAtFutureAppt) {
             answers[claimantType].marriageCertAtFutureAppt = marriageCertAtFutureAppt;
             if (marriageCertAtFutureAppt == "yes") {
@@ -398,6 +425,38 @@ module.exports = (router, config) => {
             }
         } else {
             res.render(`${appRootRel}/questions/marriage-certificate-at-future-appt`);
+        }
+    });
+
+    // ####################################################################
+    // Do they have 3 months of payslips with them today?
+    // ####################################################################
+    router.all(`${appRoot}/questions/payslips`, function(req, res) {
+        var payslipsToday = req.body.payslipsToday;
+        var answers = req.session[config.slug].answers;
+        var claimantType = res.locals.currentApp.claimantType;
+
+        if (payslipsToday) {
+            answers[claimantType].payslipsToday = payslipsToday;
+
+            if (payslipsToday == "yes") {
+                if (answers[claimantType].dontWorkReason == "redundant"){
+                  console.log(`I'm sendng you to: ${appRoot}/questions/redundancy`);
+                  res.redirect(`${appRoot}/questions/redundancy`);
+                } else if (answers[claimantType].dontWorkReason == "sick"){
+                  res.redirect(`${appRoot}/questions/fitnote`);
+                } else {
+                  // they are employed
+                  console.log(`I'm sendng you to: ${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType} `);
+                  res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
+                }
+            } else if (payslipsToday == "under3Months") {
+              // TODO
+            } else {
+                // TODO
+            }
+        } else {
+            res.render(`${appRootRel}/questions/payslips`);
         }
     });
 
@@ -514,7 +573,9 @@ module.exports = (router, config) => {
                 if (res.locals.currentApp.isPartnerFlow && claimantType == 'partner') {
 										res.redirect(`${appRoot}/questions/marriage-certificate?${claimantType}`);
                 } else {
-                    res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
+                    // old behaviour before EEA changes
+                    // res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
+                    res.redirect(`${appRoot}/questions/passport-with-them`);
                 }
             }
         } else {
