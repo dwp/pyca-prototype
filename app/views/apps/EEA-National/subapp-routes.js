@@ -460,6 +460,29 @@ console.log('this is firing');
         }
     });
 
+    // ####################################################################
+    // Do they have a redundancy letter with them today?
+    // ####################################################################
+    router.all(`${appRoot}/questions/redundancy`, function(req, res) {
+        var redundancyLetterWithThemToday = req.body.redundancyLetterWithThemToday;
+        var answers = req.session[config.slug].answers;
+        var claimantType = res.locals.currentApp.claimantType;
+
+        if (redundancyLetterWithThemToday) {
+            answers[claimantType].redundancyLetterWithThemToday = redundancyLetterWithThemToday;
+
+            if (redundancyLetterWithThemToday == "yes") {
+                // END010
+                console.log("sending you to END010, redundantEEA");
+                res.redirect(`${appRoot}/outcomes/${outcomes.redundantEEA.id}?${claimantType}`);
+            } else {
+                res.redirect(`${appRoot}/questions/id-at-future-appt?${claimantType}`);
+            }
+        } else {
+            res.render(`${appRootRel}/questions/redundancy`);
+        }
+    });
+
     // // ####################################################################
     // // refuge
     // // ####################################################################
