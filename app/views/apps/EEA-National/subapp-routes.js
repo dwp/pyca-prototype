@@ -324,7 +324,7 @@ module.exports = (router, config) => {
             if (marriageCertificate == "yes") {
                 res.redirect(`${appRoot}/questions/passport-with-them?${claimantType}`);
             } else {
-                // Placeholder while create new question for if person can bring it
+                res.redirect(`${appRoot}/questions/marriage-certificate-at-future-appt?${claimantType}`);
             }
         } else {
             res.render(`${appRootRel}/questions/marriage-certificate`);
@@ -345,15 +345,62 @@ module.exports = (router, config) => {
 								if (res.locals.currentApp.isPartnerFlow){
 									res.redirect(`${appRoot}/outcomes/${outcomes.derivedRightsEEA.id}?${claimantType}`);
 								} else {
-									// non-partner flow, with a passport
-								}
+                  // TODO
+                  // yes but not the partner flow
+                }
 						} else {
-								// no passport with them
-						}
+              // Answered 'no' to if they have a passport/ID card with them today
+              if (res.locals.currentApp.isPartnerFlow) {
+                res.redirect(`${appRoot}/questions/id-at-future-appt?${claimantType}`);
+              } else {
+								// Something else here for Answered no and no partner
+              }
+            }
 				} else {
 						res.render(`${appRootRel}/questions/passport-with-them`);
 				}
 		});
+
+    // ####################################################################
+    // Can they bring ID with them to a future appointment?
+    // ####################################################################
+    router.all(`${appRoot}/questions/id-at-future-appt`, function(req, res) {
+        var idAtFutureAppt = req.body.idAtFutureAppt;
+        var answers = req.session[config.slug].answers;
+        var claimantType = res.locals.currentApp.claimantType;
+
+        if (idAtFutureAppt) {
+            answers[claimantType].idAtFutureAppt = idAtFutureAppt;
+            if (idAtFutureAppt == "yes") {
+                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterview.id}?${claimantType}`);
+            } else {
+                res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+            }
+        } else {
+            res.render(`${appRootRel}/questions/id-at-future-appt`);
+        }
+    });
+
+    // ####################################################################
+    // Can they bring a Marriage Certificate with them to a future appointment?
+    // ####################################################################
+    router.all(`${appRoot}/questions/marriage-certificate-at-future-appt`, function(req, res) {
+        var marriageCertAtFutureAppt = req.body.marriageCertAtFutureAppt;
+        var answers = req.session[config.slug].answers;
+        var claimantType = res.locals.currentApp.claimantType;
+        
+        if (marriageCertAtFutureAppt) {
+            answers[claimantType].marriageCertAtFutureAppt = marriageCertAtFutureAppt;
+            if (marriageCertAtFutureAppt == "yes") {
+                res.redirect(`${appRoot}/questions/passport-with-them?${claimantType}`);
+            } else {
+                res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+            }
+        } else {
+            res.render(`${appRootRel}/questions/marriage-certificate-at-future-appt`);
+        }
+    });
+
     // // ####################################################################
     // // refuge
     // // ####################################################################
