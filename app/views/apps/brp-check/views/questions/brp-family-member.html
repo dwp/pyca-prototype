@@ -46,10 +46,36 @@
 					</div>
 					<div class="column-one-half">
 
-						<figure class="figure figure--brp">
-							<img src="{{ currentApp.urlPaths.imagesPath }}brp-with-words.jpg" alt="">
-							<p class="figure__caption" aria-hidden="true">Where to find family member wording.</p>
-						</figure>
+						<div class="image-toggler js-image-toggler">
+
+							<ul class="image-toggler__nav">
+								<li class="image-toggler__nav-item active"><a href="#image1">Front</a></li>
+								<li class="image-toggler__nav-item"><a href="#image2">Back</a></li>
+							</ul>
+
+							<div class="image-toggler__body">
+
+								<div class="image-toggler__item image-toggler__item--front js-image-toggler__item active" id="image1">
+
+									<figure class="figure">
+										<img src="{{ currentApp.urlPaths.imagesPath }}brp-front-demo.jpg" alt="">
+										<p class="figure__caption" aria-hidden="true">Look for the wording in these places</p>
+									</figure>
+
+								</div>
+
+								<div class="image-toggler__item image-toggler__item--back js-image-toggler__item" id="image2">
+
+									<figure class="figure">
+										<img src="{{ currentApp.urlPaths.imagesPath }}brp-back-demo.jpg" alt="">
+										<p class="figure__caption" aria-hidden="true">Where to find family member wording.</p>
+									</figure>
+
+								</div>
+
+							</div>
+
+						</div>
 
 					</div>
 				</div>
