@@ -309,6 +309,9 @@ console.log('this is firing');
             if (job == "yes") {
                 res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
             } else {
+              if (claimantType == "partner"){
+                res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+              }
                 res.redirect(`${appRoot}/questions/stopped-working-in-last-month?${claimantType}`);
             }
         } else {
@@ -493,8 +496,7 @@ console.log('this is firing');
         if (employmentContractToday) {
             answers[claimantType].employmentContractToday = employmentContractToday;
             if (employmentContractToday == "yes") {
-              // TODO
-              // No route given for how to proceed here - speak to team for further info.
+              res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
           } else {
               res.redirect(`${appRoot}/questions/employment-contract-at-future-appt`);
             }
@@ -520,6 +522,27 @@ console.log('this is firing');
             }
         } else {
             res.render(`${appRootRel}/questions/employment-contract-at-future-appt`);
+        }
+    });
+
+    // ####################################################################
+    // Do they have fitnotes with them today?
+    // ####################################################################
+    router.all(`${appRoot}/questions/fitnotes-today`, function(req, res) {
+        var fitnotesToday = req.body.fitnotesToday;
+        var answers = req.session[config.slug].answers;
+        var claimantType = res.locals.currentApp.claimantType;
+
+        if (fitnotesToday) {
+            answers[claimantType].fitnotesToday = fitnotesToday;
+            if (fitnotesToday == "yes") {
+                res.redirect(`${appRoot}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
+                // TODO
+            } else {
+                res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+            }
+        } else {
+            res.render(`${appRootRel}/questions/fitnotes-today`);
         }
     });
     // // ####################################################################
@@ -708,7 +731,8 @@ console.log('this is firing');
         if (hasFitNote) {
             if (hasFitNote == 'yes') {
 
-                res.redirect(`${appRoot}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
+                // res.redirect(`${appRoot}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
+                res.redirect(`${appRoot}/questions/fitnote?${claimantType}`);
 
             } else if (hasFitNote == 'no') {
 
