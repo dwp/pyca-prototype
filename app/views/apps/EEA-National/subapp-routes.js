@@ -397,8 +397,6 @@ console.log('this is firing');
         if (idAtFutureAppt) {
             answers[claimantType].idAtFutureAppt = idAtFutureAppt;
             if (idAtFutureAppt == "yes") {
-              console.log("idAtFutureAppt fires");
-              console.log(`I want to send you to: ${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
                 res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
             } else {
                 res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
@@ -451,9 +449,10 @@ console.log('this is firing');
                   res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
                 }
             } else if (payslipsToday == "under3Months") {
-              // TODO
+              res.redirect(`${appRoot}/questions/employment-contract-today`);
             } else {
-                // TODO
+                // Does not have payslips with them today
+                res.redirect(`${appRoot}/questions/id-at-future-appt`);
             }
         } else {
             res.render(`${appRootRel}/questions/payslips`);
@@ -483,6 +482,46 @@ console.log('this is firing');
         }
     });
 
+    // ####################################################################
+    // Do they have a contract of employment with them today?
+    // ####################################################################
+    router.all(`${appRoot}/questions/employment-contract-today`, function(req, res) {
+        var employmentContractToday = req.body.employmentContractToday;
+        var answers = req.session[config.slug].answers;
+        var claimantType = res.locals.currentApp.claimantType;
+
+        if (employmentContractToday) {
+            answers[claimantType].employmentContractToday = employmentContractToday;
+            if (employmentContractToday == "yes") {
+              // TODO
+              // No route given for how to proceed here - speak to team for further info.
+          } else {
+              res.redirect(`${appRoot}/questions/employment-contract-at-future-appt`);
+            }
+        } else {
+            res.render(`${appRootRel}/questions/employment-contract-today`);
+        }
+    });
+
+    // ####################################################################
+    // Can they bring ID with them to a future appointment?
+    // ####################################################################
+    router.all(`${appRoot}/questions/employment-contract-at-future-appt`, function(req, res) {
+        var employmentContractAtFutureAppt = req.body.employmentContractAtFutureAppt;
+        var answers = req.session[config.slug].answers;
+        var claimantType = res.locals.currentApp.claimantType;
+
+        if (employmentContractAtFutureAppt) {
+            answers[claimantType].employmentContractAtFutureAppt = employmentContractAtFutureAppt;
+            if (employmentContractAtFutureAppt == "yes") {
+                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterview.id}?${claimantType}`);
+            } else {
+                res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+            }
+        } else {
+            res.render(`${appRootRel}/questions/employment-contract-at-future-appt`);
+        }
+    });
     // // ####################################################################
     // // refuge
     // // ####################################################################
