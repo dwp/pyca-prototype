@@ -10,13 +10,13 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          {{ 'Has their partner' if currentApp.isPartnerFlow else 'Has this person' }} stopped working in the last month?
+          {{ 'Did their partner' if currentApp.isPartnerFlow else 'Did they' }} stop working in the last month?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
-              <span class="visuallyhidden">{{ 'Has their partner' if currentApp.isPartnerFlow else 'Has this person' }} stopped working in the last month?</span>
+              <span class="visuallyhidden">{{ 'Did their partner' if currentApp.isPartnerFlow else 'Did they' }} stop working in the last month?</span>
             </legend>
 
             <label for="stoppedWorkingInTheLastMonth-yes" class="block-label selection-button-radio">

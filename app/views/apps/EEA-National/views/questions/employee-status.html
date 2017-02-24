@@ -8,25 +8,25 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          {{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} currently have a job?
+          {{ 'What is their partners' if currentApp.isPartnerFlow else 'What is their' }} employment status?
         </h1>
 
-        <p class="form-hint">They are employed by someone if they can produce evidence of being paid a regular salary in the last 3 months, even if they are on maternity leave.</p>
+        <p>Select all that apply:</p>
 
         <div class="form-group">
           <fieldset role="group" aria-required="true">
             <legend>
-              <span class="visuallyhidden">{{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} currently have a job?</span>
+              <span class="visuallyhidden">{{ 'What is their partners' if currentApp.isPartnerFlow else 'What is their' }} employment status?</span>
             </legend>
 
             <label for="employed" class="block-label selection-button-checkbox">
               <input type="checkbox" name="employeeStatus[employed]" value="true" id="employed" data-uncheck='["dontWork"]'>
-              Yes, they’re employed by someone
+              Employed
             </label>
 
             <label for="selfEmployed" class="block-label selection-button-checkbox">
               <input type="checkbox" name="employeeStatus[selfEmployed]" value="true" id="selfEmployed" data-uncheck='["dontWork"]'>
-              Yes, they’re self-employed (work for themselves)
+              Self-employed
             </label>
           </fieldset>
         </div>

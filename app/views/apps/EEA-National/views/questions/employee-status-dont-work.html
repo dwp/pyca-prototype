@@ -8,23 +8,23 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-					Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?
+					Why {{ 'did their partner' if currentApp.isPartnerFlow else 'did they' }} stop working?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true">
             <legend>
-              <span class="visuallyhidden">Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?</span>
+              <span class="visuallyhidden">Why {{ 'did their partner' if currentApp.isPartnerFlow else 'did they' }} stop working?</span>
             </legend>
 
             <label for="dont-work-reason-redundant" class="block-label selection-button-radio">
               <input type="radio" name="dontWorkReason" value="redundant" id="dont-work-reason-redundant">
-              They were made redundant recently
+              Made redundant
             </label>
 
             <label for="dont-work-reason-sick" class="block-label selection-button-radio">
               <input type="radio" name="dontWorkReason" value="sick" id="dont-work-reason-sick">
-              They stopped working recently due to an illness
+              Illness
             </label>
 
             <label for="dont-work-reason-other" class="block-label selection-button-radio">
