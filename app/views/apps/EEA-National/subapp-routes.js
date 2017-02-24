@@ -150,7 +150,7 @@ module.exports = (router, config) => {
                         (!answers.claimant.isEEA && answers.claimant.familyMember === 'yes')) ||
                     (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no' &&
                         answers.claimant.familyMember === 'no' && answers.claimant.outOfUk === 'yes')) {
-console.log('this is firing');
+
                     // Mark as derived rights flow
                     answers.claimant.isDerivedRightsFlow = true;
 
@@ -165,33 +165,22 @@ console.log('this is firing');
             // Has partner, override outcome based on claimant
             else if (answers.claimant.partner === 'yes' && answers.claimant.outcomeId) {
 
-              console.log('this is firing!');
-
                 // Save outcome
                 answers.partner.outcomeId = outcomeId;
 
                 // Does claimant outcome differ? Partner must be eligible
                 if (answers.claimant.outcomeId !== outcomeId && outcomeId !== outcomes.ineligible.id) {
 
-                  console.log('Partner is eligible');
-
                     // Ineligible claimant (derived rights)
                     if (answers.claimant.outcomeId === outcomes.ineligible.id) {
 
-                      console.log('Ineligible claimant (derived rights)');
-
                         // Skip if already on derived rights outcome
                         if (outcomeId !== outcomes.derivedRightsNonEEA.id && outcomeId !== outcomes.derivedRightsEEA.id) {
-
-                            console.log(`Skip if already on derived rights outcome`);
-                            console.log(`The outcomeId is: ${outcomeId}`);
 
                             // Ineligible claimant + derived rights partner
                             if (outcomeId === outcomes.employedEEA.id ||
                                 outcomeId === outcomes.sickEEA.id ||
                                 outcomeId === outcomes.redundantEEA.id) {
-
-                                  console.log(`Ineligible claimant + derived rights partner`);
 
                                 // Force outcome to derived rights
                                 answers.partner.outcomeId = answers.claimant.isEEA ?
@@ -206,14 +195,12 @@ console.log('this is firing');
                               // Catch ineligible EEA claimant with EEA partner who needs to bring in passport/ID card and
                               // (optional) a marriage certificate
                               // Temporary fix until we look at the routing overall
-                              //res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
                               res.render(`${appRootRel}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}`);
                               return;
                              }
 
                             // Otherwise still ineligible
                             else {
-                                console.log(`Otherwise still ineligible`);
                                 //res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
                                 return;
                             }
@@ -407,8 +394,6 @@ console.log('this is firing');
         if (idAtFutureAppt) {
             answers[claimantType].idAtFutureAppt = idAtFutureAppt;
             if (idAtFutureAppt == "yes") {
-              console.log(`res.locals.currentApp.feiDocuments contains: ${res.locals.currentApp.feiDocuments}`);
-              console.log(`feiDocuments variable contains: ${res.locals.currentApp.feiDocuments}`);
                 res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
             } else {
                 res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
@@ -451,13 +436,11 @@ console.log('this is firing');
 
             if (payslipsToday == "yes") {
                 if (answers[claimantType].dontWorkReason == "redundant"){
-                  console.log(`I'm sendng you to: ${appRoot}/questions/redundancy`);
                   res.redirect(`${appRoot}/questions/redundancy`);
                 } else if (answers[claimantType].dontWorkReason == "sick"){
                   res.redirect(`${appRoot}/questions/fitnote`);
                 } else {
                   // they are employed
-                  console.log(`I'm sendng you to: ${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType} `);
                   res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
                 }
             } else if (payslipsToday == "under3Months") {
@@ -491,7 +474,6 @@ console.log('this is firing');
 
             if (redundancyLetterWithThemToday == "yes") {
                 // END010
-                console.log("sending you to END010, redundantEEA");
                 res.redirect(`${appRoot}/outcomes/${outcomes.redundantEEA.id}?${claimantType}`);
             } else {
               // Populate that a redundancy letter will be required.
@@ -565,7 +547,6 @@ console.log('this is firing');
             answers[claimantType].fitnotesToday = fitnotesToday;
             if (fitnotesToday == "yes") {
                 res.redirect(`${appRoot}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
-                // TODO
             } else {
                 res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
             }
@@ -686,8 +667,6 @@ console.log('this is firing');
                 if (res.locals.currentApp.isPartnerFlow && claimantType == 'partner') {
 										res.redirect(`${appRoot}/questions/marriage-certificate?${claimantType}`);
                 } else {
-                    // old behaviour before EEA changes
-                    // res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
                     res.redirect(`${appRoot}/questions/passport-with-them`);
                 }
             }
@@ -759,7 +738,6 @@ console.log('this is firing');
         if (hasFitNote) {
             if (hasFitNote == 'yes') {
 
-                // res.redirect(`${appRoot}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
                 res.redirect(`${appRoot}/questions/fitnotes-today?${claimantType}`);
 
             } else if (hasFitNote == 'no') {
