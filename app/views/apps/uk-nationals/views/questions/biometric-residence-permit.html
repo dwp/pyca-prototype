@@ -1,0 +1,60 @@
+{% set page = {
+	title: "Biometric Residence Permit"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+
+		<div class="column-full">
+
+		</div>
+
+    <div class="column-one-half">
+
+      <form method="post" class="form">
+
+	      <h1 class="heading-large">
+	        Have they brought a biometric residence permit today?
+	      </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Have they brought a biometric residence permit today?</span>
+            </legend>
+
+            <label for="brp-yes-today" class="block-label selection-button-radio">
+              <input type="radio" name="brp" value="yes" id="brp-yes-today">
+              Yes
+            </label>
+
+            <label for="brp-no" class="block-label selection-button-radio">
+              <input type="radio" name="brp" value="no" id="brp-no">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+
+		<div class="column-one-half">
+			<figure class="figure figure--brp">
+				<img src="{{ currentApp.urlPaths.imagesPath }}brp-front.jpg" alt="">
+				<p class="figure__caption" aria-hidden="true">Example of a biometric residence permit.</p>
+			</figure>
+		</div>
+
+
+
+  </div>
+{% endblock %}
