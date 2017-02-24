@@ -255,13 +255,13 @@ module.exports = (router, config) => {
 	  if (hasBritishPassportToday) {
 	    answers[claimantType].hasBritishPassportToday = hasBritishPassportToday;
 
-	    // UK national
+	    // Has British passport with them
 	    if (hasBritishPassportToday == 'yes') {
 	      answers[claimantType].isEEA = true;
-	      res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
+	      res.redirect(`${appRoot}/questions/british-citizen?${claimantType}`);
 	    }
 
-	    // Non-UK national
+	    // Don't have their British passport with them
 	    else if (hasBritishPassportToday == 'no') {
 	      res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterview.id}?${claimantType}`);
 	    }
@@ -273,6 +273,43 @@ module.exports = (router, config) => {
 	  }
 
 	});
+
+	// ####################################################################
+	// Branching for citizens with a british passport and british citizen
+	// ####################################################################
+	router.all(`${appRoot}/questions/british-citizen`, function (req, res) {
+		var isBritishCitizen = req.body.britishCitizen;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (isBritishCitizen) {
+			answers[claimantType].isBritishCitizen = isBritishCitizen;
+
+			// UK national
+			if (isBritishCitizen == 'yes') {
+				answers[claimantType].isEEA = true;
+				res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
+			}
+
+			// Non-UK national
+			else if (isBritishCitizen == 'no') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+
+		}
+
+		else {
+			res.render(`${appRootRel}/questions/british-citizen`);
+		}
+
+	});
+
+
+
+
+
+
+
 
 	// ####################################################################
 	// refuge

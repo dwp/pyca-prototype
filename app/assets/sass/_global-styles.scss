@@ -3,10 +3,11 @@
 $path: "/public/images/";
 
 // Import GOV.UK elements from /govuk-modules/, this will import the frontend toolkit and some base styles.
-// Take a look in /govuk-modules/_govuk-elements.scss to see which files are imported. 
-@import 'govuk-elements'; 
+// Take a look in /govuk-modules/_govuk-elements.scss to see which files are imported.
+@import 'govuk-elements';
 
 // Take a look at in app/assets/sass/patterns/ to see which files are imported.
+@import 'partials/mixins';
 @import 'patterns/check-your-answers';
 @import 'partials/autocomplete';
 @import 'partials/form-overrides';
@@ -27,7 +28,7 @@ $media-breakpoints:(
   desktop: 769px
 );
 
-// generate a ta alignment class and if require a modifier version for 
+// generate a ta alignment class and if require a modifier version for
 // each breakpoint.
 $alignments: left, right, center;
 
@@ -38,7 +39,7 @@ $alignments: left, right, center;
       @include media($breakpoint) {
         &--#{$breakpoint} {
           text-align: $alignment;
-        }  
+        }
       }
     }
   }
@@ -128,7 +129,7 @@ $alignments: left, right, center;
   width: 100%;
   @include media(tablet) {
     width: 100%;
-  }  
+  }
 }
 
 .mt {
@@ -144,21 +145,21 @@ $alignments: left, right, center;
 }
 
 .meta-data {
-	
+
 	margin-bottom: 1.5em;
-	
+
 	&__key {
 		font-weight: bold;
 	}
-	
+
 	&__val {
-			
+
 	}
-	
+
 	&__val + &__key {
 		margin-top: 1em;
 	}
-	
+
 }
 
 .button--block {
