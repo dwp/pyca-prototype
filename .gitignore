@@ -8,3 +8,4 @@ govuk_modules
 node_modules/*
 .tmuxp.*
 .idea
+app/views/apps/***/*.css
