@@ -79,9 +79,9 @@ module.exports = (router, config) => {
             id: 'END014',
             status: 'Returning British national with no passport on the day of initial interview'
         },
-        bookFurtherEvidenceInterviewMarriageCert: {
+        bookFurtherEvidenceInterviewAdditionalDocsReqd: {
             id: 'END099',
-            status: "Temporary: EEA National, recently stopped work for 'other' reason. Married to working EEA national. Need to bring passport/ID and possibly a marriage certificate"
+            status: "EEA National - needs Further Evidence Interview for: passport &: redundancy letter / contract of employment / payslips /  marriage certificate"
         }
     }
 
@@ -191,11 +191,11 @@ module.exports = (router, config) => {
                                 return;
                             }
 
-                            else if (outcomeId === outcomes.bookFurtherEvidenceInterviewMarriageCert.id){
+                            else if (outcomeId === outcomes.bookFurtherEvidenceInterviewAdditionalDocsReqd.id){
                               // Catch ineligible EEA claimant with EEA partner who needs to bring in passport/ID card and
                               // (optional) a marriage certificate
                               // Temporary fix until we look at the routing overall
-                              res.render(`${appRootRel}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}`);
+                              res.render(`${appRootRel}/outcomes/${outcomes.bookFurtherEvidenceInterviewAdditionalDocsReqd.id}`);
                               return;
                              }
 
@@ -394,7 +394,7 @@ module.exports = (router, config) => {
         if (idAtFutureAppt) {
             answers[claimantType].idAtFutureAppt = idAtFutureAppt;
             if (idAtFutureAppt == "yes") {
-                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
+                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewAdditionalDocsReqd.id}?${claimantType}`);
             } else {
                 res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
             }
@@ -526,7 +526,7 @@ module.exports = (router, config) => {
         if (employmentContractAtFutureAppt) {
             answers[claimantType].employmentContractAtFutureAppt = employmentContractAtFutureAppt;
             if (employmentContractAtFutureAppt == "yes") {
-                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
+                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewAdditionalDocsReqd.id}?${claimantType}`);
             } else {
                 res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
             }
