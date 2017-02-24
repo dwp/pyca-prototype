@@ -12,23 +12,18 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          Do they have a marriage certificate?
+          Have they brought a marriage certificate today?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
-              <span class="visuallyhidden">Do they have a marriage certificate?</span>
+              <span class="visuallyhidden">Have they brought a marriage certificate today?</span>
             </legend>
 
             <label for="marriage-certificate-yes-today" class="block-label selection-button-radio">
               <input type="radio" name="marriageCertificate" value="yes" id="marriage-certificate-yes-today">
               Yes
-            </label>
-
-            <label for="marriage-certificate-yes-not-today" class="block-label selection-button-radio">
-              <input type="radio" name="marriageCertificate" value="not today" id="marriage-certificate-yes-not-today">
-              Yes, but they haven't brought it today
             </label>
 
             <label for="marriage-certificate-no" class="block-label selection-button-radio">
