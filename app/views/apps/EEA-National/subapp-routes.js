@@ -111,12 +111,9 @@ module.exports = (router, config) => {
         // Claimant type suffix
         var claimantType = isPartnerFlow ? 'partner' : 'claimant';
 
-        var feiDocuments = res.locals.currentApp.feiDocuments || [];
-
         res.locals.currentApp.isPartnerFlow = isPartnerFlow;
         res.locals.currentApp.claimantType = claimantType;
         req.session[config.slug].answers = answers;
-        res.locals.currentApp.feiDocuments = feiDocuments;
 
         next();
     });
@@ -474,7 +471,6 @@ console.log('this is firing');
         var redundancyLetterWithThemToday = req.body.redundancyLetterWithThemToday;
         var answers = req.session[config.slug].answers;
         var claimantType = res.locals.currentApp.claimantType;
-        var feiDocuments = res.locals.currentApp.feiDocuments;
 
         if (redundancyLetterWithThemToday) {
             answers[claimantType].redundancyLetterWithThemToday = redundancyLetterWithThemToday;
@@ -484,11 +480,13 @@ console.log('this is firing');
                 console.log("sending you to END010, redundantEEA");
                 res.redirect(`${appRoot}/outcomes/${outcomes.redundantEEA.id}?${claimantType}`);
             } else {
-              res.locals.currentApp.feiDocuments.push("test");
-              feiDocuments.push("teseter");
-              console.log(`res.locals.currentApp.feiDocuments contains: ${res.locals.currentApp.feiDocuments}`);
-              console.log(`feiDocuments variable contains: ${res.locals.currentApp.feiDocuments}`);
-                res.redirect(`${appRoot}/questions/id-at-future-appt?${claimantType}`);
+              // Populate that a redundancy letter will be required.
+              if (typeof answers.feiDocuments == 'undefined'){
+                answers.feiDocuments = [];
+              }
+              answers.feiDocuments.push("redundancy letter");
+
+              res.redirect(`${appRoot}/questions/id-at-future-appt?${claimantType}`);
             }
         } else {
             res.render(`${appRootRel}/questions/redundancy`);
