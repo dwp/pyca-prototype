@@ -513,6 +513,12 @@ console.log('this is firing');
             if (employmentContractToday == "yes") {
               res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
           } else {
+            // Populate that a contract of employment  will be required.
+            if (typeof answers.feiDocuments == 'undefined'){
+              answers.feiDocuments = [];
+            }
+            answers.feiDocuments.push("contract of employment");
+
               res.redirect(`${appRoot}/questions/employment-contract-at-future-appt`);
             }
         } else {
@@ -521,7 +527,7 @@ console.log('this is firing');
     });
 
     // ####################################################################
-    // Can they bring ID with them to a future appointment?
+    // Can they bring contract of employment with them to a future appointment?
     // ####################################################################
     router.all(`${appRoot}/questions/employment-contract-at-future-appt`, function(req, res) {
         var employmentContractAtFutureAppt = req.body.employmentContractAtFutureAppt;
@@ -531,7 +537,7 @@ console.log('this is firing');
         if (employmentContractAtFutureAppt) {
             answers[claimantType].employmentContractAtFutureAppt = employmentContractAtFutureAppt;
             if (employmentContractAtFutureAppt == "yes") {
-                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterview.id}?${claimantType}`);
+                res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriageCert.id}?${claimantType}`);
             } else {
                 res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
             }
