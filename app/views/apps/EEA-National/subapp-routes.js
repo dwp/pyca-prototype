@@ -742,7 +742,7 @@ console.log('this is firing');
             if (hasFitNote == 'yes') {
 
                 // res.redirect(`${appRoot}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
-                res.redirect(`${appRoot}/questions/fitnote?${claimantType}`);
+                res.redirect(`${appRoot}/questions/fitnotes-today?${claimantType}`);
 
             } else if (hasFitNote == 'no') {
 
