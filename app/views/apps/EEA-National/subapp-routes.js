@@ -464,6 +464,13 @@ console.log('this is firing');
               res.redirect(`${appRoot}/questions/employment-contract-today`);
             } else {
                 // Does not have payslips with them today
+
+                // Populate that payslips will be required at a future appointment
+                if (typeof answers.feiDocuments == 'undefined'){
+                  answers.feiDocuments = [];
+                }
+                answers.feiDocuments.push("payslips");
+
                 res.redirect(`${appRoot}/questions/id-at-future-appt`);
             }
         } else {
