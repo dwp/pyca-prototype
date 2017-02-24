@@ -13,17 +13,11 @@
       <p>Tell the person to bring their:</p>
       <ul class="list list-bullet">
 		<li>passport</li>
-{{ 'does their truth lorem' if currentApp.feiDocuments else 'some other '}}
-<li>{{ currentApp.feiDocuments }}</li>
 
-
-        {% for data in currentApp.feiDocuments %}
-            <li>once round the loop</li>
+        {% for data in currentApp.session.answers.feiDocuments %}
             <li>{{ data }}</li>
-            <li>{{ loop.indexb }}</li>
         {% endfor %}
 
-		<li>marriage certificate</li>
       </ul>
 
       <div class="panel panel-border-narrow">
