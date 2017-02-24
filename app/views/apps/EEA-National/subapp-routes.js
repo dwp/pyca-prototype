@@ -350,6 +350,13 @@ console.log('this is firing');
 
         if (marriageCertificate) {
             answers[claimantType].marriageCertificate = marriageCertificate;
+
+            // Populate that a Marriage certificate will be required at a future appointment
+            if (typeof answers.feiDocuments == 'undefined'){
+              answers.feiDocuments = [];
+            }
+            answers.feiDocuments.push("marriage certificate");
+
             if (marriageCertificate == "yes") {
                 res.redirect(`${appRoot}/questions/passport-with-them?${claimantType}`);
             } else {
