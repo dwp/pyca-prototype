@@ -1,9 +1,9 @@
 
       <div class="govuk-box-highlight">
         {% if currentApp.claimantStatus == 'Ineligible' %}
-          <h1 class="bold-large">Book a HRT for this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
+          <h1 class="bold-large">Book a HRT for this person</h1>
         {% else %}
-          <h1 class="bold-large">Fast-track this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
+          <h1 class="bold-large">Fast-track this person</h1>
           <p>{{ currentApp.claimantStatus }} {{ 'with a qualifying partner' if isPartnerFlow}}</p>
 
         {% endif %}
