@@ -14,13 +14,13 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          {{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} have a British passport?
+          {{ 'Does their partner' if currentApp.isPartnerFlow else 'Do they' }} have a British passport?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
-              <span class="visuallyhidden">{{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} have a British passport?</span>
+              <span class="visuallyhidden">{{ 'Does their partner' if currentApp.isPartnerFlow else 'Do they' }} have a British passport?</span>
             </legend>
 
             <label for="ukNational-yes" class="block-label selection-button-radio">
