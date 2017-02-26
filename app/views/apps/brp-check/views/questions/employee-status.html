@@ -12,7 +12,7 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          {{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} currently have a job?
+          {{ 'Does their partner' if currentApp.isPartnerFlow else 'Do they' }} currently have a job?
         </h1>
 
         <p class="form-hint">They are employed by someone if they can produce evidence of being paid a regular salary in the last 3 months, even if they are on maternity leave.</p>
@@ -20,7 +20,7 @@
         <div class="form-group">
           <fieldset role="group" aria-required="true">
             <legend>
-              <span class="visuallyhidden">{{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} currently have a job?</span>
+              <span class="visuallyhidden">{{ 'Does their partner' if currentApp.isPartnerFlow else 'Do they' }} currently have a job?</span>
             </legend>
 
             <label for="employed" class="block-label selection-button-checkbox">
