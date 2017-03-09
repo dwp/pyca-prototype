@@ -1,0 +1,49 @@
+{% set page = {
+	title: "Partner"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          {{ 'Are they married or in a civil partnership?' if currentApp.isDerivedRightsFlow else 'Do they have a partner?' }}
+        </h1>
+
+        {%- if not currentApp.isDerivedRightsFlow %}
+        <p class="form-hint">This means a husband, wife or civil partner, or someone who lives with them and they share a personal life with, for example they may have common bills or share a bank account.</p>
+        {% endif -%}
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true" class="inline">
+            <legend>
+              <span class="visuallyhidden">Do you have a partner?</span>
+            </legend>
+
+            <label for="partner-yes" class="block-label selection-button-radio">
+              <input type="radio" name="partner" value="yes" id="partner-yes">
+              Yes
+            </label>
+
+            <label for="partner-no" class="block-label selection-button-radio">
+              <input type="radio" name="partner" value="no" id="partner-no">
+              No
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}﻿
