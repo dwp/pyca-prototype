@@ -263,7 +263,7 @@ module.exports = (router, config) => {
 
 	    // Don't have their British passport with them
 	    else if (hasBritishPassportToday == 'no') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterview.id}?${claimantType}`);
+	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 	    }
 
 	  }
