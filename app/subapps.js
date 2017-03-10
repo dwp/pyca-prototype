@@ -145,6 +145,38 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 		next()
 	})
 
+	// do the following things when clicking 'start' button in a subapplicaiton
+	router.all(`${appData.urlPaths.appRoot}/views/start`, function(req, res, next){
+		if(req.query.page) {
+
+      // build a url to redirect to
+      let redirectionURL = `${appData.urlPaths.appRoot}/views/${req.query.page}`
+
+      // if we have a session then destroy it
+			if(req.session) {
+
+        console.log(`Current session looks like:`);
+        console.log(req.session);
+
+				req.session.destroy()
+				console.log(`Destroyed session for ${appData.slug}`);
+
+        console.log(`Current session after destroy looks like:`);
+        console.log(req.session);
+
+			}
+
+			console.log(`Redirecting to ${redirectionURL}`);
+			return res.redirect(`${redirectionURL}`)
+
+		} else {
+			return res.send('You need to pass a start page URL path in the query string')
+		}
+
+    next()
+
+	})
+
 	router.all(subRoutes, function(req,res,next){
 
 	  if (!req.session[appData.slug]){

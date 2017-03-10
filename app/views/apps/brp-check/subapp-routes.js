@@ -457,10 +457,6 @@ module.exports = (router, config) => {
 	});
 
 
-
-
-
-
 	router.all(`${appRoot}/questions/permanent-residence`, function (req, res) {
 	  var permanentResidence = req.body.permanentResidence;
 	  var answers = req.session[config.slug].answers;
