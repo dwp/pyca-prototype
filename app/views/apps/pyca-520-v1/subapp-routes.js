@@ -230,7 +230,7 @@ module.exports = (router, config) => {
 
 	    // Non-UK national
 	    else if (ukNational == 'no') {
-	      res.redirect(`${appRoot}/questions/nationality?${claimantType}`);
+	      res.redirect(`${appRoot}/questions/refugee?${claimantType}`);
 	    }
 
 	    else if (res.locals.currentApp.isPartnerFlow && ukNational === 'unknown') {
