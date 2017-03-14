@@ -4,6 +4,8 @@
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
+{% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
+
 {% block main_content %}
 
   <div class="grid-row">
