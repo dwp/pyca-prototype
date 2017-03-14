@@ -21,4 +21,5 @@
 {% block body_end %}
   {% include "includes/scripts.html" %}
   <!-- GOV.UK Prototype kit {{releaseVersion}} -->
+  {{ currentApp | log if currentApp }}
 {% endblock %}

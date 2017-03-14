@@ -16,15 +16,22 @@
 			<h1 class="heading-xlarge">
 				{% if serviceName %} {{ serviceName }} {% endif %}
 			</h1>
-			
-			<h2 class="heading-medium">Versions</h2>
-			
+
+			<h2 class="heading-medium">Prototype versions</h2>
+
+			<p>The following links are to different prototype 'versions' for the Prove you can apply service with an overview of the changes and associated research.</p>
+
 			{{ macros.subapps_list(apps) }}
+
+			<h2 class="heading-medium">'Live' prototype</h2>
+
+			<p>This links to a representation of the live Prove you can apply service. This should match the latest release.</p>
+
+			<p><a href="apps/live/views/" class="button">Launch live version</a></p>
 
 			<h2 class="heading-medium">Things on here</h2>
 
 			<ul class="list list-bullet">
-				<!-- <li><a href="/citizen">Tool to prepare for a residency interview</a></li> -->
 				<li><a href="/validation/single-choice">Example single-choice form validation</a></li>
 				<li><a href="/validation/multiple-choice">Example multiple-choice form validation</a></li>
 				<li><a href="/validation/autocomplete">Example autocomplete form validation</a></li>

@@ -3,7 +3,7 @@
     <nav id="proposition-menu">
       <a href="/" id="proposition-name">{% if serviceName %} {{ serviceName }} {% endif %}</a>
       <p id="proposition-link">
-        <a href="/citizen"{% if url == '/citizen' %} class="active"{% endif %}>Home</a>
+        <a href="{{ currentApp.urlPaths.root + '/' if currentApp else '/' }}">Home</a>
       </p>
     </nav>
   </div>

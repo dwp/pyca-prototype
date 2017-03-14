@@ -16,11 +16,11 @@ module.exports = {
   useDocumentation: 'true',
 
   // Force HTTP to redirect to HTTPs on production
-  useHttps: 'true',
+  useHttps: 'false',
 
   // Cookie warning - update link to service's cookie page.
   cookieText: 'This service uses cookies to make the site simpler. <a href="/help/cookies" title="Find out more about cookies">Find out more about cookies</a>',
-  
+
   // use the routing for sub applications within app
   useSubapplications: true
 
