@@ -148,7 +148,7 @@ module.exports = (router, config) => {
           answers.claimant.isDerivedRightsFlow = true;
 
           // Redirect to partner flow
-          res.redirect(`/${type}/questions/partner?claimant`);
+          res.redirect(`${appRoot}/questions/partner?claimant`);
           return;
 
         }
