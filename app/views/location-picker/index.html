@@ -1,0 +1,66 @@
+{% set page = {
+	hasLocationPicker: true
+} if not page %}
+
+{% extends "layouts/layout.html" %}
+
+{% block page_title %}
+	Prove you can apply for benefits in the UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+
+	{% include "includes/phase_banner_prototype.html" %}
+
+	<div class="grid-row">
+		<div class="column-two-thirds">
+
+      <form class="form">
+
+        <h1 class="form-title heading-large">
+          {% if locale === 'en-GB' %}
+            Location picker
+          {% else %}
+            Dewisydd lleoliad
+          {% endif %}
+        </h1>
+
+        <!-- Location picker -->
+        <div class="form-group">
+          <label class="form-label-bold" for="location-select-dropdown">
+            {% if locale === 'en-GB' %}
+              What was the last country you visited?
+            {% else %}
+              Lleoliad
+            {% endif %}
+          </label>
+          <select class="form-control" id="location-select-dropdown">
+            <option value="" disabled selected>
+              {% if locale === 'en-GB' %}
+                Choose a location
+              {% else %}
+                Dewiswch leoliad
+              {% endif %}
+            </option>
+            {% for location in locations %}
+              <option value="{{location}}">{{location}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          {% if locale === 'en-GB' %}
+            <input type="submit" class="button" value="Continue">
+          {% else %}
+            <input type="submit" class="button" value="Parhau">
+          {% endif %}
+        </div>
+      </form>
+
+		</div>
+	</div>
+</main>
+
+{% endblock %}
