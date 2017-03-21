@@ -17,12 +17,6 @@
 				{% if serviceName %} {{ serviceName }} {% endif %}
 			</h1>
 
-			<h2 class="heading-medium">Prototype versions</h2>
-
-			<p>The following links are to different prototype 'versions' for the Prove you can apply service with an overview of the changes and associated research.</p>
-
-			{{ macros.subapps_list(apps) }}
-
 			<h2 class="heading-medium">'Live' prototype</h2>
 
 			<div class="notice">
@@ -30,7 +24,7 @@
 			    <span class="visually-hidden">Warning</span>
 			  </i>
 			  <strong class="bold-small">
-			    Anything in this version of the prototype should be currently live OR signed off to go live.
+			    Anything in this version of the prototype should be currently live OR 'signed off' by the team and product owner to go live.
 			  </strong>
 			</div>
 
@@ -38,7 +32,13 @@
 
 			<p><a href="apps/live/views/" class="button">Launch live version</a></p>
 
-			<h2 class="heading-medium">Things on here</h2>
+			<h2 class="heading-medium">Prototype versions</h2>
+
+			<p>The following links are to different prototype 'versions' for the Prove you can apply service with an overview of the changes and associated research.</p>
+
+			{{ macros.subapps_list(apps) }}
+
+			<h2 class="heading-medium">Other things on here</h2>
 
 			<ul class="list list-bullet">
 				<li><a href="/validation/single-choice">Example single-choice form validation</a></li>
