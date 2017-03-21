@@ -305,12 +305,6 @@ module.exports = (router, config) => {
 	});
 
 
-
-
-
-
-
-
 	// ####################################################################
 	// refuge
 	// ####################################################################
@@ -356,17 +350,14 @@ module.exports = (router, config) => {
 
 	    // They have a british residency permit
 	    if (brp == 'yes') {
-	      res.redirect(`${appRoot}/questions/brp-family-member?${claimantType}`);
+	      res.redirect(`${appRoot}/questions/no-recourse-to-public-funds?${claimantType}`);
 	    }
 
 	    // Non-UK national
 	    else if (brp == 'no') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+	      res.redirect(`${appRoot}/questions/no-recourse-to-public-funds?${claimantType}`);
 	    }
 
-	    else if (brp == 'not today') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewBRP.id}?${claimantType}`);
-	    }
 	  }
 
 	  else {
