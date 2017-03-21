@@ -1,0 +1,51 @@
+﻿{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          {{ 'Has their partner got anything' if currentApp.isPartnerFlow else 'Have they brought anything' }} which says ‘permanent residence’?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">{{ 'Has their partner got anything' if currentApp.isPartnerFlow else 'Have they brought anything' }} which says ‘permanent residence’?</span>
+            </legend>
+
+            <label for="permanent-residence-yes" class="block-label selection-button-radio">
+              <input type="radio" name="permanentResidence" value="yes" id="permanent-residence-yes">
+              Yes
+            </label>
+
+            <label for="permanent-residence-no" class="block-label selection-button-radio">
+              <input type="radio" name="permanentResidence" value="no" id="permanent-residence-no">
+              No
+            </label>
+
+            {% if currentApp.isPartnerFlow %}
+            <label for="permanent-residence-unknown" class="block-label selection-button-radio">
+              <input type="radio" name="permanentResidence" value="unknown" id="permanent-residence-unknown">
+              Don’t know
+            </label>
+      	    {% endif %}
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,4 +1,8 @@
-﻿{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+{% set page = {
+	title: "UK Passport"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
 {% block main_content %}
 
@@ -13,7 +17,7 @@
           Is ‘family member’ written on {{ 'their partner’s' if currentApp.isPartnerFlow else 'their' }} visa?
         </h1>
 
-        {%- if not currentApp.isPartnerFlow %}
+        {%- if not isPartnerFlow %}
         <p class="form-hint">Check their biometric residence permit (BRP), residence card or the visa page on their passport.</p>
         {% endif -%}
 
@@ -33,7 +37,7 @@
               No
             </label>
 
-            {% if isPartnerFlow %}
+            {% if currentApp.isPartnerFlow %}
             <label for="family-member-unknown" class="block-label selection-button-radio">
               <input type="radio" name="familyMember" value="unknown" id="family-member-unknown">
               Don’t know

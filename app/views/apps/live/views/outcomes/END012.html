@@ -1,5 +1,5 @@
 {% set page = {
-	title: "END0012"
+	title: "END012"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -8,15 +8,15 @@
 
   <div class="grid-row">
     <div class="column-two-thirds">
-      {% include currentApp.filePaths.includesDir + "header.html" %}
+
+			{% include currentApp.filePaths.includesDir + "header.html" %}
 
       <h2 class="heading-medium">Evidence to collect</h2>
-      <ul class="list list-bullet">
+      <ul class="list list-bullet pyca-list">
         <li>passport - number, nationality, date of issue and expiry date</li>
         <li>marriage or civil partnership certificate - couple's names, date of marriage, country of marriage</li>
       </ul>
 
-      {% include currentApp.filePaths.includesDir + "footer.html" %}
 
     </div>
   </div>
