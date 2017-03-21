@@ -1,8 +1,12 @@
-﻿{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+{% set page = {
+	title: "No recourse to public funds"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
 {% block main_content %}
 
-  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
+	{% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
@@ -49,4 +53,4 @@
     </div>
   </div>
 
-{% endblock %}
+{% endblock %}﻿

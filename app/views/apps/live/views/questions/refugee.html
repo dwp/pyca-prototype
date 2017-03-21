@@ -1,8 +1,12 @@
-﻿{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+﻿{% set page = {
+	title: "Refugee"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
 
 {% block main_content %}
-
-  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
