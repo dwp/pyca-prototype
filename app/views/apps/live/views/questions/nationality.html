@@ -23,13 +23,6 @@
           <fieldset>
             <label for="location-select-dropdown" class="visuallyhidden">What nationality is on {{ 'their partner’s passport?' if currentApp.isPartnerFlow else 'the passport they’ve brought?' }}</label>
 
-            {# <select name="nationality" id="nationality" class="form-control full autocompleter">
-              <option value="">Select country</option>
-              {%- for country in countries %}
-              <option value="{{country.name}}"{% if country.aliases %} data-aliases='[{% for alias in country.aliases %}"{{ alias }}"{% if not loop.last %},{% endif %}{% endfor %}]'{% endif -%}>{{country.name}}</option>
-              {%- endfor %}
-            </select> #}
-
 						<select class="form-control" id="location-select-dropdown" name="country">
 	            <option value="" disabled selected>
 	              {% if locale === 'en-GB' %}
