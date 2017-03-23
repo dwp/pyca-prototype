@@ -17,7 +17,7 @@
 	<div class="grid-row">
 		<div class="column-two-thirds">
 
-      <form class="form">
+      <form class="form" method="post">
 
         <h1 class="form-title heading-large">
           {% if locale === 'en-GB' %}
@@ -36,7 +36,7 @@
               Lleoliad
             {% endif %}
           </label>
-          <select class="form-control" id="location-select-dropdown">
+          <select class="form-control" id="location-select-dropdown" name="country">
             <option value="" disabled selected>
               {% if locale === 'en-GB' %}
                 Choose a location

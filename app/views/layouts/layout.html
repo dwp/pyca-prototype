@@ -191,6 +191,7 @@
           element: container[0],
           id: id,
           minLength: 2,
+          name: 'nationality',
           source: (query, syncResults) => {
             const showNoResults = query.length <= 1
             if (showNoResults) {
@@ -199,7 +200,6 @@
               query = query.replace(/\./g,'')
               countries.search(query, (rawResults) => {
                 var presentableResults = presentResults(rawResults, query)
-
                 syncResults(presentableResults)
               })
             }

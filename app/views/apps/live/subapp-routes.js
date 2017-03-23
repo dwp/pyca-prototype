@@ -532,7 +532,9 @@ module.exports = (router, config) => {
 	      // Croatia straight to outcome
 	      if (nationality === 'Croatia') {
 	        res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	      }
+	      } else if(nationality === 'Ireland') {
+          res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
+        }
 
 	      // Continue
 	      res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
