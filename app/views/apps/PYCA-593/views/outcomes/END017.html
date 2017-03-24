@@ -1,0 +1,26 @@
+{% set page = {
+	title: "END017"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+			{% include currentApp.filePaths.includesDir + "header.html" %}
+
+	    <h2 class="heading-medium">What to do now</h1>
+	    <ul class="list list-number pyca-list">
+	      <li>In the ‘prove you can apply’ to-do, for the question ‘Is an HRT interview required?’, select ‘No’.</li>
+				<li>In the 'refer to decision maker' to-do, download the ALP, complete the 'no HRT required' section, and reupload the ALP.</li>
+				<li>For the question x, select 'Yes'.</li>
+				<li>Select done</li>
+				<li>In the 'make a decision - fast track' to-do, ....</li>
+	    </ul>
+
+	  </div>
+	</div>
+
+{% endblock %}
