@@ -626,6 +626,8 @@ module.exports = (router, config) => {
 	        res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 	      } else if(nationality === 'Ireland') {
           res.redirect(`${appRoot}/questions/out-of-uk?${claimantType}`);
+				} else if(nationality === 'United Kingdom') {
+					res.redirect(`${appRoot}/questions/british-passport-today?${claimantType}`);
         }
 
 	      // Continue
