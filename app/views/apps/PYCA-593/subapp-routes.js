@@ -89,11 +89,11 @@ module.exports = (router, config) => {
 	  },
 		noHRTRequired: {
 			id: 'END017',
-			status: 'No HRT required'
+			status: 'Fill in section 1 of the ALP'
 		},
 		makeaDecision: {
 			id: 'END018',
-			status: 'Make an HRT decision'
+			status: 'Fill in section 2 of the ALP'
 		}
 	}
 
@@ -409,12 +409,12 @@ module.exports = (router, config) => {
 			answers[claimantType].brprefugeedate = brprefugeedate;
 
 			// BRP is in date
-			if (brprefugeedate === 'yes') {
+			if (brprefugeedate === 'no') {
 				res.redirect(`${appRoot}/outcomes/${outcomes.makeaDecision.id}?${claimantType}`);
 			}
 
 			// BRP is not in date
-			else if (brprefugeedate === 'no') {
+			else if (brprefugeedate === 'yes') {
 				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 			}
 
