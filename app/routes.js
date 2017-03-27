@@ -12,11 +12,6 @@ var locationServiceV2 = require('./services/location-v2')
 var locationServiceV3 = require('./services/location-v3')
 var demoLocationService = require('./services/demo-location-v1')
 
-// Route index page
-router.get('/', function (req, res) {
-  res.render('index')
-})
-
 router.use('*', (req,res,next) => {
   let locale = 'en-GB'
   res.locals.html_lang = 'en'

@@ -216,8 +216,10 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 
 // Route index page including the collection of apps in the context
 router.get('/', function (req, res, next) {
+	console.log('using this');
   // remove 'live version from the list' we will link to that directly.
   res.locals.apps = subApps.filter(item => item.slug !== 'live');
+  res.render('index')
   next()
 })
 
