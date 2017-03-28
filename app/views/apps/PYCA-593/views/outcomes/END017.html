@@ -1,0 +1,43 @@
+{% set page = {
+	title: "END017"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+			{% include currentApp.filePaths.includesDir + "header.html" %}
+
+			<h2 class="heading-medium">Evidence to collect</h2>
+      <ul class="list list-bullet pyca-list">
+        <li>No evidence needs to be collected</li>
+      </ul>
+
+			<h2 class="heading-medium">What to do next</h1>
+			<h3 class="heading-small">How to clear the PYCA to-do:</h3>
+	    <ul class="list list-number pyca-list">
+	      <li>For the question "Is a HRT interview required", select NO</li>
+				<li>Click done to complete the to-do</li>
+	    </ul>
+			<h3 class="heading-small">How to clear the Refer to Decision Maker to-do:</h3>
+			<ul class="list list-number pyca-list">
+				<li>Download the ALP</li>
+				<li>Fill in section 1</li>
+				<li>Upload the ALP</li>
+				<li>For the quesiton "Is this a Fast-Track HRT referral case", select YES</li>
+				<li> Click done to complete the to-do</li>
+			</ul>
+			<h3 class="heading-small">How to clear the Make a decision (HRT Fast-Track) to-do:</h3>
+			<ul class="list list-number pyca-list">
+				<li>For the question "Is claimant entitled?", select YES</li>
+				<li>In the decision notes type "No HRT decision required"</li>
+				<li>Click done to complete the to-do</li>
+			</ul>
+
+	  </div>
+	</div>
+
+{% endblock %}
