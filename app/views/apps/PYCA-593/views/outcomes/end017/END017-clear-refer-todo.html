@@ -1,0 +1,36 @@
+{% set page = {
+	title: "END017 v2"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+
+		<div class="column-full">
+
+      <form method="post" class="form">
+
+	      <h1 class="heading-large">
+	        Clear the 'Refer to decision maker to-do'
+	      </h1>
+
+				<ol class="list list-number">
+					<li style="padding-bottom:10px">Download and open the ALP.</li>
+					<li style="padding-bottom:10px">Fill in section 1.</li>
+					<li style="padding-bottom:10px">Save and upload the ALP.</li>
+					<li style="padding-bottom:10px">For the question "Is this a Fast-Track HRT referral case?", select 'Yes'.</li>
+					<li style="padding-bottom:10px">Select 'Done' to complete the to-do.</li>
+				</ol>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+{% endblock %}
