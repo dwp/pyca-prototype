@@ -106,6 +106,7 @@ module.exports = (router, config) => {
 
 	  var answers = req.session[config.slug].answers || { claimant: {}, partner: {} };
 	  var isPartnerFlow = answers.claimant.partner === 'yes';
+		var currentIteration;
 
 	  // Allow partner override by query string
 	  if (typeof req.query.partner !== 'undefined') {
@@ -126,7 +127,7 @@ module.exports = (router, config) => {
 
 	  res.locals.currentApp.isPartnerFlow = isPartnerFlow;
 	  res.locals.currentApp.claimantType = claimantType;
-		res.locals.currentApp.iteration = currentIteration;
+		req.session[config.slug].iteration = currentIteration;
 	  req.session[config.slug].answers = answers;
 
 	  next();
@@ -869,6 +870,7 @@ module.exports = (router, config) => {
 	router.all(`${appRoot}/questions/out-of-uk`, function (req, res) {
 	  var outOfUk = req.body.outOfUk;
 	  var answers = req.session[config.slug].answers;
+		var iteration = req.session[config.slug].iteration;
 	  var claimantType = res.locals.currentApp.claimantType;
 
 	  if (outOfUk) {
@@ -881,7 +883,14 @@ module.exports = (router, config) => {
 
 	    // Out of UK less than 4 weeks
 	    else if (outOfUk === 'no') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}?${claimantType}`);
+
+				if(iteration) {
+					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}/${outcomes.noHRTRequired.id}?${claimantType}`);
+				} else {
+					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}?${claimantType}`);
+				}
+
+
 	    }
 
 	    else if (res.locals.currentApp.isPartnerFlow && outOfUk === 'unknown') {

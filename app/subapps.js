@@ -150,10 +150,11 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 
 		if(req.query.page) {
 
-			let iteration = req.query.iteration ? `&iteration=${req.query.iteration}` : ``
+			let iteration = req.query.iteration ? req.query.iteration : ``
+			let iterationString = req.query.iteration ? `&iteration=${req.query.iteration}` : ``
 
       // build a url to redirect to
-      let redirectionURL = `${appData.urlPaths.appRoot}/views/${req.query.page}${iteration}`
+      let redirectionURL = `${appData.urlPaths.appRoot}/views/${req.query.page}${iterationString}`
 
       // if we have a session then destroy it
 			if(req.session) {
@@ -169,6 +170,8 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 
 			}
 
+			req.session[appData.slug] = req.session[appData.slug] || {};
+			req.session[appData.slug].iteration = iteration;
 			console.log(`Redirecting to ${redirectionURL}`);
 			return res.redirect(`${redirectionURL}`)
 
