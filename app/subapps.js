@@ -58,7 +58,7 @@ let getSubAppData = function(currentPath) {
 		// a string used to give the app a unique body class
 		body_class: title.replace(/\s+/g, '-').toLowerCase(),
 		slug: titleSlug,
-    startURL: `${appAbsolutePath}/views/`,
+    startURL: `${appAbsolutePath}/views/index`,
 
 		// url paths constructed from the passed in subapp path
 		urlPaths: {
@@ -147,10 +147,13 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 
 	// do the following things when clicking 'start' button in a subapplicaiton
 	router.all(`${appData.urlPaths.appRoot}/views/start`, function(req, res, next){
+
 		if(req.query.page) {
 
+			let iteration = req.query.iteration ? `&iteration=${req.query.iteration}` : ``
+
       // build a url to redirect to
-      let redirectionURL = `${appData.urlPaths.appRoot}/views/${req.query.page}`
+      let redirectionURL = `${appData.urlPaths.appRoot}/views/${req.query.page}${iteration}`
 
       // if we have a session then destroy it
 			if(req.session) {
@@ -191,6 +194,7 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 	  }
 
     appData.session = req.session[appData.slug]
+		appData.query = req.query
 
 	  _.merge(res.locals, {
       session: req.session,
