@@ -879,7 +879,8 @@ module.exports = (router, config) => {
 	    else if (outOfUk === 'no') {
 
 				if(iteration) {
-					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}/${outcomes.noHRTRequired.id}?${claimantType}`);
+
+					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id.toLowerCase()}/${outcomes.noHRTRequired.id}?${claimantType}`);
 				} else {
 					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}?${claimantType}`);
 				}
