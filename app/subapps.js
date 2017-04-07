@@ -150,7 +150,7 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 
 		if(req.query.page) {
 
-			let iteration = req.query.iteration ? req.query.iteration : ``
+			let iteration = req.query.iteration ? req.query.iteration : undefined
 			let iterationString = req.query.iteration ? `&iteration=${req.query.iteration}` : ``
 
       // build a url to redirect to

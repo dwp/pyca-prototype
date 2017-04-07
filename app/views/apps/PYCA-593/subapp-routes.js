@@ -106,16 +106,11 @@ module.exports = (router, config) => {
 
 	  var answers = req.session[config.slug].answers || { claimant: {}, partner: {} };
 	  var isPartnerFlow = answers.claimant.partner === 'yes';
-		var currentIteration;
 
 	  // Allow partner override by query string
 	  if (typeof req.query.partner !== 'undefined') {
 	    isPartnerFlow = true;
 	  }
-
-		if (typeof req.query.iteration !== 'undefined') {
-			currentIteration = req.query.iteration;
-		}
 
 	  // Allow claimant override by query string
 	  if (typeof req.query.claimant !== 'undefined') {
@@ -127,7 +122,6 @@ module.exports = (router, config) => {
 
 	  res.locals.currentApp.isPartnerFlow = isPartnerFlow;
 	  res.locals.currentApp.claimantType = claimantType;
-		req.session[config.slug].iteration = currentIteration;
 	  req.session[config.slug].answers = answers;
 
 	  next();
