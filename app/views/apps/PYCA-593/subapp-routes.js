@@ -404,17 +404,26 @@ module.exports = (router, config) => {
 		var brprefugeedate = req.body.brprefugeedate;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
+		var iteration = req.session[config.slug].iteration;
 
 		if (brprefugeedate) {
 			answers[claimantType].brprefugeedate = brprefugeedate;
 
 			// BRP is in date
 			if (brprefugeedate === 'no') {
+
+				if (iteration) {
+					res.redirect(`${appRoot}/outcomes/${outcomes.makeaDecision.id.toLowerCase()}/${outcomes.makeaDecision.id}?${claimantType}`);
+				}
+				else {
 				res.redirect(`${appRoot}/outcomes/${outcomes.makeaDecision.id}?${claimantType}`);
+				}
+
 			}
 
 			// BRP is not in date
-			else if (brprefugeedate === 'yes') {
+
+			if (brprefugeedate === 'yes') {
 				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 			}
 
@@ -879,7 +888,6 @@ module.exports = (router, config) => {
 	    else if (outOfUk === 'no') {
 
 				if(iteration) {
-
 					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id.toLowerCase()}/${outcomes.noHRTRequired.id}?${claimantType}`);
 				} else {
 					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}?${claimantType}`);
