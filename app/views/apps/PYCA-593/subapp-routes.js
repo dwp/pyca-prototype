@@ -864,6 +864,7 @@ module.exports = (router, config) => {
 	router.all(`${appRoot}/questions/out-of-uk`, function (req, res) {
 	  var outOfUk = req.body.outOfUk;
 	  var answers = req.session[config.slug].answers;
+		var iteration = req.session[config.slug].iteration;
 	  var claimantType = res.locals.currentApp.claimantType;
 
 	  if (outOfUk) {
@@ -876,7 +877,14 @@ module.exports = (router, config) => {
 
 	    // Out of UK less than 4 weeks
 	    else if (outOfUk === 'no') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}?${claimantType}`);
+
+				if(iteration) {
+					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}/${outcomes.noHRTRequired.id}?${claimantType}`);
+				} else {
+					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}?${claimantType}`);
+				}
+
+
 	    }
 
 	    else if (res.locals.currentApp.isPartnerFlow && outOfUk === 'unknown') {

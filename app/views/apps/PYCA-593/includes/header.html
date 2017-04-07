@@ -2,15 +2,17 @@
   {% if currentApp.claimantStatus == 'Ineligible' %}
     <h1 class="bold-large">Book a HRT for this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
   {% elseif currentApp.claimantStatus == 'Fill in section 1 of the ALP' %}
-    <h1 class="bold-large">No HRT decision is required for this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
+    <h1 class="bold-large">No HRT decision needed<!--required for this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}--></h1>
     {% elseif currentApp.claimantStatus == 'Fill in section 2 of the ALP' %}
-      <h1 class="bold-large">You can now make a HRT decision for this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
+      <h1 class="bold-large">Make a HRT decision for this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
   {% else %}
     <h1 class="bold-large">Fast-track this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
   {% endif %}
 </div>
 
-{% if currentApp.claimantStatus == 'Ineligible' %}
+{% if currentApp.claimantStatus == 'Fill in section 1 of the ALP' or currentApp.claimantStatus == 'Fill in section 2 of the ALP' %}
+<!--do nothing-->
+{% elseif currentApp.claimantStatus == 'Ineligible' %}
   <p>This claim is not eligible for fast-track.</p>
 {% else %}
   <h2 class="heading-medium">Claimant status</h2>

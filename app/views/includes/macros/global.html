@@ -7,3 +7,7 @@
 		</ul>
 	{% endif %}
 {% endmacro %}
+
+{% macro subapp_start(pagePath, currentApp) %}
+	<a class="button button-start" href="start?page={{ pagePath | d('questions/uk-national?claimant') }}{{ ('&iteration=' + currentApp.query.iteration) if currentApp.query.iteration }}" role="button">Start now</a>
+{% endmacro %}

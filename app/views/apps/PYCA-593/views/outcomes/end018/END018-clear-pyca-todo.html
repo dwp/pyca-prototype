@@ -1,0 +1,31 @@
+{% set page = {
+	title: "END017 v2"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+
+		<div class="column-full">
+
+      <form method="post" action="END018-clear-refer-todo" class="form">
+
+	      <h1 class="heading-large">
+	        Clear the 'Prove you can apply to-do'
+	      </h1>
+
+				<p>For the question "Is a HRT interview required", select 'No'.</p>
+				<p>Select 'Done' to complete the to-do.</p>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+{% endblock %}

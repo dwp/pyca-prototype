@@ -1,0 +1,31 @@
+{% set page = {
+	title: "END017 v2"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+
+		<div class="column-full">
+
+      <form method="post" action="END017-clear-pyca-todo" class="form">
+
+	      <h1 class="heading-large">
+	        No HRT decision needed
+	      </h1>
+
+				<p>This person doesn't need a HRT decision.</p>
+				<p>Continue and follow the instructions here on what to do next.</p>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+{% endblock %}
