@@ -29,7 +29,7 @@ module.exports = (router, config) => {
 	const outcomes = {
 	  british: {
 	      id: 'END001',
-	      status: 'British citizen'
+	      status: 'British / Irish national'
 	  },
 	  employedEEA: {
 	      id: 'END002',
@@ -65,7 +65,7 @@ module.exports = (router, config) => {
 	  },
 	  sickEEA: {
 	      id: 'END011',
-	      status: 'Temporary sick EEA citizen'
+	      status: 'Temporarily sick EEA citizen'
 	  },
 	  derivedRightsEEA: {
 	      id: 'END012',
