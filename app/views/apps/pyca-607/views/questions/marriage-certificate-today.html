@@ -1,0 +1,46 @@
+{% set page = {
+	title: "Marriage certificate"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Have they brought a marriage certificate today?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Have they brought a marriage certificate today?</span>
+            </legend>
+
+            <label for="marriage-certificate-yes-today" class="block-label selection-button-radio">
+              <input type="radio" name="marriageCertificate" value="yes" id="marriage-certificate-yes-today">
+              Yes
+            </label>
+
+            <label for="marriage-certificate-no" class="block-label selection-button-radio">
+              <input type="radio" name="marriageCertificate" value="no" id="marriage-certificate-no">
+              No
+            </label>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}
