@@ -1,0 +1,23 @@
+﻿{% set page = {
+	title: "END003"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      {% include currentApp.filePaths.includesDir + "header.html" %}
+      <h2 class="heading-medium">Clear the Prove You Can Apply to-do</h2>
+      <ol class="list list-number pyca-list">
+        <li>In the ‘agent notes’ box type: ‘Not eligible for fast track’.</li>
+        <li>For the question ‘Is a HRT interview required?’, select ‘Yes’.</li>
+        <li>Select ‘Done’.</li>
+      </ol>
+
+      <h2 class="heading-medium">Now book the HRT</h2>
+    </div>
+  </div>
+
+{% endblock %}
