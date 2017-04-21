@@ -1,16 +1,16 @@
 language: node_js
 node_js:
 - 4.0
-install:
-- npm install
-script:
-- gulp test
-- npm test
-after_success:
-- "./create-release-tag.sh"
-- "./update-release-branch.sh"
+- 6.0
+before_deploy:
+- test $TRAVIS_TEST_RESULT = 0
+before_install:
+- npm install -g mocha
 deploy:
-  provider: heroku
+- provider: script    # (If version.txt is updated) - create a new tag and push to Github, update the latest-release branch
+  script: ./create-release.sh
+  on: master
+- provider: heroku
   api_key:
     secure: h/9/Rcd41XVU4VYYeBoKKvG6uShEoDksCGGZ/2dgeY1f3tYnhGzzgL6TIkvhafwDbKk2Y4o6d/MI05K+s7lorf2uTKpr1To2o52hQqmb4YREPWruZtBqoRo5X4nCeN2oEdW+yJRH3jZDNUmwkPzjytqxkcUUUeDPHfz3+xCtSZk=
   app: govuk-prototype-kit
@@ -20,4 +20,4 @@ notifications:
 sudo: false
 env:
   global:
-  - secure: DNOsydCMSHOvp1SEQNRHx3SOqaUPA5XZQZ+eOsA/hcc4iXQktMxX004tfsKgUVfvzWdXVFtLscL2TpHad2TjPDvtcmb2vYH3tqgHHhyAK0fJRMp4UNh7z5RnHKsoe0WRAQGtGAqw8ND7a2GWV0/yWoxub66C1WZmSBNxlCH27dw=
+  - secure: esj3ut+TwKX25QzU1koJyTVIX+x1V55graI65X8LiYXKcOP040VPJ9lIC0HeRs5UViBM0Ur1F93rGdgW2zYVzu5MLZoH7KjpzMcG30x+FDqLChT0JfNcLLtLm/wIhx/OAAmsBxXlvjPp092BeEKd3Jug8d329TxwwK5G5XxAatg=

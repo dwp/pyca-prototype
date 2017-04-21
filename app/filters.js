@@ -38,6 +38,32 @@ module.exports = function (env) {
 
   ------------------------------------------------------------------ */
 
+  /**
+   * generateID
+   * @param  {string} string the stirng to concatenate with a random string
+   * @return {string}        the based text concatenated with a
+   *                         randomly generated string
+   */
+  filters.generateID = function generateID(string) {
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for(var i=0; i < 5; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return `${string ? string : ''}-${text}`;
+  }
+
+  /**
+   * Exposes object.assign to views
+   * @param  {Object} objA first object
+   * @param  {Object} objB second object the merge in and override
+   * @return {Object}      merged object
+   */
+  filters.merge = function merge(objA,objB) {
+    let newObj = Object.assign(objA,objB)
+    return newObj
+  }
+
   /* ------------------------------------------------------------------
     keep the following line to return your filters to the app
   ------------------------------------------------------------------ */

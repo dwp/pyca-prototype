@@ -1,15 +1,15 @@
 {
   "name": "express-prototype",
   "description": "GOVUK prototyping app in Express",
-  "version": "4.0.0",
+  "version": "6.0.0",
   "private": true,
   "engines": {
-    "node": ">=4.0 <6.7"
+    "node": ">=6.0 <7.0"
   },
   "scripts": {
     "start": "node start.js",
     "lint": "standard",
-    "test": "npm run lint"
+    "test": "gulp test && npm run lint"
   },
   "dependencies": {
     "basic-auth": "^1.0.3",
@@ -22,14 +22,14 @@
     "express-session": "^1.13.0",
     "express-writer": "0.0.4",
     "globby": "^6.1.0",
-    "govuk-elements-sass": "2.2.1",
-    "govuk_frontend_toolkit": "5.0.2",
+    "govuk-elements-sass": "3.0.1",
+    "govuk_frontend_toolkit": "5.1.2",
     "govuk_template_jinja": "0.19.2",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-mocha": "^3.0.1",
     "gulp-nodemon": "^2.1.0",
-    "gulp-sass": "^2.3.2",
+    "gulp-sass": "3.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "lodash": "^4.17.2",

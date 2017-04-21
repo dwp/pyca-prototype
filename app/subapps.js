@@ -156,13 +156,15 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
       // build a url to redirect to
       let redirectionURL = `${appData.urlPaths.appRoot}/views/${req.query.page}${iterationString}`
 
+			console.log(req.session);
+
       // if we have a session then destroy it
 			if(req.session) {
 
         console.log(`Current session looks like:`);
         console.log(req.session);
 
-				req.session.destroy()
+				req.session[appData.slug] = {};
 				console.log(`Destroyed session for ${appData.slug}`);
 
         console.log(`Current session after destroy looks like:`);

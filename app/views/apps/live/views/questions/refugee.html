@@ -23,22 +23,30 @@
               <span class="visuallyhidden">{{ 'Is their partner' if currentApp.isPartnerFlow else 'Is this person' }} a refugee?</span>
             </legend>
 
-            <label for="refugee-yes" class="block-label selection-button-radio">
-              <input type="radio" name="refugee" value="yes" id="refugee-yes">
-              Yes
-            </label>
+						{{
+							form.radio({
+								name: 'refugee',
+								label: 'Yes'
+							})
+						}}
 
-            <label for="refugee-no" class="block-label selection-button-radio">
-              <input type="radio" name="refugee" value="no" id="refugee-no">
-              No
-            </label>
+						{{
+							form.radio({
+								name: 'refugee',
+								label: 'no'
+							})
+						}}
 
             {% if currentApp.isPartnerFlow %}
-            <label for="refugee-unknown" class="block-label selection-button-radio">
-              <input type="radio" name="refugee" value="unknown" id="refugee-unknown">
-              Don’t know
-            </label>
+						{{
+							form.radio({
+								name: 'refugee',
+								label: "Don't know",
+								value: "unknown"
+							})
+						}}
             {% endif %}
+						
           </fieldset>
         </div>
 
