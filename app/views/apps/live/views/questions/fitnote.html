@@ -23,21 +23,30 @@
               <span class="visuallyhidden">{{ 'Has their partner' if currentApp.isPartnerFlow else 'Have they' }} had fit notes constantly since they stopped working?</span>
             </legend>
 
-            <label for="hasFitNote-yes" class="block-label selection-button-radio">
-              <input type="radio" name="hasFitNote" value="yes" id="hasFitNote-yes">
-              Yes
-            </label>
+						{{
+							form.radio({
+								name: 'hasFitNote',
+								label: "Yes"
+							})
+						}}
 
-            <label for="hasFitNote-no" class="block-label selection-button-radio">
-              <input type="radio" name="hasFitNote" value="no" id="hasFitNote-no">
-              No
-            </label>
+						{{
+							form.radio({
+								name: 'hasFitNote',
+								label: "No"
+							})
+						}}
 
             {% if currentApp.isPartnerFlow %}
-            <label for="hasFitNote-unknown" class="block-label selection-button-radio">
-              <input type="radio" name="hasFitNote" value="unknown" id="hasFitNote-unknown">
-              Don’t know
-            </label>
+
+							{{
+								form.radio({
+									name: 'hasFitNote',
+									label: "Don't know",
+									value: "unknown"
+								})
+							}}
+
             {% endif %}
           </fieldset>
         </div>

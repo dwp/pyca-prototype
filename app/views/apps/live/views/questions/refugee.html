@@ -19,7 +19,8 @@
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
-            <legend>
+
+						<legend>
               <span class="visuallyhidden">{{ 'Is their partner' if currentApp.isPartnerFlow else 'Is this person' }} a refugee?</span>
             </legend>
 
@@ -38,15 +39,15 @@
 						}}
 
             {% if currentApp.isPartnerFlow %}
-						{{
-							form.radio({
-								name: 'refugee',
-								label: "Don't know",
-								value: "unknown"
-							})
-						}}
+							{{
+								form.radio({
+									name: 'refugee',
+									label: "Don't know",
+									value: "unknown"
+								})
+							}}
             {% endif %}
-						
+
           </fieldset>
         </div>
 

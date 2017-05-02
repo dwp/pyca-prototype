@@ -25,15 +25,20 @@
               <span class="visuallyhidden">Do you have a partner?</span>
             </legend>
 
-            <label for="partner-yes" class="block-label selection-button-radio">
-              <input type="radio" name="partner" value="yes" id="partner-yes">
-              Yes
-            </label>
+						{{
+							form.radio({
+								name: 'partner',
+								label: "Yes"
+							})
+						}}
 
-            <label for="partner-no" class="block-label selection-button-radio">
-              <input type="radio" name="partner" value="no" id="partner-no">
-              No
-            </label>
+						{{
+							form.radio({
+								name: 'partner',
+								label: "No"
+							})
+						}}
+
           </fieldset>
         </div>
 

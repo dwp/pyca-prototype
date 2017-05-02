@@ -19,25 +19,33 @@
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
-            <legend>
+
+						<legend>
               <span class="visuallyhidden">{{ 'Has their partner' if currentApp.isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?</span>
             </legend>
 
-            <label for="out-of-uk-yes" class="block-label selection-button-radio">
-              <input type="radio" name="outOfUk" value="yes" id="out-of-uk-yes">
-              Yes
-            </label>
+						{{
+							form.radio({
+								name: 'outOfUk',
+								label: "Yes"
+							})
+						}}
 
-            <label for="out-of-uk-no" class="block-label selection-button-radio">
-              <input type="radio" name="outOfUk" value="no" id="out-of-uk-no">
-              No
-            </label>
+						{{
+							form.radio({
+								name: 'outOfUk',
+								label: "No"
+							})
+						}}
 
             {% if currentApp.isPartnerFlow %}
-            <label for="out-of-uk-unknown" class="block-label selection-button-radio">
-              <input type="radio" name="outOfUk" value="unknown" id="out-of-uk-unknown">
-              Don’t know
-            </label>
+							{{
+								form.radio({
+									name: 'outOfUk',
+									label: "Don't know",
+									value: "unknown"
+								})
+							}}
             {% endif %}
           </fieldset>
         </div>

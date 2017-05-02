@@ -23,4 +23,7 @@ $('body').on('submit', 'form', function (e) {
   })
 
   $(this).prepend($inputs)
+
+  // e.preventDefault();
+
 })

@@ -21,15 +21,19 @@
               <span class="visuallyhidden">Can they bring a marriage certificate to another appointment?</span>
             </legend>
 
-            <label for="marriage-certificate-bring-yes" class="block-label selection-button-radio">
-              <input type="radio" name="marriageCertificateBring" value="yes" id="marriage-certificate-bring-yes">
-              Yes
-            </label>
+						{{
+							form.radio({
+								name: 'marriageCertificateBring',
+								label: "Yes"
+							})
+						}}
 
-            <label for="marriage-certificate-bring-no" class="block-label selection-button-radio">
-              <input type="radio" name="marriageCertificateBring" value="no" id="marriage-certificate-bring-no">
-              No
-            </label>
+						{{
+							form.radio({
+								name: 'marriageCertificateBring',
+								label: "No"
+							})
+						}}
 
           </fieldset>
         </div>

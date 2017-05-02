@@ -23,26 +23,35 @@
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+						
             <legend>
               <span class="visuallyhidden">Is ‘family member’ written on {{ 'their partner’s' if currentApp.isPartnerFlow else 'their' }} visa?</span>
             </legend>
 
-            <label for="family-member-yes" class="block-label selection-button-radio">
-              <input type="radio" name="familyMember" value="yes" id="family-member-yes">
-              Yes
-            </label>
+						{{
+							form.radio({
+								name: 'familyMember',
+								label: "Yes"
+							})
+						}}
 
-            <label for="family-member-no" class="block-label selection-button-radio">
-              <input type="radio" name="familyMember" value="no" id="family-member-no">
-              No
-            </label>
+						{{
+							form.radio({
+								name: 'familyMember',
+								label: "No"
+							})
+						}}
 
             {% if currentApp.isPartnerFlow %}
-            <label for="family-member-unknown" class="block-label selection-button-radio">
-              <input type="radio" name="familyMember" value="unknown" id="family-member-unknown">
-              Don’t know
-            </label>
+							{{
+								form.radio({
+									name: 'familyMember',
+									label: "Don't know",
+									value: 'unknown'
+								})
+							}}
             {% endif %}
+
           </fieldset>
         </div>
 
