@@ -148,6 +148,7 @@ var addCheckedFunction = function (app, nunjucksEnv) {
 
       var storedValue;
 
+      // if name uses bracket notation infer it's an object path
       if (name.indexOf('[') !== -1){
         storedValue = keypath.get(req.session.data, (name.replace('[','.').replace(']','')));
       } else {
