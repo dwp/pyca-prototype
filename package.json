@@ -32,6 +32,7 @@
     "gulp-sass": "3.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
+    "keypather": "^2.0.1",
     "lodash": "^4.17.2",
     "marked": "^0.3.6",
     "minimist": "0.0.8",

@@ -563,30 +563,26 @@ module.exports = (router, config) => {
 	    return;
 	  }
 
-		console.log(req.body);
-
 	  if (employeeStatus) {
+			
 	    answers[claimantType].employeeStatus = employeeStatus;
 
-			// console.log(employeeStatus.employed);
+	    // Self-employed
+	    if (employeeStatus.selfEmployed === 'true') {
+	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+	    }
 
-	    // // Self-employed
-	    // if (employeeStatus.selfEmployed === 'true') {
-	    //   res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    // }
-			//
-	    // // Employed
-	    // else if (employeeStatus.employed === 'true') {
-	    //   res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
-	    // }
-			//
-	    // // Not working
-	    // else if (employeeStatus.dontWork === 'true') {
-	    //   res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
-	    // }
-	  }
+	    // Employed
+	    else if (employeeStatus.employed === 'true') {
+	      res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
+	    }
 
-	  else {
+	    // Not working
+	    else if (employeeStatus.dontWork === 'true') {
+	      res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
+	    }
+
+	  } else {
 	    res.render(`${appRootRel}/questions/employee-status`);
 	  }
 	});
