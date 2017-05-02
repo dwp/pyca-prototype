@@ -564,6 +564,7 @@ module.exports = (router, config) => {
 	  }
 
 	  if (employeeStatus) {
+			
 	    answers[claimantType].employeeStatus = employeeStatus;
 
 	    // Self-employed
@@ -580,9 +581,8 @@ module.exports = (router, config) => {
 	    else if (employeeStatus.dontWork === 'true') {
 	      res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
 	    }
-	  }
 
-	  else {
+	  } else {
 	    res.render(`${appRootRel}/questions/employee-status`);
 	  }
 	});

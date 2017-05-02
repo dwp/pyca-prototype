@@ -21,15 +21,20 @@
               <span class="visuallyhidden">What is their relationship with the family member?</span>
             </legend>
 
-            <label for="familyRelationship-spouse" class="block-label selection-button-radio">
-              <input type="radio" name="familyRelationship" value="spouse" id="familyRelationship-spouse">
-              Spouse or civil partner
-            </label>
+						{{
+							form.radio({
+								name: 'familyRelationship',
+								label: "Spouse or civil partner",
+								value: 'spouse'
+							})
+						}}
 
-            <label for="familyRelationship-other" class="block-label selection-button-radio">
-              <input type="radio" name="familyRelationship" value="other" id="familyRelationship-other">
-              Other
-            </label>
+						{{
+							form.radio({
+								name: 'familyRelationship',
+								label: "Other"
+							})
+						}}
 
           </fieldset>
         </div>

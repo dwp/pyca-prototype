@@ -1,4 +1,5 @@
 {% import "includes/macros/global.html" as macros %}
+{% import "includes/macros/forms.html" as form %}
 
 {% extends "govuk_template.html" %}
 
@@ -11,11 +12,21 @@
 {% endblock %}
 
 {% block proposition_header %}
-  {% include "includes/propositional_navigation.html" %}
+
 {% endblock %}
 
 {% block header_class %}
   with-proposition
+{% endblock %}
+
+{% block footer_support_links %}
+  {% if useAutoStoreData %}
+    <ul>
+      <li>
+        <a href="/prototype-admin/clear-data">Clear data</a>
+      </li>
+    </ul>
+  {% endif %}
 {% endblock %}
 
 {% block body_end %}

@@ -22,19 +22,24 @@
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+
             <legend>
               <span class="visuallyhidden">Do the words 'FAMILY MEMBER' or 'EU RIGHT TO RESIDE' appear on the biometric residence permit?</span>
             </legend>
 
-            <label for="family-member-yes" class="block-label selection-button-radio">
-              <input type="radio" name="familyMember" value="yes" id="family-member-yes">
-              Yes
-            </label>
+						{{
+							form.radio({
+								name: 'familyMember',
+								label: "Yes"
+							})
+						}}
 
-            <label for="family-member-no" class="block-label selection-button-radio">
-              <input type="radio" name="familyMember" value="no" id="family-member-no">
-              No
-            </label>
+						{{
+							form.radio({
+								name: 'familyMember',
+								label: "No"
+							})
+						}}
 
           </fieldset>
         </div>

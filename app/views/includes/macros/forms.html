@@ -1,0 +1,21 @@
+{% macro choice(input) %}
+  {% if not input.type %}
+    {{ ("You didn't provide a type for " + input.name) | log }}
+  {% else %}
+    <div class="multiple-choice">
+      {% set id = input.name | generateID | lower %}
+      <input id="input-{{ id }}" type="{{ input.type }}" name="{{ input.name }}" value="{{ input.value | d(input.label | lower) }}">
+      <label for="input-{{ id }}">{{ input.label }}</label>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% macro radio(radio) %}
+  {% set input = radio | merge({ type: 'radio' }) %}
+  {{ choice(input) }}
+{% endmacro %}
+
+{% macro checkbox(checkbox) %}
+  {% set input = checkbox | merge({ type: 'checkbox' }) %}
+  {{ choice(input) }}
+{% endmacro %}

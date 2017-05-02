@@ -26,15 +26,19 @@
               <span class="visuallyhidden">Have they brought a biometric residence permit today?</span>
             </legend>
 
-            <label for="brp-yes-today" class="block-label selection-button-radio">
-              <input type="radio" name="brp" value="yes" id="brp-yes-today">
-              Yes
-            </label>
+						{{
+							form.radio({
+								name: 'brp',
+								label: "Yes"
+							})
+						}}
 
-            <label for="brp-no" class="block-label selection-button-radio">
-              <input type="radio" name="brp" value="no" id="brp-no">
-              No
-            </label>
+						{{
+							form.radio({
+								name: 'brp',
+								label: "No"
+							})
+						}}
 
           </fieldset>
         </div>

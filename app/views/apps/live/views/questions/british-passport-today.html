@@ -23,15 +23,19 @@
               <span class="visuallyhidden">{{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} have a British passport?</span>
             </legend>
 
-            <label for="britishPassportToday-yes" class="block-label selection-button-radio">
-              <input type="radio" name="britishPassportToday" value="yes" id="britishPassportToday-yes">
-              Yes
-            </label>
+						{{
+							form.radio({
+								name: 'britishPassportToday',
+								label: "Yes"
+							})
+						}}
 
-            <label for="britishPassportToday-no" class="block-label selection-button-radio">
-              <input type="radio" name="britishPassportToday" value="no" id="britishPassportToday-no">
-              No
-            </label>
+						{{
+							form.radio({
+								name: 'britishPassportToday',
+								label: "No"
+							})
+						}}
 
           </fieldset>
         </div>

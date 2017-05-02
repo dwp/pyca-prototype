@@ -21,20 +21,30 @@
               <span class="visuallyhidden">Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?</span>
             </legend>
 
-            <label for="dont-work-reason-redundant" class="block-label selection-button-radio">
-              <input type="radio" name="dontWorkReason" value="redundant" id="dont-work-reason-redundant">
-              They were made redundant recently
-            </label>
+						{{
+							form.radio({
+								name: 'dontWorkReason',
+								label: "They were made redundant recently",
+								value: 'redundant'
+							})
+						}}
 
-            <label for="dont-work-reason-sick" class="block-label selection-button-radio">
-              <input type="radio" name="dontWorkReason" value="sick" id="dont-work-reason-sick">
-              They stopped working recently due to an illness
-            </label>
+						{{
+							form.radio({
+								name: 'dontWorkReason',
+								label: "They stopped working recently due to an illness",
+								value: 'sick'
+							})
+						}}
 
-            <label for="dont-work-reason-other" class="block-label selection-button-radio">
-              <input type="radio" name="dontWorkReason" value="other" id="dont-work-reason-other">
-              Other reason
-            </label>
+						{{
+							form.radio({
+								name: 'dontWorkReason',
+								label: "Other reason",
+								value: 'other'
+							})
+						}}
+
           </fieldset>
         </div>
 

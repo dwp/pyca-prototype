@@ -12,6 +12,9 @@ module.exports = {
   // Enable or disable password protection on production
   useAuth: 'true',
 
+  // Automatically stores form data, and send to all views
+  useAutoStoreData: 'true',
+
   // Enable or disable built-in docs and examples.
   useDocumentation: 'true',
 
@@ -22,6 +25,9 @@ module.exports = {
   cookieText: 'This service uses cookies to make the site simpler. <a href="/help/cookies" title="Find out more about cookies">Find out more about cookies</a>',
 
   // use the routing for sub applications within app
-  useSubapplications: true
+  useSubapplications: true,
+
+  // Enable or disable Browser Sync
+  useBrowserSync: 'true'
 
 }

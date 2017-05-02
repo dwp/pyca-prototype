@@ -1,3 +1,65 @@
+# 6.0.0
+
+New features:
+- [#369 Add template pages for content and questions](https://github.com/alphagov/govuk_prototype_kit/pull/369)
+- [#340 Auto data session 4](https://github.com/alphagov/govuk_prototype_kit/pull/340)
+- [#367 Added config to turn off browser sync](https://github.com/alphagov/govuk_prototype_kit/pull/367)
+- [#368 Update Travis deployment to be consistent with other govuk frontend repos](https://github.com/alphagov/govuk_prototype_kit/pull/368)
+- [#361 Add an example of the task list pattern](https://github.com/alphagov/govuk_prototype_kit/pull/361)
+- [#364 Use GOV.UK elements v3.0.1](https://github.com/alphagov/govuk_prototype_kit/pull/364)
+- [#360 Bump govuk_frontend_toolkit to 5.1.1](https://github.com/alphagov/govuk_prototype_kit/pull/360)
+- [#352 bump gulp-sass to increase node-sass dependency](https://github.com/alphagov/govuk_prototype_kit/pull/352)
+
+Bug fixes:
+- [#356 fix download link](https://github.com/alphagov/govuk_prototype_kit/pull/356)
+- [#357 fix docs links](https://github.com/alphagov/govuk_prototype_kit/pull/357)
+- [#354 Allow search indexing in promo mode](https://github.com/alphagov/govuk_prototype_kit/pull/354)
+
+# 5.1.0
+
+New features:
+- [#335 Add ability to override service name on a page](https://github.com/alphagov/govuk_prototype_kit/pull/335)
+
+Bug fixes:
+- [#350 Prevent asking users to authenticate twice](https://github.com/alphagov/govuk_prototype_kit/pull/350)
+- [#344 Removing links to route.js / updating example in branching.html](https://github.com/alphagov/govuk_prototype_kit/pull/344)
+- [#343 Remove the title attribute from the cookie message](https://github.com/alphagov/govuk_prototype_kit/pull/343)
+- [#341 fix css sourcemaps](https://github.com/alphagov/govuk_prototype_kit/pull/341)
+- [#337 Add Git step to Heroku guide](https://github.com/alphagov/govuk_prototype_kit/pull/337)
+- [#336 Use app.locals instead of app.use](https://github.com/alphagov/govuk_prototype_kit/pull/336)
+
+# 5.0.1
+
+- [#330 Update GOV.UK toolkit and StandardJS to latest](https://github.com/alphagov/govuk_prototype_kit/pull/330)
+- [#328 Update GOV.UK template to latest](https://github.com/alphagov/govuk_prototype_kit/pull/328)
+- [#324 Fix the example question page’s back link](https://github.com/alphagov/govuk_prototype_kit/pull/324)
+
+# 5.0.0
+
+Breaking changes:
+
+- [#284 Use Gulp instead of Grunt](https://github.com/alphagov/govuk_prototype_kit/pull/284)
+
+Use [Gulp.js](http://gulpjs.com/) rather than [Grunt](http://gruntjs.com/) as a build tool.
+It is recommended to [install Gulp globally](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md), do so using:
+
+`npm install --global gulp-cli`
+
+All changes:
+
+The short version:
+- [#311 Update govuk-elements-sass to 2.2.0](https://github.com/alphagov/govuk_prototype_kit/pull/311)
+- [#308 Change node version from 4 to 6](https://github.com/alphagov/govuk_prototype_kit/pull/308)
+- [#299 Basic sanity check test suite](https://github.com/alphagov/govuk_prototype_kit/pull/299)
+- [#296 Keep the latest release branch up-to-date](https://github.com/alphagov/govuk_prototype_kit/pull/296)
+- Fix broken links for the documentation app
+
+The extended version:
+This release includes custom radio buttons and checkbox styles from govuk-elements-sass v2.2.0.
+The version of Node that the prototype kit uses has been updated, we recommend using LTS (version 6 or above).
+Travis will now run tests against each pull request to ensure that the app runs (by checking the server and build tasks).
+The latest-release branch can be used to update the prototype kit. Instructions for [updating your version of the prototype kit via the latest-release branch can be found here](https://govuk-prototype-kit.herokuapp.com/docs/updating-the-kit#updating-via-the-command-line-advanced-).
+
 # 4.0.0
 
 Breaking changes:

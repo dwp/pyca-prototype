@@ -159,14 +159,14 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
       // if we have a session then destroy it
 			if(req.session) {
 
-        console.log(`Current session looks like:`);
-        console.log(req.session);
+        // console.log(`Current session looks like:`);
+        // console.log(req.session);
 
-				req.session.destroy()
+				req.session[appData.slug] = {};
 				console.log(`Destroyed session for ${appData.slug}`);
 
-        console.log(`Current session after destroy looks like:`);
-        console.log(req.session);
+        // console.log(`Current session after destroy looks like:`);
+        // console.log(req.session);
 
 			}
 
@@ -223,7 +223,6 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 
 // Route index page including the collection of apps in the context
 router.get('/', function (req, res, next) {
-	console.log('using this');
   // remove 'live version from the list' we will link to that directly.
   res.locals.apps = subApps.filter(item => item.slug !== 'live');
   res.render('index')
