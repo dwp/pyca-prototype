@@ -150,7 +150,6 @@ var addCheckedFunction = function (app, nunjucksEnv) {
 
       if (name.indexOf('[') !== -1){
         storedValue = keypath.get(req.session.data, (name.replace('[','.').replace(']','')));
-        console.log(storedValue);
       } else {
         storedValue = req.session.data[name]
       }
