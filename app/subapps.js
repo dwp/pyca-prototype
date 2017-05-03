@@ -9,7 +9,7 @@ const _ = require('lodash')
 const appsDir = 'apps'
 const baseSubAppPath = `${__dirname}/views/`
 const sentenceCase = require('sentence-case')
-let subApps = new Array()
+let subApps = []
 
 /**
  * assembles an object from a given path of a routes file
