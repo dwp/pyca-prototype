@@ -149,7 +149,7 @@ module.exports = (router, config) => {
 	      if (outcomeId === outcomes.ineligible.id &&
 	        (answers.claimant.isEEA && answers.claimant.dontWorkReason === 'other') ||
 	          (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no'
-	           && answers.claimant.familyMember === 'no' && answers.claimant.outOfUk === 'yes')) {
+	           && answers.claimant.familyMember === 'no')) {
 
 	        // Mark as derived rights flow
 	        answers.claimant.isDerivedRightsFlow = true;
@@ -212,7 +212,7 @@ module.exports = (router, config) => {
 	});
 
 	// ####################################################################
-	// Branching for citizens
+	// Branching for UK citizens
 	// ####################################################################
 	router.all(`${appRoot}/questions/uk-national`, function (req, res) {
 	  var ukNational = req.body.ukNational;
@@ -337,181 +337,8 @@ module.exports = (router, config) => {
 	});
 
 	// ####################################################################
-	// Branching for NonEEA citizens
+	// Checking claimants nationality
 	// ####################################################################
-	router.all(`${appRoot}/questions/biometric-residence-permit`, function (req, res) {
-	  var brp = req.body.brp;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
-
-	  if (brp) {
-
-			answers[claimantType].brp = brp;
-
-	    // They have a british residency permit
-	    if (brp == 'yes') {
-	      res.redirect(`${appRoot}/questions/no-recourse-to-public-funds?${claimantType}`);
-	    }
-
-	    // Non-UK national
-	    else if (brp == 'no') {
-	      res.redirect(`${appRoot}/questions/no-recourse-to-public-funds?${claimantType}`);
-	    }
-
-	  }
-
-	  else {
-	    res.render(`${appRootRel}/questions/biometric-residence-permit`);
-	  }
-
-	});
-
-	// ####################################################################
-	// Branching for NonEEA with a BRP
-	// ####################################################################
-	router.all(`${appRoot}/questions/brp-family-member`, function (req, res) {
-	  var familyMember = req.body.familyMember;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
-
-	  if (familyMember) {
-
-			answers[claimantType].familyMember = familyMember;
-
-	    // yes - family member or 'EU RIGHT TO RESIDE' are on the permit
-	    if (familyMember == 'yes') {
-	      res.redirect(`${appRoot}/questions/brp-family-member-relationship?${claimantType}`);
-	    }
-
-	    // No - family member or 'EU RIGHT TO RESIDE' are NOT the permit
-	    else if (familyMember == 'no') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.leaveToRemain.id}?${claimantType}`);
-	    }
-
-	  }
-
-	  else {
-	    res.render(`${appRootRel}/questions/brp-family-member`);
-	  }
-
-	});
-
-	// ####################################################################
-	// Branching for NonEEA with a BRP Family member
-	// ####################################################################
-	router.all(`${appRoot}/questions/brp-family-member-relationship`, function (req, res) {
-	  var familyRelationship = req.body.familyRelationship;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
-
-	  if (familyRelationship) {
-
-			answers[claimantType].familyRelationship = familyRelationship;
-
-	    // yes - they are a spouse or civil partner
-	    if (familyRelationship == 'spouse') {
-	      res.redirect(`${appRoot}/questions/marriage-certificate-today?${claimantType}`);
-	    }
-
-	    // Other - they are NOT a spouse or civil partner but something else
-	    else if (familyRelationship == 'other') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    }
-
-	  }
-
-	  else {
-	    res.render(`${appRootRel}/questions/brp-family-member-relationship`);
-	  }
-
-	});
-
-	// ####################################################################
-	// Branching for NonEEA with a BRP EEA spouse
-	// ####################################################################
-	router.all(`${appRoot}/questions/marriage-certificate-today`, function (req, res) {
-	  var marriageCertificate = req.body.marriageCertificate;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
-
-	  if (marriageCertificate) {
-
-			answers[claimantType].marriageCertificate = marriageCertificate;
-
-	    // yes - they have a marriage certificate and its with them
-	    if (marriageCertificate == 'yes') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.derivedRightsNonEEA.id}?${claimantType}`);
-	    }
-
-			else if (marriageCertificate == 'no') {
-				res.redirect(`${appRoot}/questions/marriage-certificate-bring?${claimantType}`);
-			}
-
-	  }
-
-	  else {
-	    res.render(`${appRootRel}/questions/marriage-certificate-today`);
-	  }
-
-	});
-
-	// ####################################################################
-	// Branching for NonEEA married to EEA spouse without a marriage certificate today
-	// ####################################################################
-	router.all(`${appRoot}/questions/marriage-certificate-bring`, function (req, res) {
-		var marriageCertificateBring = req.body.marriageCertificateBring;
-		var answers = req.session[config.slug].answers;
-		var claimantType = res.locals.currentApp.claimantType;
-
-		if (marriageCertificateBring) {
-
-			answers[claimantType].marriageCertificateBring = marriageCertificateBring;
-
-			// yes - they have a marriage certificate and its with them
-			if (marriageCertificateBring == 'yes') {
-				res.redirect(`${appRoot}/outcomes/${outcomes.bookFurtherEvidenceInterviewMarriage.id}?${claimantType}`);
-			}
-
-			else if (marriageCertificateBring == 'no') {
-				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-			}
-
-		}
-
-		else {
-			res.render(`${appRootRel}/questions/marriage-certificate-bring`);
-		}
-
-	});
-
-
-
-
-
-
-	router.all(`${appRoot}/questions/permanent-residence`, function (req, res) {
-	  var permanentResidence = req.body.permanentResidence;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
-
-	  if (permanentResidence) {
-	    answers[claimantType].permanentResidence = permanentResidence;
-
-	    // Permanent residence card
-	    if (permanentResidence === 'yes') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.permanentResident.id}?${claimantType}`);
-	    }
-
-	    // No permanent residence card
-	    else if (permanentResidence === 'no') {
-	      res.redirect(`${appRoot}/questions/nationality?${claimantType}`);
-	    }
-	  }
-
-	  else {
-	    res.render(`${appRootRel}/questions/permanent-residence`);
-	  }
-	});
 
 	router.all(`${appRoot}/questions/nationality`, function (req, res) {
 	  var nationality = req.body.nationality;
@@ -552,6 +379,10 @@ module.exports = (router, config) => {
 	  }
 	});
 
+	// ####################################################################
+	// Checking if EEA employment status
+	// ####################################################################
+
 	router.all(`${appRoot}/questions/employee-status`, function (req, res) {
 	  var employeeStatus = req.body.employeeStatus;
 	  var answers = req.session[config.slug].answers;
@@ -564,7 +395,7 @@ module.exports = (router, config) => {
 	  }
 
 	  if (employeeStatus) {
-			
+
 	    answers[claimantType].employeeStatus = employeeStatus;
 
 	    // Self-employed
@@ -587,35 +418,9 @@ module.exports = (router, config) => {
 	  }
 	});
 
-	router.all(`${appRoot}/questions/employee-status-self-employed`, function (req, res) {
-	  var selfEmployedProof = req.body.selfEmployedProof;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
-
-	  // Ineligible claimant (derived rights), self-employed straight to outcome
-	  if (answers.claimant.isDerivedRightsFlow && answers.partner.employeeStatus.selfEmployed === 'true') {
-	    res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    return;
-	  }
-
-	  if (selfEmployedProof) {
-	    answers[claimantType].selfEmployedProof = selfEmployedProof;
-
-	    // Self-employed proof can be provided
-	    if (selfEmployedProof === 'yes') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedEEA.id}?${claimantType}`);
-	    }
-
-	    // Self-employed proof can't be provided
-	    else if (selfEmployedProof === 'no' || res.locals.currentApp.isPartnerFlow && selfEmployedProof === 'unknown') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    }
-	  }
-
-	  else {
-	    res.render(`${appRootRel}/questions/employee-status-self-employed`);
-	  }
-	});
+	// ####################################################################
+	// Checking why an EEA claimant doesn't work
+	// ####################################################################
 
 	router.all(`${appRoot}/questions/employee-status-dont-work`, function (req, res) {
 	  var dontWorkReason = req.body.dontWorkReason;
@@ -646,29 +451,47 @@ module.exports = (router, config) => {
 	  }
 	});
 
+	// ####################################################################
+	// Checking if a sick EEA claimant has a fit note
+	// ####################################################################
+
 	router.all(`${appRoot}/questions/fitnote`, function(req, res) {
 	  var hasFitNote = req.body.hasFitNote;
 	  var answers = req.session[config.slug].answers;
 	  var claimantType = res.locals.currentApp.claimantType;
 
 	  if(hasFitNote) {
-	    if(hasFitNote == 'yes') {
+
+			if(hasFitNote == 'yes') {
 	      res.redirect(`${appRoot}/outcomes/${outcomes.sickEEA.id}?${claimantType}`);
-	    } else if (hasFitNote == 'no') {
-	      if(!!answers.claimant.outcomeId) {
+	    }
+
+			else if (hasFitNote == 'no') {
+
+				if(!!answers.claimant.outcomeId) {
 	        res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	      } else {
+	      }
+
+				else {
 	        answers.claimant.isDerivedRightsFlow = true;
 	        answers.claimant.outcomeId = outcomes.ineligible.id;
 	        res.redirect(`${appRoot}/questions/partner?${claimantType}`);
 	      }
-	    } else if (hasFitNote == 'unknown') {
+	    }
+
+			else if (hasFitNote == 'unknown') {
 	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 	    }
-	  } else {
+	  }
+
+		else {
 	    res.render(`${appRootRel}/questions/fitnote`);
 	  }
 	});
+
+	// ####################################################################
+	// EEA out of work Partner questions
+	// ####################################################################
 
 	router.all(`${appRoot}/questions/partner`, function (req, res) {
 	  var partner = req.body.partner;
@@ -705,6 +528,40 @@ module.exports = (router, config) => {
 	  }
 	});
 
+	// ####################################################################
+	// Checking if non EEA claimant has a BRP (doesn't change routing)
+	// ####################################################################
+	router.all(`${appRoot}/questions/biometric-residence-permit`, function (req, res) {
+		var brp = req.body.brp;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (brp) {
+
+			answers[claimantType].brp = brp;
+
+			// They have a biometric residency permit
+			if (brp == 'yes') {
+				res.redirect(`${appRoot}/questions/no-recourse-to-public-funds?${claimantType}`);
+			}
+
+			// Non-UK national
+			else if (brp == 'no') {
+				res.redirect(`${appRoot}/questions/no-recourse-to-public-funds?${claimantType}`);
+			}
+
+		}
+
+		else {
+			res.render(`${appRootRel}/questions/biometric-residence-permit`);
+		}
+
+	});
+
+	// ####################################################################
+	// Does the claimant have no recourse to public funds
+	// ####################################################################
+
 	router.all(`${appRoot}/questions/no-recourse-to-public-funds`, function (req, res) {
 	  var noRecourseToPublicFunds = req.body.noRecourseToPublicFunds;
 	  var answers = req.session[config.slug].answers;
@@ -739,6 +596,10 @@ module.exports = (router, config) => {
 	  }
 	});
 
+	// ####################################################################
+	// Checking if claimant has a family member visa
+	// ####################################################################
+
 	router.all(`${appRoot}/questions/family-member`, function (req, res) {
 	  var familyMember = req.body.familyMember;
 	  var answers = req.session[config.slug].answers;
@@ -749,8 +610,15 @@ module.exports = (router, config) => {
 
 	    // Visa says 'family member'
 	    if (familyMember === 'yes') {
+				if(!!answers.claimant.outcomeID){
 	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    }
+	    	}
+
+				else {answers.claimant.isDerivedRightsFlow = true;
+	        answers.claimant.outcomeId = outcomes.ineligible.id;
+	        res.redirect(`${appRoot}/questions/partner?${claimantType}`);
+	      }
+			}
 
 	    // Visa doesn't say 'family member'
 	    else if (familyMember === 'no') {
@@ -764,34 +632,6 @@ module.exports = (router, config) => {
 
 	  else {
 	    res.render(`${appRootRel}/questions/family-member`);
-	  }
-	});
-
-	router.all(`${appRoot}/questions/out-of-uk`, function (req, res) {
-	  var outOfUk = req.body.outOfUk;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
-
-	  if (outOfUk) {
-	    answers[claimantType].outOfUk = outOfUk;
-
-	    // Out of UK more than 4 weeks
-	    if (outOfUk === 'yes') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    }
-
-	    // Out of UK less than 4 weeks
-	    else if (outOfUk === 'no') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.leaveToRemain.id}?${claimantType}`);
-	    }
-
-	    else if (res.locals.currentApp.isPartnerFlow && outOfUk === 'unknown') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    }
-	  }
-
-	  else {
-	    res.render(`${appRootRel}/questions/out-of-uk`);
 	  }
 	});
 
