@@ -18,23 +18,24 @@
 			 			<br />This can be a passport, national identity card, biometric residence permit or travel document.
 			 		</span>
 		    </h1>
-
         <div class="form-group">
           <fieldset>
-            <label for="location-select-dropdown" class="visuallyhidden">What nationality is on {{ 'their partner’s passport?' if currentApp.isPartnerFlow else 'the passport they’ve brought?' }}</label>
+            <label for="location-picker" class="visuallyhidden">What nationality is on {{ 'their partner’s passport?' if currentApp.isPartnerFlow else 'the passport they’ve brought?' }}</label>
 
-						<select class="form-control" id="location-select-dropdown" name="country">
-	            <option value="" disabled selected>
-	              {% if locale === 'en-GB' %}
-	                Choose a location
-	              {% else %}
-	                Dewiswch leoliad
-	              {% endif %}
-	            </option>
-	            {% for location in locations %}
-	              <option value="{{location}}">{{location}}</option>
-	            {% endfor %}
-	          </select>
+            <div class="form-control-2-3">
+              <select id="location-picker" name="nationality">
+  	            <option value="" disabled selected>
+  	              {% if locale === 'en-GB' %}
+  	                Choose a location
+  	              {% else %}
+  	                Dewiswch leoliad
+  	              {% endif %}
+  	            </option>
+  	            {% for location in locations %}
+  	              <option value="{{location}}">{{location}}</option>
+  	            {% endfor %}
+  	          </select>
+            </div>
 
           </fieldset>
         </div>

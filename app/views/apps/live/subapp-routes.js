@@ -345,8 +345,12 @@ module.exports = (router, config) => {
 	  var answers = req.session[config.slug].answers;
 	  var claimantType = res.locals.currentApp.claimantType;
 
+		console.log(req.body);
+
 	  if (nationality) {
 	    answers[claimantType].nationality = nationality;
+
+      console.log(nationality);
 
 	    // List countries, pull out names
 	    var listEEA = res.locals.countriesByEEA;
