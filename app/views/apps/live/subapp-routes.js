@@ -518,6 +518,8 @@ module.exports = (router, config) => {
 	  var answers = req.session[config.slug].answers;
 	  var claimantType = res.locals.currentApp.claimantType;
 
+		console.log(req.body);
+
 	  if (nationality) {
 	    answers[claimantType].nationality = nationality;
 
@@ -564,7 +566,7 @@ module.exports = (router, config) => {
 	  }
 
 	  if (employeeStatus) {
-			
+
 	    answers[claimantType].employeeStatus = employeeStatus;
 
 	    // Self-employed
