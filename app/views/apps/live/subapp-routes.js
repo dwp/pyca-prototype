@@ -523,6 +523,8 @@ module.exports = (router, config) => {
 	  if (nationality) {
 	    answers[claimantType].nationality = nationality;
 
+      console.log(nationality);
+
 	    // List countries, pull out names
 	    var listEEA = res.locals.countriesByEEA;
 	    var listNonEEA = res.locals.countriesByNonEEA;
