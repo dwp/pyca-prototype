@@ -27,3 +27,12 @@ gulp.task('copy-elements-sass', function () {
   return gulp.src(['node_modules/govuk-elements-sass/public/sass/**'])
   .pipe(gulp.dest(config.paths.govukModules + '/govuk-elements-sass/'))
 })
+
+gulp.task('copy-or-autocomplete', function () {
+  return gulp.src([
+    'node_modules/openregister-location-picker/dist/**',
+    'node_modules/accessible-autocomplete/dist/**',
+    'node_modules/openregister-picker-engine/dist/**'
+  ])
+  .pipe(gulp.dest(config.paths.govukModules + '/openregister-picker/'))
+})
