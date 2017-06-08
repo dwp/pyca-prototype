@@ -22,6 +22,13 @@ router.use('*', (req,res,next) => {
   next()
 })
 
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Content-Security-Policy", "*");
+  next();
+});
+
 router.all('/country-picker', function (req, res) {
   res.render('location-picker/index')
 })

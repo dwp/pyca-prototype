@@ -76,12 +76,6 @@ utils.addNunjucksFilters(nunjucksAppEnv)
 // Set views engine
 app.set('view engine', 'html')
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
-
 // Middleware to serve static assets
 app.use('/public', express.static(path.join(__dirname, '/public')))
 app.use('/public', express.static(path.join(__dirname, '/govuk_modules/govuk_template/assets')))
