@@ -37,6 +37,7 @@
     "marked": "^0.3.6",
     "minimist": "0.0.8",
     "nunjucks": "^2.5.2",
+    "openregister-location-picker": "^0.2.1",
     "portscanner": "^1.0.0",
     "prompt": "^0.2.14",
     "readdir": "0.0.6",
