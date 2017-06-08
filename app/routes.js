@@ -24,8 +24,8 @@ router.use('*', (req,res,next) => {
 
 router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Content-Security-Policy", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Content-Security-Policy", "script-src 'self' 'unsafe-inline' https://apis.google.com https://unpkg.com https://cdn.polyfill.io https://gov.uk");
   next();
 });
 
