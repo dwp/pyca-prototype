@@ -25,6 +25,7 @@ router.use('*', (req,res,next) => {
 router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Content-Security-Policy", "default-src * 'unsafe-inline'; script-src * 'self' 'unsafe-inline'; object-src 'none'; img-src * 'self'; media-src 'self'; frame-src 'none';font-src * 'self' data:; connect-src * 'self'; style-src 'self'");
   res.header('Access-Control-Allow-Credentials', true);
   next();
 });
