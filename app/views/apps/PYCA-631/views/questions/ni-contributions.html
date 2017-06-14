@@ -1,0 +1,53 @@
+{% set page = {
+	title: "Employee status &ndash; self employed"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+<div class="grid-row">
+	<div class="column-two-thirds">
+
+		<form method="post" class="form">
+
+			<h1 class="heading-large">
+				Are they registered to pay National Insurance Contributions?
+			</h1>
+
+			<div class="form-group">
+				<fieldset role="radiogroup" aria-required="true">
+
+					<legend>
+						<span class="visuallyhidden">Are they registered to pay National Insurance Contributions?</span>
+					</legend>
+
+					{{
+						form.radio({
+							name: 'niContributions',
+							label: "Yes",
+                            value: "yes"
+						})
+					}}
+
+					{{
+						form.radio({
+							name: 'niContributions',
+							label: "No",
+							value: 'no'
+						})
+					}}
+
+				</fieldset>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="button">Continue</button>
+			</div>
+
+		</form>
+
+	</div>
+</div>
+
+{% endblock %}﻿
