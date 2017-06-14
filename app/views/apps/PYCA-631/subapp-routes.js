@@ -764,6 +764,105 @@ module.exports = (router, config) => {
 			res.render(`${appRootRel}/questions/accident-sick-pay`);
 		}
 	});
+
+	router.all(`${appRoot}/questions/any-employees`, function (req, res) {
+		var anyEmployees = req.body.anyEmployees;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (anyEmployees) {
+			answers[claimantType].anyEmployees = anyEmployees;
+			res.redirect(`${appRoot}/questions/decide-who-provide-service-to?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/any-employees`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/decide-who-provide-service-to`, function (req, res) {
+		var decideWhoToProvideServiceTo = req.body.decideWhoToProvideServiceTo;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (decideWhoToProvideServiceTo) {
+			answers[claimantType].decideWhoToProvideServiceTo = decideWhoToProvideServiceTo;
+
+			if (decideWhoToProvideServiceTo === 'yes')
+			{
+				res.redirect(`${appRoot}/questions/business-profit?${claimantType}`);
+			} else {
+
+				res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/decide-who-provide-service-to`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/business-profit`, function (req, res) {
+		var businessEverMadeProfit = req.body.businessEverMadeProfit;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (businessEverMadeProfit) {
+			answers[claimantType].businessEverMadeProfit = businessEverMadeProfit;
+			res.redirect(`${appRoot}/questions/previous-self-employment?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/business-profit`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/previous-self-employment`, function (req, res) {
+		var previouslySelfEmployed = req.body.previouslySelfEmployed;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (previouslySelfEmployed) {
+			answers[claimantType].previouslySelfEmployed = previouslySelfEmployed;
+
+			res.redirect(`${appRoot}/questions/when-did-they-arrive?${claimantType}`);
+			// if (previouslySelfEmployed === 'yes')
+			// {
+			// 	res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			// } else {
+			// 	// res.redirect(`${appRoot}/questions/ni-contributions?${claimantType}`);
+			// 	res.send("This is the new outcome page which is actually a question and asks for some ID and if they've got it today");
+			// }
+		}
+		else {
+			res.render(`${appRootRel}/questions/previous-self-employment`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/when-did-they-arrive`, function (req, res) {
+		var arriveInUkDay = req.body.ukDay;
+		var arriveInUkMonth = req.body.ukMonth;
+		var arriveInUkYear = req.body.ukYear;
+		var dateArrivedInUk = req.body.ukDay + "/" + req.body.ukMonth + "/" + req.body.ukYear;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (arriveInUkDay && arriveInUkMonth && arriveInUkYear) {
+			answers[claimantType].arriveInUkDay = arriveInUkDay;
+			answers[claimantType].arriveInUkMonth = arriveInUkMonth;
+			answers[claimantType].arriveInUkYear = arriveInUkYear;
+			answers[claimantType].dateArrivedInUk = dateArrivedInUk;
+
+			if (answers[claimantType].previouslySelfEmployed == 'yes') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+			else {
+				// res.redirect(`${appRoot}/questions/ni-contributions?${claimantType}`);
+				res.send("This is the new outcome page which is actually a question and asks for some ID and if they've got it today");
+			}
+			res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/when-did-they-arrive`);
+		}
+	});
   // ################ END PYCA-613 Changes ##############################
 
   return router
