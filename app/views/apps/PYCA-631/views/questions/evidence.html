@@ -12,7 +12,7 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          The claimant must provide some ID documents
+          Can the claimant provide these documents today?
         </h1>
 
         <strong class="bold-small">One of the following options:</strong>
@@ -22,16 +22,36 @@
         <li>ID Card</li>
         </ul>
 
-        <strong class="bold-small">Along with (3 months worth) of one of the below:</strong>
+        <strong class="bold-small">Along with one of the below:</strong>
 
         <ul class="list list-bullet">
-        <li>bank statements</li>
-        <li>accounts</li>
-        <li>receipts or services</li>
-        <li>record of income and expenses</li>
-        <li>tax return for the last year</li>
-        <li>a letter from HMRC</li>
+        <li>3 months of bank statements</li>
+        <li>3 months of accounts</li>
+        <li>3 months of receipts or services</li>
+        <li>3 months of record of income and expenses</li>
+        <li>Tax return for the last year</li>
+        <li>Letter from HMRC</li>
         </ul>
+
+        <form>
+          <div class="form-group">
+            <fieldset class="inline">
+
+              <legend class="visually-hidden">Can the claimant provide these documents today?</legend>
+
+              <div class="multiple-choice">
+                <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes">
+                <label for="radio-inline-1">Yes</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-inline-2" type="radio" name="radio-inline-group" value="No">
+                <label for="radio-inline-2">No</label>
+              </div>
+
+            </fieldset>
+          </div>
+        </form>
+
 
       <div class="form-group">
         <button type="submit" class="button">Continue</button>
