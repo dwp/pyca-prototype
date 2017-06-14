@@ -1,0 +1,44 @@
+{% set page = {
+	title: "Marriage certificate"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          The claimant must provide some ID documents
+        </h1>
+
+        <strong class="bold-small">One of the following options:</strong>
+
+        <ul class="list list-bullet">
+        <li>Passport</li>
+        <li>ID Card</li>
+        </ul>
+
+        <strong class="bold-small">Along with (3 months worth) of one of the below:</strong>
+
+        <ul class="list list-bullet">
+        <li>bank statements</li>
+        <li>accounts</li>
+        <li>receipts or services</li>
+        <li>record of income and expenses</li>
+        <li>tax return for the last year</li>
+        <li>a letter from HMRC</li>
+        </ul>
+
+      <div class="form-group">
+        <button type="submit" class="button">Continue</button>
+        </div>
+      
+
+    </div>
+  </div>
+
+{% endblock %}
