@@ -1,0 +1,68 @@
+{% set page = {
+	title: "Tax Return"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Have they, or their accountant ever submitted a tax return?
+        </h1>
+
+		 <!-- <form> -->
+		  <div class="form-group">
+		    <fieldset>
+
+		      <legend class="visually-hidden">How do you want to be contacted?</legend>
+
+		      <div class="multiple-choice" data-target="date-taxreturn">
+		        <input id="taxreturn" type="radio" name="taxReturn" value="Yes">
+		        <label for="taxreturn">Yes</label>
+		      </div>
+
+			      <div class="panel panel-border-narrow js-hidden" id="date-taxreturn">
+			        <label class="form-label" for="date-taxreturn">What is the date of their last tax return?</label>
+			        <!-- <input class="form-control" name="date-taxreturn" type="text" id="date-taxreturn"> -->
+
+					<div class="form-date">
+			          <div class="form-group form-group-day">
+			            <label class="form-label" for="uk-day">Day</label>
+			            <input class="form-control" id="ukDay" name="ukDay" type="number" pattern="[0-9]*" min="0" max="31">
+			          </div>
+
+			          <div class="form-group form-group-month">
+			            <label class="form-label" for="uk-month">Month</label>
+			            <input class="form-control" id="ukMonth" name="ukMonth" type="number" pattern="[0-9]*" min="0" max="12">
+			          </div>
+
+			          <div class="form-group form-group-year">
+			            <label class="form-label" for="uk-year">Year</label>
+			            <input class="form-control" id="ukYear" name="ukYear" type="number" pattern="[0-9]*" min="0" max="2017">
+			          </div>
+			        </div>
+			      </div>
+
+		      <div class="multiple-choice" data-target="taxreturn">
+		        <input id="taxreturn" type="radio" name="taxReturn" value="No">
+		        <label for="taxreturn">No</label>
+		      </div>
+		    </fieldset>
+		  </div>
+		<!-- </form> -->
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

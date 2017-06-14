@@ -1,0 +1,61 @@
+{% set page = {
+	title: "END016"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+<h2 class="heading-medium">Now send your claim</h2>
+
+          <p>Your claim will now be sent to your employer for verifying.</p>
+
+          <fieldset>
+          <legend class="form-label-bold dec-legend" id="app">By sending this claim you agree that:</legend>
+
+          <div class="form-group">
+            <ul class="list-bullet" aria-labelledby="app">
+              <li>the information in this claim is correct as far as you know</li>
+              <li>you'll tell the Access to Work unit about any changes to your condition or circumstances, eg if your place of work changes</li>
+              <li>you agree to the <a href="email">email terms</a></li>
+            </ul>
+
+            <div class="application-notice help-notice">
+              <p>It might be a criminal offence if you knowingly give false information or don't report anything that would affect your grant, eg if your condition improves or you change where you work.</p>
+            </div>
+          </div>
+
+        </fieldset>
+
+          <div class="form-group">
+            <a href="/Payments_login_desktop_v1/confirmation" class="button">Agree and send claim</a>
+          </div>
+
+
+      <<!-- h1 class="heading-large">Book a further evidence interview</h1>
+      <p>Tell the person to bring their:</p>
+      <ul class="list list-bullet">
+				<li>biometric residence permit</li>
+				<li>marriage certificate</li>
+      </ul>
+
+			<p>Complete as much of the ALP as you can.</p>
+
+      <div class="panel panel-border-narrow">
+        <p>
+          Don't complete the 'Refer to DM HRT To-Do'.
+        </p>
+      </div>
+
+			<br/>
+
+			<p><a class="button button-print-reminder" href="print-reminder?claimant" role="button">Print a reminder</a></p> -->
+
+    </div>
+
+	</div>
+
+{% endblock %}
