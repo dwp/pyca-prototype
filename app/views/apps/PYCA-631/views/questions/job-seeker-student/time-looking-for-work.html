@@ -1,0 +1,77 @@
+{% set page = {
+	title: "Prove you can apply"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+<div class="grid-row">
+	<div class="column-two-thirds">
+
+		<form method="post" class="form">
+
+			<h1 class="heading-large">
+				How long have you been looking for work?
+			</h1>
+
+			<div class="form-group">
+				<fieldset role="radiogroup" aria-required="true">
+
+					<legend>
+						<span class="visuallyhidden">How long have you been looking for work?</span>
+					</legend>
+
+					{{
+						form.radio({
+							name: 'lookingforwork',
+							label: "Less than 1 monthstudyhours",
+                            value: "Less than 1 monthstudyhours"
+						})
+					}}
+
+					{{
+						form.radio({
+							name: 'lookingforwork',
+							label: "1 month",
+							value: '1 month'
+						})
+					}}
+
+                    {{
+						form.radio({
+							name: 'lookingforwork',
+							label: "2 months",
+                            value: "2 months"
+						})
+					}}
+
+                    {{
+                        form.radio({
+                            name: 'lookingforwork',
+                            label: "3 months",
+                            value: "3 months"
+                        })
+                    }}
+
+                    {{
+                        form.radio({
+                            name: 'lookingforwork',
+                            label: "More than 3 months",
+                            value: "More than 3 months"
+                        })
+                    }}
+
+				</fieldset>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="button">Continue</button>
+			</div>
+
+		</form>
+
+	</div>
+</div>
+
+{% endblock %}﻿
