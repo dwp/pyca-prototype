@@ -1,0 +1,43 @@
+{% set page = {
+	title: "Tax Return"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+				Are they currently a student in the UK?
+	        </h1>
+
+		 <!-- <form> -->
+		  <div class="form-group">
+		    <fieldset>
+		      <div class="multiple-choice" data-target="uk-student">
+		        <input id="ukstudent" type="radio" name="ukstudent" value="Yes">
+		        <label for="ukstudent">Yes</label>
+		      </div>
+
+		      <div class="multiple-choice" data-target="ukstudent">
+		        <input id="ukstudent" type="radio" name="ukstudent" value="No">
+		        <label for="ukstudent">No</label>
+		      </div>
+		    </fieldset>
+		  </div>
+		<!-- </form> -->
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

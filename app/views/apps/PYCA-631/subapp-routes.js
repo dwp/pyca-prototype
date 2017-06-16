@@ -86,7 +86,11 @@ module.exports = (router, config) => {
 	  bookFurtherEvidenceInterviewMarriage: {
 	    id: 'END016',
 	    status: 'Married NonEEA with no marriage certificate on the day of the initial interview'
-	  }
+	  },
+    selfEmployedOutcome : {
+      id: 'END018',
+      status: 'Self Employed person - printing out their information'
+    }
 	}
 
 	config.isPartnerFlowEnabled = true
@@ -725,10 +729,10 @@ module.exports = (router, config) => {
   });
 
 	router.all(`${appRoot}/questions/tax-return`, function (req, res) {
-		var taxReturnUkDay = req.body.ukDay;
-		var taxReturnUkMonth = req.body.ukMonth;
-		var taxReturnUkYear = req.body.ukYear;
-		var dateSelfEmployment = req.body.ukDay + "/" + req.body.ukMonth + "/" + req.body.ukYear;
+		var taxReturnUkDay = req.body.ukDayTax;
+		var taxReturnUkMonth = req.body.ukMonthTax;
+		var taxReturnUkYear = req.body.ukYearTax;
+		var taxReturnDate = req.body.ukDayTax + "/" + req.body.ukMonthTax + "/" + req.body.ukYearTax;
 		var taxReturn = req.body.taxReturn;
 	  var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
@@ -854,8 +858,7 @@ module.exports = (router, config) => {
 				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 			}
 			else {
-				// res.redirect(`${appRoot}/questions/ni-contributions?${claimantType}`);
-				res.send("This is the new outcome page which is actually a question and asks for some ID and if they've got it today");
+        res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedOutcome.id}?${claimantType}`);
 			}
 			res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
 		}

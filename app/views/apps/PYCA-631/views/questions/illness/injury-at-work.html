@@ -1,0 +1,43 @@
+{% set page = {
+	title: "Tax Return"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Is the incapacity/injury a result of an accident at work?
+        </h1>
+
+		 <!-- <form> -->
+		  <div class="form-group">
+		    <fieldset>
+		      <div class="multiple-choice" data-target="injury-at-work">
+		        <input id="injuryatwork" type="radio" name="injuryatwork" value="Yes">
+		        <label for="injuryatwork">Yes</label>
+		      </div>
+
+		      <div class="multiple-choice" data-target="injuryatwork">
+		        <input id="injuryatwork" type="radio" name="injuryatwork" value="No">
+		        <label for="injuryatwork">No</label>
+		      </div>
+		    </fieldset>
+		  </div>
+		<!-- </form> -->
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% set page = {
+	title: "Prove you can apply"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Can they provide medical certificates from the first day day of sickness?
+        </h1>
+
+      
+		<span class="form-hint">
+		    Please allow up to one week for the Claimant to provide this.
+		  </span>
+		  </form>
+
+<form>
+		 <!-- <form> -->
+		  <div class="form-group">
+		    <fieldset>
+		      <div class="multiple-choice" data-target="prevent-permanantly">
+		        <input id="preventpermanantly" type="radio" name="preventpermanantly" value="Yes">
+		        <label for="preventpermanantly">Yes</label>
+		      </div>
+
+		      <div class="multiple-choice" data-target="preventpermanantly">
+		        <input id="preventpermanantly" type="radio" name="preventpermanantly" value="No">
+		        <label for="preventpermanantly">No</label>
+		      </div>
+		    </fieldset>
+		  </div>
+		<!-- </form> -->
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% set page = {
+	title: "END016"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="heading-large">This claimant can be fast tracked</h1>
+
+          <h2 class="heading-medium">Next steps</h2>
+
+            <ul class="list list-number">
+            <li>Save this page as a PDF</li>
+            <li>Upload PDF to 'Refer to Decision Maker' to-do</li>
+            <li>Upload all evidence 'Refer to Decision Maker' to-do</li>
+            <li>For the question 'Is an HRT interview needed' select 'No'</li>
+            <li>Select 'Done'</li>
+            </ul>
+
+            <div class="form-group">
+            <a href="" class="button">Save page as PDF</a>
+          </div>
+
+
+               <table>
+                  <thead>
+                    <tr>
+                      <td class="multiline"="col"></td>
+                      <th class="numeric"scope="col"></th>
+                    </tr>
+                  </thead>
+              </table>
+
+                  <!-- <table>
+                  <thead>
+                    <tr>
+                      <td class="multiline" scope="col"></td>
+                      <td class="numeric" scope="col"></td>
+                    </tr>
+                  </thead> -->
+                <table>
+                  <thead>
+                    <tr>
+                      <th class="multiline" scope="col">Question summary
+                      </th>
+
+                      <th class="numeric multiline" scope="col">Answer
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td class="row multiline">Accident at work
+                      </td>
+                      <td class="numeric">Yes</td>
+                    </tr>
+
+                    <tr>
+                      <td class="row">Permanent incapacity</th>
+                      <td class="numeric">X hours</td>
+                    </tr>
+
+                    <tr>
+                      <td class="row">Indutrial Injuries Disablement Benefit</td>
+                      <td class="numeric">Less than £600</td>
+                    </tr>
+
+                    <tr>
+                      <td class="row">Employer letter for employment end date</td>
+                      <td class="numeric">Yes</td>
+                    </tr>
+
+                     <tr>
+                      <td class="row">Medical certificates from first day</td>
+                      <td class="numeric">Yes</td>
+                    </tr>
+
+                     <tr>
+                      <td class="row">Arrived in UK</td>
+                      <td class="numeric">12.3.2016</td>
+                    </tr>
+
+
+                    </table>
+                  </tbody>
+                </table>
+                          
+
+    </div>
+
+	</div>
+
+{% endblock %}

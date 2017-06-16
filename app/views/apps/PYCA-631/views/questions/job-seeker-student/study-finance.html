@@ -1,5 +1,5 @@
 {% set page = {
-	title: "Employee status &ndash; self employed"
+	title: "Prove you can apply"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -12,29 +12,37 @@
 		<form method="post" class="form">
 
 			<h1 class="heading-large">
-				What is their monthly average earnings?
+				How does the claimant finance their studies?
 			</h1>
 
 			<div class="form-group">
 				<fieldset role="radiogroup" aria-required="true">
 
 					<legend>
-						<span class="visuallyhidden">What is their monthly average earnings?</span>
+						<span class="visuallyhidden">How does the claimant finance their studies?</span>
 					</legend>
 
 					{{
 						form.radio({
-							name: 'monthlyAverageEarnings',
-							label: "£0 - £600 per month",
-                            value: "£0 - £600 per month"
+							name: 'studyfinance',
+							label: "Loan",
+                            value: "Loan"
 						})
 					}}
 
 					{{
 						form.radio({
-							name: 'monthlyAverageEarnings',
-							label: "Over £600 per month",
-							value: 'Over £600 per month'
+							name: 'studyfinance',
+							label: "Help from family",
+							value: 'Help from family'
+						})
+					}}
+
+                    {{
+						form.radio({
+							name: 'studyfinance',
+							label: "Other",
+                            value: "Other"
 						})
 					}}
 
