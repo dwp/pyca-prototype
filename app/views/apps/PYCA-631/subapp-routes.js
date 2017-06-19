@@ -87,10 +87,14 @@ module.exports = (router, config) => {
 	    id: 'END016',
 	    status: 'Married NonEEA with no marriage certificate on the day of the initial interview'
 	  },
-    selfEmployedOutcome : {
+    selfEmployedWithEvidence : {
       id: 'END018',
-      status: 'Self Employed person - printing out their information'
-    }
+      status: 'Self Employed person - save their information'
+    },
+		selfEmployedWithoutEvidence : {
+			id: 'END021',
+			status: 'Self Employed person - without their evidence with them'
+		}
 	}
 
 	config.isPartnerFlowEnabled = true
@@ -714,6 +718,7 @@ module.exports = (router, config) => {
 	  var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
+console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		if (hmrcRegistered) {
 			answers[claimantType].hmrcRegistered = hmrcRegistered;
 			res.redirect(`${appRoot}/questions/tax-return?${claimantType}`);
@@ -723,26 +728,30 @@ module.exports = (router, config) => {
 		}
   });
 
-	// router.all(`${appRoot}/questions/tax-return`, function (req, res) {
-	// 	var taxReturnUkDay = req.body.ukDayTax;
-	// 	var taxReturnUkMonth = req.body.ukMonthTax;
-	// 	var taxReturnUkYear = req.body.ukYearTax;
-	// 	var taxReturnDate = req.body.ukDayTax + "/" + req.body.ukMonthTax + "/" + req.body.ukYearTax;
-	// 	var taxReturn = req.body.taxReturn;
-	//   var answers = req.session[config.slug].answers;
-	// 	var claimantType = res.locals.currentApp.claimantType;
-	//
-	// 	if ((taxReturnUkDay && taxReturnUkMonth && taxReturnUkYear) || taxReturn) {
-	// 		answers[claimantType].ukDay = taxReturnUkDay;
-	// 		answers[claimantType].ukMonth = taxReturnUkMonth;
-	// 		answers[claimantType].ukYear = taxReturnUkYear;
-	// 		answers[claimantType].taxReturn = taxReturn;
-	// 		res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
-	// 	}
-	// 	else {
-	// 		res.render(`${appRootRel}/questions/tax-return`);
-	// 	}
-  // });
+	router.all(`${appRoot}/questions/tax-return`, function (req, res) {
+		// var taxReturnUkDay = req.body.ukDayTax;
+		// var taxReturnUkMonth = req.body.ukMonthTax;
+		// var taxReturnUkYear = req.body.ukYearTax;
+		// var taxReturnDate = req.body.ukDayTax + "/" + req.body.ukMonthTax + "/" + req.body.ukYearTax;
+		var taxReturn = req.body.taxReturn;
+	  var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		// if ((taxReturnUkDay && taxReturnUkMonth && taxReturnUkYear) || taxReturn) {
+		// 	answers[claimantType].ukDay = taxReturnUkDay;
+		// 	answers[claimantType].ukMonth = taxReturnUkMonth;
+		// 	answers[claimantType].ukYear = taxReturnUkYear;
+		// 	answers[claimantType].taxReturn = taxReturn;
+		// 	res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
+		// }
+		if (taxReturn) {
+			answers[claimantType].taxReturn = taxReturn;
+			res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/tax-return`);
+		}
+  });
 
 	router.all(`${appRoot}/questions/accident-sick-pay`, function (req, res) {
 		var sickPay = req.body.sickPay;
@@ -865,17 +874,44 @@ module.exports = (router, config) => {
 		// 	answers[claimantType].dateArrivedInUk = dateArrivedInUk;
 
 		if (lengthOfTimeInUK){
-			if (answers[claimantType].previouslySelfEmployed == 'yes') {
+			if (answers[claimantType].previouslySelfEmployed == 'no') {
+				res.redirect(`${appRoot}/questions/evidence-today?${claimantType}`);
+			} else {
 				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-			}
-			else {
-        res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedOutcome.id}?${claimantType}`);
 			}
 		}
 		else {
 			res.render(`${appRootRel}/questions/length-of-time-in-uk`);
 		}
 	});
+
+	router.all(`${appRoot}/questions/evidence-today`, function (req, res) {
+		var evidenceToday = req.body.evidenceToday;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		console.log(`previouslySelfEmployed value is: ${answers[claimantType].previouslySelfEmployed}`);
+		console.log(`evidenceToday value is: ${answers[claimantType].evidenceToday}`);
+
+		if (evidenceToday){
+			answers[claimantType].evidenceToday = evidenceToday;
+			if (answers[claimantType].previouslySelfEmployed == 'no') {
+					if (evidenceToday == 'yes'){
+						res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedWithEvidence.id}?${claimantType}`);
+					}
+					else {
+						res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedWithoutEvidence.id}?${claimantType}`);
+					}
+			}
+			else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/evidence-today`);
+		}
+	});
+
   // ################ END PYCA-613 Changes ##############################
 
   return router
