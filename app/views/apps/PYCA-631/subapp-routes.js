@@ -408,7 +408,7 @@ module.exports = (router, config) => {
 
 	    // Self-employed
 	    if (employeeStatus.selfEmployed === 'true') {
-				res.redirect(`${appRoot}/questions/when-did-they-start-self-employment?${claimantType}`);
+				res.redirect(`${appRoot}/questions/self-employed-duration?${claimantType}`);
 	    }
 
 	    // Employed
@@ -647,22 +647,17 @@ module.exports = (router, config) => {
   // PYCA-613 Changes
   // ####################################################################
 
-  router.all(`${appRoot}/questions/when-did-they-start-self-employment`, function (req, res) {
-		var ukDay = req.body.ukDay;
-		var ukMonth = req.body.ukMonth;
-		var ukYear = req.body.ukYear;
-		var dateSelfEmployment = req.body.ukDay + "/" + req.body.ukMonth + "/" + req.body.ukYear;
+  router.all(`${appRoot}/questions/self-employed-duration`, function (req, res) {
+		var selfEmployedDuration = req.body.selfEmployedDuration;
 	  var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		if (ukDay && ukMonth && ukYear) {
-			answers[claimantType].ukDay = ukDay;
-			answers[claimantType].ukMonth = ukMonth;
-			answers[claimantType].ukYear = ukYear;
+		if (selfEmployedDuration) {
+			answers[claimantType].selfEmployedDuration = selfEmployedDuration;
 			res.redirect(`${appRoot}/questions/self-employed-hours-worked?${claimantType}`);
 		}
 		else {
-			res.render(`${appRootRel}/questions/when-did-they-start-self-employment`);
+			res.render(`${appRootRel}/questions/self-employed-duration`);
 		}
   });
 
@@ -706,7 +701,7 @@ module.exports = (router, config) => {
 			{
 				res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
 			} else {
-				res.redirect(`${appRoot}/questions/ni-contributions?${claimantType}`);
+				res.redirect(`${appRoot}/questions/hmrc-registered?${claimantType}`);
 			}
 		}
 		else {
@@ -714,40 +709,40 @@ module.exports = (router, config) => {
 		}
   });
 
-	router.all(`${appRoot}/questions/ni-contributions`, function (req, res) {
-		var niContributions = req.body.niContributions;
+	router.all(`${appRoot}/questions/hmrc-registered`, function (req, res) {
+		var hmrcRegistered = req.body.hmrcRegistered;
 	  var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		if (niContributions) {
-			answers[claimantType].niContributions = niContributions;
+		if (hmrcRegistered) {
+			answers[claimantType].hmrcRegistered = hmrcRegistered;
 			res.redirect(`${appRoot}/questions/tax-return?${claimantType}`);
 		}
 		else {
-			res.render(`${appRootRel}/questions/ni-contributions`);
+			res.render(`${appRootRel}/questions/hmrc-registered`);
 		}
   });
 
-	router.all(`${appRoot}/questions/tax-return`, function (req, res) {
-		var taxReturnUkDay = req.body.ukDayTax;
-		var taxReturnUkMonth = req.body.ukMonthTax;
-		var taxReturnUkYear = req.body.ukYearTax;
-		var taxReturnDate = req.body.ukDayTax + "/" + req.body.ukMonthTax + "/" + req.body.ukYearTax;
-		var taxReturn = req.body.taxReturn;
-	  var answers = req.session[config.slug].answers;
-		var claimantType = res.locals.currentApp.claimantType;
-
-		if ((taxReturnUkDay && taxReturnUkMonth && taxReturnUkYear) || taxReturn) {
-			answers[claimantType].ukDay = taxReturnUkDay;
-			answers[claimantType].ukMonth = taxReturnUkMonth;
-			answers[claimantType].ukYear = taxReturnUkYear;
-			answers[claimantType].taxReturn = taxReturn;
-			res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
-		}
-		else {
-			res.render(`${appRootRel}/questions/tax-return`);
-		}
-  });
+	// router.all(`${appRoot}/questions/tax-return`, function (req, res) {
+	// 	var taxReturnUkDay = req.body.ukDayTax;
+	// 	var taxReturnUkMonth = req.body.ukMonthTax;
+	// 	var taxReturnUkYear = req.body.ukYearTax;
+	// 	var taxReturnDate = req.body.ukDayTax + "/" + req.body.ukMonthTax + "/" + req.body.ukYearTax;
+	// 	var taxReturn = req.body.taxReturn;
+	//   var answers = req.session[config.slug].answers;
+	// 	var claimantType = res.locals.currentApp.claimantType;
+	//
+	// 	if ((taxReturnUkDay && taxReturnUkMonth && taxReturnUkYear) || taxReturn) {
+	// 		answers[claimantType].ukDay = taxReturnUkDay;
+	// 		answers[claimantType].ukMonth = taxReturnUkMonth;
+	// 		answers[claimantType].ukYear = taxReturnUkYear;
+	// 		answers[claimantType].taxReturn = taxReturn;
+	// 		res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
+	// 	}
+	// 	else {
+	// 		res.render(`${appRootRel}/questions/tax-return`);
+	// 	}
+  // });
 
 	router.all(`${appRoot}/questions/accident-sick-pay`, function (req, res) {
 		var sickPay = req.body.sickPay;
@@ -811,10 +806,24 @@ module.exports = (router, config) => {
 
 		if (businessEverMadeProfit) {
 			answers[claimantType].businessEverMadeProfit = businessEverMadeProfit;
-			res.redirect(`${appRoot}/questions/previous-self-employment?${claimantType}`);
+			res.redirect(`${appRoot}/questions/type-of-business?${claimantType}`);
 		}
 		else {
 			res.render(`${appRootRel}/questions/business-profit`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/type-of-business`, function (req, res) {
+		var typeOfBusiness = req.body.typeOfBusiness;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (typeOfBusiness) {
+			answers[claimantType].typeOfBusiness = typeOfBusiness;
+			res.redirect(`${appRoot}/questions/previous-self-employment?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/type-of-business`);
 		}
 	});
 
@@ -826,7 +835,7 @@ module.exports = (router, config) => {
 		if (previouslySelfEmployed) {
 			answers[claimantType].previouslySelfEmployed = previouslySelfEmployed;
 
-			res.redirect(`${appRoot}/questions/when-did-they-arrive?${claimantType}`);
+			res.redirect(`${appRoot}/questions/length-of-time-in-uk?${claimantType}`);
 			// if (previouslySelfEmployed === 'yes')
 			// {
 			// 	res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
@@ -840,30 +849,31 @@ module.exports = (router, config) => {
 		}
 	});
 
-	router.all(`${appRoot}/questions/when-did-they-arrive`, function (req, res) {
-		var arriveInUkDay = req.body.ukDay;
-		var arriveInUkMonth = req.body.ukMonth;
-		var arriveInUkYear = req.body.ukYear;
-		var dateArrivedInUk = req.body.ukDay + "/" + req.body.ukMonth + "/" + req.body.ukYear;
+	router.all(`${appRoot}/questions/length-of-time-in-uk`, function (req, res) {
+		// var arriveInUkDay = req.body.ukDayArrival;
+		// var arriveInUkMonth = req.body.ukMonthArrival;
+		// var arriveInUkYear = req.body.ukYearArrival;
+		var lengthOfTimeInUK = req.body.lengthOfTimeInUK;
+		// var dateArrivedInUk = req.body.ukDayArrival + "/" + req.body.ukMonthArrival + "/" + req.body.ukYearArrival;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		if (arriveInUkDay && arriveInUkMonth && arriveInUkYear) {
-			answers[claimantType].arriveInUkDay = arriveInUkDay;
-			answers[claimantType].arriveInUkMonth = arriveInUkMonth;
-			answers[claimantType].arriveInUkYear = arriveInUkYear;
-			answers[claimantType].dateArrivedInUk = dateArrivedInUk;
+		// if (arriveInUkDay && arriveInUkMonth && arriveInUkYear) {
+		// 	answers[claimantType].arriveInUkDay = arriveInUkDay;
+		// 	answers[claimantType].arriveInUkMonth = arriveInUkMonth;
+		// 	answers[claimantType].arriveInUkYear = arriveInUkYear;
+		// 	answers[claimantType].dateArrivedInUk = dateArrivedInUk;
 
+		if (lengthOfTimeInUK){
 			if (answers[claimantType].previouslySelfEmployed == 'yes') {
 				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 			}
 			else {
         res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedOutcome.id}?${claimantType}`);
 			}
-			res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
 		}
 		else {
-			res.render(`${appRootRel}/questions/when-did-they-arrive`);
+			res.render(`${appRootRel}/questions/length-of-time-in-uk`);
 		}
 	});
   // ################ END PYCA-613 Changes ##############################

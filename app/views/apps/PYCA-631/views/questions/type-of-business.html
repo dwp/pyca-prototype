@@ -1,0 +1,79 @@
+{% set page = {
+	title: "What year did they arrive in the UK"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+					What is {{ "their partner's" if currentApp.isPartnerFlow else 'their' }} type of business?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true">
+            <legend>
+              <span class="visuallyhidden">What is {{ "their partner's" if currentApp.isPartnerFlow else 'their' }} type of business?</span>
+            </legend>
+
+						{{
+							form.radio({
+								name: 'typeOfBusiness',
+								label: "Building Industry"
+							})
+						}}
+                        {{
+							form.radio({
+								name: 'typeOfBusiness',
+								label: "Cleaners"
+							})
+						}}
+                        {{
+                            form.radio({
+                                name: 'typeOfBusiness',
+                                label: "Hospitality"
+                            })
+                        }}
+                        {{
+                            form.radio({
+                                name: 'typeOfBusiness',
+                                label: "Gardeners"
+                            })
+                        }}
+                        {{
+                            form.radio({
+                                name: 'typeOfBusiness',
+                                label: "Taxi Driver"
+                            })
+                        }}
+                        {{
+                            form.radio({
+                                name: 'typeOfBusiness',
+                                label: "Caring Industry"
+                            })
+                        }}
+                        {{
+                            form.radio({
+                                name: 'typeOfBusiness',
+                                label: "OTher"
+                            })
+                        }}
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}﻿

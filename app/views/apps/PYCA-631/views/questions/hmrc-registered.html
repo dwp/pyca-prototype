@@ -12,19 +12,19 @@
 		<form method="post" class="form">
 
 			<h1 class="heading-large">
-				Are they registered to pay National Insurance Contributions?
+				Are they registered with HMRC?
 			</h1>
 
 			<div class="form-group">
 				<fieldset role="radiogroup" aria-required="true">
 
 					<legend>
-						<span class="visuallyhidden">Are they registered to pay National Insurance Contributions?</span>
+						<span class="visuallyhidden">Are they registered with HMRC?</span>
 					</legend>
 
 					{{
 						form.radio({
-							name: 'niContributions',
+							name: 'hmrcRegistered',
 							label: "Yes",
                             value: "yes"
 						})
