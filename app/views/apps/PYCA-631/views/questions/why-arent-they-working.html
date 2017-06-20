@@ -1,0 +1,76 @@
+{% set page = {
+	title: "Employee status - don't work"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+					Why aren't they working now?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true">
+            <legend>
+              <span class="visuallyhidden">Why aren't they working now?</span>
+            </legend>
+
+						{{
+							form.radio({
+								name: 'whynotwork',
+								label: "They were made redundant recently",
+								value: 'redundant'
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'whynotwork',
+								label: "Illness",
+								value: 'illness'
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'whynotwork',
+								label: "Vocational Training",
+								value: 'vocationaltraining'
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'whynotwork',
+								label: "Child Birth",
+								value: 'childbirth'
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'whynotwork',
+								label: "Other reason",
+								value: 'other'
+							})
+						}}
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}﻿
