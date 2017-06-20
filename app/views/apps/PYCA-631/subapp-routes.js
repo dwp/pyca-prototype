@@ -422,7 +422,7 @@ module.exports = (router, config) => {
 
 	    // Not working
 	    else if (employeeStatus.dontWork === 'true') {
-	      res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
+	      res.redirect(`${appRoot}/questions/were-they-previously-working?${claimantType}`);
 	    }
 
 	  } else {
@@ -909,6 +909,88 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		}
 		else {
 			res.render(`${appRootRel}/questions/evidence-today`);
+		}
+	});
+
+	// ####################################################################
+	router.all(`${appRoot}/questions/were-they-previously-working`, function (req, res) {
+	  var previousWork = req.body.previousWork;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (previousWork) {
+	    answers[claimantType].previousWork = previousWork;
+
+			if (previousWork.selfEmployed === 'true' && previousWork.employed === 'true') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+			 else if (previousWork.selfEmployed === 'true') {
+				res.redirect(`${appRoot}/questions/when-did-self-employment-start?${claimantType}`);
+	    }
+	    else if (previousWork.employed === 'true') {
+	      res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
+	    }
+
+	    // Not working
+	    else if (previousWork.dontWork === 'true') {
+	      res.redirect(`${appRoot}/questions/job-seeker-student/uk-look-for-work?${claimantType}`);
+	    }
+
+	  } else {
+	    res.render(`${appRootRel}/questions/were-they-previously-working`);
+	  }
+	});
+
+	// ##########################################################################
+
+	router.all(`${appRoot}/questions/employee-status-dont-work`, function (req, res) {
+		var dontWorkReason = req.body.dontWorkReason;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (dontWorkReason) {
+			answers[claimantType].dontWorkReason = dontWorkReason;
+
+			switch (dontWorkReason) {
+			  case 'redundant':
+			    // res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+					res.send('!! TODO - Flowchart says BAU - further information required about what the next step should be.');
+			    break;
+			  case 'sick':
+			    res.redirect(`${appRoot}/questions/illness/injury-at-work?${claimantType}`);
+			    break;
+			  case 'vocationaltraining':
+			    res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			    break;
+			  case 'childbirth':
+			    res.send('!! TODO - To be routed - see Andrew');
+					// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+			    break;
+			  case 'other':
+			    res.send('!! TODO - To be routed - see Andrew');
+					// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+			    break;
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/employee-status-dont-work`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/illness/injury-at-work`, function (req, res) {
+		var injuryatwork = req.body.injuryatwork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (injuryatwork){
+			if (answers[claimantType].injuryatwork == 'yes') {
+				res.redirect(`${appRoot}/questions/illness/industrial-injuries-disablement-benefit?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/illness/will-this-prevent-permanently?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/injury-at-work`);
 		}
 	});
 

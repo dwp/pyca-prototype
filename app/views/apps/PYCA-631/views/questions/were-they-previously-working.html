@@ -1,60 +1,46 @@
-{% set page = {
-	title: "Employee status - don't work"
-} %}
+{% set page = { title: "Previous Work" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
 
-{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+<div class="grid-row">
+  <div class="column-two-thirds">
 
-{% block main_content %}
+    <form method="post" class="form">
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
-
-      <form method="post" class="form">
-
-        <h1 class="heading-large">
-					Were they previously working?
+      <h1 class="heading-large">
+          {{ 'Was the claimant's partner ' if currentApp.isPartnerFlow else 'Were they' }} previously working?
         </h1>
 
-        <div class="form-group">
-          <fieldset role="radiogroup" aria-required="true">
-            <legend>
-              <span class="visuallyhidden">Were they previously working?</span>
-            </legend>
+      <div class="form-group">
+        <fieldset role="group" aria-required="true">
 
-						{{
-							form.radio({
-								name: 'previouswork',
-								label: "Yes, they were employed",
-								value: 'employed'
-							})
-						}}
+          <legend>
+            <span class="visuallyhidden">{{ 'Was the claimant's partner' if currentApp.isPartnerFlow else 'Were they' }} previously working?</span>
+          </legend>
 
-						{{
-							form.radio({
-								name: 'previouswork',
-								label: "Yes, they were self-employed",
-								value: 'self-employed'
-							})
-						}}
+          <div class="multiple-choice">
+            <input type="checkbox" name="previousWork[employed]" value="true" id="employed" data-uncheck='["dontWork"]'>
+            <label for="employed">Yes, they’re employed by someone</label>
+          </div>
 
-						{{
-							form.radio({
-								name: 'previouswork',
-								label: "No, they did not work before",
-								value: 'No'
-							})
-						}}
+          <div class="multiple-choice">
+            <input type="checkbox" name="previousWork[selfEmployed]" value="true" id="selfEmployed" data-uncheck='["dontWork"]'>
+            <label for="selfEmployed">Yes, they’re self-employed (work for themselves)</label>
+          </div>
 
-          </fieldset>
-        </div>
+          <div class="multiple-choice">
+            <input type="checkbox" name="previousWork[didntWork]" value="true" id="dontWork" data-uncheck='["employed", "selfEmployed"]'>
+            <label for="dontWork">No, they don’t do any work at the moment</label>
+          </div>
 
-        <div class="form-group">
-          <button type="submit" class="button">Continue</button>
-        </div>
+        </fieldset>
+      </div>
 
-      </form>
+      <div class="form-group">
+        <button type="submit" class="button">Continue</button>
+      </div>
 
-    </div>
+    </form>
+
   </div>
+</div>
 
-{% endblock %}﻿
+{% endblock %}
