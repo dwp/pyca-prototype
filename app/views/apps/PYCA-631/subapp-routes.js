@@ -983,6 +983,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		var claimantType = res.locals.currentApp.claimantType;
 
 		if (injuryatwork){
+			answers[claimantType].injuryatwork = injuryatwork;
 			if (answers[claimantType].injuryatwork == 'yes') {
 				res.redirect(`${appRoot}/questions/illness/industrial-injuries-disablement-benefit?${claimantType}`);
 			} else {
@@ -994,6 +995,130 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		}
 	});
 
+	router.all(`${appRoot}/questions/illness/will-this-prevent-permanently`, function (req, res) {
+		var preventpermanantly = req.body.preventpermanantly;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (preventpermanantly){
+			answers[claimantType].preventpermanantly = preventpermanantly;
+			if (answers[claimantType].preventpermanantly == 'yes') {
+				res.redirect(`${appRoot}/questions/illness/industrial-injuries-disablement-benefit?${claimantType}`);
+			} else {
+				res.send('!! TODO - To be routed to temp ill route - see Andrew');
+				// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/injury-at-work`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/illness/industrial-injuries-disablement-benefit`, function (req, res) {
+		var ijbbenefit = req.body.ijbbenefit;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (ijbbenefit){
+			answers[claimantType].ijbbenefit = ijbbenefit;
+			res.redirect(`${appRoot}/questions/when-did-employment-end?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/industrial-injuries-disablement-benefit`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/when-did-employment-end`, function (req, res) {
+		var employmentEnd = req.body.employmentEnd;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (employmentEnd){
+			answers[claimantType].employmentEnd = employmentEnd;
+			if(employmentEnd == '1week'){
+				res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+			}
+			else {
+				res.redirect(`${appRoot}/questions/looking-for-work?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/industrial-injuries-disablement-benefit`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/medical-certificates`, function (req, res) {
+		var medCerts = req.body.medCerts;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (medCerts){
+			answers[claimantType].medCerts = medCerts;
+			if(medCerts == 'yes'){
+				res.redirect(`${appRoot}/questions/illness/when-did-they-arrive?${claimantType}`);
+			}
+			else {
+				res.send('!! TODO - To be routed to partner flow - see Andrew');
+				// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/when-did-they-arrive`);
+		}
+	});
+
+	outer.all(`${appRoot}/questions/illness/when-did-they-arrive`, function (req, res) {
+		var arrivalDay = req.body.ukDay;
+		var arrivalMonth = req.body.ukMonth;
+		var arrivalYear = req.body.ukYear;
+
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if ((taxReturnUkDay && taxReturnUkMonth && taxReturnUkYear) || taxReturn) {
+			answers[claimantType].ukDay = arrivalDay;
+			answers[claimantType].ukMonth = arrivalMonth;
+			answers[claimantType].ukYear = arrivalYear;
+			res.send('TODO - This takes you to an outcome page asking for evidence...')
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/when-did-they-arrive`);
+		}
+	});
+
+
+	router.all(`${appRoot}/questions/looking-for-work`, function (req, res) {
+		var lookingforwork = req.body.lookingforwork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (lookingforwork){
+			answers[claimantType].lookingforwork = lookingforwork;
+			if(lookingforwork == 'yes'){
+				res.redirect(`${appRoot}/questions/illness/claim-uc-sooner?${claimantType}`);
+			}
+			else {
+				res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/industrial-injuries-disablement-benefit`);
+		}
+	});
+
+router.all(`${appRoot}/questions/illness/claim-uc-sooner`, function (req, res) {
+	var whyDidntClaimUcSooner = req.body.whyDidntClaimUcSooner;
+	var answers = req.session[config.slug].answers;
+	var claimantType = res.locals.currentApp.claimantType;
+
+	if (whyDidntClaimUcSooner){
+		answers[claimantType].whyDidntClaimUcSooner = whyDidntClaimUcSooner;
+		res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+	}
+	else {
+		res.render(`${appRootRel}/questions/illness/claim-uc-sooner`);
+	}
+});
   // ################ END PYCA-613 Changes ##############################
 
   return router
