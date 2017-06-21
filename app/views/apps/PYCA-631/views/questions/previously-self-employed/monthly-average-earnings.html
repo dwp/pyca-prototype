@@ -1,5 +1,5 @@
 {% set page = {
-	title: "Employee status &ndash; self employed"
+	title: "Monthly average earnings"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -24,7 +24,7 @@
 
 					{{
 						form.radio({
-							name: 'monthlyAverageEarnings',
+							name: 'prevMonthlyAverageEarnings',
 							label: "£0 - £600 per month",
                             value: "£0 - £600 per month"
 						})
@@ -32,7 +32,7 @@
 
 					{{
 						form.radio({
-							name: 'monthlyAverageEarnings',
+							name: 'prevMonthlyAverageEarnings',
 							label: "Over £600 per month",
 							value: 'Over £600 per month'
 						})

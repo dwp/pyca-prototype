@@ -6,14 +6,14 @@
     <form method="post" class="form">
 
       <h1 class="heading-large">
-          {{ 'Was the claimant's partner ' if currentApp.isPartnerFlow else 'Were they' }} previously working?
+          {{ 'Was the partner' if currentApp.isPartnerFlow else 'Were they' }} previously working?
         </h1>
 
       <div class="form-group">
         <fieldset role="group" aria-required="true">
 
           <legend>
-            <span class="visuallyhidden">{{ 'Was the claimant's partner' if currentApp.isPartnerFlow else 'Were they' }} previously working?</span>
+            <span class="visuallyhidden">{{ 'Was the partner' if currentApp.isPartnerFlow else 'Were they' }} previously working?</span>
           </legend>
 
           <div class="multiple-choice">

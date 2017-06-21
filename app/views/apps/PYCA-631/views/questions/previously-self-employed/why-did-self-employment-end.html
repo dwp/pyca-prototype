@@ -1,49 +1,43 @@
-{% set page = {
-	title: "Marriage certificate"
-} %}
+{% set page = { title: "Why did self employment end" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
 
-{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+<div class="grid-row">
+  <div class="column-two-thirds">
 
-{% block main_content %}
+    <form method="post" class="form">
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
-
-      <form method="post" class="form">
-
-        <h1 class="heading-large">
+      <h1 class="heading-large">
           Why did self-employment end?
         </h1>
 
-        <form>
-  <div class="form-group">
-    <fieldset>
-
-     <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
-
-      <div class="multiple-choice" data-target="1week">
-        <input id="illness" type="radio" name="radio-contact-group" value="illness">
-        <label for="illness">Illness</label>
-      </div>
-
-
-      <div class="multiple-choice" data-target="other">
-        <input id="other" type="radio" name="radio-contact-group" value="other">
-        <label for="other">Other</label>
-      </div>
-
-      
-    </fieldset>
-  </div>
-</form>
-
+      <form>
         <div class="form-group">
-          <button type="submit" class="button">Continue</button>
-        </div>
+          <fieldset>
 
+            <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
+
+            <div class="multiple-choice" data-target="1week">
+              <input id="illness" type="radio" name="reasonSelfEmploymentEnded" value="illness">
+              <label for="illness">Illness</label>
+            </div>
+
+
+            <div class="multiple-choice" data-target="other">
+              <input id="other" type="radio" name="reasonSelfEmploymentEnded" value="other">
+              <label for="other">Other</label>
+            </div>
+
+
+          </fieldset>
+        </div>
       </form>
 
-    </div>
+      <div class="form-group">
+        <button type="submit" class="button">Continue</button>
+      </div>
+
+    </form>
+
   </div>
+</div>
 
 {% endblock %}

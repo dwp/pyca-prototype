@@ -6,8 +6,8 @@
     <form method="post" class="form">
 
       <h1 class="heading-large">
-          Was this person actively looking for work in this time?
-        </h1>
+        Was this person actively looking for work in this time?
+      </h1>
 
       <div class="form-group">
         <fieldset role="radiogroup" aria-required="true" {{ attributes | safe }}>
@@ -16,7 +16,18 @@
             <span class="visuallyhidden">Was this person actively looking for work in this time?</span>
           </legend>
 
-          {{ form.radio({ name: 'lookingforwork', label: 'Yes' }) }} { { form.radio({ name: 'lookingforwork', label: 'no' }) }} {% endif %}
+                      {{
+                          form.radio({
+                              name: 'lookingforwork', \
+                              label: 'Yes'
+                          })
+                      }}
+                      {{
+                          form.radio({
+                              name: 'lookingforwork',
+                              label: 'no'
+                          })
+                      }}
 
         </fieldset>
       </div>

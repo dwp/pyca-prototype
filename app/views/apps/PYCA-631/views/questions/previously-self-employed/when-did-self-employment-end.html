@@ -1,5 +1,5 @@
 {% set page = {
-	title: "Marriage certificate"
+	title: "Previous self employment end"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -22,26 +22,26 @@
      <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
 
       <div class="multiple-choice" data-target="1week">
-        <input id="1week" type="radio" name="radio-contact-group" value="1week">
+        <input id="1week" type="radio" name="prevSelfEmploymentEnd" value="1week">
         <label for="1week">1 week ago</label>
       </div>
 
       <div class="multiple-choice" data-target="1month">
-        <input id="1month" type="radio" name="radio-contact-group" value="1month">
+        <input id="1month" type="radio" name="prevSelfEmploymentEnd" value="1month">
         <label for="1month">1 month ago</label>
       </div>
-      
+
       <div class="multiple-choice" data-target="6months">
-        <input id="6months" type="radio" name="radio-contact-group" value="6months">
+        <input id="6months" type="radio" name="prevSelfEmploymentEnd" value="6months">
         <label for="6-9months">6 months ago</label>
       </div>
 
       <div class="multiple-choice" data-target="1year">
-        <input id="1year" type="radio" name="radio-contact-group" value="1year">
+        <input id="1year" type="radio" name="prevSelfEmploymentEnd" value="1year">
         <label for="1-4years">1 year ago</label>
       </div>
 
-      
+
     </fieldset>
   </div>
 </form>

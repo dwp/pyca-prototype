@@ -87,14 +87,14 @@ module.exports = (router, config) => {
 	    id: 'END016',
 	    status: 'Married NonEEA with no marriage certificate on the day of the initial interview'
 	  },
+		selfEmployedWithoutEvidence : {
+					id: 'END017',
+					status: 'Self Employed person - without their evidence with them'
+		},
     selfEmployedWithEvidence : {
       id: 'END018',
       status: 'Self Employed person - save their information'
-    },
-		selfEmployedWithoutEvidence : {
-			id: 'END021',
-			status: 'Self Employed person - without their evidence with them'
-		}
+    }
 	}
 
 	config.isPartnerFlowEnabled = true
@@ -434,34 +434,35 @@ module.exports = (router, config) => {
 	// Checking why an EEA claimant doesn't work
 	// ####################################################################
 
-	router.all(`${appRoot}/questions/employee-status-dont-work`, function (req, res) {
-	  var dontWorkReason = req.body.dontWorkReason;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
-
-	  if (dontWorkReason) {
-	    answers[claimantType].dontWorkReason = dontWorkReason;
-
-	    // Redundant
-	    if (dontWorkReason === 'redundant') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.redundantEEA.id}?${claimantType}`);
-	    }
-
-	    // Sick
-	    if (dontWorkReason === 'sick') {
-	      res.redirect(`${appRoot}/questions/fitnote?${claimantType}`);
-	    }
-
-	    // Other or Partner reason unknown
-	    else if (dontWorkReason === 'other' || res.locals.currentApp.isPartnerFlow && dontWorkReason === 'unknown') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    }
-	  }
-
-	  else {
-	    res.render(`${appRootRel}/questions/employee-status-dont-work`);
-	  }
-	});
+	//  Made inactive as part of PYCA-631
+	// router.all(`${appRoot}/questions/employee-status-dont-work`, function (req, res) {
+	//   var dontWorkReason = req.body.dontWorkReason;
+	//   var answers = req.session[config.slug].answers;
+	//   var claimantType = res.locals.currentApp.claimantType;
+	//
+	//   if (dontWorkReason) {
+	//     answers[claimantType].dontWorkReason = dontWorkReason;
+	//
+	//     // Redundant
+	//     if (dontWorkReason === 'redundant') {
+	//       res.redirect(`${appRoot}/outcomes/${outcomes.redundantEEA.id}?${claimantType}`);
+	//     }
+	//
+	//     // Sick
+	//     if (dontWorkReason === 'sick') {
+	//       res.redirect(`${appRoot}/questions/fitnote?${claimantType}`);
+	//     }
+	//
+	//     // Other or Partner reason unknown
+	//     else if (dontWorkReason === 'other' || res.locals.currentApp.isPartnerFlow && dontWorkReason === 'unknown') {
+	//       res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+	//     }
+	//   }
+	//
+	//   else {
+	//     res.render(`${appRootRel}/questions/employee-status-dont-work`);
+	//   }
+	// });
 
 	// ####################################################################
 	// Checking if a sick EEA claimant has a fit note
@@ -648,7 +649,7 @@ module.exports = (router, config) => {
 	});
 
   // ####################################################################
-  // PYCA-613 Changes
+  // PYCA-631 Changes
   // ####################################################################
 
   router.all(`${appRoot}/questions/self-employed-duration`, function (req, res) {
@@ -925,7 +926,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 			}
 			 else if (previousWork.selfEmployed === 'true') {
-				res.redirect(`${appRoot}/questions/when-did-self-employment-start?${claimantType}`);
+				res.redirect(`${appRoot}/questions/previously-self-employed/when-did-self-employment-start?${claimantType}`);
 	    }
 	    else if (previousWork.employed === 'true') {
 	      res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
@@ -984,7 +985,8 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 		if (injuryatwork){
 			answers[claimantType].injuryatwork = injuryatwork;
-			if (answers[claimantType].injuryatwork == 'yes') {
+
+			if (injuryatwork == 'yes') {
 				res.redirect(`${appRoot}/questions/illness/industrial-injuries-disablement-benefit?${claimantType}`);
 			} else {
 				res.redirect(`${appRoot}/questions/illness/will-this-prevent-permanently?${claimantType}`);
@@ -996,13 +998,13 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 	});
 
 	router.all(`${appRoot}/questions/illness/will-this-prevent-permanently`, function (req, res) {
-		var preventpermanantly = req.body.preventpermanantly;
+		var preventpermanently = req.body.preventpermanently;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		if (preventpermanantly){
-			answers[claimantType].preventpermanantly = preventpermanantly;
-			if (answers[claimantType].preventpermanantly == 'yes') {
+		if (preventpermanently){
+			answers[claimantType].preventpermanently = preventpermanently;
+			if (preventpermanently == 'yes') {
 				res.redirect(`${appRoot}/questions/illness/industrial-injuries-disablement-benefit?${claimantType}`);
 			} else {
 				res.send('!! TODO - To be routed to temp ill route - see Andrew');
@@ -1010,7 +1012,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 			}
 		}
 		else {
-			res.render(`${appRootRel}/questions/illness/injury-at-work`);
+			res.render(`${appRootRel}/questions/illness/will-this-prevent-permanently`);
 		}
 	});
 
@@ -1018,9 +1020,11 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		var ijbbenefit = req.body.ijbbenefit;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
-
+console.log("in here");
 		if (ijbbenefit){
 			answers[claimantType].ijbbenefit = ijbbenefit;
+			 console.log(`ijbbenefit is: ${ijbbenefit}`);
+			 console.log(`answers[claimantType].ijbbenefit is: ${answers[claimantType].ijbbenefit}`);
 			res.redirect(`${appRoot}/questions/when-did-employment-end?${claimantType}`);
 		}
 		else {
@@ -1035,15 +1039,18 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 		if (employmentEnd){
 			answers[claimantType].employmentEnd = employmentEnd;
-			if(employmentEnd == '1week'){
+
+			console.log(`employmentEnd is ${employmentEnd} __ and answers[claimantType].employmentEnd is ${answers[claimantType].employmentEnd}`);
+			if(employmentEnd == '1 week ago'){
 				res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
 			}
 			else {
 				res.redirect(`${appRoot}/questions/looking-for-work?${claimantType}`);
+				//  ADB - TODO this is the bit you're working on!!!!!
 			}
 		}
 		else {
-			res.render(`${appRootRel}/questions/illness/industrial-injuries-disablement-benefit`);
+			res.render(`${appRootRel}/questions/when-did-employment-end`);
 		}
 	});
 
@@ -1067,7 +1074,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		}
 	});
 
-	outer.all(`${appRoot}/questions/illness/when-did-they-arrive`, function (req, res) {
+	router.all(`${appRoot}/questions/illness/when-did-they-arrive`, function (req, res) {
 		var arrivalDay = req.body.ukDay;
 		var arrivalMonth = req.body.ukMonth;
 		var arrivalYear = req.body.ukYear;
@@ -1102,24 +1109,133 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 			}
 		}
 		else {
-			res.render(`${appRootRel}/questions/illness/industrial-injuries-disablement-benefit`);
+			res.render(`${appRootRel}/questions/looking-for-work`);
 		}
 	});
 
-router.all(`${appRoot}/questions/illness/claim-uc-sooner`, function (req, res) {
-	var whyDidntClaimUcSooner = req.body.whyDidntClaimUcSooner;
-	var answers = req.session[config.slug].answers;
-	var claimantType = res.locals.currentApp.claimantType;
+	router.all(`${appRoot}/questions/illness/claim-uc-sooner`, function (req, res) {
+		var whyDidntClaimUcSooner = req.body.whyDidntClaimUcSooner;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
 
-	if (whyDidntClaimUcSooner){
-		answers[claimantType].whyDidntClaimUcSooner = whyDidntClaimUcSooner;
-		res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
-	}
-	else {
-		res.render(`${appRootRel}/questions/illness/claim-uc-sooner`);
-	}
-});
-  // ################ END PYCA-613 Changes ##############################
+		if (whyDidntClaimUcSooner){
+			answers[claimantType].whyDidntClaimUcSooner = whyDidntClaimUcSooner;
+			res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/claim-uc-sooner`);
+		}
+	});
+
+  // ################ PYCA-631 Prev Self Employed Changes ##############################
+	router.all(`${appRoot}/questions/previously-self-employed/when-did-self-employment-start`, function (req, res) {
+		var selfEmploymentStart = req.body.selfEmploymentStart;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (selfEmploymentStart){
+			answers[claimantType].selfEmploymentStart = selfEmploymentStart;
+			res.redirect(`${appRoot}/questions/previously-self-employed/when-did-self-employment-end?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/previously-self-employed/when-did-self-employment-start`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/previously-self-employed/when-did-self-employment-end`, function (req, res) {
+		var prevSelfEmploymentEnd = req.body.prevSelfEmploymentEnd;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (prevSelfEmploymentEnd){
+			answers[claimantType].prevSelfEmploymentEnd = prevSelfEmploymentEnd;
+			res.redirect(`${appRoot}/questions/previously-self-employed/self-employed-hours-worked?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/previously-self-employed/when-did-self-employment-end`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/previously-self-employed/self-employed-hours-worked`, function (req, res) {
+		var prevSelfEmploymentEnd = req.body.prevSelfEmploymentEnd;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (prevSelfEmploymentEnd){
+			answers[claimantType].prevSelfEmploymentEnd = prevSelfEmploymentEnd;
+			res.redirect(`${appRoot}/questions/previously-self-employed/monthly-average-earnings?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/previously-self-employed/self-employed-hours-worked`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/previously-self-employed/monthly-average-earnings`, function (req, res) {
+		var prevMonthlyAverageEarnings = req.body.prevMonthlyAverageEarnings;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (prevMonthlyAverageEarnings){
+			answers[claimantType].prevMonthlyAverageEarnings = prevMonthlyAverageEarnings;
+			res.redirect(`${appRoot}/questions/previously-self-employed/why-did-self-employment-end?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/previously-self-employed/monthly-average-earnings`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/previously-self-employed/why-did-self-employment-end`, function (req, res) {
+		var reasonSelfEmploymentEnded = req.body.reasonSelfEmploymentEnded;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (reasonSelfEmploymentEnded){
+			answers[claimantType].reasonSelfEmploymentEnded = reasonSelfEmploymentEnded;
+			if(reasonSelfEmploymentEnded == 'illness'){
+				res.redirect(`${appRoot}/questions/previously-self-employed/fitnote?${claimantType}`);
+			}
+			else {
+				res.send('TODO sending them down the partner route')
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/previously-self-employed/why-did-self-employment-end`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/previously-self-employed/fitnote`, function (req, res) {
+		var prevSelfEmployedFitnote = req.body.prevSelfEmployedFitnote;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (prevSelfEmployedFitnote){
+			answers[claimantType].prevSelfEmployedFitnote = prevSelfEmployedFitnote;
+			if(reasonSelfEmploymentEnded == 'yes'){
+				res.redirect(`${appRoot}/questions/previously-self-employed/when-did-they-arrive?${claimantType}`);
+			}
+			else {
+				res.send('TODO need to send them down the partner route')
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/previously-self-employed/fitnote`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/previously-self-employed/when-did-they-arrive`, function (req, res) {
+		var prevSelfEmployedArrivalInUkYear = req.body.prevSelfEmployedArrivalInUkYear;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (prevSelfEmployedArrivalInUkYear) {
+			answers[claimantType].prevSelfEmployedArrivalInUkYear = prevSelfEmployedArrivalInUkYear;
+			res.send('TODO - This takes you to an outcome page asking for evidence...')
+		}
+		else {
+			res.render(`${appRootRel}/questions/previously-self-employed/when-did-they-arrive`);
+		}
+	});
+  // ################ END PYCA-631 Changes ##############################
 
   return router
 
