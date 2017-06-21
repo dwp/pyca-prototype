@@ -88,12 +88,20 @@ module.exports = (router, config) => {
 	    status: 'Married NonEEA with no marriage certificate on the day of the initial interview'
 	  },
 		selfEmployedWithoutEvidence : {
-					id: 'END017',
-					status: 'Self Employed person - without their evidence with them'
+			id: 'END017',
+			status: 'Self Employed person - without their evidence with them'
 		},
     selfEmployedWithEvidence : {
       id: 'END018',
       status: 'Self Employed person - save their information'
+		},
+    eeaSickWithEvidence : {
+      id: 'END020',
+      status: 'EEA Sick, previously employed'
+    },
+    eeaSickWithoutEvidence : {
+      id: 'END024',
+      status: 'EEA Sick, previously employed - Further Evidence Required'
     }
 	}
 
@@ -1052,45 +1060,42 @@ console.log("in here");
 			res.render(`${appRootRel}/questions/when-did-employment-end`);
 		}
 	});
+	//
+	// router.all(`${appRoot}/questions/illness/medical-certificates`, function (req, res) {
+	// 	var medCerts = req.body.medCerts;
+	// 	var answers = req.session[config.slug].answers;
+	// 	var claimantType = res.locals.currentApp.claimantType;
+	//
+	// 	if (medCerts){
+	// 		answers[claimantType].medCerts = medCerts;
+	// 		if(medCerts == 'Yes'){
+	// 			res.redirect(`${appRoot}/questions/illness/when-did-they-arrive?${claimantType}`);
+	// 		}
+	// 		else {
+	// 			res.send('!! TODO - To be routed to partner flow - see Andrew');
+	// 			// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+	// 		}
+	// 	}
+	// 	else {
+	// 		res.render(`${appRootRel}/questions/illness/medical-certificates`);
+	// 	}
+	// });
 
-	router.all(`${appRoot}/questions/medical-certificates`, function (req, res) {
-		var medCerts = req.body.medCerts;
-		var answers = req.session[config.slug].answers;
-		var claimantType = res.locals.currentApp.claimantType;
-
-		if (medCerts){
-			answers[claimantType].medCerts = medCerts;
-			if(medCerts == 'yes'){
-				res.redirect(`${appRoot}/questions/illness/when-did-they-arrive?${claimantType}`);
-			}
-			else {
-				res.send('!! TODO - To be routed to partner flow - see Andrew');
-				// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
-			}
-		}
-		else {
-			res.render(`${appRootRel}/questions/illness/when-did-they-arrive`);
-		}
-	});
-
-	router.all(`${appRoot}/questions/illness/when-did-they-arrive`, function (req, res) {
-		var arrivalDay = req.body.ukDay;
-		var arrivalMonth = req.body.ukMonth;
-		var arrivalYear = req.body.ukYear;
-
-		var answers = req.session[config.slug].answers;
-		var claimantType = res.locals.currentApp.claimantType;
-
-		if ((taxReturnUkDay && taxReturnUkMonth && taxReturnUkYear) || taxReturn) {
-			answers[claimantType].ukDay = arrivalDay;
-			answers[claimantType].ukMonth = arrivalMonth;
-			answers[claimantType].ukYear = arrivalYear;
-			res.send('TODO - This takes you to an outcome page asking for evidence...')
-		}
-		else {
-			res.render(`${appRootRel}/questions/illness/when-did-they-arrive`);
-		}
-	});
+	// router.all(`${appRoot}/questions/illness/when-did-they-arrive`, function (req, res) {
+	// 	var lengthOfTimeInUK = req.body.lengthOfTimeInUK;
+	// 	console.log('ADB TODO awesome');
+	//
+	// 	var answers = req.session[config.slug].answers;
+	// 	var claimantType = res.locals.currentApp.claimantType;
+	//
+	// 	if (lengthOfTimeInUK) {
+	// 		answers[claimantType].lengthOfTimeInUK = lengthOfTimeInUK;
+	// 		res.send('TODO - This takes you to an outcome page asking for evidence...')
+	// 	}
+	// 	else {
+	// 		res.render(`${appRootRel}/questions/illness/when-did-they-arrive`);
+	// 	}
+	// });
 
 
 	router.all(`${appRoot}/questions/looking-for-work`, function (req, res) {
@@ -1133,14 +1138,46 @@ console.log("in here");
 
 		if (medCerts){
 			answers[claimantType].medCerts = medCerts;
-			if (medCerts == 'yes'){
-			res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+			if (medCerts == 'Yes'){
+			res.redirect(`${appRoot}/questions/illness/when-did-they-arrive?${claimantType}`);
 		} else {
 			res.send('TODO - partner flow');
 		}
 		}
 		else {
 			res.render(`${appRootRel}/questions/illness/medical-certificates`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/illness/when-did-they-arrive`, function (req, res) {
+		var lengthOfTimeInUK = req.body.lengthOfTimeInUK;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (lengthOfTimeInUK){
+			answers[claimantType].lengthOfTimeInUK = lengthOfTimeInUK;
+			res.redirect(`${appRoot}/questions/evidence-illness?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/when-did-they-arrive`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/evidence-illness`, function (req, res) {
+		var evidenceToday = req.body.evidenceToday;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (evidenceToday){
+			answers[claimantType].evidenceToday = evidenceToday;
+			if (evidenceToday == 'yes'){
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaSickWithEvidence.id}?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaSickWithoutEvidence.id}?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/evidence-illness`);
 		}
 	});
 
