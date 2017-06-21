@@ -1,10 +1,12 @@
 {% set page = {
-	title: "Tax Return"
+	title: "Industrial Injuries Disablement Benefit"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
 {% block main_content %}
+
+  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
@@ -15,29 +17,34 @@
           Have they claimed Industrial Injuries Disablement Benefit?
         </h1>
 
-		 <!-- <form> -->
-		  <div class="form-group">
-		    <fieldset>
-		      <div class="multiple-choice" data-target="ijb-benefit">
-		        <input id="ijbbenefit" type="radio" name="ijbbenefit" value="Yes">
-		        <label for="ijbbenefit">Yes</label>
-		      </div>
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Have they claimed Industrial Injuries Disablement Benefit?</span>
+            </legend>
 
-		      <div class="multiple-choice" data-target="ijbbenefit">
-		        <input id="ijbbenefit" type="radio" name="ijbbenefit" value="No">
-		        <label for="ijbbenefit">No</label>
-		      </div>
-		    </fieldset>
-		  </div>
-		<!-- </form> -->
+						{{
+							form.radio({
+								name: 'ijbbenefit',
+								label: "Yes"
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'ijbbenefit',
+								label: "No"
+							})
+						}}
+
+          </fieldset>
+        </div>
 
         <div class="form-group">
           <button type="submit" class="button">Continue</button>
         </div>
 
       </form>
-
     </div>
   </div>
-
 {% endblock %}

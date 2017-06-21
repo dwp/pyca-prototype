@@ -12,18 +12,18 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-					Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?
+					Why aren't they working now?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true">
             <legend>
-              <span class="visuallyhidden">Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?</span>
+              <span class="visuallyhidden">Why aren't they working now?</span>
             </legend>
 
 						{{
 							form.radio({
-								name: 'dontWorkReason',
+								name: 'whynotwork',
 								label: "They were made redundant recently",
 								value: 'redundant'
 							})
@@ -31,15 +31,15 @@
 
 						{{
 							form.radio({
-								name: 'dontWorkReason',
-								label: "They stopped working recently due to an illness",
-								value: 'sick'
+								name: 'whynotwork',
+								label: "Illness",
+								value: 'illness'
 							})
 						}}
 
 						{{
 							form.radio({
-								name: 'dontWorkReason',
+								name: 'whynotwork',
 								label: "Vocational Training",
 								value: 'vocationaltraining'
 							})
@@ -47,15 +47,15 @@
 
 						{{
 							form.radio({
-								name: 'dontWorkReason',
-								label: "They had a child recently",
+								name: 'whynotwork',
+								label: "Child Birth",
 								value: 'childbirth'
 							})
 						}}
 
 						{{
 							form.radio({
-								name: 'dontWorkReason',
+								name: 'whynotwork',
 								label: "Other reason",
 								value: 'other'
 							})

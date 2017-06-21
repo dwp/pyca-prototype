@@ -1,5 +1,5 @@
 {% set page = {
-	title: "Prove you can apply"
+	title: "Employee status &ndash; self employed"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -12,37 +12,29 @@
 		<form method="post" class="form">
 
 			<h1 class="heading-large">
-				How many hours do they study per week?
+				Are they registered with HMRC?
 			</h1>
 
 			<div class="form-group">
 				<fieldset role="radiogroup" aria-required="true">
 
 					<legend>
-						<span class="visuallyhidden">How many hours do they study per week?</span>
+						<span class="visuallyhidden">Are they registered with HMRC?</span>
 					</legend>
 
 					{{
 						form.radio({
-							name: 'studyhours',
-							label: "1-5",
-                            value: "1-5"
+							name: 'hmrcRegistered',
+							label: "Yes",
+                            value: "yes"
 						})
 					}}
 
 					{{
 						form.radio({
-							name: 'studyhours',
-							label: "6-10",
-							value: '6-10'
-						})
-					}}
-
-                    {{
-						form.radio({
-							name: 'studyhours',
-							label: "More than 10",
-                            value: "More than 10"
+							name: 'hmrcRegistered',
+							label: "No",
+							value: 'no'
 						})
 					}}
 

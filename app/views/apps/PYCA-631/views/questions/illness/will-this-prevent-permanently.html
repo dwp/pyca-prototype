@@ -1,10 +1,12 @@
 {% set page = {
-	title: "Tax Return"
+	title: "Will this permanently prevent work"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
 {% block main_content %}
+
+  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
 
   <div class="grid-row">
     <div class="column-two-thirds">
@@ -15,29 +17,34 @@
           Will this incapacity prevent the claimant from working permanantly?
         </h1>
 
-		 <!-- <form> -->
-		  <div class="form-group">
-		    <fieldset>
-		      <div class="multiple-choice" data-target="prevent-permanantly">
-		        <input id="preventpermanantly" type="radio" name="preventpermanantly" value="Yes">
-		        <label for="preventpermanantly">Yes</label>
-		      </div>
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Will this incapacity prevent the claimant from working permanantly?/span>
+            </legend>
 
-		      <div class="multiple-choice" data-target="preventpermanantly">
-		        <input id="preventpermanantly" type="radio" name="preventpermanantly" value="No">
-		        <label for="preventpermanantly">No</label>
-		      </div>
-		    </fieldset>
-		  </div>
-		<!-- </form> -->
+						{{
+							form.radio({
+								name: 'preventpermanently',
+								label: "Yes"
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'preventpermanently',
+								label: "No"
+							})
+						}}
+
+          </fieldset>
+        </div>
 
         <div class="form-group">
           <button type="submit" class="button">Continue</button>
         </div>
 
       </form>
-
     </div>
   </div>
-
 {% endblock %}

@@ -1,5 +1,5 @@
 {% set page = {
-	title: "Employee status &ndash; self employed"
+	title: "Monthly average earnings"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -12,29 +12,29 @@
 		<form method="post" class="form">
 
 			<h1 class="heading-large">
-				Are they registered to pay National Insurance Contributions?
+				What were their monthly average earnings?
 			</h1>
 
 			<div class="form-group">
 				<fieldset role="radiogroup" aria-required="true">
 
 					<legend>
-						<span class="visuallyhidden">Are they registered to pay National Insurance Contributions?</span>
+						<span class="visuallyhidden">What were their monthly average earnings?</span>
 					</legend>
 
 					{{
 						form.radio({
-							name: 'niContributions',
-							label: "Yes",
-                            value: "yes"
+							name: 'prevMonthlyAverageEarnings',
+							label: "£0 - £600 per month",
+                            value: "£0 - £600 per month"
 						})
 					}}
 
 					{{
 						form.radio({
-							name: 'niContributions',
-							label: "No",
-							value: 'no'
+							name: 'prevMonthlyAverageEarnings',
+							label: "Over £600 per month",
+							value: 'Over £600 per month'
 						})
 					}}
 

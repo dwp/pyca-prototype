@@ -1,5 +1,5 @@
 {% set page = {
-	title: "Did you arrive to look for work"
+	title: "Tax Return"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -12,20 +12,20 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-				Did the claimant come to the UK to look for work?
+				Has the course ended?
 	        </h1>
 
 		 <!-- <form> -->
 		  <div class="form-group">
 		    <fieldset>
-		      <div class="multiple-choice" data-target="look-for-work">
-		        <input id="lookforwork" type="radio" name="lookforwork" value="Yes">
-		        <label for="lookforwork">Yes</label>
+		      <div class="multiple-choice" data-target="course-ended">
+		        <input id="courseended" type="radio" name="courseended" value="Yes">
+		        <label for="courseended">Yes</label>
 		      </div>
 
-		      <div class="multiple-choice" data-target="lookforwork">
-		        <input id="lookforwork" type="radio" name="lookforwork" value="No">
-		        <label for="lookforwork">No</label>
+		      <div class="multiple-choice" data-target="course-ended">
+		        <input id="courseended" type="radio" name="courseended" value="No">
+		        <label for="courseended">No</label>
 		      </div>
 		    </fieldset>
 		  </div>

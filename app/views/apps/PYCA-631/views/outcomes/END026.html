@@ -1,18 +1,17 @@
 {% set page = {
-	title: "END016"
+	title: "END021"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
 {% block main_content %}
 
-  <div class="grid-row">
+<!-- <<<<< FAST TRACK PREVIOUSLY SELF EMPLOYED >>>>
+ -->
+ <div class="grid-row">
     <div class="column-two-thirds">
 
-    {% include currentApp.filePaths.includesDir + "header.html" %}
-
-<!-- <<< FAST TRACK ILLNESS >>>
- -->
+         {% include currentApp.filePaths.includesDir + "header.html" %}
 
           <h2 class="heading-medium">Next steps</h2>
 
@@ -29,6 +28,7 @@
           </div>
 
 
+
                <table>
                   <thead>
                     <tr>
@@ -37,65 +37,50 @@
                     </tr>
                   </thead>
               </table>
+<table>
 
-                  <!-- <table>
                   <thead>
                     <tr>
-                      <td class="multiline" scope="col"></td>
-                      <td class="numeric" scope="col"></td>
-                    </tr>
-                  </thead> -->
-                <table>
-                  <thead>
-                    <tr>
-                      <th class="multiline" scope="col">Question summary
-                      </th>
-
-                      <th class="numeric multiline" scope="col">Answer
-                      </th>
+                      <th scope="col">Question summary</th>
+                      <th class="numeric" scope="col">Answer</th>
                     </tr>
                   </thead>
 
+
                   <tbody>
                     <tr>
-                      <td class="row multiline">Accident at work
-                      </td>
-                      <td class="numeric">Yes</td>
+                      <td class="row">Employer letter</th>
+                      <td class="numeric">12.3.2016</td>
+                    </tr>
+
+                      <tr>
+                      <td class="row">End date of employment</th>
+                      <td class="numeric">12.3.2016</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Permanent incapacity</th>
+                      <td class="row">Currently pregnant</th>
                       <td class="numeric">X hours</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Indutrial Injuries Disablement Benefit</td>
+                      <td class="row">Back to work intention</th>
                       <td class="numeric">Less than £600</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Employer letter for employment end date</td>
+                      <td class="row">Arrival in UK</th>
                       <td class="numeric">Yes</td>
                     </tr>
 
-                     <tr>
-                      <td class="row">Medical certificates from first day</td>
-                      <td class="numeric">Yes</td>
-                    </tr>
-
-                     <tr>
-                      <td class="row">Arrived in UK</td>
-                      <td class="numeric">12.3.2016</td>
-                    </tr>
 
 
                     </table>
+
                   </tbody>
                 </table>
-                          
 
     </div>
-
-	</div>
+  </div>
 
 {% endblock %}
