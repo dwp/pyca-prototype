@@ -1,18 +1,17 @@
 {% set page = {
-	title: "END019"
+	title: "END021"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
 
-<!-- <<< FAST TRACK JOB SEEKER/STUDENT >>>
- -->
-
 {% block main_content %}
 
-  <div class="grid-row">
+<!-- <<<<< FAST TRACK PREVIOUSLY SELF EMPLOYED >>>>
+ -->
+ <div class="grid-row">
     <div class="column-two-thirds">
 
-    {% include currentApp.filePaths.includesDir + "header.html" %}
+       {% include currentApp.filePaths.includesDir + "header.html" %}
 
           <h2 class="heading-medium">Next steps</h2>
 
@@ -28,16 +27,6 @@
             <a href="" class="button">Save page as PDF</a>
           </div>
 
-
-               <table>
-                  <thead>
-                    <tr>
-                      <td class="multiline"="col"></td>
-                      <th class="numeric"scope="col"></th>
-                    </tr>
-                  </thead>
-              </table>
-
                   <!-- <table>
                   <thead>
                     <tr>
@@ -48,69 +37,83 @@
                 <table>
                   <thead>
                     <tr>
-                      <th class="multiline" scope="col">Question summary
-                      </th>
+                      <td class="multiline"="col"></td>
+                      <th class="numeric"scope="col"></th>
+                    </tr>
+                  </thead>
+              </table>
+<table>
 
-                      <th class="numeric multiline" scope="col">Answer
-                      </th>
+                  <thead>
+                    <tr>
+                      <th scope="col">Question summary</th>
+                      <th class="numeric" scope="col">Answer</th>
                     </tr>
                   </thead>
 
+
                   <tbody>
                     <tr>
-                      <td class="row multiline">UK looking for work
-                      </td>
-                      <td class="numeric">Yes</td>
+                      <td class="row">Start date of self employment</th>
+                      <td class="numeric">12.3.2016</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Time looking for work</th>
+                      <td class="row">Hours per week working as self employed</th>
                       <td class="numeric">X hours</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Student</td>
+                      <td class="row">Monthly average earnings</th>
                       <td class="numeric">Less than £600</td>
                     </tr>
 
                     <tr>
-                      <td class="row">CSI Policy</td>
+                      <td class="row">Salary to self</th>
                       <td class="numeric">Yes</td>
                     </tr>
 
                      <tr>
-                      <td class="row">CSI policy start</td>
+                      <td class="row">Registered to pay NIC</th>
                       <td class="numeric">Yes</td>
                     </tr>
 
                      <tr>
-                      <td class="row">Course start date</td>
+                      <td class="row">Last submitted tax return</th>
                       <td class="numeric">12.3.2016</td>
                     </tr>
 
                      <tr>
-                      <td class="row">Course end date</td>
+                      <td class="row">Accident/sick/unemployment pay</th>
                       <td class="numeric">Yes</td>
                     </tr>
 
                       <tr>
-                      <td class="row">Study hours</th>
+                      <td class="row">Employees</th>
                       <td class="numeric">Yes</td>
                     </tr>
 
                       <tr>
-                      <td class="row">Study finances</th>
+                      <td class="row">Description of service</th>
                       <td class="numeric">Joinery company</td>
                     </tr>
 
+                      <tr>
+                      <td class="row">Profit made</th>
+                      <td class="numeric">Yes</td>
+                    </tr>
 
-                    </table>
+                      <tr>
+                      <td class="row">Any other periods of self employment</th>
+                      <td class="numeric">Yes</td>
+                    </tr>
+
+</table>
+
                   </tbody>
                 </table>
 
-
     </div>
-
-	</div>
+  </div>
 
 {% endblock %}
