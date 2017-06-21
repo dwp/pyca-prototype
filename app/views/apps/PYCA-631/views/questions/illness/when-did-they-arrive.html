@@ -1,5 +1,5 @@
 {% set page = {
-	title: "UK Arrival"
+	title: "What year did they arrive in the UK"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -12,33 +12,65 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          When did they arrive in the UK?
+					How long have {{ 'their partner' if currentApp.isPartnerFlow else 'they' }} been in the UK?
         </h1>
 
         <div class="form-group">
-          <fieldset>
-            <!-- <legend>
-              <span class="form-hint">For example, 31 3 1980</span>
-            </legend> -->
-            <div class="form-date">
-              <div class="form-group form-group-day">
-                <label class="form-label" for="uk-day">Day</label>
-                <input class="form-control" id="uk-day" name="ukDay" type="number" pattern="[0-9]*" min="0" max="31">
-              </div>
+          <fieldset role="radiogroup" aria-required="true">
+            <legend>
+              <span class="visuallyhidden">How long have {{ 'their partner' if currentApp.isPartnerFlow else 'they' }} been in the UK?</span>
+            </legend>
 
-              <div class="form-group form-group-month">
-                <label class="form-label" for="uk-month">Month</label>
-                <input class="form-control" id="uk-month" name="ukMonth" type="number" pattern="[0-9]*" min="0" max="12">
-              </div>
+						{{
+							form.radio({
+								name: 'lengthOfTimeInUK',
+								label: "Less than 6 months",
+								value: 'Less than 6 months'
+							})
+						}}
 
-              <div class="form-group form-group-year">
-                <label class="form-label" for="uk-year">Year</label>
-                <input class="form-control" id="uk-year" name="ukYear" type="number" pattern="[0-9]*" min="0" max="2017">
-              </div>
-            </div>
+						{{
+							form.radio({
+								name: 'lengthOfTimeInUK',
+								label: "6 to 12 months",
+								value: '6 to 12 months'
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'lengthOfTimeInUK',
+								label: "1 to 2 years"
+							})
+						}}
+
+                        {{
+							form.radio({
+								name: 'lengthOfTimeInUK',
+								label: "2 to 3 years"
+							})
+						}}
+                        {{
+                            form.radio({
+                                name: 'lengthOfTimeInUK',
+                                label: "3 to 4 years"
+                            })
+                        }}
+                        {{
+                            form.radio({
+                                name: 'lengthOfTimeInUK',
+                                label: "4 to 5 years"
+                            })
+                        }}
+                        {{
+                            form.radio({
+                                name: 'lengthOfTimeInUK',
+                                label: "More than 5 years"
+                            })
+                        }}
+
           </fieldset>
         </div>
-
 
         <div class="form-group">
           <button type="submit" class="button">Continue</button>
@@ -49,4 +81,4 @@
     </div>
   </div>
 
-{% endblock %}
+{% endblock %}﻿

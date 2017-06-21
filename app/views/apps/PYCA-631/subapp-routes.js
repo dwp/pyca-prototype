@@ -954,8 +954,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 			switch (dontWorkReason) {
 			  case 'redundant':
-			    // res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
-					res.send('!! TODO - Flowchart says BAU - further information required about what the next step should be.');
+					res.redirect(`${appRoot}/outcomes/${outcomes.redundantEEA.id}?${claimantType}`);
 			    break;
 			  case 'sick':
 			    res.redirect(`${appRoot}/questions/illness/injury-at-work?${claimantType}`);
@@ -1124,6 +1123,24 @@ console.log("in here");
 		}
 		else {
 			res.render(`${appRootRel}/questions/illness/claim-uc-sooner`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/illness/medical-certificates`, function (req, res) {
+		var medCerts = req.body.medCerts;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (medCerts){
+			answers[claimantType].medCerts = medCerts;
+			if (medCerts == 'yes'){
+			res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+		} else {
+			res.send('TODO - partner flow');
+		}
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/medical-certificates`);
 		}
 	});
 
