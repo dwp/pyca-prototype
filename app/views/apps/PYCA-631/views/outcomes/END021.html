@@ -50,32 +50,32 @@
                   <tbody>
                     <tr>
                       <td class="row">Start date of self employment</th>
-                      <td class="numeric">12.3.2016</td>
+                      <td class="numeric">{{ data['prevSelfEmploymentStart']}}</td>
                     </tr>
 
                       <tr>
                       <td class="row">End date of self employment</th>
-                      <td class="numeric">12.3.2016</td>
+                      <td class="numeric">{{ data['prevSelfEmploymentEnd']}}</td>
                     </tr>
 
                     <tr>
                       <td class="row">Hours per week working as self employed</th>
-                      <td class="numeric">X hours</td>
+                      <td class="numeric">{{ data['prevSelfEmployedHours']}}</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Average weekly earnings</th>
-                      <td class="numeric">Less than £600</td>
+                      <td class="row">Average monthly earnings</th>
+                      <td class="numeric">{{ data['prevMonthlyAverageEarnings']}}</td>
                     </tr>
 
                     <tr>
                       <td class="row">Reason for ending</th>
-                      <td class="numeric">Yes</td>
+                      <td class="numeric">{{ data['reasonPrevSelfEmploymentEnded']}}</td>
                     </tr>
 
                      <tr>
                       <td class="row">Fitnote</th>
-                      <td class="numeric">Yes</td>
+                      <td class="numeric">{{ data['prevSelfEmployedFitnote']}}</td>
                     </tr>
 
 
