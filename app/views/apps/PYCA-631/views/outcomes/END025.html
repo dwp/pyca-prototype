@@ -1,5 +1,5 @@
 {% set page = {
-	title: "END021"
+	title: "END025"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -34,7 +34,8 @@
                       <td class="numeric" scope="col"></td>
                     </tr>
                   </thead> -->
-                <table>
+
+               <table>
                   <thead>
                     <tr>
                       <td class="multiline"="col"></td>
@@ -55,60 +56,39 @@
                   <tbody>
                     <tr>
                       <td class="row">Start date of self employment</th>
-                      <td class="numeric">12.3.2016</td>
+                      <td class="numeric">{{ data['prevSelfEmploymentStart']}}</td>
+                    </tr>
+
+                      <tr>
+                      <td class="row">End date of self employment</th>
+                      <td class="numeric">{{ data['prevSelfEmploymentEnd']}}</td>
                     </tr>
 
                     <tr>
                       <td class="row">Hours per week working as self employed</th>
-                      <td class="numeric">X hours</td>
+                      <td class="numeric">{{ data['prevSelfEmployedHours']}}</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Monthly average earnings</th>
-                      <td class="numeric">Less than £600</td>
+                      <td class="row">Average monthly earnings</th>
+                      <td class="numeric">{{ data['prevMonthlyAverageEarnings']}}</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Salary to self</th>
-                      <td class="numeric">Yes</td>
+                      <td class="row">Reason for ending</th>
+                      <td class="numeric">{{ data['reasonPrevSelfEmploymentEnded']}}</td>
                     </tr>
 
                      <tr>
-                      <td class="row">Registered to pay NIC</th>
-                      <td class="numeric">Yes</td>
+                      <td class="row">Fitnote</th>
+                      <td class="numeric">{{ data['prevSelfEmployedFitnote']}}</td>
                     </tr>
 
-                     <tr>
-                      <td class="row">Last submitted tax return</th>
-                      <td class="numeric">12.3.2016</td>
-                    </tr>
 
-                     <tr>
-                      <td class="row">Accident/sick/unemployment pay</th>
-                      <td class="numeric">Yes</td>
-                    </tr>
+                    </table>
 
-                      <tr>
-                      <td class="row">Employees</th>
-                      <td class="numeric">Yes</td>
-                    </tr>
-
-                      <tr>
-                      <td class="row">Description of service</th>
-                      <td class="numeric">Joinery company</td>
-                    </tr>
-
-                      <tr>
-                      <td class="row">Profit made</th>
-                      <td class="numeric">Yes</td>
-                    </tr>
-
-                      <tr>
-                      <td class="row">Any other periods of self employment</th>
-                      <td class="numeric">Yes</td>
-                    </tr>
-
-</table>
+                  </tbody>
+                </table>
 
                   </tbody>
                 </table>

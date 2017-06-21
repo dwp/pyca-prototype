@@ -1129,12 +1129,12 @@ console.log("in here");
 
   // ################ PYCA-631 Prev Self Employed Changes ##############################
 	router.all(`${appRoot}/questions/previously-self-employed/when-did-self-employment-start`, function (req, res) {
-		var selfEmploymentStart = req.body.selfEmploymentStart;
+		var prevSelfEmploymentStart = req.body.prevSelfEmploymentStart;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		if (selfEmploymentStart){
-			answers[claimantType].selfEmploymentStart = selfEmploymentStart;
+		if (prevSelfEmploymentStart){
+			answers[claimantType].prevSelfEmploymentStart = prevSelfEmploymentStart;
 			res.redirect(`${appRoot}/questions/previously-self-employed/when-did-self-employment-end?${claimantType}`);
 		}
 		else {
