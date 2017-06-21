@@ -16,7 +16,7 @@
         </h1>
 
         <div class="form-group">
-          <fieldset role="radiogroup" aria-required="true">
+          <fieldset role="radiogroup" aria-required="true" class="inline">
             <legend>
               <span class="visuallyhidden">How long have {{ 'their partner' if currentApp.isPartnerFlow else 'they' }} been in the UK?</span>
             </legend>
@@ -24,50 +24,17 @@
 						{{
 							form.radio({
 								name: 'lengthOfTimeInUK',
-								label: "Less than 6 months",
-								value: 'Less than 6 months'
+								label: "1 to 4 years"
 							})
 						}}
 
 						{{
 							form.radio({
 								name: 'lengthOfTimeInUK',
-								label: "6 to 12 months",
-								value: '6 to 12 months'
+								label: "5 or more years"
 							})
 						}}
 
-						{{
-							form.radio({
-								name: 'lengthOfTimeInUK',
-								label: "1 to 2 years"
-							})
-						}}
-
-                        {{
-							form.radio({
-								name: 'lengthOfTimeInUK',
-								label: "2 to 3 years"
-							})
-						}}
-                        {{
-                            form.radio({
-                                name: 'lengthOfTimeInUK',
-                                label: "3 to 4 years"
-                            })
-                        }}
-                        {{
-                            form.radio({
-                                name: 'lengthOfTimeInUK',
-                                label: "4 to 5 years"
-                            })
-                        }}
-                        {{
-                            form.radio({
-                                name: 'lengthOfTimeInUK',
-                                label: "More than 5 years"
-                            })
-                        }}
 
           </fieldset>
         </div>
