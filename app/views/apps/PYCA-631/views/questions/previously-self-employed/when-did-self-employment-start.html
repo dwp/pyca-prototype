@@ -6,53 +6,62 @@
 
 {% block main_content %}
 
+  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
+
   <div class="grid-row">
     <div class="column-two-thirds">
 
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          When did self-employment start?
+          When did {{ 'the partners' if currentApp.isPartnerFlow else '' }} self employment start?
         </h1>
 
-        <form>
-  <div class="form-group">
-    <fieldset>
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">When did {{ 'the partners' if currentApp.isPartnerFlow else '' }} self employment start?</span>
+            </legend>
 
-     <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
+						{{
+							form.radio({
+								name: 'prevSelfEmploymentStart',
+								label: "Less than 3 months ago"
+							})
+						}}
+						{{
+							form.radio({
+								name: 'prevSelfEmploymentStart',
+								label: "Less than 6 months ago"
+							})
+						}}
+						{{
+							form.radio({
+								name: 'prevSelfEmploymentStart',
+								label: "Less than 1 year ago"
+							})
+						}}
+						{{
+							form.radio({
+								name: 'prevSelfEmploymentStart',
+								label: "Less than 5 years ago"
+							})
+						}}
+						{{
+							form.radio({
+								name: 'prevSelfEmploymentStart',
+								label: "5 or more years ago"
+							})
+						}}
 
-      <div class="multiple-choice" data-target="1week">
-        <input id="1week" type="radio" name="prevSelfEmploymentStart" value="1week">
-        <label for="1week">1 week ago</label>
-      </div>
-
-      <div class="multiple-choice" data-target="1month">
-        <input id="1month" type="radio" name="prevSelfEmploymentStart" value="1month">
-        <label for="1month">1 month ago</label>
-      </div>
-
-      <div class="multiple-choice" data-target="6months">
-        <input id="6months" type="radio" name="prevSelfEmploymentStart" value="6months">
-        <label for="6-9months">6 months ago</label>
-      </div>
-
-      <div class="multiple-choice" data-target="1year">
-        <input id="1year" type="radio" name="prevSelfEmploymentStart" value="1year">
-        <label for="1-4years">1 year ago</label>
-      </div>
-
-
-    </fieldset>
-  </div>
-</form>
+          </fieldset>
+        </div>
 
         <div class="form-group">
           <button type="submit" class="button">Continue</button>
         </div>
 
       </form>
-
     </div>
   </div>
-
 {% endblock %}

@@ -102,6 +102,14 @@ module.exports = (router, config) => {
     eeaSickWithoutEvidence : {
       id: 'END024',
       status: 'EEA Sick, previously employed - Further Evidence Required'
+    },
+    eeaPrevSelfEmployedWithEvidence : {
+      id: 'END025',
+      status: 'EEA Sick, previously SELF employed'
+    },
+    eeaPrevSelfEmployedWithoutEvidence : {
+      id: 'END021',
+      status: 'EEA Sick, previously SELF employed - Further Evidence Required'
     }
 	}
 
@@ -1211,12 +1219,12 @@ console.log("in here");
 	});
 
 	router.all(`${appRoot}/questions/previously-self-employed/self-employed-hours-worked`, function (req, res) {
-		var prevSelfEmploymentEnd = req.body.prevSelfEmploymentEnd;
+		var prevSelfEmployedHours = req.body.prevSelfEmployedHours;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		if (prevSelfEmploymentEnd){
-			answers[claimantType].prevSelfEmploymentEnd = prevSelfEmploymentEnd;
+		if (prevSelfEmployedHours){
+			answers[claimantType].prevSelfEmployedHours = prevSelfEmployedHours;
 			res.redirect(`${appRoot}/questions/previously-self-employed/monthly-average-earnings?${claimantType}`);
 		}
 		else {
@@ -1239,13 +1247,13 @@ console.log("in here");
 	});
 
 	router.all(`${appRoot}/questions/previously-self-employed/why-did-self-employment-end`, function (req, res) {
-		var reasonSelfEmploymentEnded = req.body.reasonSelfEmploymentEnded;
+		var reasonPrevSelfEmploymentEnded = req.body.reasonPrevSelfEmploymentEnded;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		if (reasonSelfEmploymentEnded){
-			answers[claimantType].reasonSelfEmploymentEnded = reasonSelfEmploymentEnded;
-			if(reasonSelfEmploymentEnded == 'illness'){
+		if (reasonPrevSelfEmploymentEnded){
+			answers[claimantType].reasonPrevSelfEmploymentEnded = reasonPrevSelfEmploymentEnded;
+			if(reasonPrevSelfEmploymentEnded == 'illness'){
 				res.redirect(`${appRoot}/questions/previously-self-employed/fitnote?${claimantType}`);
 			}
 			else {
@@ -1264,7 +1272,7 @@ console.log("in here");
 
 		if (prevSelfEmployedFitnote){
 			answers[claimantType].prevSelfEmployedFitnote = prevSelfEmployedFitnote;
-			if(reasonSelfEmploymentEnded == 'yes'){
+			if(prevSelfEmployedFitnote == 'yes'){
 				res.redirect(`${appRoot}/questions/previously-self-employed/when-did-they-arrive?${claimantType}`);
 			}
 			else {
@@ -1283,10 +1291,31 @@ console.log("in here");
 
 		if (prevSelfEmployedArrivalInUkYear) {
 			answers[claimantType].prevSelfEmployedArrivalInUkYear = prevSelfEmployedArrivalInUkYear;
-			res.send('TODO - This takes you to an outcome page asking for evidence...')
+			res.redirect(`${appRoot}/questions/previously-self-employed/evidence-prev-selfemp?${claimantType}`);
 		}
 		else {
 			res.render(`${appRootRel}/questions/previously-self-employed/when-did-they-arrive`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/previously-self-employed/evidence-prev-selfemp`, function (req, res) {
+		var evidenceToday = req.body.evidenceToday;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (evidenceToday) {
+			answers[claimantType].evidenceToday = evidenceToday;
+			console.log(`evidenceToday is: ${evidenceToday}`);
+			console.log(`answers[claimantType].evidenceToday is: ${answers[claimantType].evidenceToday}`);
+
+			if (evidenceToday == 'yes'){
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaPrevSelfEmployedWithEvidence.id}?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaPrevSelfEmployedWithoutEvidence.id}?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/previously-self-employed/evidence-prev-selfemp`);
 		}
 	});
   // ################ END PYCA-631 Changes ##############################

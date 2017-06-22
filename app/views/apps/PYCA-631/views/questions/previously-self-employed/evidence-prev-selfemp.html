@@ -1,9 +1,9 @@
-{% set page = { title: "Evidence Todayu" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+{% set page = { title: "Evidence Today" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
 
 <div class="grid-row">
   <div class="column-two-thirds">
 
-    <form method="post" class="form">
+    <!-- <form method="post" class="form"> -->
 
       <h1 class="heading-large">
           Can the claimant provide these documents today?
@@ -11,7 +11,7 @@
 
       <strong class="bold-small">All of the following options:</strong>
 
-    <ul class="list list-bullet">
+      <ul class="list list-bullet">
         <li>Passport or ID Card</li>
         <li>ID Card</li>
         <li>Fitnote</li>
@@ -22,7 +22,7 @@
 
       <ul class="list list-bullet">
 
-     <li>3 months of bank statements</li>
+        <li>3 months of bank statements</li>
         <li>3 months of accounts</li>
         <li>3 months of receipts or services</li>
         <li>3 months of record of income and expenses</li>
@@ -41,19 +41,7 @@
                   <span class="visuallyhidden">{Can the claimant provide these documents today?</span>
                 </legend>
 
-    						{{
-    							form.radio({
-    								name: 'evidenceToday',
-    								label: "Yes"
-    							})
-    						}}
-
-    						{{
-    							form.radio({
-    								name: 'evidenceToday',
-    								label: "No"
-    							})
-    						}}
+                {{ form.radio({ name: 'evidenceToday', label: "Yes" }) }} {{ form.radio({ name: 'evidenceToday', label: "No" }) }}
 
               </fieldset>
             </div>
