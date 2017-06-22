@@ -110,6 +110,14 @@ module.exports = (router, config) => {
     eeaPrevSelfEmployedWithoutEvidence : {
       id: 'END021',
       status: 'EEA Sick, previously SELF employed - Further Evidence Required'
+    },
+    eeaLooking4WorkWithEvidence : {
+      id: 'END019',
+      status: 'EEA not working or previously employed, arrived looking for work'
+    },
+    eeaLooking4WorkWithoutEvidence : {
+      id: 'END023',
+      status: 'EEA not working or previously employed, arrived looking for work - requires further evidence'
     }
 	}
 
@@ -937,6 +945,9 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 	  if (previousWork) {
 	    answers[claimantType].previousWork = previousWork;
+				console.log(`selfEmployed is ${previousWork.selfEmployed}`);
+				console.log(`employed is ${previousWork.employed}`);
+				console.log(`didnt work is ${previousWork.didntWork}`);
 
 			if (previousWork.selfEmployed === 'true' && previousWork.employed === 'true') {
 				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
@@ -947,9 +958,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 	    else if (previousWork.employed === 'true') {
 	      res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
 	    }
-
-	    // Not working
-	    else if (previousWork.dontWork === 'true') {
+	    else if (previousWork.didntWork === 'true') {
 	      res.redirect(`${appRoot}/questions/job-seeker-student/uk-look-for-work?${claimantType}`);
 	    }
 
@@ -1318,6 +1327,56 @@ console.log("in here");
 			res.render(`${appRootRel}/questions/previously-self-employed/evidence-prev-selfemp`);
 		}
 	});
+
+	// ###############Job Seeker Student ########################################
+	router.all(`${appRoot}/questions/job-seeker-student/uk-look-for-work`, function (req, res) {
+	  var studentLookForWork = req.body.studentLookForWork;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (studentLookForWork) {
+	    answers[claimantType].studentLookForWork = studentLookForWork;
+			if (studentLookForWork == 'yes'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/time-looking-for-work?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/job-seeker-student/uk-student?${claimantType}`);
+			}
+	  } else {
+	    res.render(`${appRootRel}/questions/job-seeker-student/uk-look-for-work`);
+	  }
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/time-looking-for-work`, function (req, res) {
+	  var lookingforwork = req.body.lookingforwork;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (lookingforwork) {
+	    answers[claimantType].lookingforwork = lookingforwork;
+			res.redirect(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student?${claimantType}`);
+	  } else {
+	    res.render(`${appRootRel}/questions/job-seeker-student/time-looking-for-work`);
+	  }
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student`, function (req, res) {
+	  var evidenceToday = req.body.evidenceToday;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (evidenceToday) {
+	    answers[claimantType].evidenceToday = evidenceToday;
+			if (evidenceToday == 'yes'){
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaLooking4WorkWithEvidence.id}?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaLooking4WorkWithoutEvidence.id}?${claimantType}`);
+			}
+	  } else {
+	    res.render(`${appRootRel}/questions/job-seeker-student/evidence-jobseeker-student`);
+	  }
+	});
+	
+
   // ################ END PYCA-631 Changes ##############################
 
   return router
