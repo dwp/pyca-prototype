@@ -1384,11 +1384,7 @@ console.log("in here");
 
 	  if (ukstudent) {
 	    answers[claimantType].ukstudent = ukstudent;
-			if (ukstudent == 'yes'){
-				res.send('TODO')
-			} else {
-				res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy?${claimantType}`);
-			}
+				res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy?${claimantType}`)
 	  } else {
 	    res.render(`${appRootRel}/questions/job-seeker-student/uk-student`);
 	  }
@@ -1401,10 +1397,25 @@ console.log("in here");
 
 		if (studentcsi) {
 			answers[claimantType].studentcsi = studentcsi;
-			if (studentcsi == 'yes'){
-				res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy-start?${claimantType}`);
-			} else {
-				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			// Use this 1 question handler for when the claimant is and is not a student
+
+			if(answers[claimantType].ukstudent == 'yes'){
+				if (studentcsi == 'yes'){
+					// Student with a CSI policy
+					res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy-start?${claimantType}`);
+				} else {
+					// Student withOUT a CSI policy
+					res.redirect(`${appRoot}/questions/job-seeker-student/course-start?${claimantType}`);
+				}
+			}
+			else {
+				if (studentcsi == 'yes'){
+					// Not a student but has a CSI policy
+					res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy-start?${claimantType}`);
+				} else {
+					// Not a student and no CSI policy
+					res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+				}
 			}
 		} else {
 			res.render(`${appRootRel}/questions/job-seeker-student/csi-policy`);
@@ -1418,13 +1429,87 @@ console.log("in here");
 
 		if (studentcsistart) {
 			answers[claimantType].studentcsistart = studentcsistart;
+
+			if(answers[claimantType].ukstudent == 'yes'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/course-start?${claimantType}`);
+			} else {
 				res.redirect(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student?${claimantType}`);
+			}
 				// Use routing for those looking for work.
 		} else {
 			res.render(`${appRootRel}/questions/job-seeker-student/csi-policy-start`);
 		}
 	});
 
+	router.all(`${appRoot}/questions/job-seeker-student/course-start`, function (req, res) {
+		var courseStarted = req.body.courseStarted;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (courseStarted) {
+			answers[claimantType].courseStarted = courseStarted;
+			res.redirect(`${appRoot}/questions/job-seeker-student/has-the-course-ended?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/course-start`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/has-the-course-ended`, function (req, res) {
+		var courseended = req.body.courseended;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (courseended) {
+			answers[claimantType].courseended = courseended;
+			if(courseended == 'yes'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/course-end?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
+			}
+
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/has-the-course-ended`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/study-hours`, function (req, res) {
+		var studyhours = req.body.studyhours;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (studyhours) {
+			answers[claimantType].studyhours = studyhours;
+			res.redirect(`${appRoot}/questions/job-seeker-student/study-finance?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/study-hours`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/study-finance`, function (req, res) {
+		var studyfinance = req.body.studyfinance;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (studyfinance) {
+			answers[claimantType].studyhours = studyfinance;
+			res.redirect(`${appRoot}/questions/job-seeker-student/when-did-they-arrive?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/study-finance`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/when-did-they-arrive`, function (req, res) {
+		var notWorkingArrivalInUkYear = req.body.notWorkingArrivalInUkYear;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (notWorkingArrivalInUkYear) {
+			answers[claimantType].notWorkingArrivalInUkYear = notWorkingArrivalInUkYear;
+			res.redirect(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/when-did-they-arrive`);
+		}
+	});
   // ################ END PYCA-631 Changes ##############################
 
   return router
