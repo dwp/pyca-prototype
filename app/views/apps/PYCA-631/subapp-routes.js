@@ -1328,7 +1328,7 @@ console.log("in here");
 		}
 	});
 
-	// ###############Job Seeker Student ########################################
+	// ####################### Job Seeker ########################################
 	router.all(`${appRoot}/questions/job-seeker-student/uk-look-for-work`, function (req, res) {
 	  var studentLookForWork = req.body.studentLookForWork;
 	  var answers = req.session[config.slug].answers;
@@ -1375,7 +1375,55 @@ console.log("in here");
 	    res.render(`${appRootRel}/questions/job-seeker-student/evidence-jobseeker-student`);
 	  }
 	});
-	
+
+	// ####################### Student ########################################
+	router.all(`${appRoot}/questions/job-seeker-student/uk-student`, function (req, res) {
+	  var ukstudent = req.body.ukstudent;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (ukstudent) {
+	    answers[claimantType].ukstudent = ukstudent;
+			if (ukstudent == 'yes'){
+				res.send('TODO')
+			} else {
+				res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy?${claimantType}`);
+			}
+	  } else {
+	    res.render(`${appRootRel}/questions/job-seeker-student/uk-student`);
+	  }
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/csi-policy`, function (req, res) {
+		var studentcsi = req.body.studentcsi;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (studentcsi) {
+			answers[claimantType].studentcsi = studentcsi;
+			if (studentcsi == 'yes'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy-start?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/csi-policy`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/csi-policy-start`, function (req, res) {
+		var studentcsistart = req.body.studentcsistart;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (studentcsistart) {
+			answers[claimantType].studentcsistart = studentcsistart;
+				res.redirect(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student?${claimantType}`);
+				// Use routing for those looking for work.
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/csi-policy-start`);
+		}
+	});
 
   // ################ END PYCA-631 Changes ##############################
 
