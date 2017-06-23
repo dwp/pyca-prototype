@@ -915,9 +915,6 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		console.log(`previouslySelfEmployed value is: ${answers[claimantType].previouslySelfEmployed}`);
-		console.log(`evidenceToday value is: ${answers[claimantType].evidenceToday}`);
-
 		if (evidenceToday){
 			answers[claimantType].evidenceToday = evidenceToday;
 			if (answers[claimantType].previouslySelfEmployed == 'no') {
@@ -945,9 +942,6 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 	  if (previousWork) {
 	    answers[claimantType].previousWork = previousWork;
-				console.log(`selfEmployed is ${previousWork.selfEmployed}`);
-				console.log(`employed is ${previousWork.employed}`);
-				console.log(`didnt work is ${previousWork.didntWork}`);
 
 			if (previousWork.selfEmployed === 'true' && previousWork.employed === 'true') {
 				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
@@ -1044,11 +1038,9 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		var ijbbenefit = req.body.ijbbenefit;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
-console.log("in here");
+
 		if (ijbbenefit){
 			answers[claimantType].ijbbenefit = ijbbenefit;
-			 console.log(`ijbbenefit is: ${ijbbenefit}`);
-			 console.log(`answers[claimantType].ijbbenefit is: ${answers[claimantType].ijbbenefit}`);
 			res.redirect(`${appRoot}/questions/when-did-employment-end?${claimantType}`);
 		}
 		else {
@@ -1064,13 +1056,11 @@ console.log("in here");
 		if (employmentEnd){
 			answers[claimantType].employmentEnd = employmentEnd;
 
-			console.log(`employmentEnd is ${employmentEnd} __ and answers[claimantType].employmentEnd is ${answers[claimantType].employmentEnd}`);
 			if(employmentEnd == '1 week ago'){
 				res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
 			}
 			else {
 				res.redirect(`${appRoot}/questions/looking-for-work?${claimantType}`);
-				//  ADB - TODO this is the bit you're working on!!!!!
 			}
 		}
 		else {
@@ -1122,11 +1112,17 @@ console.log("in here");
 
 		if (lookingforwork){
 			answers[claimantType].lookingforwork = lookingforwork;
+			console.log(`questions/looking-for-work _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
 			if(lookingforwork == 'yes'){
 				res.redirect(`${appRoot}/questions/illness/claim-uc-sooner?${claimantType}`);
 			}
 			else {
-				res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+				console.log(`questions/looking-for-work _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+				if (answers[claimantType].ukstudent == 'yes'){
+					res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
+				} else {
+					res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+			}
 			}
 		}
 		else {
@@ -1141,7 +1137,12 @@ console.log("in here");
 
 		if (whyDidntClaimUcSooner){
 			answers[claimantType].whyDidntClaimUcSooner = whyDidntClaimUcSooner;
-			res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+			console.log(`questions/job-seeker-student/course-end _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+			if(answers[claimantType].ukstudent == 'yes'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+			}
 		}
 		else {
 			res.render(`${appRootRel}/questions/illness/claim-uc-sooner`);
@@ -1155,6 +1156,8 @@ console.log("in here");
 
 		if (medCerts){
 			answers[claimantType].medCerts = medCerts;
+
+			console.log(`questions/job-seeker-student/course-end _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
 			if (medCerts == 'Yes'){
 			res.redirect(`${appRoot}/questions/illness/when-did-they-arrive?${claimantType}`);
 		} else {
@@ -1384,6 +1387,7 @@ console.log("in here");
 
 	  if (ukstudent) {
 	    answers[claimantType].ukstudent = ukstudent;
+			console.log(`answers[claimantType].ukstudent is: ${answers[claimantType].ukstudent}`)
 				res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy?${claimantType}`)
 	  } else {
 	    res.render(`${appRootRel}/questions/job-seeker-student/uk-student`);
@@ -1461,6 +1465,9 @@ console.log("in here");
 
 		if (courseended) {
 			answers[claimantType].courseended = courseended;
+
+			console.log(`questions/job-seeker-student/has-the-course-ended _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+
 			if(courseended == 'yes'){
 				res.redirect(`${appRoot}/questions/job-seeker-student/course-end?${claimantType}`);
 			} else {
@@ -1508,6 +1515,27 @@ console.log("in here");
 			res.redirect(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student?${claimantType}`);
 		} else {
 			res.render(`${appRootRel}/questions/job-seeker-student/when-did-they-arrive`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/course-end`, function (req, res) {
+		var courseEnded = req.body.courseEnded;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (courseEnded) {
+			answers[claimantType].courseEnded = courseEnded;
+
+			console.log(`questions/job-seeker-student/course-end _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+
+			if(courseEnded == '1 week ago'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/looking-for-work?${claimantType}`);
+			}
+
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/course-end`);
 		}
 	});
   // ################ END PYCA-631 Changes ##############################
