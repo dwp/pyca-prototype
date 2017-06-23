@@ -13,17 +13,14 @@
 
       <ul class="list list-bullet">
         <li>Passport or ID Card</li>
-        <li>Fitnote</li>
         <li>Contract of employment</li>
-      </ul>
+    </ul>
 
       <strong class="bold-small">Along with at least one of the below:</strong>
 
       <ul class="list list-bullet">
         <li>3 months of bank statements</li>
-        <li>3 months of accounts</li>
-        <li>3 months of receipts or services</li>
-        <li>3 months of record of income and expenses</li>
+        <li>Letter of redundancy</li>
         <li>Birth Certificate</li>
         <li>MAB B1</li>
         <li>Death Certificate</li>
@@ -42,14 +39,16 @@
     						{{
     							form.radio({
     								name: 'evidenceToday',
-    								label: "Yes"
+    								label: "Yes",
+                                    value: 'yes'
     							})
     						}}
 
     						{{
     							form.radio({
     								name: 'evidenceToday',
-    								label: "No"
+    								label: "No",
+                                    value: 'no'
     							})
     						}}
 

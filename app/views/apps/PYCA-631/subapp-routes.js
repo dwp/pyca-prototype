@@ -118,6 +118,14 @@ module.exports = (router, config) => {
     eeaLooking4WorkWithoutEvidence : {
       id: 'END023',
       status: 'EEA not working or previously employed, arrived looking for work - requires further evidence'
+    },
+    pregnantFastTrack : {
+      id: 'END026',
+      status: 'EEA not working due to pregnancy'
+    },
+    pregnantFastTrackFurtherEvidenceRequired : {
+      id: 'END022',
+      status: 'EEA not working due to pregnancy - Further Evidence Required'
     }
 	}
 
@@ -377,12 +385,12 @@ module.exports = (router, config) => {
 	  var answers = req.session[config.slug].answers;
 	  var claimantType = res.locals.currentApp.claimantType;
 
-		console.log(req.body);
+		// console.log(req.body);
 
 	  if (nationality) {
 	    answers[claimantType].nationality = nationality;
 
-      console.log(nationality);
+      // console.log(nationality);
 
 	    // List countries, pull out names
 	    var listEEA = res.locals.countriesByEEA;
@@ -743,7 +751,7 @@ module.exports = (router, config) => {
 	  var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-console.log(`hmrcRegistered is: ${hmrcRegistered}`);
+// console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		if (hmrcRegistered) {
 			answers[claimantType].hmrcRegistered = hmrcRegistered;
 			res.redirect(`${appRoot}/questions/tax-return?${claimantType}`);
@@ -982,12 +990,10 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 			    res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 			    break;
 			  case 'childbirth':
-			    res.send('!! TODO - To be routed - see Andrew');
-					// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+					res.redirect(`${appRoot}/questions/pregnancy/letter-employer?${claimantType}`);
 			    break;
 			  case 'other':
-			    res.send('!! TODO - To be routed - see Andrew');
-					// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+					res.redirect(`${appRoot}/questions/job-seeker-student/uk-look-for-work?${claimantType}`);
 			    break;
 			}
 		}
@@ -1090,7 +1096,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 	// router.all(`${appRoot}/questions/illness/when-did-they-arrive`, function (req, res) {
 	// 	var lengthOfTimeInUK = req.body.lengthOfTimeInUK;
-	// 	console.log('ADB TODO awesome');
+	// 	// console.log('ADB TODO awesome');
 	//
 	// 	var answers = req.session[config.slug].answers;
 	// 	var claimantType = res.locals.currentApp.claimantType;
@@ -1112,12 +1118,12 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 		if (lookingforwork){
 			answers[claimantType].lookingforwork = lookingforwork;
-			console.log(`questions/looking-for-work _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+			// console.log(`questions/looking-for-work _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
 			if(lookingforwork == 'yes'){
 				res.redirect(`${appRoot}/questions/illness/claim-uc-sooner?${claimantType}`);
 			}
 			else {
-				console.log(`questions/looking-for-work _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+				// console.log(`questions/looking-for-work _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
 				if (answers[claimantType].ukstudent == 'yes'){
 					res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
 				} else {
@@ -1137,7 +1143,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 		if (whyDidntClaimUcSooner){
 			answers[claimantType].whyDidntClaimUcSooner = whyDidntClaimUcSooner;
-			console.log(`questions/job-seeker-student/course-end _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+			// console.log(`questions/job-seeker-student/course-end _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
 			if(answers[claimantType].ukstudent == 'yes'){
 				res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
 			} else {
@@ -1157,7 +1163,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		if (medCerts){
 			answers[claimantType].medCerts = medCerts;
 
-			console.log(`questions/job-seeker-student/course-end _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+			// console.log(`questions/job-seeker-student/course-end _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
 			if (medCerts == 'Yes'){
 			res.redirect(`${appRoot}/questions/illness/when-did-they-arrive?${claimantType}`);
 		} else {
@@ -1317,8 +1323,8 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 		if (evidenceToday) {
 			answers[claimantType].evidenceToday = evidenceToday;
-			console.log(`evidenceToday is: ${evidenceToday}`);
-			console.log(`answers[claimantType].evidenceToday is: ${answers[claimantType].evidenceToday}`);
+			// console.log(`evidenceToday is: ${evidenceToday}`);
+			// console.log(`answers[claimantType].evidenceToday is: ${answers[claimantType].evidenceToday}`);
 
 			if (evidenceToday == 'yes'){
 				res.redirect(`${appRoot}/outcomes/${outcomes.eeaPrevSelfEmployedWithEvidence.id}?${claimantType}`);
@@ -1387,7 +1393,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 	  if (ukstudent) {
 	    answers[claimantType].ukstudent = ukstudent;
-			console.log(`answers[claimantType].ukstudent is: ${answers[claimantType].ukstudent}`)
+			// console.log(`answers[claimantType].ukstudent is: ${answers[claimantType].ukstudent}`)
 				res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy?${claimantType}`)
 	  } else {
 	    res.render(`${appRootRel}/questions/job-seeker-student/uk-student`);
@@ -1466,7 +1472,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		if (courseended) {
 			answers[claimantType].courseended = courseended;
 
-			console.log(`questions/job-seeker-student/has-the-course-ended _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+			// console.log(`questions/job-seeker-student/has-the-course-ended _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
 
 			if(courseended == 'yes'){
 				res.redirect(`${appRoot}/questions/job-seeker-student/course-end?${claimantType}`);
@@ -1526,7 +1532,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		if (courseEnded) {
 			answers[claimantType].courseEnded = courseEnded;
 
-			console.log(`questions/job-seeker-student/course-end _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
+			// console.log(`questions/job-seeker-student/course-end _ The ukstudent value is: ${answers[claimantType].ukstudent}`)
 
 			if(courseEnded == '1 week ago'){
 				res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
@@ -1538,7 +1544,171 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 			res.render(`${appRootRel}/questions/job-seeker-student/course-end`);
 		}
 	});
-  // ################ END PYCA-631 Changes ##############################
+
+	// ####################### pregnancy / childbirth#############################
+	router.all(`${appRoot}/questions/pregnancy/letter-employer`, function (req, res) {
+		var employerletter = req.body.employerletter;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (employerletter) {
+			answers[claimantType].employerletter = employerletter;
+
+			if(employerletter == 'yes'){
+				res.redirect(`${appRoot}/questions/pregnancy/currently-looking-for-work?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/pregnancy/when-did-employment-end?${claimantType}`);
+			}
+
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/letter-employer`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/when-did-employment-end`, function (req, res) {
+		var pregnancytemploymentend = req.body.pregnancytemploymentend;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (pregnancytemploymentend) {
+			answers[claimantType].pregnancytemploymentend = pregnancytemploymentend;
+
+			switch (pregnancytemploymentend) {
+				case '<1week':
+				case '1week':
+					res.redirect(`${appRoot}/questions/pregnancy/currently-looking-for-work?${claimantType}`);
+					break;
+				case '>1week':
+				case '<1month':
+				case '>1month':
+					res.redirect(`${appRoot}/questions/pregnancy/looking-for-work?${claimantType}`);
+					break;
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/pregnancy/when-did-employment-end`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/currently-looking-for-work`, function (req, res) {
+		var currentlylookingforwork = req.body.currentlylookingforwork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (currentlylookingforwork) {
+			answers[claimantType].currentlylookingforwork = currentlylookingforwork;
+			res.redirect(`${appRoot}/questions/pregnancy/currently-pregnant?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/currently-looking-for-work`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/looking-for-work`, function (req, res) {
+		var lookingforwork = req.body.lookingforwork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (lookingforwork) {
+			answers[claimantType].lookingforwork = lookingforwork;
+			if(lookingforwork == 'yes'){
+				res.redirect(`${appRoot}/questions/pregnancy/claim-uc-sooner?${claimantType}`);
+			}
+			else {
+				res.redirect(`${appRoot}/questions/pregnancy/currently-pregnant?${claimantType}`);
+			}
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/looking-for-work`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/claim-uc-sooner`, function (req, res) {
+		var whyDidntClaimUcSooner = req.body.whyDidntClaimUcSooner;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (whyDidntClaimUcSooner) {
+			answers[claimantType].whyDidntClaimUcSooner = whyDidntClaimUcSooner;
+			res.redirect(`${appRoot}/questions/pregnancy/currently-pregnant?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/claim-uc-sooner`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/currently-pregnant`, function (req, res) {
+		var pregnant = req.body.pregnant;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (pregnant) {
+			answers[claimantType].pregnant = pregnant;
+			res.redirect(`${appRoot}/questions/pregnancy/back-to-work?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/currently-pregnant`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/back-to-work`, function (req, res) {
+		var backtowork = req.body.backtowork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (backtowork) {
+			answers[claimantType].backtowork = backtowork;
+			if (backtowork == 'yes'){
+				res.redirect(`${appRoot}/questions/pregnancy/when-back-to-work?${claimantType}`);
+			} else {
+				res.send('TODO route to partner flow');
+				// TODO
+			}
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/back-to-work`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/when-back-to-work`, function (req, res) {
+		var whenbacktowork = req.body.whenbacktowork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (whenbacktowork) {
+			answers[claimantType].whenbacktowork = whenbacktowork;
+			res.redirect(`${appRoot}/questions/pregnancy/when-did-they-arrive?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/when-back-to-work`);
+		}
+	});
+
+  router.all(`${appRoot}/questions/pregnancy/when-did-they-arrive`, function (req, res) {
+    var pregnantArrivalInUkYear = req.body.pregnantArrivalInUkYear;
+    var answers = req.session[config.slug].answers;
+    var claimantType = res.locals.currentApp.claimantType;
+
+    if (pregnantArrivalInUkYear) {
+      answers[claimantType].pregnantArrivalInUkYear = pregnantArrivalInUkYear;
+      res.redirect(`${appRoot}/questions/pregnancy/evidence-preg?${claimantType}`);
+    } else {
+      res.render(`${appRootRel}/questions/pregnancy/when-did-they-arrive`);
+    }
+  });
+
+	router.all(`${appRoot}/questions/pregnancy/evidence-preg`, function (req, res) {
+		var evidenceToday = req.body.evidenceToday;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (evidenceToday) {
+			answers[claimantType].evidenceToday = evidenceToday;
+			if (evidenceToday == 'yes'){
+			res.redirect(`${appRoot}/outcomes/${outcomes.pregnantFastTrack.id}?${claimantType}`);
+			} else {
+			res.redirect(`${appRoot}/outcomes/${outcomes.pregnantFastTrackFurtherEvidenceRequired.id}?${claimantType}`);
+
+			}
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/evidence-preg`);
+		}
+	});
+  // ####################### END PYCA-631 Changes ##############################
 
   return router
 

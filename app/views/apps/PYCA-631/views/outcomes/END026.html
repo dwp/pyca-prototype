@@ -1,88 +1,82 @@
-{% set page = {
-	title: "END021"
-} %}
+{% set page = { title: "END026" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
 
-{% extends currentApp.filePaths.layoutsDir + "default.html" %}
-
-{% block main_content %}
-
-<!-- <<<<< FAST TRACK PREVIOUSLY SELF EMPLOYED >>>>
+<!-- <<<<< FAST TRACK pregnant >>>>
  -->
- <div class="grid-row">
-    <div class="column-two-thirds">
+<div class="grid-row">
+  <div class="column-two-thirds">
 
-         {% include currentApp.filePaths.includesDir + "header.html" %}
+    {% include currentApp.filePaths.includesDir + "header.html" %}
 
-          <h2 class="heading-medium">Next steps</h2>
+    <h2 class="heading-medium">Next steps</h2>
 
-            <ul class="list list-number">
-            <li>In the PYCA to do select 'Yes' for "Is this a fast track referral?"</li>
-            <li>Clear the to do</li>
-            <li>Save this page as a PDF</li>
-            <li>Upload PDF to 'Refer to Decision Maker' to-do</li>
-            <li>Upload all evidence 'Refer to Decision Maker' to-do</li>
-            <li>For the question 'Is an HRT interview needed' select 'No'</li>
-            <li>Select 'Done'</li>
-            </ul>
+    <ul class="list list-number">
+      <li>In the PYCA to do select 'Yes' for "Is this a fast track referral?"</li>
+      <li>Clear the to do</li>
+      <li>Save this page as a PDF</li>
+      <li>Upload PDF to 'Refer to Decision Maker' to-do</li>
+      <li>Upload all evidence 'Refer to Decision Maker' to-do</li>
+      <li>For the question 'Is an HRT interview needed' select 'No'</li>
+      <li>Select 'Done'</li>
+    </ul>
 
-            <div class="form-group">
-            <a href="" class="button">Save page as PDF</a>
-          </div>
-
-
-
-               <<table>
-                  <thead>
-                    <tr>
-                      <td class="multiline"="col"></td>
-                      <th class="numeric"scope="col"></th>
-                    </tr>
-                  </thead>
-              </table>
-<table>
-
-                  <thead>
-                    <tr>
-                      <th scope="col">Question summary</th>
-                      <th class="numeric" scope="col">Answer</th>
-                    </tr>
-                  </thead>
-
-
-                  <tbody>
-                    <tr>
-                      <td class="row">Employer letter</th>
-                      <td class="numeric">{{ data['employerletter']}}</td>
-                    </tr>
-
-                      <tr>
-                      <td class="row">End date of employment</th>
-                      <td class="numeric">{{ data['pregnancyEmploymentEnd']}}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="row">Currently pregnant</th>
-                      <td class="numeric">{{ data['pregnant']}}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="row">Back to work intention</th>
-                      <td class="numeric">{{ data['backtowork']}}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="row">Arrival in UK</th>
-                      <td class="numeric">TODO when-did-they-arrive</td>
-                    </tr>
-
-
-
-                    </table>
-
-                  </tbody>
-                </table>
-
+    <div class="form-group">
+      <a href="" class="button">Save page as PDF</a>
     </div>
+
+
+
+    <table>
+      <thead>
+        <tr>
+          <td class="multiline"="col"></td>
+          <th class="numeric" scope="col"></th>
+        </tr>
+      </thead>
+    </table>
+    <table>
+
+      <thead>
+        <tr>
+          <th scope="col">Question summary</th>
+          <th class="numeric" scope="col">Answer</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+        <tr>
+          <td class="row">Employer letter</th>
+            <td class="numeric">{{ data['employerletter']}}</td>
+        </tr>
+
+        <tr>
+          <td class="row">End date of employment</th>
+            <td class="numeric">{{ data['pregnancyEmploymentEnd']}}</td>
+        </tr>
+
+        <tr>
+          <td class="row">Currently pregnant</th>
+            <td class="numeric">{{ data['pregnant']}}</td>
+        </tr>
+
+        <tr>
+          <td class="row">Back to work intention</th>
+            <td class="numeric">{{ data['backtowork']}}</td>
+        </tr>
+
+        <tr>
+          <td class="row">Arrival in UK</th>
+            <td class="numeric">{{ data['pregnantArrivalInUkYear']}}</td>
+        </tr>
+
+
+
+    </table>
+
+    </tbody>
+    </table>
+
   </div>
+</div>
 
 {% endblock %}

@@ -1,60 +1,47 @@
-{% set page = {
-	title: "Return to work"
-} %}
+{% set page = { title: "Return to work" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
 
-{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+<div class="grid-row">
+  <div class="column-two-thirds">
 
-{% block main_content %}
+    <form method="post" class="form">
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
-
-      <form method="post" class="form">
-
-        <h1 class="heading-large">
+      <h1 class="heading-large">
           When do they intend to go back to work?
         </h1>
 
-        <form>
-  <div class="form-group">
-    <fieldset>
+      <div class="form-group">
+        <fieldset>
 
-     <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
+          <div class="multiple-choice" data-target="whenbacktowork">
+            <input id="3monthsafter" type="radio" name="whenbacktowork" value="3monthsafter">
+            <label for="3monthsafter">3 months after the baby is born</label>
+          </div>
 
-      <div class="multiple-choice" data-target="back-to-work">
-        <input id="3monthsafter" type="radio" name="radio-contact-group" value="3monthsafter">
-        <label for="3monthsafter">3 months after the baby is born</label>
+          <div class="multiple-choice" data-target="whenbacktowork">
+            <input id="6monthsafter" type="radio" name="whenbacktowork" value="6monthsafter">
+            <label for="6monthsafter">6 months after the baby is born</label>
+          </div>
+
+          <div class="multiple-choice" data-target="whenbacktowork">
+            <input id="1yearafter" type="radio" name="whenbacktowork" value="1yearafter">
+            <label for="1yearafter">1 year after the baby is born</label>
+          </div>
+
+          <div class="multiple-choice" data-target="whenbacktowork">
+            <input id="2yearsafter" type="radio" name="whenbacktowork" value="2yearsafter">
+            <label for="2yearsafter">2 years after the baby is born</label>
+          </div>
+
+        </fieldset>
       </div>
 
-       <div class="multiple-choice" data-target="back-to-work">
-        <input id="6monthsafter" type="radio" name="radio-contact-group" value="6monthsafter">
-        <label for="6monthsafter">6 months after the baby is born</label>
+      <div class="form-group">
+        <button type="submit" class="button">Continue</button>
       </div>
 
-        <div class="multiple-choice" data-target="back-to-work">
-        <input id="1yearafter" type="radio" name="radio-contact-group" value="1yearafter">
-        <label for="1yearafter">1 year after the baby is born</label>
-      </div>
+    </form>
 
-      <div class="multiple-choice" data-target="back-to-work">
-        <input id="2yearsafter" type="radio" name="radio-contact-group" value="2yearsafter">
-        <label for="2yearsafter">2 years after the baby is born</label>
-      </div>
-
-      
-
-      
-    </fieldset>
   </div>
-</form>
-
-        <div class="form-group">
-          <button type="submit" class="button">Continue</button>
-        </div>
-
-      </form>
-
-    </div>
-  </div>
+</div>
 
 {% endblock %}
