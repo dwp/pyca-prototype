@@ -1,0 +1,41 @@
+{% set page = { title: "Previously sick fitnote" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+
+<div class="grid-row">
+  <div class="column-two-thirds">
+
+    <form method="post" class="form">
+
+      <h1 class="heading-large">
+          Do they have a fitnote?
+        </h1>
+
+        <div class="form-group">
+          <fieldset>
+
+            <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
+
+            <div class="multiple-choice" data-target="yes">
+              <input id="yes" type="radio" name="illFitnote" value="yes">
+              <label for="yes">Yes</label>
+            </div>
+
+
+            <div class="multiple-choice" data-target="no">
+              <input id="no" type="radio" name="illFitnote" value="no">
+              <label for="no">No</label>
+            </div>
+
+
+          </fieldset>
+        </div>
+
+      <div class="form-group">
+        <button type="submit" class="button">Continue</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}
