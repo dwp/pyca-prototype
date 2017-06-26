@@ -1,4 +1,4 @@
-﻿{% set page = { title: "Looking for work" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %} {% block main_content %}
+{% set page = { title: "Currently looking for work" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %} {% block main_content %}
 
 <div class="grid-row">
   <div class="column-two-thirds">
@@ -6,26 +6,28 @@
     <form method="post" class="form">
 
       <h1 class="heading-large">
-        Was this person actively looking for work in this time?
+        Are they currently looking for work?
       </h1>
 
       <div class="form-group">
         <fieldset role="radiogroup" aria-required="true" {{ attributes | safe }}>
 
           <legend>
-            <span class="visuallyhidden">Was this person actively looking for work in this time?</span>
+            <span class="visuallyhidden">Are they currently looking for work?</span>
           </legend>
 
               {{
                   form.radio({
-                      name: 'lookingforwork', 
-                      label: 'Yes'
+                      name: 'currentlylookingforwork',
+                      label: 'Yes',
+                      value: 'yes'
                   })
               }}
               {{
                   form.radio({
-                      name: 'lookingforwork',
-                      label: 'no'
+                      name: 'currentlylookingforwork',
+                      label: 'No',
+                      value: 'no'
                   })
               }}
 

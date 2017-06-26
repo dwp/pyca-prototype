@@ -13,20 +13,37 @@
 
   <h1 class="heading-large">This claimant requires more evidence</h1>
 
+     <strong class="bold-small">All of the following:</strong>
+
+      <ul class="list list-bullet">
+        <li>Passport or ID Card</li>
+        <li>Contract of employment</li>
+      </ul>
+
+      <strong class="bold-small">Along with at least one of the below:</strong>
+
+      <ul class="list list-bullet">
+        <li>3 months of bank statements</li>
+        <li>3 months of accounts</li>
+        <li>3 months of receipts or services</li>
+        <li>3 months of record of income and expenses</li>
+        <li>Medical Certificates</li>
+         <li>Letter confirming any other benefit</li>
+      </ul>
+
           <h2 class="heading-medium">Next steps</h2>
 
             <ul class="list list-number">
+            <li>In the PYCA to do select 'Yes' for "Is this a fast track referral?"
+            <li>Clear the to do</li>
             <li>Save this page as a PDF</li>
             <li>Upload PDF to 'Refer to Decision Maker' to-do</li>
+            <li>In the claimant's history add "PYCA completed, 'Refer to DM' to do to be cleared once the evidence is provided"</li>
             <li>Do not clear the 'Refer to Decision Maker' to-do</li>
             <li>Book a further evidence interview</li>
             <li>Add this note to 'Further Evidence interview' to-do:</li>
             </ul>
             <p>"Attach the evidence provided by the claimant to the 'Refer to Decision Maker to do' and clear the to-do"</p>
-
-            <div class="form-group">
-            <a href="" class="button">Save page as PDF</a>
-          </div>
 
 
                <table>
@@ -83,10 +100,10 @@
                       <td class="numeric">{{ data['medCerts']}}</td>
                     </tr>
 
-                     <tr>
-                      <td class="row">Arrived in UK</td>
-                      <td class="numeric">TODO illness/when-did-they-arrive</td>
-                    </tr>
+					<tr>
+					 <td class="row">Arrived in UK</td>
+					 <td class="numeric">{{ data['lengthOfTimeInUK']}}</td>
+				   	</tr>
 
 
                     </table>

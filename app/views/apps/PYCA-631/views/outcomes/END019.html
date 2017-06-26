@@ -17,6 +17,8 @@
           <h2 class="heading-medium">Next steps</h2>
 
             <ul class="list list-number">
+            <li>In the PYCA to do select 'Yes' for "Is this a fast track referral?"</li>
+            <li>Clear the to do</li>
             <li>Save this page as a PDF</li>
             <li>Upload PDF to 'Refer to Decision Maker' to-do</li>
             <li>Upload all evidence 'Refer to Decision Maker' to-do</li>
@@ -75,22 +77,22 @@
 
                     <tr>
                       <td class="row">CSI Policy</td>
-                      <td class="numeric">{{ data['csi']}}</td>
+                      <td class="numeric">{{ data['studentcsi'] | capitalize }}</td>
                     </tr>
 
                      <tr>
                       <td class="row">CSI policy start</td>
-                      <td class="numeric">{{ data['csidate']}}</td>
+                      <td class="numeric">{{ data['studentcsistart']}}</td>
                     </tr>
 
                      <tr>
-                      <td class="row">Course start date</td>
-                      <td class="numeric">TODO course-start</td>
+                      <td class="row">Course start</td>
+                      <td class="numeric">{{ data['courseStarted']}}t</td>
                     </tr>
 
                      <tr>
                       <td class="row">Course end date</td>
-                      <td class="numeric">TODO course-end</td>
+                      <td class="numeric">{{ data['coursesendDay'] if currentApp.isPartnerFlow else '' }} TODO</td>
                     </tr>
 
                       <tr>

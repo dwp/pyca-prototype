@@ -1,61 +1,39 @@
-{% set page = {
-	title: "Pregnancy employer letter"
-} %}
+{% set page = { title: "Pregnancy employer letter" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
 
-{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+<div class="grid-row">
+  <div class="column-two-thirds">
 
-{% block main_content %}
+    <form method="post" class="form">
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
-
-      <form method="post" class="form">
-
-        <h1 class="heading-large">
+      <h1 class="heading-large">
           Do they have a letter from their employer, confirming when the employment ended?
         </h1>
 
-        <form>
-  <div class="form-group">
-    <fieldset>
-
-     <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
-
-     <div class="form-group">
-        <fieldset role="radiogroup" aria-required="true">
-
-          <legend>
-            <span class="visuallyhidden">Do they have a letter from their employer, confirming when the employment ended?</span>
-          </legend>
-
-          {{
-            form.radio({
-              name: 'employerletter',
-              label: "Yes",
-                            value: "yes"
-            })
-          }}
-
-          {{
-            form.radio({
-              name: 'employerletter',
-              label: "No",
-              value: 'no'
-            })
-          }}
-
-        </fieldset>
-      </div>
-  </div>
-</form>
-
         <div class="form-group">
-          <button type="submit" class="button">Continue</button>
+          <fieldset class="inline">
+
+            <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
+
+            <div class="form-group">
+              <fieldset role="radiogroup" aria-required="true">
+
+                <legend>
+                  <span class="visuallyhidden">Do they have a letter from their employer, confirming when the employment ended?</span>
+                </legend>
+
+                {{ form.radio({ name: 'employerletter', label: "Yes", value: "yes" }) }} {{ form.radio({ name: 'employerletter', label: "No", value: 'no' }) }}
+
+              </fieldset>
+            </div>
         </div>
 
-      </form>
+      <div class="form-group">
+        <button type="submit" class="button">Continue</button>
+      </div>
 
-    </div>
+    </form>
+
   </div>
+</div>
 
 {% endblock %}

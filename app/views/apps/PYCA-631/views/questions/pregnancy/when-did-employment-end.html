@@ -15,36 +15,32 @@
           When did their employment end?
         </h1>
 
-        <form>
-  <div class="form-group">
-    <fieldset>
+          <div class="form-group">
+            <fieldset>
 
-     <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
+              <div class="multiple-choice">
+                <input id="radio-1" type="radio" name="pregnancytemploymentend" value="<1week">
+                <label for="radio-1">Under 1 week ago</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-2" type="radio" name="pregnancytemploymentend" value="1week">
+                <label for="radio-2">1 week ago</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-3" type="radio" name="pregnancytemploymentend" value=">1week">
+                <label for="radio-3"> Over 1 week ago</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-4" type="radio" name="pregnancytemploymentend" value="<1month">
+                <label for="radio-4">Under 1 month ago</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-5" type="radio" name="pregnancytemploymentend" value=">1month">
+                <label for="radio-">Over 1 month ago</label>
+              </div>
 
-      <div class="multiple-choice" data-target="1week">
-        <input id="1week" type="radio" name="pregnancyEmploymentEnd" value="1week">
-        <label for="1week">1 week ago</label>
-      </div>
-
-      <div class="multiple-choice" data-target="1month">
-        <input id="1month" type="radio" name="pregnancyEmploymentEnd" value="1month">
-        <label for="1month">1 month ago</label>
-      </div>
-      
-      <div class="multiple-choice" data-target="6months">
-        <input id="6months" type="radio" name="pregnancyEmploymentEnd" value="6months">
-        <label for="6-9months">6 months ago</label>
-      </div>
-
-      <div class="multiple-choice" data-target="1year">
-        <input id="1year" type="radio" name="pregnancyEmploymentEnd" value="1year">
-        <label for="1-4years">1 year ago</label>
-      </div>
-
-      
-    </fieldset>
-  </div>
-</form>
+            </fieldset>
+          </div>
 
         <div class="form-group">
           <button type="submit" class="button">Continue</button>

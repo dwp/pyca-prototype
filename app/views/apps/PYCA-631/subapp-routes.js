@@ -88,12 +88,44 @@ module.exports = (router, config) => {
 	    status: 'Married NonEEA with no marriage certificate on the day of the initial interview'
 	  },
 		selfEmployedWithoutEvidence : {
-					id: 'END017',
-					status: 'Self Employed person - without their evidence with them'
+			id: 'END017',
+			status: 'Self Employed person - without their evidence with them'
 		},
     selfEmployedWithEvidence : {
       id: 'END018',
       status: 'Self Employed person - save their information'
+		},
+    eeaSickWithEvidence : {
+      id: 'END020',
+      status: 'EEA Sick, previously employed'
+    },
+    eeaSickWithoutEvidence : {
+      id: 'END024',
+      status: 'EEA Sick, previously employed - Further Evidence Required'
+    },
+    eeaPrevSelfEmployedWithEvidence : {
+      id: 'END025',
+      status: 'EEA Sick, previously SELF employed'
+    },
+    eeaPrevSelfEmployedWithoutEvidence : {
+      id: 'END021',
+      status: 'EEA Sick, previously SELF employed - Further Evidence Required'
+    },
+    eeaLooking4WorkWithEvidence : {
+      id: 'END019',
+      status: 'EEA not working or previously employed, arrived looking for work'
+    },
+    eeaLooking4WorkWithoutEvidence : {
+      id: 'END023',
+      status: 'EEA not working or previously employed, arrived looking for work - requires further evidence'
+    },
+    pregnantFastTrack : {
+      id: 'END026',
+      status: 'EEA not working due to pregnancy'
+    },
+    pregnantFastTrackFurtherEvidenceRequired : {
+      id: 'END022',
+      status: 'EEA not working due to pregnancy - Further Evidence Required'
     }
 	}
 
@@ -146,7 +178,6 @@ module.exports = (router, config) => {
 
 	  // Skip if partner flow disabled
 	  if (config.isPartnerFlowEnabled) {
-
 	    // Not asked about partner yet
 	    if (typeof answers.claimant.partner === 'undefined') {
 
@@ -156,8 +187,14 @@ module.exports = (router, config) => {
 	      // Ineligible claimant (but might qualify for derived rights)
 	      if (outcomeId === outcomes.ineligible.id &&
 	        (answers.claimant.isEEA && answers.claimant.dontWorkReason === 'other') ||
-	          (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no'
-	           && answers.claimant.familyMember === 'no')) {
+	        (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no'
+	           && answers.claimant.familyMember === 'no') ||
+					(answers.claimant.backtowork == 'no') ||
+					(answers.claimant.reasonPrevSelfEmploymentEnded == 'other') ||
+					(answers.claimant.prevSelfEmployedFitnote == 'no') ||
+					(answers.claimant.preventpermanently == 'no') ||
+					(answers.claimant.medCerts == 'no')
+				 ) {
 
 	        // Mark as derived rights flow
 	        answers.claimant.isDerivedRightsFlow = true;
@@ -353,12 +390,8 @@ module.exports = (router, config) => {
 	  var answers = req.session[config.slug].answers;
 	  var claimantType = res.locals.currentApp.claimantType;
 
-		console.log(req.body);
-
 	  if (nationality) {
 	    answers[claimantType].nationality = nationality;
-
-      console.log(nationality);
 
 	    // List countries, pull out names
 	    var listEEA = res.locals.countriesByEEA;
@@ -719,7 +752,6 @@ module.exports = (router, config) => {
 	  var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		if (hmrcRegistered) {
 			answers[claimantType].hmrcRegistered = hmrcRegistered;
 			res.redirect(`${appRoot}/questions/tax-return?${claimantType}`);
@@ -730,21 +762,10 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
   });
 
 	router.all(`${appRoot}/questions/tax-return`, function (req, res) {
-		// var taxReturnUkDay = req.body.ukDayTax;
-		// var taxReturnUkMonth = req.body.ukMonthTax;
-		// var taxReturnUkYear = req.body.ukYearTax;
-		// var taxReturnDate = req.body.ukDayTax + "/" + req.body.ukMonthTax + "/" + req.body.ukYearTax;
 		var taxReturn = req.body.taxReturn;
 	  var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		// if ((taxReturnUkDay && taxReturnUkMonth && taxReturnUkYear) || taxReturn) {
-		// 	answers[claimantType].ukDay = taxReturnUkDay;
-		// 	answers[claimantType].ukMonth = taxReturnUkMonth;
-		// 	answers[claimantType].ukYear = taxReturnUkYear;
-		// 	answers[claimantType].taxReturn = taxReturn;
-		// 	res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
-		// }
 		if (taxReturn) {
 			answers[claimantType].taxReturn = taxReturn;
 			res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
@@ -844,15 +865,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 		if (previouslySelfEmployed) {
 			answers[claimantType].previouslySelfEmployed = previouslySelfEmployed;
-
 			res.redirect(`${appRoot}/questions/length-of-time-in-uk?${claimantType}`);
-			// if (previouslySelfEmployed === 'yes')
-			// {
-			// 	res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-			// } else {
-			// 	// res.redirect(`${appRoot}/questions/ni-contributions?${claimantType}`);
-			// 	res.send("This is the new outcome page which is actually a question and asks for some ID and if they've got it today");
-			// }
 		}
 		else {
 			res.render(`${appRootRel}/questions/previous-self-employment`);
@@ -860,19 +873,9 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 	});
 
 	router.all(`${appRoot}/questions/length-of-time-in-uk`, function (req, res) {
-		// var arriveInUkDay = req.body.ukDayArrival;
-		// var arriveInUkMonth = req.body.ukMonthArrival;
-		// var arriveInUkYear = req.body.ukYearArrival;
 		var lengthOfTimeInUK = req.body.lengthOfTimeInUK;
-		// var dateArrivedInUk = req.body.ukDayArrival + "/" + req.body.ukMonthArrival + "/" + req.body.ukYearArrival;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
-
-		// if (arriveInUkDay && arriveInUkMonth && arriveInUkYear) {
-		// 	answers[claimantType].arriveInUkDay = arriveInUkDay;
-		// 	answers[claimantType].arriveInUkMonth = arriveInUkMonth;
-		// 	answers[claimantType].arriveInUkYear = arriveInUkYear;
-		// 	answers[claimantType].dateArrivedInUk = dateArrivedInUk;
 
 		if (lengthOfTimeInUK){
 			if (answers[claimantType].previouslySelfEmployed == 'no') {
@@ -890,9 +893,6 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		var evidenceToday = req.body.evidenceToday;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
-
-		console.log(`previouslySelfEmployed value is: ${answers[claimantType].previouslySelfEmployed}`);
-		console.log(`evidenceToday value is: ${answers[claimantType].evidenceToday}`);
 
 		if (evidenceToday){
 			answers[claimantType].evidenceToday = evidenceToday;
@@ -931,9 +931,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 	    else if (previousWork.employed === 'true') {
 	      res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
 	    }
-
-	    // Not working
-	    else if (previousWork.dontWork === 'true') {
+	    else if (previousWork.didntWork === 'true') {
 	      res.redirect(`${appRoot}/questions/job-seeker-student/uk-look-for-work?${claimantType}`);
 	    }
 
@@ -954,8 +952,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 
 			switch (dontWorkReason) {
 			  case 'redundant':
-			    // res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
-					res.send('!! TODO - Flowchart says BAU - further information required about what the next step should be.');
+					res.redirect(`${appRoot}/outcomes/${outcomes.redundantEEA.id}?${claimantType}`);
 			    break;
 			  case 'sick':
 			    res.redirect(`${appRoot}/questions/illness/injury-at-work?${claimantType}`);
@@ -964,12 +961,10 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 			    res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 			    break;
 			  case 'childbirth':
-			    res.send('!! TODO - To be routed - see Andrew');
-					// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+					res.redirect(`${appRoot}/questions/pregnancy/letter-employer?${claimantType}`);
 			    break;
 			  case 'other':
-			    res.send('!! TODO - To be routed - see Andrew');
-					// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+					res.redirect(`${appRoot}/questions/job-seeker-student/uk-look-for-work?${claimantType}`);
 			    break;
 			}
 		}
@@ -1007,8 +1002,7 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 			if (preventpermanently == 'yes') {
 				res.redirect(`${appRoot}/questions/illness/industrial-injuries-disablement-benefit?${claimantType}`);
 			} else {
-				res.send('!! TODO - To be routed to temp ill route - see Andrew');
-				// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
+				res.redirect(`${appRoot}/questions/illness/fitnote?${claimantType}`);
 			}
 		}
 		else {
@@ -1016,15 +1010,31 @@ console.log(`hmrcRegistered is: ${hmrcRegistered}`);
 		}
 	});
 
+	router.all(`${appRoot}/questions/illness/fitnote`, function (req, res) {
+		var illFitnote = req.body.illFitnote;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (illFitnote){
+			answers[claimantType].illFitnote = illFitnote;
+			if (illFitnote == 'yes') {
+				res.redirect(`${appRoot}/questions/evidence-illness?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/fitnote`);
+		}
+	});
+
 	router.all(`${appRoot}/questions/illness/industrial-injuries-disablement-benefit`, function (req, res) {
 		var ijbbenefit = req.body.ijbbenefit;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
-console.log("in here");
+
 		if (ijbbenefit){
 			answers[claimantType].ijbbenefit = ijbbenefit;
-			 console.log(`ijbbenefit is: ${ijbbenefit}`);
-			 console.log(`answers[claimantType].ijbbenefit is: ${answers[claimantType].ijbbenefit}`);
 			res.redirect(`${appRoot}/questions/when-did-employment-end?${claimantType}`);
 		}
 		else {
@@ -1040,59 +1050,17 @@ console.log("in here");
 		if (employmentEnd){
 			answers[claimantType].employmentEnd = employmentEnd;
 
-			console.log(`employmentEnd is ${employmentEnd} __ and answers[claimantType].employmentEnd is ${answers[claimantType].employmentEnd}`);
 			if(employmentEnd == '1 week ago'){
 				res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
 			}
 			else {
 				res.redirect(`${appRoot}/questions/looking-for-work?${claimantType}`);
-				//  ADB - TODO this is the bit you're working on!!!!!
 			}
 		}
 		else {
 			res.render(`${appRootRel}/questions/when-did-employment-end`);
 		}
 	});
-
-	router.all(`${appRoot}/questions/medical-certificates`, function (req, res) {
-		var medCerts = req.body.medCerts;
-		var answers = req.session[config.slug].answers;
-		var claimantType = res.locals.currentApp.claimantType;
-
-		if (medCerts){
-			answers[claimantType].medCerts = medCerts;
-			if(medCerts == 'yes'){
-				res.redirect(`${appRoot}/questions/illness/when-did-they-arrive?${claimantType}`);
-			}
-			else {
-				res.send('!! TODO - To be routed to partner flow - see Andrew');
-				// res.redirect(`${appRoot}/questions/path-here?${claimantType}`);
-			}
-		}
-		else {
-			res.render(`${appRootRel}/questions/illness/when-did-they-arrive`);
-		}
-	});
-
-	router.all(`${appRoot}/questions/illness/when-did-they-arrive`, function (req, res) {
-		var arrivalDay = req.body.ukDay;
-		var arrivalMonth = req.body.ukMonth;
-		var arrivalYear = req.body.ukYear;
-
-		var answers = req.session[config.slug].answers;
-		var claimantType = res.locals.currentApp.claimantType;
-
-		if ((taxReturnUkDay && taxReturnUkMonth && taxReturnUkYear) || taxReturn) {
-			answers[claimantType].ukDay = arrivalDay;
-			answers[claimantType].ukMonth = arrivalMonth;
-			answers[claimantType].ukYear = arrivalYear;
-			res.send('TODO - This takes you to an outcome page asking for evidence...')
-		}
-		else {
-			res.render(`${appRootRel}/questions/illness/when-did-they-arrive`);
-		}
-	});
-
 
 	router.all(`${appRoot}/questions/looking-for-work`, function (req, res) {
 		var lookingforwork = req.body.lookingforwork;
@@ -1105,7 +1073,11 @@ console.log("in here");
 				res.redirect(`${appRoot}/questions/illness/claim-uc-sooner?${claimantType}`);
 			}
 			else {
-				res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+				if (answers[claimantType].ukstudent == 'yes'){
+					res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
+				} else {
+					res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+				}
 			}
 		}
 		else {
@@ -1120,10 +1092,65 @@ console.log("in here");
 
 		if (whyDidntClaimUcSooner){
 			answers[claimantType].whyDidntClaimUcSooner = whyDidntClaimUcSooner;
-			res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+			if(answers[claimantType].ukstudent == 'yes'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/illness/medical-certificates?${claimantType}`);
+			}
 		}
 		else {
 			res.render(`${appRootRel}/questions/illness/claim-uc-sooner`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/illness/medical-certificates`, function (req, res) {
+		var medCerts = req.body.medCerts;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (medCerts){
+			answers[claimantType].medCerts = medCerts;
+
+			if (medCerts == 'Yes'){
+				res.redirect(`${appRoot}/questions/illness/when-did-they-arrive?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/medical-certificates`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/illness/when-did-they-arrive`, function (req, res) {
+		var lengthOfTimeInUK = req.body.lengthOfTimeInUK;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (lengthOfTimeInUK){
+			answers[claimantType].lengthOfTimeInUK = lengthOfTimeInUK;
+			res.redirect(`${appRoot}/questions/evidence-illness?${claimantType}`);
+		}
+		else {
+			res.render(`${appRootRel}/questions/illness/when-did-they-arrive`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/evidence-illness`, function (req, res) {
+		var evidenceToday = req.body.evidenceToday;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (evidenceToday){
+			answers[claimantType].evidenceToday = evidenceToday;
+			if (evidenceToday == 'yes'){
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaSickWithEvidence.id}?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaSickWithoutEvidence.id}?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/evidence-illness`);
 		}
 	});
 
@@ -1157,12 +1184,12 @@ console.log("in here");
 	});
 
 	router.all(`${appRoot}/questions/previously-self-employed/self-employed-hours-worked`, function (req, res) {
-		var prevSelfEmploymentEnd = req.body.prevSelfEmploymentEnd;
+		var prevSelfEmployedHours = req.body.prevSelfEmployedHours;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		if (prevSelfEmploymentEnd){
-			answers[claimantType].prevSelfEmploymentEnd = prevSelfEmploymentEnd;
+		if (prevSelfEmployedHours){
+			answers[claimantType].prevSelfEmployedHours = prevSelfEmployedHours;
 			res.redirect(`${appRoot}/questions/previously-self-employed/monthly-average-earnings?${claimantType}`);
 		}
 		else {
@@ -1185,17 +1212,17 @@ console.log("in here");
 	});
 
 	router.all(`${appRoot}/questions/previously-self-employed/why-did-self-employment-end`, function (req, res) {
-		var reasonSelfEmploymentEnded = req.body.reasonSelfEmploymentEnded;
+		var reasonPrevSelfEmploymentEnded = req.body.reasonPrevSelfEmploymentEnded;
 		var answers = req.session[config.slug].answers;
 		var claimantType = res.locals.currentApp.claimantType;
 
-		if (reasonSelfEmploymentEnded){
-			answers[claimantType].reasonSelfEmploymentEnded = reasonSelfEmploymentEnded;
-			if(reasonSelfEmploymentEnded == 'illness'){
+		if (reasonPrevSelfEmploymentEnded){
+			answers[claimantType].reasonPrevSelfEmploymentEnded = reasonPrevSelfEmploymentEnded;
+			if(reasonPrevSelfEmploymentEnded == 'illness'){
 				res.redirect(`${appRoot}/questions/previously-self-employed/fitnote?${claimantType}`);
 			}
 			else {
-				res.send('TODO sending them down the partner route')
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 			}
 		}
 		else {
@@ -1210,11 +1237,11 @@ console.log("in here");
 
 		if (prevSelfEmployedFitnote){
 			answers[claimantType].prevSelfEmployedFitnote = prevSelfEmployedFitnote;
-			if(reasonSelfEmploymentEnded == 'yes'){
+			if(prevSelfEmployedFitnote == 'yes'){
 				res.redirect(`${appRoot}/questions/previously-self-employed/when-did-they-arrive?${claimantType}`);
 			}
 			else {
-				res.send('TODO need to send them down the partner route')
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 			}
 		}
 		else {
@@ -1229,13 +1256,398 @@ console.log("in here");
 
 		if (prevSelfEmployedArrivalInUkYear) {
 			answers[claimantType].prevSelfEmployedArrivalInUkYear = prevSelfEmployedArrivalInUkYear;
-			res.send('TODO - This takes you to an outcome page asking for evidence...')
+			res.redirect(`${appRoot}/questions/previously-self-employed/evidence-prev-selfemp?${claimantType}`);
 		}
 		else {
 			res.render(`${appRootRel}/questions/previously-self-employed/when-did-they-arrive`);
 		}
 	});
-  // ################ END PYCA-631 Changes ##############################
+
+	router.all(`${appRoot}/questions/previously-self-employed/evidence-prev-selfemp`, function (req, res) {
+		var evidenceToday = req.body.evidenceToday;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (evidenceToday) {
+			answers[claimantType].evidenceToday = evidenceToday;
+
+			if (evidenceToday == 'yes'){
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaPrevSelfEmployedWithEvidence.id}?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaPrevSelfEmployedWithoutEvidence.id}?${claimantType}`);
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/previously-self-employed/evidence-prev-selfemp`);
+		}
+	});
+
+	// ####################### Job Seeker ########################################
+	router.all(`${appRoot}/questions/job-seeker-student/uk-look-for-work`, function (req, res) {
+	  var studentLookForWork = req.body.studentLookForWork;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (studentLookForWork) {
+	    answers[claimantType].studentLookForWork = studentLookForWork;
+			if (studentLookForWork == 'yes'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/time-looking-for-work?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/job-seeker-student/uk-student?${claimantType}`);
+			}
+	  } else {
+	    res.render(`${appRootRel}/questions/job-seeker-student/uk-look-for-work`);
+	  }
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/time-looking-for-work`, function (req, res) {
+	  var lookingforwork = req.body.lookingforwork;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (lookingforwork) {
+	    answers[claimantType].lookingforwork = lookingforwork;
+			res.redirect(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student?${claimantType}`);
+	  } else {
+	    res.render(`${appRootRel}/questions/job-seeker-student/time-looking-for-work`);
+	  }
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student`, function (req, res) {
+	  var evidenceToday = req.body.evidenceToday;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (evidenceToday) {
+	    answers[claimantType].evidenceToday = evidenceToday;
+			if (evidenceToday == 'yes'){
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaLooking4WorkWithEvidence.id}?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaLooking4WorkWithoutEvidence.id}?${claimantType}`);
+			}
+	  } else {
+	    res.render(`${appRootRel}/questions/job-seeker-student/evidence-jobseeker-student`);
+	  }
+	});
+
+	// ####################### Student ########################################
+	router.all(`${appRoot}/questions/job-seeker-student/uk-student`, function (req, res) {
+	  var ukstudent = req.body.ukstudent;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (ukstudent) {
+	    answers[claimantType].ukstudent = ukstudent;
+				res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy?${claimantType}`)
+	  } else {
+	    res.render(`${appRootRel}/questions/job-seeker-student/uk-student`);
+	  }
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/csi-policy`, function (req, res) {
+		var studentcsi = req.body.studentcsi;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (studentcsi) {
+			answers[claimantType].studentcsi = studentcsi;
+			// Use this 1 question handler for when the claimant is and is not a student
+
+			if(answers[claimantType].ukstudent == 'yes'){
+				if (studentcsi == 'yes'){
+					// Student with a CSI policy
+					res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy-start?${claimantType}`);
+				} else {
+					// Student withOUT a CSI policy
+					res.redirect(`${appRoot}/questions/job-seeker-student/course-start?${claimantType}`);
+				}
+			}
+			else {
+				if (studentcsi == 'yes'){
+					// Not a student but has a CSI policy
+					res.redirect(`${appRoot}/questions/job-seeker-student/csi-policy-start?${claimantType}`);
+				} else {
+					// Not a student and no CSI policy
+					res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+				}
+			}
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/csi-policy`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/csi-policy-start`, function (req, res) {
+		var studentcsistart = req.body.studentcsistart;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (studentcsistart) {
+			answers[claimantType].studentcsistart = studentcsistart;
+
+			if(answers[claimantType].ukstudent == 'yes'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/course-start?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student?${claimantType}`);
+			}
+				// Use routing for those looking for work.
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/csi-policy-start`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/course-start`, function (req, res) {
+		var courseStarted = req.body.courseStarted;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (courseStarted) {
+			answers[claimantType].courseStarted = courseStarted;
+			res.redirect(`${appRoot}/questions/job-seeker-student/has-the-course-ended?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/course-start`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/has-the-course-ended`, function (req, res) {
+		var courseended = req.body.courseended;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (courseended) {
+			answers[claimantType].courseended = courseended;
+
+			if(courseended == 'yes'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/course-end?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
+			}
+
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/has-the-course-ended`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/study-hours`, function (req, res) {
+		var studyhours = req.body.studyhours;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (studyhours) {
+			answers[claimantType].studyhours = studyhours;
+			res.redirect(`${appRoot}/questions/job-seeker-student/study-finance?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/study-hours`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/study-finance`, function (req, res) {
+		var studyfinance = req.body.studyfinance;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (studyfinance) {
+			answers[claimantType].studyhours = studyfinance;
+			res.redirect(`${appRoot}/questions/job-seeker-student/when-did-they-arrive?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/study-finance`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/when-did-they-arrive`, function (req, res) {
+		var notWorkingArrivalInUkYear = req.body.notWorkingArrivalInUkYear;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (notWorkingArrivalInUkYear) {
+			answers[claimantType].notWorkingArrivalInUkYear = notWorkingArrivalInUkYear;
+			res.redirect(`${appRoot}/questions/job-seeker-student/evidence-jobseeker-student?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/when-did-they-arrive`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/job-seeker-student/course-end`, function (req, res) {
+		var courseEnded = req.body.courseEnded;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (courseEnded) {
+			answers[claimantType].courseEnded = courseEnded;
+
+			if(courseEnded == '1 week ago'){
+				res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/looking-for-work?${claimantType}`);
+			}
+
+		} else {
+			res.render(`${appRootRel}/questions/job-seeker-student/course-end`);
+		}
+	});
+
+	// ####################### pregnancy / childbirth#############################
+	router.all(`${appRoot}/questions/pregnancy/letter-employer`, function (req, res) {
+		var employerletter = req.body.employerletter;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (employerletter) {
+			answers[claimantType].employerletter = employerletter;
+
+			if(employerletter == 'yes'){
+				res.redirect(`${appRoot}/questions/pregnancy/currently-looking-for-work?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/questions/pregnancy/when-did-employment-end?${claimantType}`);
+			}
+
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/letter-employer`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/when-did-employment-end`, function (req, res) {
+		var pregnancytemploymentend = req.body.pregnancytemploymentend;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (pregnancytemploymentend) {
+			answers[claimantType].pregnancytemploymentend = pregnancytemploymentend;
+
+			switch (pregnancytemploymentend) {
+				case '<1week':
+				case '1week':
+					res.redirect(`${appRoot}/questions/pregnancy/currently-looking-for-work?${claimantType}`);
+					break;
+				case '>1week':
+				case '<1month':
+				case '>1month':
+					res.redirect(`${appRoot}/questions/pregnancy/looking-for-work?${claimantType}`);
+					break;
+			}
+		}
+		else {
+			res.render(`${appRootRel}/questions/pregnancy/when-did-employment-end`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/currently-looking-for-work`, function (req, res) {
+		var currentlylookingforwork = req.body.currentlylookingforwork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (currentlylookingforwork) {
+			answers[claimantType].currentlylookingforwork = currentlylookingforwork;
+			res.redirect(`${appRoot}/questions/pregnancy/currently-pregnant?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/currently-looking-for-work`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/looking-for-work`, function (req, res) {
+		var lookingforwork = req.body.lookingforwork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (lookingforwork) {
+			answers[claimantType].lookingforwork = lookingforwork;
+			if(lookingforwork == 'yes'){
+				res.redirect(`${appRoot}/questions/pregnancy/claim-uc-sooner?${claimantType}`);
+			}
+			else {
+				res.redirect(`${appRoot}/questions/pregnancy/currently-pregnant?${claimantType}`);
+			}
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/looking-for-work`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/claim-uc-sooner`, function (req, res) {
+		var whyDidntClaimUcSooner = req.body.whyDidntClaimUcSooner;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (whyDidntClaimUcSooner) {
+			answers[claimantType].whyDidntClaimUcSooner = whyDidntClaimUcSooner;
+			res.redirect(`${appRoot}/questions/pregnancy/currently-pregnantc?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/claim-uc-sooner`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/currently-pregnant`, function (req, res) {
+		var pregnant = req.body.pregnant;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (pregnant) {
+			answers[claimantType].pregnant = pregnant;
+			res.redirect(`${appRoot}/questions/pregnancy/back-to-work?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/currently-pregnant`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/back-to-work`, function (req, res) {
+		var backtowork = req.body.backtowork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (backtowork) {
+			answers[claimantType].backtowork = backtowork;
+			if (backtowork == 'yes'){
+				res.redirect(`${appRoot}/questions/pregnancy/when-back-to-work?${claimantType}`);
+			} else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/back-to-work`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/pregnancy/when-back-to-work`, function (req, res) {
+		var whenbacktowork = req.body.whenbacktowork;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (whenbacktowork) {
+			answers[claimantType].whenbacktowork = whenbacktowork;
+			res.redirect(`${appRoot}/questions/pregnancy/when-did-they-arrive?${claimantType}`);
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/when-back-to-work`);
+		}
+	});
+
+  router.all(`${appRoot}/questions/pregnancy/when-did-they-arrive`, function (req, res) {
+    var pregnantArrivalInUkYear = req.body.pregnantArrivalInUkYear;
+    var answers = req.session[config.slug].answers;
+    var claimantType = res.locals.currentApp.claimantType;
+
+    if (pregnantArrivalInUkYear) {
+      answers[claimantType].pregnantArrivalInUkYear = pregnantArrivalInUkYear;
+      res.redirect(`${appRoot}/questions/pregnancy/evidence-preg?${claimantType}`);
+    } else {
+      res.render(`${appRootRel}/questions/pregnancy/when-did-they-arrive`);
+    }
+  });
+
+	router.all(`${appRoot}/questions/pregnancy/evidence-preg`, function (req, res) {
+		var evidenceToday = req.body.evidenceToday;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (evidenceToday) {
+			answers[claimantType].evidenceToday = evidenceToday;
+			if (evidenceToday == 'yes'){
+			res.redirect(`${appRoot}/outcomes/${outcomes.pregnantFastTrack.id}?${claimantType}`);
+			} else {
+			res.redirect(`${appRoot}/outcomes/${outcomes.pregnantFastTrackFurtherEvidenceRequired.id}?${claimantType}`);
+
+			}
+		} else {
+			res.render(`${appRootRel}/questions/pregnancy/evidence-preg`);
+		}
+	});
+  // ####################### END PYCA-631 Changes ##############################
 
   return router
 

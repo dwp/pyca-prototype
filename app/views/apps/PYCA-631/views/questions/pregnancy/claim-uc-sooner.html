@@ -1,0 +1,66 @@
+﻿{% set page = {
+	title: "Employment end"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          When did their employment end?
+        </h1>
+
+          <div class="form-group">
+            <fieldset>
+
+              <div class="multiple-choice">
+                <input id="radio-1" type="radio" name="whyDidntClaimUcSooner" value="Went abroad">
+                <label for="radio-1">Went abroad</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-2" type="radio" name="whyDidntClaimUcSooner" value="Wanted a break from work">
+                <label for="radio-2">Wanted a break from work</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-3" type="radio" name="whyDidntClaimUcSooner" value="Expected to find work quicker">
+                <label for="radio-3">Expected to find work quicker</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-4" type="radio" name="whyDidntClaimUcSooner" value="Needed to arrange child care">
+                <label for="radio-4">Needed to arrange child care</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-5" type="radio" name="whyDidntClaimUcSooner" value="Family reasons">
+                <label for="radio-">Family reasons</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-5" type="radio" name="whyDidntClaimUcSooner" value="Had job arranged but fell through">
+                <label for="radio-">Had job arranged but fell through</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-5" type="radio" name="whyDidntClaimUcSooner" value="Didn't know I could claim">
+                <label for="radio-">Didn't know I could claim</label>
+              </div>
+              <div class="multiple-choice">
+                <input id="radio-5" type="radio" name="whyDidntClaimUcSooner" value="Other">
+                <label for="radio-">Other</label>
+              </div>
+
+            </fieldset>
+          </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}
