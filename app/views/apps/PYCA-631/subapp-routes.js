@@ -1291,7 +1291,7 @@ module.exports = (router, config) => {
 
   // ####################### Job Seeker ########################################
   router.all(`${appRoot}/questions/job-seeker-student/uk-look-for-work`, function (req, res) {
-    var studentLookForWork = req.body.studentLookForWork; 
+    var studentLookForWork = req.body.studentLookForWork;
     var answers = req.session[config.slug].answers;
     var claimantType = res.locals.currentApp.claimantType;
 
@@ -1416,14 +1416,14 @@ module.exports = (router, config) => {
   });
 
   router.all(`${appRoot}/questions/job-seeker-student/has-the-course-ended`, function (req, res) {
-    var courseended = req.body.courseended;
+    var hascourseended = req.body.hascourseended;
     var answers = req.session[config.slug].answers;
     var claimantType = res.locals.currentApp.claimantType;
 
-    if (courseended) {
-      answers[claimantType].courseended = courseended;
+    if (hascourseended) {
+      answers[claimantType].hascourseended = hascourseended;
 
-      if(courseended == 'yes'){
+      if(hascourseended == 'yes'){
         res.redirect(`${appRoot}/questions/job-seeker-student/course-end?${claimantType}`);
       } else {
         res.redirect(`${appRoot}/questions/job-seeker-student/study-hours?${claimantType}`);

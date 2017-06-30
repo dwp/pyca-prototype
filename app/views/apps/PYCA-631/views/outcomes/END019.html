@@ -111,10 +111,31 @@
                       </tr>
                     {% endif %}
 
-                    {% if (data['courseStarted']) %}
+                    {% if (data['hascourseended']) %}
+                      <tr>
+                        <td class="row">Has the course ended</th>
+                          <td class="numeric"> {{data['hascourseended'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['courseEnded']) %}
                       <tr>
                         <td class="row">Course end date</th>
-                          <td class="numeric"> {{data['coursesendDay'] | capitalize }} </td>
+                          <td class="numeric"> {{data['courseEnded'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['lookingforwork']) %}
+                      <tr>
+                        <td class="row">Was claimant actively looking for work in this time?</th>
+                          <td class="numeric"> {{data['lookingforwork'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['whyDidntClaimUcSooner']) %}
+                      <tr>
+                        <td class="row">Why didn't they claim UC sooner?</th>
+                          <td class="numeric"> {{data['whyDidntClaimUcSooner'] | capitalize }} </td>
                       </tr>
                     {% endif %}
 
@@ -131,6 +152,15 @@
                           <td class="numeric"> {{data['studyfinance'] | capitalize }} </td>
                       </tr>
                     {% endif %}
+
+                    {% if (data['notWorkingArrivalInUkYear']) %}
+                      <tr>
+                        <td class="row">How long have they been in the UK?</th>
+                          <td class="numeric"> {{data['notWorkingArrivalInUkYear'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+
 
                     </table>
                   </tbody>
