@@ -86,7 +86,15 @@ module.exports = (router, config) => {
 	  bookFurtherEvidenceInterviewMarriage: {
 	    id: 'END016',
 	    status: 'Married NonEEA with no marriage certificate on the day of the initial interview'
-	  }
+		},
+		noHRTRequired: {
+			id: 'END017',
+			status: 'Fill in section 1 of the ALP'
+		},
+		makeaDecision: {
+			id: 'END018',
+			status: 'Fill in section 2 of the ALP'
+		}
 	}
 
 	config.isPartnerFlowEnabled = true
@@ -288,7 +296,7 @@ module.exports = (router, config) => {
 			// UK national
 			if (isBritishCitizen == 'yes') {
 				answers[claimantType].isEEA = true;
-				res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
+				res.redirect(`${appRoot}/questions/out-of-uk?${claimantType}`);
 			}
 
 			// Non-UK national
@@ -303,38 +311,170 @@ module.exports = (router, config) => {
 		}
 
 	});
+	// ####################################################################
+	// Branching for citizens with a british passport and british citizen, out of uk?
+	// ####################################################################
+	router.all(`${appRoot}/questions/out-of-uk`, function (req, res) {
+		var outOfUk = req.body.outOfUk;
+		var answers = req.session[config.slug].answers;
+		var iteration = req.session[config.slug].iteration;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (outOfUk) {
+			answers[claimantType].outOfUk = outOfUk;
+
+			// Out of UK more than 4 weeks
+			if (outOfUk === 'yes') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
+			}
+
+			// Out of UK less than 4 weeks
+			else if (outOfUk === 'no') {
+
+				if(iteration) {
+					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id.toLowerCase()}/${outcomes.noHRTRequired.id}?${claimantType}`);
+				} else {
+					res.redirect(`${appRoot}/outcomes/${outcomes.noHRTRequired.id}?${claimantType}`);
+				}
+
+
+			}
+
+			else if (res.locals.currentApp.isPartnerFlow && outOfUk === 'unknown') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		}
+
+		else {
+			res.render(`${appRootRel}/questions/out-of-uk`);
+		}
+	});
 
 
 	// ####################################################################
 	// refuge
 	// ####################################################################
 	router.all(`${appRoot}/questions/refugee`, function (req, res) {
-	  var refugee = req.body.refugee;
-	  var answers = req.session[config.slug].answers;
-	  var claimantType = res.locals.currentApp.claimantType;
+		var refugee = req.body.refugee;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
 
-	  if (refugee) {
-	    answers[claimantType].refugee = refugee;
+		if (refugee) {
+			answers[claimantType].refugee = refugee;
 
-	    // Refugee
-	    if (refugee === 'yes') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.refugee.id}?${claimantType}`);
-	    }
+			// Refugee
+			if (refugee === 'yes') {
+				res.redirect(`${appRoot}/questions/brp-refugee?${claimantType}`);
+			}
 
-	    // Non-refugee
-	    else if (refugee === 'no') {
-	      res.redirect(`${appRoot}/questions/nationality?${claimantType}`);
-	    }
+			// Non-refugee
+			else if (refugee === 'no') {
+				res.redirect(`${appRoot}/questions/nationality?${claimantType}`);
+			}
 
-	    else if (res.locals.currentApp.isPartnerFlow && refugee === 'unknown') {
-	      res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-	    }
-	  }
+			else if (res.locals.currentApp.isPartnerFlow && refugee === 'unknown') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		}
 
-	  else {
-	    res.render(`${appRootRel}/questions/refugee`);
-	  }
+		else {
+			res.render(`${appRootRel}/questions/refugee`);
+		}
 	});
+
+	router.all(`${appRoot}/questions/brp-refugee`, function (req, res) {
+		var brprefugee = req.body.brprefugee;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (brprefugee) {
+			answers[claimantType].brprefugee = brprefugee;
+
+			// Has Refugee BRP
+			if (brprefugee === 'yes') {
+				res.redirect(`${appRoot}/questions/brp-refugee-status?${claimantType}`);
+			}
+
+			// Does not have refugee BRP
+			else if (brprefugee === 'no') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.refugee.id}?${claimantType}`);
+			}
+
+			else if (res.locals.currentApp.isPartnerFlow && brprefugee === 'unknown') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		}
+
+		else {
+			res.render(`${appRootRel}/questions/brp-refugee`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/brp-refugee-status`, function (req, res) {
+		var brprefugeestatus = req.body.brprefugeestatus;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+
+		if (brprefugeestatus) {
+			answers[claimantType].brprefugeestatus = brprefugeestatus;
+
+			// Has Refugee status on their BRP
+			if (brprefugeestatus === 'yes') {
+				res.redirect(`${appRoot}/questions/brp-refugee-date?${claimantType}`);
+			}
+
+			// Does not have refugee status on their BRP
+			else if (brprefugeestatus === 'no') {
+				res.redirect(`${appRoot}/questions/no-recourse-to-public-funds?${claimantType}`);
+			}
+
+			else if (res.locals.currentApp.isPartnerFlow && brprefugee === 'unknown') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}${claimantType}`);
+			}
+		}
+
+		else {
+			res.render(`${appRootRel}/questions/brp-refugee-status`);
+		}
+	});
+
+	router.all(`${appRoot}/questions/brp-refugee-date`, function (req, res) {
+		var brprefugeedate = req.body.brprefugeedate;
+		var answers = req.session[config.slug].answers;
+		var claimantType = res.locals.currentApp.claimantType;
+		var iteration = req.session[config.slug].iteration;
+
+		if (brprefugeedate) {
+			answers[claimantType].brprefugeedate = brprefugeedate;
+
+			// BRP is in date
+			if (brprefugeedate === 'no') {
+
+				if (iteration) {
+					res.redirect(`${appRoot}/outcomes/${outcomes.makeaDecision.id.toLowerCase()}/${outcomes.makeaDecision.id}?${claimantType}`);
+				}
+				else {
+				res.redirect(`${appRoot}/outcomes/${outcomes.makeaDecision.id}?${claimantType}`);
+				}
+
+			}
+
+			// BRP is not in date
+
+			if (brprefugeedate === 'yes') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+
+			else if (res.locals.currentApp.isPartnerFlow && brprefugeedate === 'unknown') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+			}
+		}
+
+		else {
+			res.render(`${appRootRel}/questions/brp-refugee-date`);
+		}
+	});
+
 
 	// ####################################################################
 	// Checking claimants nationality
@@ -365,7 +505,9 @@ module.exports = (router, config) => {
 	        res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
 	      } else if(nationality === 'Ireland') {
           res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
-        }
+				} else if(nationality === 'United Kingdom') {
+					res.redirect(`${appRoot}/questions/british-passport-today?${claimantType}`);
+				}
 
 	      // Continue
 	      res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
