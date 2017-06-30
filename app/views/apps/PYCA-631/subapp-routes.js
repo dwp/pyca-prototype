@@ -1009,7 +1009,8 @@ module.exports = (router, config) => {
       if (preventpermanently == 'yes') {
         res.redirect(`${appRoot}/questions/illness/industrial-injuries-disablement-benefit?${claimantType}`);
       } else {
-        res.redirect(`${appRoot}/questions/illness/fitnote?${claimantType}`);
+        // res.redirect(`${appRoot}/questions/illness/fitnote?${claimantType}`);
+        res.redirect(`${appRoot}/questions/fitnote?${claimantType}`);
       }
     }
     else {
@@ -1024,6 +1025,8 @@ module.exports = (router, config) => {
 
     if (illFitnote){
       answers[claimantType].illFitnote = illFitnote;
+      // TODO actually dont think this should exist...
+      // think we should use the existing fitnote question and route handling
       if (illFitnote == 'yes') {
         res.redirect(`${appRoot}/questions/evidence-illness?${claimantType}`);
       } else {
@@ -1151,6 +1154,7 @@ module.exports = (router, config) => {
     if (evidenceToday){
       answers[claimantType].evidenceToday = evidenceToday;
       if (evidenceToday == 'yes'){
+        console.log('getting to here and then being caught and sent down the partner flow...')
         res.redirect(`${appRoot}/outcomes/${outcomes.eeaSickWithEvidence.id}?${claimantType}`);
       } else {
         res.redirect(`${appRoot}/outcomes/${outcomes.eeaSickWithoutEvidence.id}?${claimantType}`);
