@@ -45,7 +45,7 @@
                     </tr>
                   </thead>
               </table>
-<table>
+              <table>
 
                   <thead>
                     <tr>
@@ -56,36 +56,53 @@
 
 
                   <tbody>
+
                     <tr>
-                      <td class="row">Start date of self employment</th>
-                      <td class="numeric">{{ data['prevSelfEmploymentStart']}}</td>
+                      <td class="row">Were they previously working?</th>
+                      <td class="numeric">
+                        {% for propName, propValue in data['previousWork'] %}
+                          {{ propValue }}
+                        {% endfor %}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="row">When did self employment start?</th>
+                      <td class="numeric">{{ data['prevSelfEmploymentStart'] | capitalize}}</td>
                     </tr>
 
                       <tr>
-                      <td class="row">End date of self employment</th>
-                      <td class="numeric">{{ data['prevSelfEmploymentEnd']}}</td>
+                      <td class="row">When did self employment end?</th>
+                      <td class="numeric">{{ data['prevSelfEmploymentEnd'] | capitalize}}</td>
                     </tr>
 
                     <tr>
                       <td class="row">Hours per week working as self employed</th>
-                      <td class="numeric">{{ data['prevSelfEmployedHours']}}</td>
+                      <td class="numeric">{{ data['prevSelfEmployedHours'] | capitalize}}</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Average monthly earnings</th>
-                      <td class="numeric">{{ data['prevMonthlyAverageEarnings']}}</td>
+                      <td class="row">What were their monthly average earnings?</th>
+                      <td class="numeric">{{ data['prevMonthlyAverageEarnings'] | capitalize}}</td>
                     </tr>
 
                     <tr>
-                      <td class="row">Reason for ending</th>
-                      <td class="numeric">{{ data['reasonPrevSelfEmploymentEnded']}}</td>
+                      <td class="row">Why did self-employment end?</th>
+                      <td class="numeric">{{ data['reasonPrevSelfEmploymentEnded'] | capitalize}}</td>
                     </tr>
 
                      <tr>
                       <td class="row">Fitnote</th>
-                      <td class="numeric">{{ data['prevSelfEmployedFitnote']}}</td>
+                      <td class="numeric">{{ data['prevSelfEmployedFitnote'] | capitalize}}</td>
                     </tr>
 
+                    {% if (data['prevSelfEmployedArrivalInUkYear']) %}
+                      <tr>
+                        <td class="row">How long have they been in the UK?</th>
+
+                        <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+                        <td class="numeric"> {{data['prevSelfEmployedArrivalInUkYear'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
 
                     </table>
 
