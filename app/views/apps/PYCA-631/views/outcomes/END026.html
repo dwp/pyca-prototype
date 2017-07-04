@@ -44,28 +44,83 @@
 
 
       <tbody>
+
+
         <tr>
-          <td class="row">Employer letter</th>
-            <td class="numeric">{{ data['employerletter']}}</td>
+          <td class="row">Were they previously working?</th>
+          <td class="numeric">
+            {% for propName, propValue in data['previousWork'] %}
+              {{ propValue }}
+            {% endfor %}
+          </td>
         </tr>
 
         <tr>
-          <td class="row">End date of employment</th>
-            <td class="numeric">{{ data['pregnancyEmploymentEnd']}}</td>
+          <td class="row">Why aren't they working?</th>
+          <td class="numeric">
+            <!-- {{ data['dontWorkReason'] | dump}} -->
+            {{ data['dontWorkReason'] | capitalize}}
+            <!-- {% for whyNotWorkingName, whyNotWorkingValue in data['dontWorkReason'] %}
+              {{ whyNotWorkingName }}
+            {% endfor %} -->
+          </td>
+        </tr>
+
+
+        <tr>
+          <td class="row">Do they have a letter from their employer, confirming when the employment ended?</th>
+            <td class="numeric">{{ data['employerletter'] | capitalize }}</td>
+        </tr>
+
+        {% if (data['pregnancyemploymentend']) %}
+          <tr>
+            <td class="row">End date of employment</th>
+              <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+              <td class="numeric"> {{data['pregnancyemploymentend'] | capitalize }} </td>
+          </tr>
+        {% endif %}
+
+
+
+        {% if (data['currentlylookingforwork']) %}
+          <tr>
+            <td class="row">Are they currently looking for work?</th>
+              <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+              <td class="numeric"> {{data['currentlylookingforwork'] | capitalize }} </td>
+          </tr>
+        {% endif %}
+
+
+
+        {% if (data['lookingforwork']) %}
+          <tr>
+            <td class="row">Was this person actively looking for work in this time?</th>
+              <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+              <td class="numeric"> {{data['lookingforwork'] | capitalize }} </td>
+          </tr>
+        {% endif %}
+
+        {% if (data['whyDidntClaimUcSooner']) %}
+          <tr>
+            <td class="row">Why didn't they claim UC sooner?</th>
+              <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+              <td class="numeric"> {{data['whyDidntClaimUcSooner'] | capitalize }} </td>
+          </tr>
+        {% endif %}
+
+
+        <tr>
+          <td class="row">Is the claimant currently pregnant?</th>
+            <td class="numeric">{{ data['pregnant'] | capitalize }}</td>
         </tr>
 
         <tr>
-          <td class="row">Currently pregnant</th>
-            <td class="numeric">{{ data['pregnant']}}</td>
+          <td class="row">Does the claimant intend to go back to work?</th>
+            <td class="numeric">{{ data['backtowork'] | capitalize }}</td>
         </tr>
 
         <tr>
-          <td class="row">Back to work intention</th>
-            <td class="numeric">{{ data['backtowork']}}</td>
-        </tr>
-
-        <tr>
-          <td class="row">Arrival in UK</th>
+          <td class="row">How long have they been in the UK?</th>
             <td class="numeric">{{ data['pregnantArrivalInUkYear']}}</td>
         </tr>
 

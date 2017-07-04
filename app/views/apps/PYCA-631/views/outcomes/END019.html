@@ -1,5 +1,5 @@
 {% set page = {
-	title: "END019"
+  title: "END019"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -59,51 +59,107 @@
                   </thead>
 
                   <tbody>
+
                     <tr>
-                      <td class="row multiline">UK looking for work
+                      <td class="row">Were they previously working?</th>
+                      <td class="numeric">
+                        {% for propName, propValue in data['previousWork'] %}
+                          {{ propValue }}
+                        {% endfor %}
                       </td>
-                      <td class="numeric">{{ data['lookforwork']}}</td>
                     </tr>
 
-                    <tr>
-                      <td class="row">Time looking for work</th>
-                      <td class="numeric">{{ data['lookingforwork']}}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="row">Student</td>
-                      <td class="numeric">{{ data['ukstudent']}}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="row">CSI Policy</td>
-                      <td class="numeric">{{ data['studentcsi'] | capitalize }}</td>
-                    </tr>
-
-                     <tr>
-                      <td class="row">CSI policy start</td>
-                      <td class="numeric">{{ data['studentcsistart']}}</td>
-                    </tr>
-
-                     <tr>
-                      <td class="row">Course start</td>
-                      <td class="numeric">{{ data['courseStarted']}}t</td>
-                    </tr>
-
-                     <tr>
-                      <td class="row">Course end date</td>
-                      <td class="numeric">{{ data['coursesendDay'] if currentApp.isPartnerFlow else '' }} TODO</td>
-                    </tr>
-
+                    {% if (data['studentLookForWork']) %}
                       <tr>
-                      <td class="row">Study hours</th>
-                      <td class="numeric">{{ data['studyhours']}}</td>
-                    </tr>
+                        <td class="row">UK looking for work</th>
+                          <td class="numeric"> {{data['studentLookForWork'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
 
+                    {% if (data['lookingforwork']) %}
                       <tr>
-                      <td class="row">Study finances</th>
-                      <td class="numeric">{{ data['studyfinance']}}</td>
-                    </tr>
+                        <td class="row">Time looking for work</th>
+                          <td class="numeric"> {{data['lookingforwork'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['ukstudent']) %}
+                      <tr>
+                        <td class="row">Are they currently a student in the UK?</th>
+                          <td class="numeric"> {{data['ukstudent'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['studentcsi']) %}
+                      <tr>
+                        <td class="row">CSI policy</th>
+                          <td class="numeric"> {{data['studentcsi'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['studentcsistart']) %}
+                      <tr>
+                        <td class="row">CSI policy start</th>
+                          <td class="numeric"> {{data['studentcsistart'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['courseStarted']) %}
+                      <tr>
+                        <td class="row">Course Started</th>
+                          <td class="numeric"> {{data['courseStarted'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['hascourseended']) %}
+                      <tr>
+                        <td class="row">Has the course ended</th>
+                          <td class="numeric"> {{data['hascourseended'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['courseEnded']) %}
+                      <tr>
+                        <td class="row">Course end date</th>
+                          <td class="numeric"> {{data['courseEnded'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['lookingforwork']) %}
+                      <tr>
+                        <td class="row">Was claimant actively looking for work in this time?</th>
+                          <td class="numeric"> {{data['lookingforwork'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['whyDidntClaimUcSooner']) %}
+                      <tr>
+                        <td class="row">Why didn't they claim UC sooner?</th>
+                          <td class="numeric"> {{data['whyDidntClaimUcSooner'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['studyhours']) %}
+                      <tr>
+                        <td class="row">Study Hours</th>
+                          <td class="numeric"> {{data['studyhours'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['studyfinance']) %}
+                      <tr>
+                        <td class="row">Study finances</th>
+                          <td class="numeric"> {{data['studyfinance'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['notWorkingArrivalInUkYear']) %}
+                      <tr>
+                        <td class="row">How long have they been in the UK?</th>
+                          <td class="numeric"> {{data['notWorkingArrivalInUkYear'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
 
 
                     </table>
@@ -113,6 +169,6 @@
 
     </div>
 
-	</div>
+  </div>
 
 {% endblock %}
