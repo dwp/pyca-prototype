@@ -1,5 +1,5 @@
 {% set page = {
-	title: "What year did they arrive in the UK"
+	title: "When did they arrive in the UK"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -23,7 +23,7 @@
 
 						{{
 							form.radio({
-								name: 'lengthOfTimeInUK',
+								name: 'notWorkingArrivalInUkYear',
 								label: "Less than 6 months",
 								value: 'Less than 6 months'
 							})
@@ -31,7 +31,7 @@
 
 						{{
 							form.radio({
-								name: 'lengthOfTimeInUK',
+								name: 'notWorkingArrivalInUkYear',
 								label: "6 to 12 months",
 								value: '6 to 12 months'
 							})
@@ -39,32 +39,32 @@
 
 						{{
 							form.radio({
-								name: 'lengthOfTimeInUK',
+								name: 'notWorkingArrivalInUkYear',
 								label: "1 to 2 years"
 							})
 						}}
 
                         {{
 							form.radio({
-								name: 'lengthOfTimeInUK',
+								name: 'notWorkingArrivalInUkYear',
 								label: "2 to 3 years"
 							})
 						}}
                         {{
                             form.radio({
-                                name: 'lengthOfTimeInUK',
+                                name: 'notWorkingArrivalInUkYear',
                                 label: "3 to 4 years"
                             })
                         }}
                         {{
                             form.radio({
-                                name: 'lengthOfTimeInUK',
+                                name: 'notWorkingArrivalInUkYear',
                                 label: "4 to 5 years"
                             })
                         }}
                         {{
                             form.radio({
-                                name: 'lengthOfTimeInUK',
+                                name: 'notWorkingArrivalInUkYear',
                                 label: "More than 5 years"
                             })
                         }}

@@ -1,50 +1,37 @@
-{% set page = {
-	title: "Medical Certificates"
-} %}
+{% set page = { title: "Medical Certificates" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
 
-{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+<div class="grid-row">
+	<div class="column-two-thirds">
 
-{% block main_content %}
+		<form method="post" class="form">
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
-
-      <form method="post" class="form">
-
-        <h1 class="heading-large">
+		<h1 class="heading-large">
           Can they provide medical certificates from the first day of sickness?
         </h1>
 
+			<span class="form-hint">Please allow up to one week from the end of work to the date of the first certificate.</span>
 
-		<span class="form-hint">
-		    Please allow up to one week for the Claimant to provide this.
-		  </span>
-		  </form>
+			<!-- <form> -->
+			<div class="form-group">
+				<fieldset>
+					<div class="multiple-choice" data-target="medCerts">
+						<input id="medCerts" type="radio" name="medCerts" value="Yes">
+						<label for="medCerts">Yes</label>
+					</div>
 
-<form>
-		 <!-- <form> -->
-		  <div class="form-group">
-		    <fieldset>
-		      <div class="multiple-choice" data-target="medCerts">
-		        <input id="medCerts" type="radio" name="medCerts" value="Yes">
-		        <label for="medCerts">Yes</label>
-		      </div>
+					<div class="multiple-choice" data-target="medCerts">
+						<input id="medCerts" type="radio" name="medCerts" value="No">
+						<label for="medCerts">No</label>
+					</div>
+				</fieldset>
+			</div>
+			<!-- </form> -->
 
-		      <div class="multiple-choice" data-target="medCerts">
-		        <input id="medCerts" type="radio" name="medCerts" value="No">
-		        <label for="medCerts">No</label>
-		      </div>
-		    </fieldset>
-		  </div>
-		<!-- </form> -->
-
-        <div class="form-group">
-          <button type="submit" class="button">Continue</button>
-        </div>
-
-      </form>
-
-    </div>
-  </div>
+			<div class="form-group">
+				<button type="submit" class="button">Continue</button>
+			</div>
+		</form>
+	</div>
+</div>
 
 {% endblock %}

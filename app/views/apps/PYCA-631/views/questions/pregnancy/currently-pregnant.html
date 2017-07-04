@@ -1,61 +1,53 @@
-{% set page = {
-	title: "Pregnant"
-} %}
+{% set page = { title: "Pregnant" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
 
-{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+<div class="grid-row">
+  <div class="column-two-thirds">
 
-{% block main_content %}
+    <form method="post" class="form">
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
-
-      <form method="post" class="form">
-
-        <h1 class="heading-large">
+      <h1 class="heading-large">
           Is the claimant currently pregnant?
         </h1>
 
-        <form>
-  <div class="form-group">
-    <fieldset>
+      <div class="form-group">
+        <fieldset class="inline">
 
-     <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
+          <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
 
-     <div class="form-group">
-        <fieldset role="radiogroup" aria-required="true">
+          <div class="form-group">
+            <fieldset role="radiogroup" aria-required="true">
 
-          <legend>
-            <span class="visuallyhidden">Is the claimant currently pregnant?</span>
-          </legend>
+              <legend>
+                <span class="visuallyhidden">Is the claimant currently pregnant?</span>
+              </legend>
 
-          {{
-            form.radio({
-              name: 'pregnant',
-              label: "Yes",
-                            value: "yes"
-            })
-          }}
+              {{
+                form.radio({
+                  name: 'pregnant',
+                  label: "Yes",
+                  value: "yes"
+                })
+              }}
 
-          {{
-            form.radio({
-              name: 'pregnant',
-              label: "No",
-              value: 'no'
-            })
-          }}
+              {{
+                form.radio({
+                  name: 'pregnant',
+                  label: "No",
+                  value: 'no'
+                })
+              }}
 
-        </fieldset>
+            </fieldset>
+          </div>
       </div>
+
+      <div class="form-group">
+        <button type="submit" class="button">Continue</button>
+      </div>
+
+    </form>
+
   </div>
-</form>
-
-        <div class="form-group">
-          <button type="submit" class="button">Continue</button>
-        </div>
-
-      </form>
-
-    </div>
-  </div>
+</div>
 
 {% endblock %}

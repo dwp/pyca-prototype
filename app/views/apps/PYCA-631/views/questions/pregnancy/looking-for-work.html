@@ -1,4 +1,4 @@
-﻿{% set page = { title: "Looking for work" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %} {% block main_content %}
+{% set page = { title: "Looking for work" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %} {% block main_content %}
 
 <div class="grid-row">
   <div class="column-two-thirds">
@@ -18,7 +18,7 @@
 
               {{
                   form.radio({
-                      name: 'lookingforwork', 
+                      name: 'lookingforwork',
                       label: 'Yes'
                   })
               }}
