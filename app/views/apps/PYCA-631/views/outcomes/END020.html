@@ -1,5 +1,5 @@
 {% set page = {
-	title: "END016"
+  title: "END016"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -59,35 +59,77 @@
                   </thead>
 
                   <tbody>
+
+                    <tr>
+                    	<td class="row">Were they previously working?</th>
+                    	<td class="numeric">
+                    		{% for propName, propValue in data['previousWork'] %}
+                    			{{ propValue }}
+                    		{% endfor %}
+                    	</td>
+                    </tr>
+
+                    <tr>
+                    	<td class="row">Why aren't they working?</th>
+                    	<td class="numeric">
+                    		<!-- {{ data['dontWorkReason'] | dump}} -->
+                    		{{ data['dontWorkReason'] | capitalize}}
+                    		<!-- {% for whyNotWorkingName, whyNotWorkingValue in data['dontWorkReason'] %}
+                    			{{ whyNotWorkingName }}
+                    		{% endfor %} -->
+                    	</td>
+                    </tr>
+
                     <tr>
                       <td class="row multiline">Accident/injury at work
                       </td>
-                      <td class="numeric">{{ data['injuryatwork']}}</td>
+                      <td class="numeric">{{ data['injuryatwork'] | capitalize}}</td>
                     </tr>
 
-                    <tr>
-                      <td class="row">Permanent incapacity</th>
-                      <td class="numeric">{{ data['preventpermanently']}}</td>
-                    </tr>
+                    {% if (data['preventpermanently']) %}
+                      <tr>
+                        <td class="row">Permanent incapacity</th>
+                          <td class="numeric"> {{data['preventpermanently'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
 
                     <tr>
                       <td class="row">Industrial Injuries Disablement Benefit</td>
-                      <td class="numeric">{{ data['ijbbenefit']}}</td>
+                      <td class="numeric">{{ data['ijbbenefit'] | capitalize}}</td>
                     </tr>
 
-                    <tr>
-                      <td class="row">Employer letter for employment end date</td>
-                      <td class="numeric">{{ data['illnessemployerletter']}}</td>
-                    </tr>
+                    {% if (data['employmentEnd']) %}
+                      <tr>
+                        <td class="row">When did employment end?</th>
+                          <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+                          <td class="numeric"> {{data['employmentEnd'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['lookingforwork']) %}
+                      <tr>
+                        <td class="row">Was this person actively looking for work in this time?</th>
+                          <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+                          <td class="numeric"> {{data['lookingforwork'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    {% if (data['whyDidntClaimUcSooner']) %}
+                      <tr>
+                        <td class="row">Why didn't they claim UC sooner?</th>
+                        <td class="numeric"> {{data['whyDidntClaimUcSooner'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
 
                      <tr>
                       <td class="row">Medical certificates from first day</td>
-                      <td class="numeric">{{ data['medCerts']}}</td>
+                      <td class="numeric">{{ data['medCerts'] | capitalize}}</td>
                     </tr>
 
                      <tr>
                       <td class="row">Arrived in UK</td>
-                      <td class="numeric">{{ data['lengthOfTimeInUK']}}</td>
+                      <td class="numeric">{{ data['lengthOfTimeInUK'] | capitalize}}</td>
                     </tr>
 
 
@@ -98,6 +140,6 @@
 
     </div>
 
-	</div>
+  </div>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 {% set page = {
-	title: "When did employment end"
+  title: "When did employment end"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -23,31 +23,31 @@
               <span class="visuallyhidden">When did {{ "their partner's" if currentApp.isPartnerFlow else 'their' }} employment end?</span>
             </legend>
 
-						{{
-							form.radio({
-								name: 'employmentEnd',
-								label: "1 week ago"
-							})
-						}}
+            {{
+            form.radio({
+            name: 'employmentEnd',
+            label: "1 week ago"
+            })
+            }}
 
-						{{
-							form.radio({
-								name: 'employmentEnd',
-								label: "1 month ago"
-							})
-						}}
-                        {{
-                            form.radio({
-                                name: 'employmentEnd',
-                                label: "6 months ago"
-                            })
-                        }}
-                        {{
-                            form.radio({
-                                name: 'employmentEnd',
-                                label: "1 year ago"
-                            })
-                        }}
+            {{
+            form.radio({
+            name: 'employmentEnd',
+            label: "1 month ago"
+            })
+            }}
+            {{
+                form.radio({
+                    name: 'employmentEnd',
+                    label: "6 months ago"
+                })
+            }}
+            {{
+                form.radio({
+                    name: 'employmentEnd',
+                    label: "1 year ago"
+                })
+            }}
           </fieldset>
         </div>
 
