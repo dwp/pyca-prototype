@@ -1,0 +1,14 @@
+<div class="govuk-box-highlight">
+  {% if currentApp.claimantStatus == 'Ineligible' %}
+    <h1 class="bold-large">Book a HRT for this {{ 'person' if currentApp.isPartnerFlow else 'person' }}</h1>
+  {% else %}
+    <h1 class="bold-large">Fast-track this {{ 'person' if currentApp.isPartnerFlow else 'person' }}</h1>
+  {% endif %}
+</div>
+
+{% if currentApp.claimantStatus == 'Ineligible' %}
+  <p>This claim is not eligible for fast-track.</p>
+{% else %}
+  <h2 class="heading-medium">Claimant status</h2>
+  <p>{{ currentApp.claimantStatus }} {{ 'with a qualifying partner' if isPartnerFlow}}</p>
+{% endif %}

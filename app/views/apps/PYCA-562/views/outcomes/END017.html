@@ -1,0 +1,142 @@
+{% set page = {
+	title: "END016"
+} %}
+<!-- <<< FURTHER EVIDENCE INTERVIEW SELF EMPLOYED >>>
+ -->
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+  <h1 class="heading-large">This claimant requires more evidence</h1>
+
+  <h2 class="heading-medium">The claimant will need to to bring:</h2>
+
+
+  <strong class="bold-small">One of the following options:</strong>
+
+      <ul class="list list-bullet">
+        <li>Passport</li>
+        <li>ID Card</li>
+      </ul>
+
+      <strong class="bold-small">Along with at least one of the below:</strong>
+
+      <ul class="list list-bullet">
+        <li>3 months of bank statements</li>
+        <li>3 months of accounts</li>
+        <li>3 months of receipts or services</li>
+        <li>3 months of record of income and expenses</li>
+        <li>Tax return for the last year</li>
+        <li>Letter from HMRC</li>
+        <li>Proof of arrival into the UK (such as a ticket or boarding pass)</li>
+      </ul>
+
+          <h2 class="heading-medium">Next steps</h2>
+
+            <ul class="list list-number">
+            <li>In the PYCA to do select 'Yes' for "Is this a fast track referral?"
+            <li>Clear the to do</li>
+            <li>Save this page as a PDF</li>
+            <li>Upload PDF to 'Refer to Decision Maker' to-do</li>
+            <li>In the claimant's history add "PYCA completed, 'Refer to DM' to do to be cleared once the evidence is provided"</li>
+            <li>Do not clear the 'Refer to Decision Maker' to-do</li>
+            <li>Book a further evidence interview</li>
+            <li>Add this note to 'Further Evidence interview' to-do:</li>
+            </ul>
+            <p>"Attach the evidence provided by the claimant to the 'Refer to Decision Maker to do' and clear the to-do"</p>
+
+
+		<form>
+			<input class="button" type=button name=print value="Save page as PDF" onClick="window.print()">
+		</form>
+
+
+		<table>
+			<thead>
+				<tr>
+					<td class="multiline" scope="col"></td>
+					<td class="numeric" scope="col"></td>
+				</tr>
+			</thead>
+			<table>
+				<thead>
+					<tr>
+						<th class="multiline" scope="col">Question summary</th>
+						<th class="numeric multiline" scope="col">Answer
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td class="row multiline">How long have they been self employed?</td>
+						<!-- <td class="numeric">{{ data['ukDay']}} / {{ data['ukMonth']}} / {{ data['ukYear']}}</td> -->
+						<td class="numeric">{{ data['selfEmployedDuration']}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Hours per week working as self employed</th>
+							<td class="numeric">{{ data['selfEmployedHours']}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Monthly average earnings</td>
+						<td class="numeric">{{ data['monthlyAverageEarnings']}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Salary to self</td>
+						<td class="numeric">{{ data['payThemselfASalary'] | capitalize}}</td>
+						<!-- {{ data['ukDay']}} -->
+					</tr>
+
+					<tr>
+						<td class="row">Registered with HMRC</td>
+						<td class="numeric">{{ data['hmrcRegistered'] | capitalize}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Accident/sick/unemployment pay</td>
+						<td class="numeric">{{ data['sickPay'] | capitalize}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Employees</td>
+						<td class="numeric">{{ data['anyEmployees'] | capitalize}}</td>
+					</tr>
+
+					<!-- <tr>
+                      <td class="row">Description of service</th>
+                      <td class="numeric">Joinery company</td>
+                    </tr> -->
+
+					<tr>
+						<td class="row">Profit made</th>
+							<td class="numeric">{{ data['businessEverMadeProfit'] | capitalize}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">What is the type of business?</th>
+							<td class="numeric">{{ data['typeOfBusiness'] | capitalize}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Any other periods of self employment</th>
+							<td class="numeric">{{ data['previouslySelfEmployed'] | capitalize}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Been in the UK for:</td>
+						<!-- <td class="numeric">{{ data['ukDay']}} / {{ data['ukMonth']}} / {{ data['ukYear']}}</td> -->
+						<td class="numeric">{{ data['lengthOfTimeInUK']}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</table>
+	</div>
+</div>
+
+{% endblock %}

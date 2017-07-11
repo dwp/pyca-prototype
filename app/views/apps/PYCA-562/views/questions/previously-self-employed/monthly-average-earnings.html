@@ -1,0 +1,53 @@
+{% set page = {
+	title: "Monthly average earnings"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+<div class="grid-row">
+	<div class="column-two-thirds">
+
+		<form method="post" class="form">
+
+			<h1 class="heading-large">
+				What were their monthly average earnings?
+			</h1>
+
+			<div class="form-group">
+				<fieldset role="radiogroup" aria-required="true" class="inline">
+
+					<legend>
+						<span class="visuallyhidden">What were their monthly average earnings?</span>
+					</legend>
+
+					{{
+						form.radio({
+							name: 'prevMonthlyAverageEarnings',
+							label: "Less than £600",
+                            value: 'Less than £600'
+						})
+					}}
+
+					{{
+						form.radio({
+							name: 'prevMonthlyAverageEarnings',
+							label: "More than £600",
+							value: 'More than £600'
+						})
+					}}
+
+				</fieldset>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="button">Continue</button>
+			</div>
+
+		</form>
+
+	</div>
+</div>
+
+{% endblock %}﻿

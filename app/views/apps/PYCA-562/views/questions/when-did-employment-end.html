@@ -1,0 +1,61 @@
+{% set page = {
+  title: "When did employment end"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          When did {{ "their partner's" if currentApp.isPartnerFlow else 'their' }} employment end?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">When did {{ "their partner's" if currentApp.isPartnerFlow else 'their' }} employment end?</span>
+            </legend>
+
+            {{
+            form.radio({
+            name: 'employmentEnd',
+            label: "1 week ago"
+            })
+            }}
+
+            {{
+            form.radio({
+            name: 'employmentEnd',
+            label: "1 month ago"
+            })
+            }}
+            {{
+                form.radio({
+                    name: 'employmentEnd',
+                    label: "6 months ago"
+                })
+            }}
+            {{
+                form.radio({
+                    name: 'employmentEnd',
+                    label: "1 year ago"
+                })
+            }}
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+{% endblock %}

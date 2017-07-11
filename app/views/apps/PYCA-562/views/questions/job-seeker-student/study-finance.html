@@ -1,0 +1,61 @@
+{% set page = {
+	title: "Study finances"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+<div class="grid-row">
+	<div class="column-two-thirds">
+
+		<form method="post" class="form">
+
+			<h1 class="heading-large">
+				How does the claimant finance their studies?
+			</h1>
+
+			<div class="form-group">
+				<fieldset role="radiogroup" aria-required="true">
+
+					<legend>
+						<span class="visuallyhidden">How does the claimant finance their studies?</span>
+					</legend>
+
+					{{
+						form.radio({
+							name: 'studyfinance',
+							label: "Loan",
+                            value: "Loan"
+						})
+					}}
+
+					{{
+						form.radio({
+							name: 'studyfinance',
+							label: "Help from family",
+							value: 'Help from family'
+						})
+					}}
+
+                    {{
+						form.radio({
+							name: 'studyfinance',
+							label: "Other",
+                            value: "Other"
+						})
+					}}
+
+				</fieldset>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="button">Continue</button>
+			</div>
+
+		</form>
+
+	</div>
+</div>
+
+{% endblock %}﻿

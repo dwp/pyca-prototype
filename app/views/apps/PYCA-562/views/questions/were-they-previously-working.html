@@ -1,0 +1,46 @@
+{% set page = { title: "Previous Work" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+
+<div class="grid-row">
+  <div class="column-two-thirds">
+
+    <form method="post" class="form">
+
+      <h1 class="heading-large">
+          {{ 'Was the partner' if currentApp.isPartnerFlow else 'Were they' }} previously working?
+        </h1>
+
+      <div class="form-group">
+        <fieldset role="group" aria-required="true">
+
+          <legend>
+            <span class="visuallyhidden">{{ 'Was the partner' if currentApp.isPartnerFlow else 'Were they' }} previously working?</span>
+          </legend>
+
+          <div class="multiple-choice">
+            <input type="checkbox" name="previousWork[employed]" value="true" id="employed" data-uncheck='["dontWork"]'>
+            <label for="employed">Yes, they were employed by someone</label>
+          </div>
+
+          <div class="multiple-choice">
+            <input type="checkbox" name="previousWork[selfEmployed]" value="true" id="selfEmployed" data-uncheck='["dontWork"]'>
+            <label for="selfEmployed">Yes, they were self-employed (work for themselves)</label>
+          </div>
+
+          <div class="multiple-choice">
+            <input type="checkbox" name="previousWork[didntWork]" value="true" id="didntWork" data-uncheck='["employed", "selfEmployed"]'>
+            <label for="didntWork">No, they didn’t do any work before</label>
+          </div>
+
+        </fieldset>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="button">Continue</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

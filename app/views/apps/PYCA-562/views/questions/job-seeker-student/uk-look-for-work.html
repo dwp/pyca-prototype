@@ -1,0 +1,43 @@
+{% set page = {
+	title: "Did you arrive to look for work"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+				Did the claimant come to the UK to look for work?
+	        </h1>
+
+		 <!-- <form> -->
+		  <div class="form-group">
+		    <fieldset class="inline">
+		      <div class="multiple-choice" data-target="studentLookForWork">
+		        <input id="studentLookForWork" type="radio" name="studentLookForWork" value="yes">
+		        <label for="studentLookForWork">Yes</label>
+		      </div>
+
+		      <div class="multiple-choice" data-target="studentLookForWork">
+		        <input id="studentLookForWork" type="radio" name="studentLookForWork" value="no">
+		        <label for="studentLookForWork">No</label>
+		      </div>
+		    </fieldset>
+		  </div>
+		<!-- </form> -->
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

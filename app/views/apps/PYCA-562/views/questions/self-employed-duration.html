@@ -1,0 +1,82 @@
+{% set page = {
+	title: "Employee status &ndash; self employed"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+<div class="grid-row">
+	<div class="column-two-thirds">
+
+		<form method="post" class="form">
+
+			<h1 class="heading-large">
+				How long have they been self employed?
+			</h1>
+
+			<div class="form-group">
+				<fieldset role="radiogroup" aria-required="true">
+
+					<legend>
+						<span class="visuallyhidden">How long have they been self employed?</span>
+					</legend>
+
+					{{
+						form.radio({
+							name: 'selfEmployedDuration',
+							label: "1 to 3 months",
+                            value: "1 to 3 months"
+						})
+					}}
+
+					{{
+						form.radio({
+							name: 'selfEmployedDuration',
+							label: "4 to 6 months",
+							value: '4 to 6 months'
+						})
+					}}
+
+					{{
+						form.radio({
+							name: 'selfEmployedDuration',
+							label: "7 to 9 months",
+							value: '7 to 9 months"'
+						})
+					}}
+					{{
+						form.radio({
+							name: 'selfEmployedDuration',
+							label: "10 to 11 months",
+							value: '10 to 12 months'
+						})
+					}}
+					{{
+						form.radio({
+							name: 'selfEmployedDuration',
+							label: "1 to 4 years",
+							value: '1 to 4 years'
+						})
+					}}
+					{{
+						form.radio({
+							name: 'selfEmployedDuration',
+							label: "More than 5 years",
+							value: 'More than 5 years'
+						})
+					}}
+
+				</fieldset>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="button">Continue</button>
+			</div>
+
+		</form>
+
+	</div>
+</div>
+
+{% endblock %}﻿

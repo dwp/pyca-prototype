@@ -1,0 +1,62 @@
+{% set page = {
+	title: "Marriage certificate"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          How long have they been self employed?
+        </h1>
+
+        <form>
+  <div class="form-group">
+    <fieldset>
+
+     <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
+
+      <div class="multiple-choice" data-target="1-3months">
+        <input id="1-3months" type="radio" name="radio-contact-group" value="1-3months">
+        <label for="1-3months">1 to 3 months</label>
+      </div>
+
+      <div class="multiple-choice" data-target="4-6months">
+        <input id="4-6 months" type="radio" name="radio-contact-group" value="4-6months">
+        <label for="4-6months">4 to 6 months</label>
+      </div>
+      
+      <div class="multiple-choice" data-target="6-9months">
+        <input id="6-9months" type="radio" name="radio-contact-group" value="6-9months">
+        <label for="6-9months">7 to 9 months</label>
+      </div>
+
+      <div class="multiple-choice" data-target="1-4years">
+        <input id="1-4years" type="radio" name="radio-contact-group" value="1-4years">
+        <label for="1-4years">1 to 4 years</label>
+      </div>
+
+      <div class="multiple-choice" data-target="5+years">
+        <input id="5+years" type="radio" name="radio-contact-group" value="5+years">
+        <label for="5+years">More than 5 years</label>
+      </div>
+
+    </fieldset>
+  </div>
+</form>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

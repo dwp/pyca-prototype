@@ -1,0 +1,53 @@
+{% set page = {
+	title: "CSI Policy Start Date"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+				When did they get this policy?
+	        </h1>
+
+		 <!-- <form> -->
+		  <div class="form-group">
+		    <fieldset>
+		      <div class="multiple-choice" data-target="csi-date">
+		        <input id="studentcsistart" type="radio" name="studentcsistart" value="In the last year">
+		        <label for="studentcsistart">In the last year</label>
+		      </div>
+
+		      <div class="multiple-choice" data-target="csidate">
+		        <input id="studentcsistart" type="radio" name="studentcsistart" value="In the last 5 years">
+		        <label for="studentcsistart">In the last 5 years</label>
+		      </div>
+
+		       <div class="multiple-choice" data-target="studentcsistart">
+		        <input id="studentcsistart" type="radio" name="studentcsistart" value="More than 5 years ago">
+		        <label for="csidate">More than 5 years ago</label>
+		      </div>
+		      
+		    </fieldset>
+		  </div>
+
+		  
+
+
+		<!-- </form> -->
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}
