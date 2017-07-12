@@ -692,7 +692,7 @@ module.exports = (router, config) => {
 
     if (selfEmployedDuration) {
       answers[claimantType].selfEmployedDuration = selfEmployedDuration;
-      res.redirect(`${appRoot}/questions/self-employed-hours-worked?${claimantType}`);
+      res.redirect(`${appRoot}/questions/previous-self-employment?${claimantType}`);
     }
     else {
       res.render(`${appRootRel}/questions/self-employed-duration`);
@@ -720,7 +720,7 @@ module.exports = (router, config) => {
 
     if (monthlyAverageEarnings) {
       answers[claimantType].monthlyAverageEarnings = monthlyAverageEarnings;
-      res.redirect(`${appRoot}/questions/salary?${claimantType}`);
+      res.redirect(`${appRoot}/questions/type-of-business?${claimantType}`);
     }
     else {
       res.render(`${appRootRel}/questions/monthly-average-earnings`);
@@ -739,7 +739,7 @@ module.exports = (router, config) => {
       {
         res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
       } else {
-        res.redirect(`${appRoot}/questions/hmrc-registered?${claimantType}`);
+        res.redirect(`${appRoot}/questions/accident-sick-pay?${claimantType}`);
       }
     }
     else {
@@ -787,7 +787,7 @@ module.exports = (router, config) => {
       {
         res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
       } else {
-        res.redirect(`${appRoot}/questions/any-employees?${claimantType}`);
+        res.redirect(`${appRoot}/questions/self-employed-hours-worked?${claimantType}`);
       }
     }
     else {
@@ -802,7 +802,7 @@ module.exports = (router, config) => {
 
     if (anyEmployees) {
       answers[claimantType].anyEmployees = anyEmployees;
-      res.redirect(`${appRoot}/questions/decide-who-provide-service-to?${claimantType}`);
+      res.redirect(`${appRoot}/questions/business-profit?${claimantType}`);
     }
     else {
       res.render(`${appRootRel}/questions/any-employees`);
@@ -819,9 +819,8 @@ module.exports = (router, config) => {
 
       if (decideWhoToProvideServiceTo === 'yes')
       {
-        res.redirect(`${appRoot}/questions/business-profit?${claimantType}`);
+        res.redirect(`${appRoot}/questions/salary?${claimantType}`);
       } else {
-
         res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
       }
     }
@@ -837,7 +836,7 @@ module.exports = (router, config) => {
 
     if (businessEverMadeProfit) {
       answers[claimantType].businessEverMadeProfit = businessEverMadeProfit;
-      res.redirect(`${appRoot}/questions/type-of-business?${claimantType}`);
+      res.redirect(`${appRoot}/questions/length-of-time-in-uk?${claimantType}`);
     }
     else {
       res.render(`${appRootRel}/questions/business-profit`);
@@ -854,7 +853,7 @@ module.exports = (router, config) => {
       res.redirect(`${appRoot}/questions/previous-self-employment?${claimantType}`);
     }
     else {
-      res.render(`${appRootRel}/questions/type-of-business`);
+      res.render(`${appRootRel}/questions/any-employees`);
     }
   });
 
@@ -865,7 +864,12 @@ module.exports = (router, config) => {
 
     if (previouslySelfEmployed) {
       answers[claimantType].previouslySelfEmployed = previouslySelfEmployed;
-      res.redirect(`${appRoot}/questions/length-of-time-in-uk?${claimantType}`);
+      // ADB TODO
+      if (previouslySelfEmployed == 'yes'){
+        res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+      } else {
+        res.redirect(`${appRoot}/questions/decide-who-provide-service-to?${claimantType}`);
+      }
     }
     else {
       res.render(`${appRootRel}/questions/previous-self-employment`);
