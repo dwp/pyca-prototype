@@ -89,7 +89,11 @@ module.exports = (router, config) => {
     },
     selfEmployedWithoutEvidence : {
       id: 'END017',
-      status: 'Self Employed person - without their evidence with them'
+      status: 'Self Employed person'
+    },
+    selfEmployedWithoutEvidence2 : {
+      id: 'END017-2',
+      status: 'Self Employed person'
     },
     selfEmployedWithEvidence : {
       id: 'END018',
@@ -850,10 +854,10 @@ module.exports = (router, config) => {
 
     if (typeOfBusiness) {
       answers[claimantType].typeOfBusiness = typeOfBusiness;
-      res.redirect(`${appRoot}/questions/previous-self-employment?${claimantType}`);
+      res.redirect(`${appRoot}/questions/any-employees?${claimantType}`);
     }
     else {
-      res.render(`${appRootRel}/questions/any-employees`);
+      res.render(`${appRootRel}/questions/type-of-business`);
     }
   });
 
@@ -882,11 +886,7 @@ module.exports = (router, config) => {
     var claimantType = res.locals.currentApp.claimantType;
 
     if (lengthOfTimeInUK){
-      if (answers[claimantType].previouslySelfEmployed == 'no') {
         res.redirect(`${appRoot}/questions/evidence-today?${claimantType}`);
-      } else {
-        res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-      }
     }
     else {
       res.render(`${appRootRel}/questions/length-of-time-in-uk`);
@@ -1653,7 +1653,7 @@ module.exports = (router, config) => {
     if (evidenceToday) {
       answers[claimantType].evidenceToday = evidenceToday;
       if (evidenceToday == 'yes'){
-      res.redirect(`${appRoot}/outcomes/${outcomes.pregnantFastTrack.id}?${claimantType}`);
+      res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedWithoutEvidence2.id}?${claimantType}`);
       } else {
       res.redirect(`${appRoot}/outcomes/${outcomes.pregnantFastTrackFurtherEvidenceRequired.id}?${claimantType}`);
 
@@ -1663,6 +1663,14 @@ module.exports = (router, config) => {
     }
   });
   // ####################### END PYCA-631 Changes ##############################
+  router.all(`${appRoot}/outcomes/END017`, function (req, res) {
+    console.log('hello!')
+    var answers = req.session[config.slug].answers;
+    var claimantType = res.locals.currentApp.claimantType;
+    res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedWithoutEvidence2.id}?${claimantType}`);
+  });
+
+
 
   return router
 
