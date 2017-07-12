@@ -1,0 +1,52 @@
+{% set page = {
+	title: "Nationality",
+	hasLocationPicker: true
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+           What nationality is on {{ 'their partner’s passport?' if currentApp.isPartnerFlow else 'the ID document they’ve brought?' }}
+					 <span class="form-hint">
+			 			<br />This can be a passport, national identity card, biometric residence permit or travel document.
+			 		</span>
+		    </h1>
+        <div class="form-group">
+          <fieldset>
+            <label for="location-picker" class="visuallyhidden">What nationality is on {{ 'their partner’s passport?' if currentApp.isPartnerFlow else 'the passport they’ve brought?' }}</label>
+
+            <div class="form-control-2-3">
+              <select id="location-picker" name="nationality">
+  	            <option value="" disabled selected>
+  	              {% if locale === 'en-GB' %}
+  	                Choose a location
+  	              {% else %}
+  	                Dewiswch leoliad
+  	              {% endif %}
+  	            </option>
+  	            {% for location in locations %}
+  	              <option value="{{location}}">{{location}}</option>
+  	            {% endfor %}
+  	          </select>
+            </div>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

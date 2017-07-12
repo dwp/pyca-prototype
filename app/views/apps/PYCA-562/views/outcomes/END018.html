@@ -1,0 +1,109 @@
+{% set page = { title: "END018" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+
+<div class="grid-row">
+	<div class="column-two-thirds">
+	{% include currentApp.filePaths.includesDir + "header.html" %}
+
+	<!-- <<< FAST TRACK INTERVIEW SELF EMPLOYED >>>
+ -->
+
+		<h2 class="heading-medium">Next steps</h2>
+
+		<ul class="list list-number">
+			<li>In the PYCA to do select 'Yes' for "Is this a fast track referral?"</li>
+            <li>Clear the to do</li>
+			<li>Save this page as a PDF</li>
+			<li>Upload PDF to 'Refer to Decision Maker' to-do</li>
+			<li>Upload all evidence 'Refer to Decision Maker' to-do</li>
+			<li>For the question 'Is an HRT interview needed' select 'No'</li>
+			<li>Select 'Done'</li>
+		</ul>
+
+		<form>
+			<input class="button" type=button name=print value="Save page as PDF" onClick="window.print()">
+		</form>
+
+
+		<table>
+			<thead>
+				<tr>
+					<td class="multiline"="col"></td>
+					<th class="numeric" scope="col"></th>
+				</tr>
+			</thead>
+		</table>
+
+			<table>
+				<thead>
+					<tr>
+						<th class="multiline" scope="col">Question summary</th>
+						<th class="numeric multiline" scope="col">Answer
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td class="row multiline">How long have they been self employed?</td>
+						<!-- <td class="numeric">{{ data['ukDay']}} / {{ data['ukMonth']}} / {{ data['ukYear']}}</td> -->
+						<td class="numeric">{{ data['selfEmployedDuration']}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Hours per week working as self employed</th>
+							<td class="numeric">{{ data['selfEmployedHours']}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Monthly average earnings</td>
+						<td class="numeric">{{ data['monthlyAverageEarnings']}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Salary to self</td>
+						<td class="numeric">{{ data['payThemselfASalary'] | capitalize}}</td>
+						<!-- {{ data['ukDay']}} -->
+					</tr>
+
+					<tr>
+						<td class="row">Accident/sick/unemployment pay</td>
+						<td class="numeric">{{ data['sickPay'] | capitalize}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Employees</td>
+						<td class="numeric">{{ data['anyEmployees'] | capitalize}}</td>
+					</tr>
+
+					<!-- <tr>
+                      <td class="row">Description of service</th>
+                      <td class="numeric">Joinery company</td>
+                    </tr> -->
+
+					<tr>
+						<td class="row">Profit made</th>
+							<td class="numeric">{{ data['businessEverMadeProfit'] | capitalize}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">What is the type of business?</th>
+							<td class="numeric">{{ data['typeOfBusiness'] | capitalize}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Any other periods of self employment</th>
+							<td class="numeric">{{ data['previouslySelfEmployed'] | capitalize}}</td>
+					</tr>
+
+					<tr>
+						<td class="row">Been in the UK for:</td>
+						<!-- <td class="numeric">{{ data['ukDay']}} / {{ data['ukMonth']}} / {{ data['ukYear']}}</td> -->
+						<td class="numeric">{{ data['lengthOfTimeInUK']}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</table>
+	</div>
+</div>
+
+{% endblock %}

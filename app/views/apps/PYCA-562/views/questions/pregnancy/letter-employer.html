@@ -1,0 +1,39 @@
+{% set page = { title: "Pregnancy employer letter" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+
+<div class="grid-row">
+  <div class="column-two-thirds">
+
+    <form method="post" class="form">
+
+      <h1 class="heading-large">
+          Do they have a letter from their employer, confirming when the employment ended?
+        </h1>
+
+        <div class="form-group">
+          <fieldset class="inline">
+
+            <!--  <legend class="visually-hidden">How do you want to be contacted?</legend> -->
+
+            <div class="form-group">
+              <fieldset role="radiogroup" aria-required="true">
+
+                <legend>
+                  <span class="visuallyhidden">Do they have a letter from their employer, confirming when the employment ended?</span>
+                </legend>
+
+                {{ form.radio({ name: 'employerletter', label: "Yes", value: "yes" }) }} {{ form.radio({ name: 'employerletter', label: "No", value: 'no' }) }}
+
+              </fieldset>
+            </div>
+        </div>
+
+      <div class="form-group">
+        <button type="submit" class="button">Continue</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

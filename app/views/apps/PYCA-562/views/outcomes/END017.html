@@ -1,0 +1,48 @@
+{% set page = {
+	title: "END016"
+} %}
+<!-- <<< FURTHER EVIDENCE INTERVIEW SELF EMPLOYED >>>
+ -->
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+    <h1 class="heading-large">More evidence needed</h1>
+
+		<h2 class="heading-medium">Claimant status</h2>
+	  <p>{{ currentApp.claimantStatus }} {{ 'with a qualifying partner' if isPartnerFlow}}</p>
+
+    <h2 class="heading-medium">The claimant will need to to bring:</h2>
+
+    <strong class="bold-small">All of the following:</strong>
+
+    <ul class="list list-bullet">
+      <li>Passport or ID Card</li>
+      <li>Fitnote</li>
+    </ul>
+
+    <strong class="bold-small">As many as possible from this list:</strong>
+
+    <ul class="list list-bullet">
+      <li>3 months of bank statements</li>
+      <li>3 months of accounts</li>
+      <li>3 months of receipts or services</li>
+      <li>3 months of record of income and expenses</li>
+      <li>Tax return for the last year</li>
+      <li>Letter from HMRC</li>
+      <li>Proof of arrival into the UK (such as a ticket or boarding pass)</li>
+    </ul>
+
+		<form method="post" class="form">
+			<div class="form-group">
+				<button type="submit" class="button">Continue</button>
+			</div>
+		</form>
+
+	</div>
+</div>
+
+{% endblock %}

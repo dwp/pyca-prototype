@@ -1,0 +1,137 @@
+{% set page = { title: "END026" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
+
+<!-- <<<<< FAST TRACK pregnant >>>>
+ -->
+<div class="grid-row">
+  <div class="column-two-thirds">
+
+    {% include currentApp.filePaths.includesDir + "header.html" %}
+
+    <h2 class="heading-medium">Next steps</h2>
+
+    <ul class="list list-number">
+      <li>In the PYCA to do select 'Yes' for "Is this a fast track referral?"</li>
+      <li>Clear the to do</li>
+      <li>Save this page as a PDF</li>
+      <li>Upload PDF to 'Refer to Decision Maker' to-do</li>
+      <li>Upload all evidence 'Refer to Decision Maker' to-do</li>
+      <li>For the question 'Is an HRT interview needed' select 'No'</li>
+      <li>Select 'Done'</li>
+    </ul>
+
+    <div class="form-group">
+      <input class="button" type=button name=print value="Save page as PDF" onClick="window.print()">
+    </div>
+
+
+
+    <table>
+      <thead>
+        <tr>
+          <td class="multiline"="col"></td>
+          <th class="numeric" scope="col"></th>
+        </tr>
+      </thead>
+    </table>
+    <table>
+
+      <thead>
+        <tr>
+          <th scope="col">Question summary</th>
+          <th class="numeric" scope="col">Answer</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+
+
+        <tr>
+          <td class="row">Were they previously working?</th>
+          <td class="numeric">
+            {% for propName, propValue in data['previousWork'] %}
+              {{ propValue }}
+            {% endfor %}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="row">Why aren't they working?</th>
+          <td class="numeric">
+            <!-- {{ data['dontWorkReason'] | dump}} -->
+            {{ data['dontWorkReason'] | capitalize}}
+            <!-- {% for whyNotWorkingName, whyNotWorkingValue in data['dontWorkReason'] %}
+              {{ whyNotWorkingName }}
+            {% endfor %} -->
+          </td>
+        </tr>
+
+
+        <tr>
+          <td class="row">Do they have a letter from their employer, confirming when the employment ended?</th>
+            <td class="numeric">{{ data['employerletter'] | capitalize }}</td>
+        </tr>
+
+        {% if (data['pregnancyemploymentend']) %}
+          <tr>
+            <td class="row">End date of employment</th>
+              <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+              <td class="numeric"> {{data['pregnancyemploymentend'] | capitalize }} </td>
+          </tr>
+        {% endif %}
+
+
+
+        {% if (data['currentlylookingforwork']) %}
+          <tr>
+            <td class="row">Are they currently looking for work?</th>
+              <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+              <td class="numeric"> {{data['currentlylookingforwork'] | capitalize }} </td>
+          </tr>
+        {% endif %}
+
+
+
+        {% if (data['lookingforwork']) %}
+          <tr>
+            <td class="row">Was this person actively looking for work in this time?</th>
+              <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+              <td class="numeric"> {{data['lookingforwork'] | capitalize }} </td>
+          </tr>
+        {% endif %}
+
+        {% if (data['whyDidntClaimUcSooner']) %}
+          <tr>
+            <td class="row">Why didn't they claim UC sooner?</th>
+              <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+              <td class="numeric"> {{data['whyDidntClaimUcSooner'] | capitalize }} </td>
+          </tr>
+        {% endif %}
+
+
+        <tr>
+          <td class="row">Is the claimant currently pregnant?</th>
+            <td class="numeric">{{ data['pregnant'] | capitalize }}</td>
+        </tr>
+
+        <tr>
+          <td class="row">Does the claimant intend to go back to work?</th>
+            <td class="numeric">{{ data['backtowork'] | capitalize }}</td>
+        </tr>
+
+        <tr>
+          <td class="row">How long have they been in the UK?</th>
+            <td class="numeric">{{ data['pregnantArrivalInUkYear']}}</td>
+        </tr>
+
+
+
+    </table>
+
+    </tbody>
+    </table>
+
+  </div>
+</div>
+
+{% endblock %}

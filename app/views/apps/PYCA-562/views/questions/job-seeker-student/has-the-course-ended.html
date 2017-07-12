@@ -1,0 +1,43 @@
+{% set page = {
+	title: "Course Ended"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+				Has the course ended?
+	        </h1>
+
+		 <!-- <form> -->
+		  <div class="form-group">
+		    <fieldset class="inline">
+		      <div class="multiple-choice" data-target="course-ended">
+		        <input id="courseended" type="radio" name="hascourseended" value="yes">
+		        <label for="courseended">Yes</label>
+		      </div>
+
+		      <div class="multiple-choice" data-target="course-ended">
+		        <input id="courseended" type="radio" name="hascourseended" value="no">
+		        <label for="courseended">No</label>
+		      </div>
+		    </fieldset>
+		  </div>
+		<!-- </form> -->
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

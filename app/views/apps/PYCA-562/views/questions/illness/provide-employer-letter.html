@@ -1,0 +1,43 @@
+{% set page = {
+	title: "Employer Letter"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Can they provide a letter from their employer confirming the end date of employment?
+        </h1>
+
+		 <!-- <form> -->
+		  <div class="form-group">
+		    <fieldset>
+		      <div class="multiple-choice" data-target="illnessemployerletter">
+		        <input id="illnessemployerletter" type="radio" name="illnessemployerletter" value="Yes">
+		        <label for="employerletter">Yes</label>
+		      </div>
+
+		      <div class="multiple-choice" data-target="illnessemployerletter">
+		        <input id="illnessemployerletter" type="radio" name="illnessemployerletter" value="No">
+		        <label for="illnessemployerletter">No</label>
+		      </div>
+		    </fieldset>
+		  </div>
+		<!-- </form> -->
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% set page = { title: "When did self employment start" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %} {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
+
+<div class="grid-row">
+	<div class="column-two-thirds">
+
+		<form method="post" class="form">
+
+			<h1 class="heading-large">
+          When did {{ 'the partners' if currentApp.isPartnerFlow else '' }} self employment start?
+        </h1>
+
+			<div class="form-group">
+				<!-- <fieldset role="radiogroup" aria-required="true" {{ attributes | safe }}> -->
+					<legend>
+						<span class="visuallyhidden">When did {{ 'the partners' if currentApp.isPartnerFlow else '' }} self employment start?</span>
+					</legend>
+
+					<!-- {{ form.radio({ name: 'prevSelfEmploymentEnd', label: "1 week ago" }) }} {{ form.radio({ name: 'prevSelfEmploymentEnd', label: "1 month ago" }) }} {{ form.radio({ name: 'prevSelfEmploymentEnd', label: "6 months ago" }) }} {{ form.radio({ name: 'prevSelfEmploymentEnd',
+					label: "1 year ago" }) }} -->
+
+
+					<div class="multiple-choice">
+						<input id="radio-1" type="radio" name="prevSelfEmploymentStart" value="Less than 3 months ago">
+						<label for="radio-1">Less than 3 months ago</label>
+					</div>
+					<div class="multiple-choice">
+						<input id="radio-2" type="radio" name="prevSelfEmploymentStart" value="Less than 6 months ago">
+						<label for="radio-2">Less than 6 months ago</label>
+					</div>
+					<div class="multiple-choice">
+						<input id="radio-3" type="radio" name="prevSelfEmploymentStart" value="Less than 1 year ago">
+						<label for="radio-3">Less than 1 year ago</label>
+					</div>
+					<div class="multiple-choice">
+						<input id="radio-3" type="radio" name="prevSelfEmploymentStart" value="Less than 5 years ago">
+						<label for="radio-3">Less than 5 years ago</label>
+					</div>
+					<div class="multiple-choice">
+						<input id="radio-3" type="radio" name="prevSelfEmploymentStart" value="Less than 5 years ago">
+						<label for="radio-3">5 or more years ago</label>
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="button">Continue</button>
+			</div>
+
+		</form>
+	</div>
+</div>
+{% endblock %}

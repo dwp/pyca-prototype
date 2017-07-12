@@ -1,0 +1,118 @@
+{% set page = {
+  title: "END025"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+<!-- <<<<< FAST TRACK PREVIOUSLY SELF EMPLOYED >>>>
+ -->
+ <div class="grid-row">
+    <div class="column-two-thirds">
+
+       {% include currentApp.filePaths.includesDir + "header.html" %}
+
+          <h2 class="heading-medium">Next steps</h2>
+
+            <ul class="list list-number">
+            <li>In the PYCA to do select 'Yes' for "Is this a fast track referral?"</li>
+            <li>Clear the to do</li>
+            <li>Save this page as a PDF</li>
+            <li>Upload PDF to 'Refer to Decision Maker' to-do</li>
+            <li>Upload all evidence 'Refer to Decision Maker' to-do</li>
+            <li>For the question 'Is an HRT interview needed' select 'No'</li>
+            <li>Select 'Done'</li>
+            </ul>
+
+            <div class="form-group">
+              <input class="button" type=button name=print value="Save page as PDF" onClick="window.print()">
+            </div>
+
+                  <!-- <table>
+                  <thead>
+                    <tr>
+                      <td class="multiline" scope="col"></td>
+                      <td class="numeric" scope="col"></td>
+                    </tr>
+                  </thead> -->
+
+               <table>
+                  <thead>
+                    <tr>
+                      <td class="multiline"="col"></td>
+                      <th class="numeric"scope="col"></th>
+                    </tr>
+                  </thead>
+              </table>
+              <table>
+
+                  <thead>
+                    <tr>
+                      <th scope="col">Question summary</th>
+                      <th class="numeric" scope="col">Answer</th>
+                    </tr>
+                  </thead>
+
+
+                  <tbody>
+
+                    <tr>
+                      <td class="row">Were they previously working?</th>
+                      <td class="numeric">
+                        {% for propName, propValue in data['previousWork'] %}
+                          {{ propValue }}
+                        {% endfor %}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="row">When did self employment start?</th>
+                      <td class="numeric">{{ data['prevSelfEmploymentStart'] | capitalize}}</td>
+                    </tr>
+
+                      <tr>
+                      <td class="row">When did self employment end?</th>
+                      <td class="numeric">{{ data['prevSelfEmploymentEnd'] | capitalize}}</td>
+                    </tr>
+
+                    <tr>
+                      <td class="row">Hours per week working as self employed</th>
+                      <td class="numeric">{{ data['prevSelfEmployedHours'] | capitalize}}</td>
+                    </tr>
+
+                    <tr>
+                      <td class="row">What were their monthly average earnings?</th>
+                      <td class="numeric">{{ data['prevMonthlyAverageEarnings'] | capitalize}}</td>
+                    </tr>
+
+                    <tr>
+                      <td class="row">Why did self-employment end?</th>
+                      <td class="numeric">{{ data['reasonPrevSelfEmploymentEnded'] | capitalize}}</td>
+                    </tr>
+
+                     <tr>
+                      <td class="row">Fitnote</th>
+                      <td class="numeric">{{ data['prevSelfEmployedFitnote'] | capitalize}}</td>
+                    </tr>
+
+                    {% if (data['prevSelfEmployedArrivalInUkYear']) %}
+                      <tr>
+                        <td class="row">How long have they been in the UK?</th>
+
+                        <!-- <td class="numeric">{{ data['pregnancyemploymentend'] if (data['pregnancyemploymentend']) else "N/A" }}</td> -->
+                        <td class="numeric"> {{data['prevSelfEmployedArrivalInUkYear'] | capitalize }} </td>
+                      </tr>
+                    {% endif %}
+
+                    </table>
+
+                  </tbody>
+                </table>
+
+                  </tbody>
+                </table>
+
+    </div>
+  </div>
+
+{% endblock %}
