@@ -1663,11 +1663,12 @@ module.exports = (router, config) => {
     }
   });
   // ####################### END PYCA-631 Changes ##############################
-  router.all(`${appRoot}/outcomes/END017`, function (req, res) {
+  router.all(`${appRoot}/outcomes/END017-2`, function (req, res) {
     console.log('hello!')
     var answers = req.session[config.slug].answers;
     var claimantType = res.locals.currentApp.claimantType;
-    res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedWithoutEvidence2.id}?${claimantType}`);
+    res.send("some text to show I've gotten here");
+    // res.redirect(`${appRoot}/outcomes/${outcomes.selfEmployedWithoutEvidence2.id}?${claimantType}`);
   });
 
 
