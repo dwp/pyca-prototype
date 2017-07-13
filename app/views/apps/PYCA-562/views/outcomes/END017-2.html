@@ -95,11 +95,9 @@
 	</table>
 </div>
 
-  <div class="grid-row hide-on-print">
-    <div class="column-two-thirds">
-
-  <h1 class="heading-large">Next steps</h1>
-
+<div class="grid-row hide-on-print">
+  <div class="column-two-thirds">
+  	<h1 class="heading-large">Next steps</h1>
     <h2 class="heading-medium">How to clear the 'Prove You Can Apply' to-do:</h2>
     <ol class="list list-number">
       <li>In the ‘PYCA to do’ select ‘No’ for "Is an HRT interview needed?”</li>
@@ -117,13 +115,19 @@
       <li>Add this note to ‘Claimant’s journal’: “Attach the evidence provided by the claimant to the 'Refer to Decision Maker to do' and clear the to-do”.</li>
     </ol>
 
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<input class="button" type=button name=print value="Download Decision Makers' report" onClick="window.print()">
-		</div>
+		</div> -->
 	</div>
 </div>
 
-
+<a id='a' class="button" type="button" download='Download.html' type='text/csv'>Download Decision Makers' report</a>
+<script>
+		var csv = document.getElementById('answerSummary').innerHTML;
+    var data = new Blob([csv]);
+    var a = document.getElementById('a');
+    a.href = URL.createObjectURL(data);
+</script>
 
 
 {% endblock %}
