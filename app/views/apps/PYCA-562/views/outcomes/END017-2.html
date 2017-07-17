@@ -1,5 +1,5 @@
 {% set page = {
-	title: "END016"
+  title: "END016"
 } %}
 <!-- <<< FURTHER EVIDENCE INTERVIEW SELF EMPLOYED >>>
  -->
@@ -8,91 +8,91 @@
 {% block main_content %}
 
 <style type="text/css">
-	#answerSummary {
-		display: none;
-	}
-	@media print {
-	 #answerSummary {display: block !important;}
-	 .hide-on-print {display: none;}
-	}
+  #answerSummary {
+  display: none;
+  }
+  @media print {
+   #answerSummary {display: block !important;}
+   .hide-on-print {display: none;}
+  }
 </style>
 
 <div id="answerSummary">
-	<table>
-		<thead>
-			<tr>
-				<td class="multiline" scope="col"></td>
-				<td class="numeric" scope="col"></td>
-			</tr>
-		</thead>
-		<table>
-			<thead>
-				<tr>
-					<th class="multiline" scope="col">Question summary</th>
-					<th class="numeric multiline" scope="col">Answer
-					</th>
-				</tr>
-			</thead>
+  <table>
+  <thead>
+  <tr>
+  <td class="multiline" scope="col"></td>
+  <td class="numeric" scope="col"></td>
+  </tr>
+  </thead>
+  <table>
+  <thead>
+  <tr>
+  <th class="multiline" scope="col">Question summary</th>
+  <th class="numeric multiline" scope="col">Answer
+  </th>
+  </tr>
+  </thead>
 
-			<tbody>
-				<tr>
-					<td class="row multiline">How long have they been self employed?</td>
-					<td class="numeric">{{ data['selfEmployedDuration']}}</td>
-				</tr>
+  <tbody>
+  <tr>
+  <td class="row multiline">How long have they been self employed?</td>
+  <td class="numeric">{{ data['selfEmployedDuration']}}</td>
+  </tr>
 
-				<tr>
-					<td class="row">Hours per week working as self employed</th>
-						<td class="numeric">{{ data['selfEmployedHours']}}</td>
-				</tr>
+  <tr>
+  <td class="row">Hours per week working as self employed</th>
+  <td class="numeric">{{ data['selfEmployedHours']}}</td>
+  </tr>
 
-				<tr>
-					<td class="row">Monthly average earnings</td>
-					<td class="numeric">{{ data['monthlyAverageEarnings']}}</td>
-				</tr>
+  <tr>
+  <td class="row">Monthly average earnings</td>
+  <td class="numeric">{{ data['monthlyAverageEarnings']}}</td>
+  </tr>
 
-				<tr>
-					<td class="row">Salary to self</td>
-					<td class="numeric">{{ data['payThemselfASalary'] | capitalize}}</td>
-					<!-- {{ data['ukDay']}} -->
-				</tr>
+  <tr>
+  <td class="row">Salary to self</td>
+  <td class="numeric">{{ data['payThemselfASalary'] | capitalize}}</td>
+  <!-- {{ data['ukDay']}} -->
+  </tr>
 
-				<tr>
-					<td class="row">Registered with HMRC</td>
-					<td class="numeric">{{ data['hmrcRegistered'] | capitalize}}</td>
-				</tr>
+  <tr>
+  <td class="row">Registered with HMRC</td>
+  <td class="numeric">{{ data['hmrcRegistered'] | capitalize}}</td>
+  </tr>
 
-				<tr>
-					<td class="row">Accident/sick/unemployment pay</td>
-					<td class="numeric">{{ data['sickPay'] | capitalize}}</td>
-				</tr>
+  <tr>
+  <td class="row">Accident/sick/unemployment pay</td>
+  <td class="numeric">{{ data['sickPay'] | capitalize}}</td>
+  </tr>
 
-				<tr>
-					<td class="row">Employees</td>
-					<td class="numeric">{{ data['anyEmployees'] | capitalize}}</td>
-				</tr>
+  <tr>
+  <td class="row">Employees</td>
+  <td class="numeric">{{ data['anyEmployees'] | capitalize}}</td>
+  </tr>
 
-				<tr>
-					<td class="row">Profit made</th>
-						<td class="numeric">{{ data['businessEverMadeProfit'] | capitalize}}</td>
-				</tr>
+  <tr>
+  <td class="row">Profit made</th>
+  <td class="numeric">{{ data['businessEverMadeProfit'] | capitalize}}</td>
+  </tr>
 
-				<tr>
-					<td class="row">What is the type of business?</th>
-						<td class="numeric">{{ data['typeOfBusiness'] | capitalize}}</td>
-				</tr>
+  <tr>
+  <td class="row">What is the type of business?</th>
+  <td class="numeric">{{ data['typeOfBusiness'] | capitalize}}</td>
+  </tr>
 
-				<tr>
-					<td class="row">Any other periods of self employment</th>
-						<td class="numeric">{{ data['previouslySelfEmployed'] | capitalize}}</td>
-				</tr>
+  <tr>
+  <td class="row">Any other periods of self employment</th>
+  <td class="numeric">{{ data['previouslySelfEmployed'] | capitalize}}</td>
+  </tr>
 
-				<tr>
-					<td class="row">Been in the UK for:</td>
-					<td class="numeric">{{ data['lengthOfTimeInUK']}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</table>
+  <tr>
+  <td class="row">Been in the UK for:</td>
+  <td class="numeric">{{ data['lengthOfTimeInUK']}}</td>
+  </tr>
+  </tbody>
+  </table>
+  </table>
 </div>
 
 <div class="grid-row hide-on-print">
@@ -100,30 +100,24 @@
   	<h1 class="heading-large">Next steps</h1>
     <h2 class="heading-medium">How to clear the 'Prove You Can Apply' to-do:</h2>
     <ol class="list list-number">
-      <li>In the ‘PYCA to do’ select ‘No’ for "Is an HRT interview needed?”</li>
-      <li>Clear the to do</li>
+      <li>In the ‘PYCA to do’ select ‘No’ for "Is an HRT interview needed?”.</li>
+      <li>Clear the to do.</li>
     </ol>
 
     <h2 class="heading-medium">How to book a further evidence interview:</h2>
     <ol class="list list-number">
-      <li>Download the Decision Makers' report below</li>
-      <li>Upload this report to the agent notes in the’Refer to Decision Maker' to-do</li>
-      <li>Upload all the claimant’s evidence to the agent notes in the 'Refer to Decision Maker' to-do</li>
-      <li>In the claimant's history add "PYCA completed, 'Refer to DM' to do to be cleared once the evidence is provided"</li>
-      <li>Do not clear the 'Refer to Decision Maker' to-do</li>
-      <li>Book a further evidence interview</li>
-      <li>Add this note to ‘Claimant’s journal’: “Attach the evidence provided by the claimant to the 'Refer to Decision Maker to do' and clear the to-do”.</li>
+      <li>Download the Decision Makers' report below.</li>
+      <li>Upload this report to the agent notes in the ‘Refer to Decision Maker’ to-do.</li>
+      <li>Do not clear the 'Refer to Decision Maker' to-do.</li>
+      <li>Book a further evidence interview.</li>
+      <li>Add this note to ‘Claimant’s journal’: <br> “Attach the evidence provided by the claimant to the 'Refer to Decision Maker to do' and clear the to-do”.</li>
     </ol>
-
-		<!-- <div class="form-group">
-			<input class="button" type=button name=print value="Download Decision Makers' report" onClick="window.print()">
-		</div> -->
-	</div>
+  </div>
 </div>
 
 <a id='a' class="button" type="button" download='Download.html' type='text/csv'>Download Decision Makers' report</a>
 <script>
-		var csv = document.getElementById('answerSummary').innerHTML;
+  var csv = document.getElementById('answerSummary').innerHTML;
     var data = new Blob([csv]);
     var a = document.getElementById('a');
     a.href = URL.createObjectURL(data);
