@@ -72,7 +72,11 @@
 
     };
 
-    addauth('{{ 'USERNAME' | getENV }}', '{{ 'PASSWORD' | getENV }}')
+    $(function(){
+      $(document).on("load", function(){
+        addauth('{{ 'USERNAME' | getENV }}', '{{ 'PASSWORD' | getENV }}');
+      });
+    })
 
   </script>
 
