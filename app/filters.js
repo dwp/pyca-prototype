@@ -1,9 +1,3 @@
- var _nodeEnv = require('node-env-file');
-_nodeEnv('./.env');
-
-
- // nodeEnv(__dirname + '/.env');
-
 module.exports = function (env) {
   /**
    * Instantiate object used to store the methods registered as a
