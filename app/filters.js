@@ -1,3 +1,9 @@
+ var _nodeEnv = require('node-env-file');
+_nodeEnv('./.env');
+
+
+ // nodeEnv(__dirname + '/.env');
+
 module.exports = function (env) {
   /**
    * Instantiate object used to store the methods registered as a
@@ -62,6 +68,10 @@ module.exports = function (env) {
   filters.merge = function merge(objA,objB) {
     let newObj = Object.assign(objA,objB)
     return newObj
+  }
+
+  filters.getENV = function getENV(name) {
+    return (process.env[name] ? process.env[name] : 'not found')
   }
 
   /* ------------------------------------------------------------------

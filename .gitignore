@@ -9,3 +9,4 @@ node_modules/*
 .tmuxp.*
 .idea
 app/views/apps/***/*.css
+.env

@@ -37,6 +37,7 @@
     "lodash": "^4.17.2",
     "marked": "^0.3.6",
     "minimist": "0.0.8",
+    "node-env-file": "^0.1.8",
     "nunjucks": "^2.5.2",
     "openregister-location-picker": "^0.2.1",
     "portscanner": "^1.0.0",
