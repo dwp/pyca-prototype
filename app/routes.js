@@ -22,14 +22,14 @@ router.use('*', (req,res,next) => {
   next()
 })
 
-router.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Methods', "POST, GET, PUT, OPTIONS, PATCH, DELETE");
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Credentials', "true");
-  res.header('Access-Control-Allow-Headers', "X-Accept-Charset,X-Accept,Content-Type,Credentials");
-  next();
-});
+// router.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header('Access-Control-Allow-Methods', "POST, GET, PUT, OPTIONS, PATCH, DELETE");
+//   res.header('Access-Control-Allow-Origin', "*");
+//   res.header('Access-Control-Allow-Credentials', "true");
+//   res.header('Access-Control-Allow-Headers', "X-Accept-Charset,X-Accept,Content-Type,Credentials");
+//   next();
+// });
 
 router.all('/country-picker', function (req, res) {
   res.render('location-picker/index')
