@@ -41,7 +41,7 @@
     <script type="text/javascript">
       (function(fetch) {
         var headers = new Headers();
-        headers.set('Authorization', "Basic " + base64.encode("{{ 'USERNAME' | getENV }}:{{ 'PASSWORD' | getENV }}"));
+        headers.set('Authorization', "Basic " + btoa("{{ 'USERNAME' | getENV }}:{{ 'PASSWORD' | getENV }}"));
         headers.set('credentials', 'include');
         window.fetch = function(data) {
           return fetch.call(this, data, { headers: headers });
