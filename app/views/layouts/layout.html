@@ -38,16 +38,17 @@
     <link rel="stylesheet" href="/public/javascripts/lib/openregister-picker/location-picker.min.css">
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 
+    {#
     <script type="text/javascript">
       (function(fetch) {
         var headers = new Headers();
         headers.set('Authorization', "Basic " + btoa("{{ 'USERNAME' | getENV }}:{{ 'PASSWORD' | getENV }}"));
-        headers.set('credentials', 'include');
         window.fetch = function(data) {
           return fetch.call(this, data, { headers: headers });
         };
       })(window.fetch);
     </script>
+    #}
 
     <script type="text/javascript" src="/public/javascripts/lib/openregister-picker/location-picker.min.js"></script>
 
