@@ -65,7 +65,7 @@ module.exports = function (env) {
   }
 
   filters.getENV = function getENV(name) {
-    return (process.env[name] ? process.env[name] : 'not found')
+    return (process.env[name] ? `process.env[name]` : `not found`)
   }
 
   /* ------------------------------------------------------------------
