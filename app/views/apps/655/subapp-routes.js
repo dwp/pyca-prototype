@@ -94,6 +94,10 @@ module.exports = (router, config) => {
 		makeaDecision: {
 			id: 'END018',
 			status: 'Fill in section 2 of the ALP'
+		},
+		eeaLooking4WorkWithEvidence: {
+			id: 'END019',
+			status: 'EEA not working or previously employed, arrived looking for work'
 		}
 	}
 
@@ -778,6 +782,123 @@ module.exports = (router, config) => {
 
 	  else {
 	    res.render(`${appRootRel}/questions/family-member`);
+	  }
+	});
+
+	// ####################################################################
+	// Does the if the *BRP* states no recourse to public funds
+	// ####################################################################
+
+	router.all(`${appRoot}/questions/no-recourse-to-public-funds-brp`, function (req, res) {
+	  var noRecourseToPublicFundsBrp = req.body.noRecourseToPublicFundsBrp;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  // EEA claimant with BRP
+	  if (noRecourseToPublicFundsBrp) {
+	    answers[claimantType].noRecourseToPublicFundsBrp = noRecourseToPublicFundsBrp;
+
+	    if (noRecourseToPublicFundsBrp === 'yes') {
+	      res.redirect(`${appRoot}/outcomes/${outcomes.noRecourseToPublicFunds.id}?${claimantType}`);
+	    }
+	    else if (noRecourseToPublicFundsBrp === 'no') {
+	      res.redirect(`${appRoot}/questions/brp-type?${claimantType}`);
+	    }
+	  }
+	  else {
+	    res.render(`${appRootRel}/questions/no-recourse-to-public-funds-brp`);
+	  }
+	});
+
+	// ####################################################################
+	// What type is the BRP (for EEA Nationals)
+	// ####################################################################
+	router.all(`${appRoot}/questions/brp-type`, function (req, res) {
+	  var brpType = req.body.brpType;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (brpType) {
+	    answers[claimantType].brpType = brpType;
+
+	    if (brpType === 'None of the above') {
+				res.redirect(`${appRoot}/questions/family-member-brp?${claimantType}`);
+	    }
+			else {
+				res.redirect(`${appRoot}/questions/family-member?${claimantType}`);
+			}
+	  }
+	  else {
+	    res.render(`${appRootRel}/questions/brp-type`);
+	  }
+	});
+
+	// ####################################################################
+	// Is it a family member BRP
+	// ####################################################################
+	router.all(`${appRoot}/questions/family-member-brp`, function (req, res) {
+	  var familyMemberBrp = req.body.familyMemberBrp;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (familyMemberBrp) {
+	    answers[claimantType].familyMemberBrp = familyMemberBrp;
+
+	    if (familyMemberBrp === 'Yes') {
+				res.redirect(`${appRoot}/questions/partner?${claimantType}`);
+	    }
+			else if (familyMemberBrp === 'No'){
+				res.redirect(`${appRoot}/questions/out-of-uk-2yrs-continuously?${claimantType}`);
+			}
+	  }
+	  else {
+	    res.render(`${appRootRel}/questions/family-member-brp`);
+	  }
+	});
+
+	// ####################################################################
+	// Have they been out of the country for for the last 2 years (continuously)
+	// ####################################################################
+	router.all(`${appRoot}/questions/out-of-uk-2yrs-continuously`, function (req, res) {
+	  var outOfUkFor2Years = req.body.outOfUkFor2Years;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (outOfUkFor2Years) {
+	    answers[claimantType].outOfUkFor2Years = outOfUkFor2Years;
+
+	    if (outOfUkFor2Years === 'Yes') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.leaveToRemain.id}?${claimantType}`);
+	    }
+			else if (outOfUkFor2Years === 'No') {
+				res.redirect(`${appRoot}/questions/out-of-uk-4wks-in-2yrs?${claimantType}`);
+			}
+	  }
+	  else {
+	    res.render(`${appRootRel}/questions/out-of-uk-2yrs-continuously`);
+	  }
+	});
+
+	// ####################################################################
+	// Have they been out of the country for more than 4 weeks in the last 2 years
+	// ####################################################################
+	router.all(`${appRoot}/questions/out-of-uk-4wks-in-2yrs`, function (req, res) {
+	  var outOfUkMoreThan4WeeksIn2Years = req.body.outOfUkMoreThan4WeeksIn2Years;
+	  var answers = req.session[config.slug].answers;
+	  var claimantType = res.locals.currentApp.claimantType;
+
+	  if (outOfUkMoreThan4WeeksIn2Years) {
+	    answers[claimantType].outOfUkMoreThan4WeeksIn2Years = outOfUkMoreThan4WeeksIn2Years;
+
+	    if (outOfUkMoreThan4WeeksIn2Years === 'Yes') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.leaveToRemain.id}?${claimantType}`);
+	    }
+			else if (outOfUkMoreThan4WeeksIn2Years === 'No') {
+				res.redirect(`${appRoot}/outcomes/${outcomes.eeaLooking4WorkWithEvidence.id}?${claimantType}`);
+			}
+	  }
+	  else {
+	    res.render(`${appRootRel}/questions/out-of-uk-4wks-in-2yrs`);
 	  }
 	});
 
