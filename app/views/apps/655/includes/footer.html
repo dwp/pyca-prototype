@@ -1,0 +1,34 @@
+      <form method="post" class="form">
+
+        <div class="notice">
+          <i class="icon icon-important">
+            <span class="visually-hidden">Important</span>
+          </i>
+          <br>
+          <strong class="bold-small">
+            If the claimant cannot provide the necessary evidence, book an HRT interview.
+          </strong>
+        </div>
+
+        <h2 class="heading-medium">Clear the Prove You Can Apply to-do</h2>
+          <ol class="list list-number">
+            <li>For the question 'Is a HRT interview required?' select 'No'.</li>
+            <li>Click ‘Done’.</li>
+          </ol>
+
+        <h2 class="heading-medium">Clear the Refer to Decision Maker to-do</h2>
+          <ol class="list list-number">
+            <li>Download the ALP.</li>
+            <li>Complete the appropriate section in the ALP using the necessary evidence.</li>
+            <li>Upload the ALP.</li>
+            {% if currentApp.claimantStatus == 'Refugee' %}
+              <li>For the question 'Is the claimant a refugee?', select 'Yes'.</li>
+              <li>For the question 'Have you seen a Biometric Residence Permit (BRP) for the claimant, select 'No'</li>
+            {% else %}
+              <li>For the question 'Is the claimant a refugee?', select 'No'.</li>
+            {% endif %}
+            <li>For the question ‘Is this a fast-track HRT referral case?’, select ‘Yes’.</li>
+            <li>Click ‘Done’.</li>
+          </ol>
+
+      </form>

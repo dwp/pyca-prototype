@@ -1,0 +1,50 @@
+{% set page = {
+	title: "Marriage certificate"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Can they bring a marriage certificate to another appointment?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Can they bring a marriage certificate to another appointment?</span>
+            </legend>
+
+						{{
+							form.radio({
+								name: 'marriageCertificateBring',
+								label: "Yes"
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'marriageCertificateBring',
+								label: "No"
+							})
+						}}
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}
