@@ -1,0 +1,62 @@
+﻿{% set page = {
+  title: "BRP Type"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Which of the following does it say on the the front of the BRP?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Which of the following does it say on the the front of the BRP?</span>
+            </legend>
+
+            {{
+              form.radio({
+                name: 'brpType',
+                label: "Limited leave to remain"
+              })
+            }}
+
+            {{
+              form.radio({
+                name: 'brpType',
+                label: "Indefinite leave to remain"
+              })
+            }}
+            {{
+              form.radio({
+                name: 'brpType',
+                label: "Discretionary leave to remain"
+              })
+            }}
+            Or
+            {{
+              form.radio({
+                name: 'brpType',
+                label: "None of the above"
+              })
+            }}
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+{% endblock %}
