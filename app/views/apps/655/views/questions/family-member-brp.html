@@ -14,27 +14,27 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          Is ‘family member’ written on {{ 'their partner’s' if currentApp.isPartnerFlow else 'their' }} BRP?
+          Is ‘family member’ written on {{ 'their partners' if currentApp.isPartnerFlow else 'their' }} BRP?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
 
             <legend>
-              <span class="visuallyhidden">Is ‘family member’ written on {{ 'their partner’s' if currentApp.isPartnerFlow else 'their' }} BRP?</span>
+              <span class="visuallyhidden">Is ‘family member’ written on {{ 'their partners' if currentApp.isPartnerFlow else 'their' }} BRP?</span>
             </legend>
 
             {{
               form.radio({
                 name: 'familyMemberBrp',
-                label: "Yes"
+                label: 'Yes'
               })
             }}
 
             {{
               form.radio({
                 name: 'familyMemberBrp',
-                label: "No"
+                label: 'No'
               })
             }}
           </fieldset>

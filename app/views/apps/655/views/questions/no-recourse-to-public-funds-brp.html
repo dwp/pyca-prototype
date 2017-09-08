@@ -14,13 +14,13 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          Is "No recourse to public funds written on "{{ 'the partners' if currentApp.isPartnerFlow else 'their' }} biometric residence permit?
+          Is 'No recourse to public funds' written on {{ 'the partners' if currentApp.isPartnerFlow else 'their' }} biometric residence permit?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
-              <span class="visuallyhidden">Is "No recourse to public funds written on "{{ 'the partner's' if currentApp.isPartnerFlow else 'their' }} biometric residence permit?</span>
+              <span class="visuallyhidden">Is 'No recourse to public funds' written on {{ 'the partners' if currentApp.isPartnerFlow else 'their' }} biometric residence permit?</span>
             </legend>
 
 						{{

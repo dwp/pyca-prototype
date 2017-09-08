@@ -692,7 +692,7 @@ module.exports = (router, config) => {
 
 			// They have a biometric residency permit
 			if (brp == 'yes') {
-				res.redirect(`${appRoot}/questions/no-recourse-to-public-funds?${claimantType}`);
+				res.redirect(`${appRoot}/questions/no-recourse-to-public-funds-brp?${claimantType}`);
 			}
 
 			// Non-UK national
@@ -822,10 +822,10 @@ module.exports = (router, config) => {
 	    answers[claimantType].brpType = brpType;
 
 	    if (brpType === 'None of the above') {
-				res.redirect(`${appRoot}/questions/family-member-brp?${claimantType}`);
+				res.redirect(`${appRoot}/questions/family-member?${claimantType}`);
 	    }
 			else {
-				res.redirect(`${appRoot}/questions/family-member?${claimantType}`);
+				res.redirect(`${appRoot}/questions/family-member-brp?${claimantType}`);
 			}
 	  }
 	  else {
@@ -846,6 +846,7 @@ module.exports = (router, config) => {
 
 	    if (familyMemberBrp === 'Yes') {
 				res.redirect(`${appRoot}/questions/partner?${claimantType}`);
+				// TODO ADB check if there is a handler for this.
 	    }
 			else if (familyMemberBrp === 'No'){
 				res.redirect(`${appRoot}/questions/out-of-uk-2yrs-continuously?${claimantType}`);
