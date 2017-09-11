@@ -1,0 +1,62 @@
+{% set page = {
+	title: "Out of UK"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  {% set attributes = '' if currentApp.isPartnerFlow else ' class="inline"' %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          {{ 'Has their partner' if currentApp.isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+
+						<legend>
+              <span class="visuallyhidden">{{ 'Has their partner' if currentApp.isPartnerFlow else 'Have they' }} been out of the UK for more than 4 weeks in the last 6 months?</span>
+            </legend>
+
+						{{
+							form.radio({
+								name: 'outOfUk',
+								label: "Yes"
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'outOfUk',
+								label: "No"
+							})
+						}}
+
+            {% if currentApp.isPartnerFlow %}
+							{{
+								form.radio({
+									name: 'outOfUk',
+									label: "Don't know",
+									value: "unknown"
+								})
+							}}
+            {% endif %}
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}﻿
