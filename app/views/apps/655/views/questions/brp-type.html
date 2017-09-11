@@ -12,13 +12,13 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          Which of the following does it say on the the front of the BRP?
+          Which of the following does it say on the front of the BRP?
         </h1>
 
         <div class="form-group">
           <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
             <legend>
-              <span class="visuallyhidden">Which of the following does it say on the the front of the BRP?</span>
+              <span class="visuallyhidden">Which of the following does it say on the front of the BRP?</span>
             </legend>
 
             {{
@@ -40,7 +40,7 @@
                 label: "Discretionary leave to remain"
               })
             }}
-            Or
+            <p class="form-block">Or</p>
             {{
               form.radio({
                 name: 'brpType',

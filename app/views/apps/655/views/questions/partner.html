@@ -1,5 +1,5 @@
 {% set page = {
-	title: "Partner"
+  title: "Partner"
 } %}
 
 {% extends currentApp.filePaths.layoutsDir + "default.html" %}
@@ -12,7 +12,7 @@
       <form method="post" class="form">
 
         <h1 class="heading-large">
-          {{ 'Are they married or in a civil partnership?' if currentApp.isDerivedRightsFlow else 'Do they have a partner?' }}
+          {{ 'Are they married or in a civil partnership?' if currentApp.isDerivedRightsFlow else 'Are they married or in a civil partnership?' }}
         </h1>
 
         {%- if not currentApp.isDerivedRightsFlow %}
@@ -25,19 +25,19 @@
               <span class="visuallyhidden">Do you have a partner?</span>
             </legend>
 
-						{{
-							form.radio({
-								name: 'partner',
-								label: "Yes"
-							})
-						}}
+            {{
+              form.radio({
+                name: 'partner',
+                label: "Yes"
+              })
+            }}
 
-						{{
-							form.radio({
-								name: 'partner',
-								label: "No"
-							})
-						}}
+            {{
+              form.radio({
+                name: 'partner',
+                label: "No"
+              })
+            }}
 
           </fieldset>
         </div>
