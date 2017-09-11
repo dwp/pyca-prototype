@@ -131,7 +131,7 @@ module.exports = (router, config) => {
   // Intercept outcome pages, check for partner
   // ####################################################################
   router.all(`${appRoot}/outcomes/:outcomeId`, function (req, res, next) {
-
+console.log("into the Intercept");
     var isPartnerFlow = res.locals.currentApp.isPartnerFlow;
     var outcomeId = req.params.outcomeId;
     var claimantType = res.locals.currentApp.claimantType;
@@ -157,7 +157,8 @@ module.exports = (router, config) => {
         if (outcomeId === outcomes.ineligible.id &&
           (answers.claimant.isEEA && answers.claimant.dontWorkReason === 'other') ||
             (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFunds === 'no'
-             && answers.claimant.familyMember === 'no')) {
+             && answers.claimant.familyMember === 'no') ||
+            (!answers.claimant.isEEA && answers.claimant.noRecourseToPublicFundsBrp === 'no')) {
 
           // Mark as derived rights flow
           answers.claimant.isDerivedRightsFlow = true;
@@ -646,6 +647,9 @@ module.exports = (router, config) => {
 
     // Mark as derived rights flow (updates question text)
     res.locals.currentApp.isDerivedRightsFlow = answers.claimant.isDerivedRightsFlow;
+console.log('entered partner question routing');
+console.log(`partner value is: ${partner}`);
+console.log(`answers.claimant.outcomeId is: ${answers.claimant.outcomeId}`);
 
     if (partner && answers.claimant.outcomeId) {
       answers[claimantType].partner = partner;
@@ -840,7 +844,9 @@ module.exports = (router, config) => {
     if (familyMemberBrp) {
       answers[claimantType].familyMemberBrp = familyMemberBrp;
       if (familyMemberBrp === 'yes') {
-        res.redirect(`${appRoot}/questions/partner?${claimantType}`);
+        // res.redirect(`${appRoot}/questions/partner?${claimantType}`);
+        // ADB TODO
+        res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
       }
       else if (familyMemberBrp === 'no'){
         res.redirect(`${appRoot}/questions/out-of-uk-2yrs-continuously?${claimantType}`);
