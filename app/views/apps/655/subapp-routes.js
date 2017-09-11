@@ -94,10 +94,6 @@ module.exports = (router, config) => {
     makeaDecision: {
       id: 'END018',
       status: 'Fill in section 2 of the ALP'
-    },
-    eeaLooking4WorkWithEvidence: {
-      id: 'END019',
-      status: 'EEA not working or previously employed, arrived looking for work'
     }
   }
 
@@ -892,7 +888,7 @@ module.exports = (router, config) => {
         res.redirect(`${appRoot}/outcomes/${outcomes.leaveToRemain.id}?${claimantType}`);
       }
       else if (outOfUkMoreThan4WeeksIn2Years === 'no') {
-        res.redirect(`${appRoot}/outcomes/${outcomes.eeaLooking4WorkWithEvidence.id}?${claimantType}`);
+        res.redirect(`${appRoot}/outcomes/${outcomes.makeaDecision.id}?${claimantType}`);
       }
     }
     else {
