@@ -487,6 +487,7 @@ console.log("into the Intercept");
     var claimantType = res.locals.currentApp.claimantType;
 
     console.log(req.body);
+    console.log(claimantType);
 
     if (nationality) {
       answers[claimantType].nationality = nationality;
@@ -497,27 +498,51 @@ console.log("into the Intercept");
       var listEEA = res.locals.countriesByEEA;
       var listNonEEA = res.locals.countriesByNonEEA;
 
-      // EEA nationality
-      if (listEEA.indexOf(nationality) !== -1) {
-        answers[claimantType].isEEA = true;
+      if (claimantType === 'partner'){
+        // EEA nationality
+        if (listEEA.indexOf(nationality) !== -1) {
+          answers[claimantType].isEEA = true;
 
-        // Croatia straight to outcome
-        if (nationality === 'Croatia') {
+          if (nationality === 'Croatia' ||
+              nationality === 'Ireland' ||
+              nationality === 'United Kingdom' ) {
+            res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+          }
+          else {
+            // Continue
+            res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
+          }
+        }
+        // Non-EEA nationality
+        else if (listNonEEA.indexOf(nationality) !== -1) {
+          answers[claimantType].isEEA = false;
           res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
-        } else if(nationality === 'Ireland') {
-          res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
-        } else if(nationality === 'United Kingdom') {
-          res.redirect(`${appRoot}/questions/british-passport-today?${claimantType}`);
+        }
+      }
+      else {
+        // Original flow for primary claimant
+        // EEA nationality
+        if (listEEA.indexOf(nationality) !== -1) {
+          answers[claimantType].isEEA = true;
+
+          // Croatia straight to outcome
+          if (nationality === 'Croatia') {
+            res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+          } else if(nationality === 'Ireland') {
+            res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
+          } else if(nationality === 'United Kingdom') {
+            res.redirect(`${appRoot}/questions/british-passport-today?${claimantType}`);
+          }
+
+          // Continue
+          res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
         }
 
-        // Continue
-        res.redirect(`${appRoot}/questions/employee-status?${claimantType}`);
-      }
-
-      // Non-EEA nationality
-      else if (listNonEEA.indexOf(nationality) !== -1) {
-        answers[claimantType].isEEA = false;
-        res.redirect(`${appRoot}/questions/biometric-residence-permit?${claimantType}`);
+        // Non-EEA nationality
+        else if (listNonEEA.indexOf(nationality) !== -1) {
+          answers[claimantType].isEEA = false;
+          res.redirect(`${appRoot}/questions/biometric-residence-permit?${claimantType}`);
+        }
       }
     }
 
