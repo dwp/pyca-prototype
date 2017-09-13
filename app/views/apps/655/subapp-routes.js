@@ -131,7 +131,6 @@ module.exports = (router, config) => {
   // Intercept outcome pages, check for partner
   // ####################################################################
   router.all(`${appRoot}/outcomes/:outcomeId`, function (req, res, next) {
-console.log("into the Intercept");
     var isPartnerFlow = res.locals.currentApp.isPartnerFlow;
     var outcomeId = req.params.outcomeId;
     var claimantType = res.locals.currentApp.claimantType;
@@ -486,13 +485,8 @@ console.log("into the Intercept");
     var answers = req.session[config.slug].answers;
     var claimantType = res.locals.currentApp.claimantType;
 
-    console.log(req.body);
-    console.log(claimantType);
-
     if (nationality) {
       answers[claimantType].nationality = nationality;
-
-      console.log(nationality);
 
       // List countries, pull out names
       var listEEA = res.locals.countriesByEEA;
