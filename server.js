@@ -16,7 +16,7 @@ var clientSessions = require('client-sessions')
 var countries = require('./app/services/country')
 var utils = require('./lib/utils.js')
 var packageJson = require('./package.json')
-var keypath = require('keypather')();
+var getKeypath = require('keypather/get');
 
 // Grab environment variables specified in Procfile or as Heroku config vars
 var releaseVersion = packageJson.version
@@ -151,7 +151,7 @@ var addCheckedFunction = function (app, nunjucksEnv) {
 
       // if name uses bracket notation infer it's an object path
       if (name.indexOf('[') !== -1){
-        storedValue = keypath.get(req.session.data, (name.replace('[','.').replace(']','')));
+        storedValue = getKeypath(req.session.data, (name.replace('[','.').replace(']','')));
       } else {
         storedValue = req.session.data[name]
       }
