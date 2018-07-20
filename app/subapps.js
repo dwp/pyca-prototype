@@ -23,7 +23,7 @@ let getSubAppData = function(currentPath) {
 
 	// this takes the file path and returns the relative path to it
 	// within the prototyping kit
-  let computedPath = _.join(
+	let computedPath = _.join(
 			_.slice(
 				splitPathArray, (
 					_.indexOf(splitPathArray, 'views') +1
@@ -35,7 +35,7 @@ let getSubAppData = function(currentPath) {
 	// gets the sub directory name
 	let appDirName = computedPath.split('/')[1]
 
-  let appRelativePath = `${appsDir}/${appDirName}`
+	let appRelativePath = `${appsDir}/${appDirName}`
 
 	// the 'absolute' path of the app e.g '/apps/version-1/'
 	let appAbsolutePath = `/${appsDir}/${appDirName}`
@@ -47,23 +47,20 @@ let getSubAppData = function(currentPath) {
 	let titleSlug = title.replace(/\s+/g, '-').toLowerCase()
 
 	// returns and object of data derrived from the subapp path that was passed in
-  return {
-
-		// a formatted string for the title of the subapp
-		title: title,
+	let appData = {
 
 		// the directory name for the subapp
-    appDirName: appDirName,
+		appDirName: appDirName,
 
 		// a string used to give the app a unique body class
 		body_class: title.replace(/\s+/g, '-').toLowerCase(),
 		slug: titleSlug,
-    startURL: `${appAbsolutePath}/views/index`,
+		startURL: `${appAbsolutePath}/views/index`,
 
 		// url paths constructed from the passed in subapp path
 		urlPaths: {
 			appRoot: appAbsolutePath,
-      root: `${appAbsolutePath}/views`,
+			root: `${appAbsolutePath}/views`,
 			assetsPath: `${appAbsolutePath}/assets/`,
 			scriptsPath: `${appAbsolutePath}/assets/javascripts/`,
 			stylesPath: `${appAbsolutePath}/assets/sass/`,
@@ -77,9 +74,7 @@ let getSubAppData = function(currentPath) {
 			subAppDir: path.dirname(computedPath),
 			layoutsDir: `${path.dirname(computedPath)}/layouts/`,
 			includesDir: `${path.dirname(computedPath)}/includes/`,
-			coreLayoutsDirPathRel: path.relative(path.dirname(currentPath + '/layouts/'), `${__dirname}/views/layouts/`),
-			configFile: `${path.dirname(computedPath)}/config.js`,
-			dataFile: `${path.dirname(computedPath)}/data.js`
+			coreLayoutsDirPathRel: path.relative(path.dirname(currentPath + '/layouts/'), `${__dirname}/views/layouts/`)
 		},
 
 		// route strings
@@ -88,10 +83,16 @@ let getSubAppData = function(currentPath) {
 			rootRel: appRouteString.substr(1),
 			page: appRouteString + '/:page'
 		}
+	};
 
+	// add specific subApp config (can override some of app/config)
+	appData.config = require(`${baseSubAppPath}${path.dirname(computedPath)}/config.js`);
+	appData.data = require(`${baseSubAppPath}${path.dirname(computedPath)}/data.js`);
 
-  }
+	// a formatted string for the title of the subapp
+	appData.title = appData.config.title || title;
 
+	return appData;
 }
 
 /**
@@ -117,10 +118,6 @@ glob.sync(baseSubAppPath + appsDir + '/**/*-routes.js').forEach(function(current
 
 	// get some data based on the current subapp path
 	let appData = getSubAppData(currentPath)
-
-	// add specific subApp config (can override some of app/config)
-	appData.config = require(`${baseSubAppPath + appData.filePaths.configFile}`)
-	appData.data = require(`${baseSubAppPath + appData.filePaths.dataFile}`)
 
 	// push that to a collection of all the subapps
 	subApps.push(appData)

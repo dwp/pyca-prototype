@@ -1,6 +1,7 @@
 // Use this file to change subapp configuration.
 module.exports = {
-	
+	title: 'PYCA-520 (Further Evidence Interview)',
+
 	// properties in here will override those in that affect the templates
 	// with in the global config file (app/config.js)
 	overrides: {
