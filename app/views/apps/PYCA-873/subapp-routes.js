@@ -41,7 +41,7 @@ module.exports = (router, config) => {
     },
     noRecourseToPublicFunds: {
         id: 'END004',
-        status: 'No recourse to public funds'
+        status: 'No public funds'
     },
     selfEmployedEEA: {
         id: 'END006',
@@ -57,7 +57,7 @@ module.exports = (router, config) => {
     },
     leaveToRemain: {
         id: 'END009',
-        status: 'Settlement, indefinite or limited leave to remain'
+        status: 'Limited leave to enter/remain'
     },
     redundantEEA: {
         id: 'END010',
@@ -94,6 +94,10 @@ module.exports = (router, config) => {
     makeADecisionRefugee: {
       id: 'END018',
       status: 'Fill in section 2 of the ALP'
+    },
+    makeADecision: {
+      id: 'END100',
+      status: 'You can now make a decision'
     }
   }
 
@@ -684,7 +688,7 @@ module.exports = (router, config) => {
 
       // They have a biometric residency permit
       if (brp == 'yes') {
-        res.redirect(`${appRoot}/questions/no-recourse-to-public-funds?${claimantType}`);
+        res.redirect(`${appRoot}/questions/biometric-residence-permit-type?${claimantType}`);
       }
 
       // Non-UK national
@@ -701,10 +705,77 @@ module.exports = (router, config) => {
   });
 
   // ####################################################################
+  // Checking BRP or BRC type for non EEA claimants
+  // ####################################################################
+  router.all(`${appRoot}/questions/biometric-residence-permit-type`, function (req, res) {
+    var brpType = req.body.brpType;
+    var answers = req.session[config.slug].answers;
+    var claimantType = res.locals.currentApp.claimantType;
+
+    if (brpType) {
+      answers[claimantType].brpType = brpType;
+
+      // Default to not a family member
+      answers.claimant.familyMember = 'no';
+      answers.claimant.isDerivedRightsFlow = false;
+
+      // Leave to remain/enter
+      if (brpType === 'leave to remain' || brpType === 'leave to enter') {
+        res.redirect(`${appRoot}/questions/no-recourse-to-public-funds-brp?${claimantType}`);
+      }
+
+      // Check for leave time for settlement
+      else if (brpType === 'settlement') {
+        res.redirect(`${appRoot}/questions/settlement-leave?${claimantType}`);
+      }
+
+      // Residence
+      else if (brpType === 'residence') {
+        answers.claimant.familyMember = 'yes';
+        answers.claimant.isDerivedRightsFlow = true;
+        // TODO: Pick outcome to enable partner flow
+        delete answers.claimant.outcomeId;
+        res.redirect(`${appRoot}/questions/partner?${claimantType}`);
+      }
+    }
+
+    else {
+      res.render(`${appRootRel}/questions/biometric-residence-permit-type`);
+    }
+  });
+
+  // ####################################################################
+  // Checking for maximum two years leave for 'Settlement' BRP/BRC type
+  // ####################################################################
+  router.all(`${appRoot}/questions/settlement-leave`, function (req, res) {
+    var outOfUkTwoYears = req.body.outOfUkTwoYears;
+    var answers = req.session[config.slug].answers;
+    var claimantType = res.locals.currentApp.claimantType;
+
+    if (outOfUkTwoYears) {
+      answers[claimantType].outOfUkTwoYears = outOfUkTwoYears;
+
+      // Left UK for two years or more
+      if (outOfUkTwoYears === 'yes') {
+        res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
+      }
+
+      // Not left UK for more than two years
+      else if (outOfUkTwoYears === 'no') {
+        res.redirect(`${appRoot}/outcomes/${outcomes.makeADecision.id}?${claimantType}`);
+      }
+    }
+
+    else {
+      res.render(`${appRootRel}/questions/settlement-leave`);
+    }
+  });
+
+  // ####################################################################
   // Does the claimant have no recourse to public funds
   // ####################################################################
 
-  router.all(`${appRoot}/questions/no-recourse-to-public-funds`, function (req, res) {
+  router.all(`${appRoot}/questions/no-recourse-to-public-funds(-brp)?`, function (req, res) {
     var noRecourseToPublicFunds = req.body.noRecourseToPublicFunds;
     var answers = req.session[config.slug].answers;
     var claimantType = res.locals.currentApp.claimantType;
@@ -725,7 +796,16 @@ module.exports = (router, config) => {
 
       // No stamped visa
       else if (noRecourseToPublicFunds === 'no') {
-        res.redirect(`${appRoot}/questions/family-member?${claimantType}`);
+
+        // Already know they have the right document
+        if (answers.claimant.brpType === 'leave to remain' || answers.claimant.brpType === 'leave to enter') {
+          res.redirect(`${appRoot}/outcomes/${outcomes.leaveToRemain.id}?${claimantType}`);
+        }
+
+        // Attempt to derive rights
+        else {
+          res.redirect(`${appRoot}/questions/family-member?${claimantType}`);
+        }
       }
 
       else if (res.locals.currentApp.isPartnerFlow && noRecourseToPublicFunds === 'unknown') {
@@ -734,7 +814,14 @@ module.exports = (router, config) => {
     }
 
     else {
-      res.render(`${appRootRel}/questions/no-recourse-to-public-funds`);
+      let view = `${appRootRel}/questions/no-recourse-to-public-funds`;
+
+      // Change to BRP copy variant
+      if (req.originalUrl.includes('-brp')) {
+        view = `${appRootRel}/questions/no-recourse-to-public-funds-brp`;
+      }
+
+      res.render(view);
     }
   });
 

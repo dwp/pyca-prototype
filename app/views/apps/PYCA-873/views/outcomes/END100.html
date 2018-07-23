@@ -1,0 +1,29 @@
+{% set page = {
+	title: "END100"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+			{% include currentApp.filePaths.includesDir + "header.html" %}
+
+			<h2 class="heading-medium">Evidence to collect</h2>
+			<ul class="list list-bullet pyca-list">
+				<li>passport – number, nationality, date of issue, and expiry date</li>
+				<li>BRP or residence card — issue date, unique permit number (right hand corner), type of permit, remarks, comments on the card</li>
+				<li>exact date they came to live in the UK (otherwise month and year, or just year)</li>
+			</ul>
+
+			<h2 class="heading-medium">Clear the Prove You Can Apply to-do</h2>
+			<ul class="list list-number pyca-list">
+				<li>For the question "Is a HRT interview required", select 'No'.</li>
+				<li>Click 'Done'.</li>
+			</ul>
+	  </div>
+	</div>
+
+{% endblock %}
