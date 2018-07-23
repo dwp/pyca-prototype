@@ -91,7 +91,7 @@ module.exports = (router, config) => {
       id: 'END017',
       status: 'Fill in section 1 of the ALP'
     },
-    makeaDecision: {
+    makeADecisionRefugee: {
       id: 'END018',
       status: 'Fill in section 2 of the ALP'
     }
@@ -451,10 +451,10 @@ module.exports = (router, config) => {
       if (brprefugeedate === 'no') {
 
         if (iteration) {
-          res.redirect(`${appRoot}/outcomes/${outcomes.makeaDecision.id.toLowerCase()}/${outcomes.makeaDecision.id}?${claimantType}`);
+          res.redirect(`${appRoot}/outcomes/${outcomes.makeADecisionRefugee.id.toLowerCase()}/${outcomes.makeADecisionRefugee.id}?${claimantType}`);
         }
         else {
-        res.redirect(`${appRoot}/outcomes/${outcomes.makeaDecision.id}?${claimantType}`);
+          res.redirect(`${appRoot}/outcomes/${outcomes.makeADecisionRefugee.id}?${claimantType}`);
         }
 
       }
