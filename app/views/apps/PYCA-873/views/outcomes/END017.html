@@ -1,0 +1,38 @@
+{% set page = {
+	title: "END017"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+			{% include currentApp.filePaths.includesDir + "header.html" %}
+
+
+			<h2 class="heading-medium">Clear the PYCA to-do</h3>
+	    <ul class="list list-number pyca-list">
+	      <li>For the question "Is a HRT interview required", select 'No'.</li>
+				<li>Click 'done''</li>
+	    </ul>
+			<h2 class="heading-medium">Create a claimant to-do</h3>
+			<ul class="list list-number pyca-list">
+				<li>Select template 'Update information about your nationality'</li>
+				<li>Copy the following into the 'Why does the claimant need to update their nationality information?' box:</br>
+					<p>'Claimant nationality is British Citizen and has not bene out of the country for more than 4 weeks in the last 2 years'</p></li>
+				<li>Set the deadline date to the end of the first two assessment periods</li>
+				<li>Select 'create to-do'</li>
+			</ul>
+			<h2 class="heading-medium">Advise the person claiming, to sign into their account and clear this to-do:</h3>
+			<ul class="list list-number pyca-list">
+				<li>For the question 'Are you a British Citizen?', tell them to select 'Yes'</li>
+				<li>For the question 'In the last 2 years, have you been out of the UK for more than 4 weeks at a time?', tell them to select 'No'</li>
+				<li>Remind the person claiming to check their UC account for updates on their claim</li>
+			</ul>
+
+	  </div>
+	</div>
+
+{% endblock %}
