@@ -139,6 +139,10 @@ var list = [
     EEA: false
   },
   {
+    name: 'Canada',
+    EEA: false
+  },
+  {
     name: 'Cape Verde',
     EEA: false
   },
