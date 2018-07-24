@@ -518,6 +518,10 @@ module.exports = (router, config) => {
         answers[claimantType].isEEA = false;
         res.redirect(`${appRoot}/questions/biometric-residence-permit?${claimantType}`);
       }
+
+      else {
+        res.render(`${appRootRel}/questions/nationality`);
+      }
     }
 
     else {
