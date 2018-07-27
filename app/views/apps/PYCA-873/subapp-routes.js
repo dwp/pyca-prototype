@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 module.exports = (router, config) => {
 
   // ###########################################################################
@@ -95,8 +97,12 @@ module.exports = (router, config) => {
       id: 'END018',
       status: 'Fill in section 2 of the ALP'
     },
-    makeADecision: {
+    makeADecisionBRP: {
       id: 'END100',
+      status: 'You can now make a decision'
+    },
+    makeADecisionUK: {
+      id: 'END101',
       status: 'You can now make a decision'
     }
   }
@@ -315,6 +321,7 @@ module.exports = (router, config) => {
     }
 
   });
+
   // ####################################################################
   // Branching for citizens with a british passport and british citizen, out of uk?
   // ####################################################################
@@ -329,7 +336,7 @@ module.exports = (router, config) => {
 
       // Out of UK more than 4 weeks
       if (outOfUk === 'yes') {
-        res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
+        res.redirect(`${appRoot}/questions/out-of-uk-date?${claimantType}`);
       }
 
       // Out of UK less than 4 weeks
@@ -352,6 +359,51 @@ module.exports = (router, config) => {
     else {
       res.render(`${appRootRel}/questions/out-of-uk`);
     }
+  });
+
+  // ####################################################################
+  // Branching for citizens with a british passport and british citizen, out of uk?
+  // ####################################################################
+  router.all(`${appRoot}/questions/out-of-uk-date`, function (req, res) {
+    var outOfUkReturn = req.body.outOfUkReturn || {};
+    var answers = req.session[config.slug].answers;
+    var iteration = req.session[config.slug].iteration;
+    var claimantType = res.locals.currentApp.claimantType;
+
+    // All three date fields provided
+    if (outOfUkReturn.day && outOfUkReturn.month && outOfUkReturn.year) {
+      answers[claimantType].outOfUkReturn = outOfUkReturn;
+
+      // Add preceding zeroes to day/month
+      const day = outOfUkReturn.day.padStart(2, '0');
+      const month = outOfUkReturn.month.padStart(2, '0');
+      const year = outOfUkReturn.year;
+
+      // Parse date
+      const date = moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD', true);
+      const today = moment.utc().startOf('day');
+
+      // Is the date valid and in the past?
+      if (date.isValid() && date.isBefore(today)) {
+
+        // More than six months ago
+        if (date.isBefore(moment(today).subtract(6, 'months'))) {
+          return res.redirect(`${appRoot}/outcomes/${outcomes.makeADecisionUK.id}?${claimantType}`);
+        }
+
+        // More than one month ago
+        else if (date.isBefore(moment(today).subtract(1, 'month'))) {
+          return res.redirect(`${appRoot}/questions/employee-status-uk-national?${claimantType}`);
+        }
+
+        // Less than or one month ago
+        else {
+          return res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
+        }
+      }
+    }
+
+    res.render(`${appRootRel}/questions/out-of-uk-date`, { outOfUkReturn });
   });
 
 
@@ -569,6 +621,33 @@ module.exports = (router, config) => {
   });
 
   // ####################################################################
+  // Checking if UK National employment status
+  // ####################################################################
+
+  router.all(`${appRoot}/questions/employee-status-uk-national`, function (req, res) {
+    var employeeStatus = req.body.employeeStatus || {};
+    var answers = req.session[config.slug].answers;
+    var claimantType = res.locals.currentApp.claimantType;
+
+    if (employeeStatus.dontWork) {
+      answers[claimantType].employeeStatus = employeeStatus;
+
+      // Not working
+      if (employeeStatus.dontWork === 'true') {
+        res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
+      }
+
+      // Working
+      else {
+        res.redirect(`${appRoot}/outcomes/${outcomes.makeADecisionUK.id}?${claimantType}`);
+      }
+
+    } else {
+      res.render(`${appRootRel}/questions/employee-status-uk-national`);
+    }
+  });
+
+  // ####################################################################
   // Checking why an EEA claimant doesn't work
   // ####################################################################
 
@@ -766,7 +845,7 @@ module.exports = (router, config) => {
 
       // Not left UK for more than two years
       else if (outOfUkTwoYears === 'no') {
-        res.redirect(`${appRoot}/outcomes/${outcomes.makeADecision.id}?${claimantType}`);
+        res.redirect(`${appRoot}/outcomes/${outcomes.makeADecisionBRP.id}?${claimantType}`);
       }
     }
 

@@ -1,6 +1,6 @@
 // Use this file to change subapp configuration.
 module.exports = {
-	title: 'PYCA-873 (Non-EEA with a BRP)',
+	title: 'PYCA-873/859 (Quick wins)',
 
 	// properties in here will override those in that affect the templates
 	// with in the global config file (app/config.js)

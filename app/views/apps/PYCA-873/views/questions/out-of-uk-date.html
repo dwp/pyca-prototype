@@ -1,0 +1,53 @@
+{% set page = {
+  title: "Date of return"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          What date did they most recently return to the UK?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true">
+
+            <legend>
+              <span class="visuallyhidden">What date did they most recently return to the UK?</span>
+              <span class="form-hint">For example, 31 3 2018</span>
+            </legend>
+
+            <div class="form-date">
+              <div class="form-group form-group-day">
+                <label class="form-label" for="out-of-uk-return-day">Day</label>
+                <input class="form-control" id="out-of-uk-return-day" name="outOfUkReturn[day]" value="{{ outOfUkReturn.day }}" type="number" pattern="[0-9]*">
+              </div>
+              <div class="form-group form-group-month">
+                <label class="form-label" for="out-of-uk-return-month">Month</label>
+                <input class="form-control" id="out-of-uk-return-month" name="outOfUkReturn[month]" value="{{ outOfUkReturn.month }}" type="number" pattern="[0-9]*">
+              </div>
+              <div class="form-group form-group-year">
+                <label class="form-label" for="out-of-uk-return-year">Year</label>
+                <input class="form-control" id="out-of-uk-return-year" name="outOfUkReturn[year]" value="{{ outOfUkReturn.year }}" type="number" pattern="[0-9]*">
+              </div>
+            </div>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}﻿
