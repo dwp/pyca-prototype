@@ -597,21 +597,20 @@ module.exports = (router, config) => {
     }
 
     if (employeeStatus) {
-
       answers[claimantType].employeeStatus = employeeStatus;
 
       // Self-employed
-      if (employeeStatus.selfEmployed === 'true') {
+      if (employeeStatus === 'selfEmployed') {
         res.redirect(`${appRoot}/outcomes/${outcomes.ineligible.id}?${claimantType}`);
       }
 
       // Employed
-      else if (employeeStatus.employed === 'true') {
+      else if (employeeStatus === 'employed') {
         res.redirect(`${appRoot}/outcomes/${outcomes.employedEEA.id}?${claimantType}`);
       }
 
       // Not working
-      else if (employeeStatus.dontWork === 'true') {
+      else if (employeeStatus === 'dontWork') {
         res.redirect(`${appRoot}/questions/employee-status-dont-work?${claimantType}`);
       }
 
@@ -625,15 +624,15 @@ module.exports = (router, config) => {
   // ####################################################################
 
   router.all(`${appRoot}/questions/employee-status-uk-national`, function (req, res) {
-    var employeeStatus = req.body.employeeStatus || {};
+    var employeeStatus = req.body.employeeStatus;
     var answers = req.session[config.slug].answers;
     var claimantType = res.locals.currentApp.claimantType;
 
-    if (employeeStatus.dontWork) {
+    if (employeeStatus) {
       answers[claimantType].employeeStatus = employeeStatus;
 
       // Not working
-      if (employeeStatus.dontWork === 'true') {
+      if (employeeStatus === 'dontWork') {
         res.redirect(`${appRoot}/outcomes/${outcomes.british.id}?${claimantType}`);
       }
 
