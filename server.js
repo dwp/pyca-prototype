@@ -1,5 +1,5 @@
 // Core dependencies
-const crypto = require('crypto')
+const fs = require('fs')
 const path = require('path')
 
 // NPM dependencies
@@ -8,7 +8,7 @@ const browserSync = require('browser-sync')
 const dotenv = require('dotenv')
 const express = require('express')
 const nunjucks = require('nunjucks')
-const session = require('express-session')
+const session = require('client-sessions')
 const cookieParser = require('cookie-parser')
 
 // Local dependencies
@@ -193,10 +193,9 @@ app.use(session({
     secure: isSecure
   },
   // use random name to avoid clashes with other prototypes
-  name: 'govuk-prototype-kit-' + crypto.randomBytes(64).toString('hex'),
-  resave: false,
-  saveUninitialized: false,
-  secret: crypto.randomBytes(64).toString('hex')
+  cookieName: 'govuk-prototype-kit-' + (Buffer.from(app.locals.serviceName, 'utf8')).toString('hex'),
+  secret: (Buffer.from(app.locals.serviceName, 'utf8')).toString('base64'),
+  requestKey: 'session'
 }))
 
 // Automatically store all data users enter
