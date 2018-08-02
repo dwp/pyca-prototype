@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}{{ serviceName }}{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    "tag": { "text": "prototype" },
+    "html": cookieText
+  }) }}
+
+  {% if not isStart %}
+    {{ govukBackLink({
+      text: "Back",
+      href: "/prototype"
+    }) }}
+  {% endif %}
+{% endblock %}
