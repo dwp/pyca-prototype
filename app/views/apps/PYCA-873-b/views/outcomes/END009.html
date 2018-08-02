@@ -1,0 +1,26 @@
+﻿{% set page = {
+	title: "END009"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      {% include currentApp.filePaths.includesDir + "header.html" %}
+
+      <h2 class="heading-medium">Evidence to collect</h1>
+      <ul class="list list-bullet">
+        <li>passport – number, nationality, date of issue, and expiry date</li>
+        <li>BRP or residence card — issue date, unique permit number (right hand corner), type of permit, remarks, comments on the card</li>
+        <li>start and end date of visa if their card or passport says ‘limited leave to remain’</li>
+        <li>exact date they came to live in the UK (otherwise month and year, or just year)</li>
+      </ul>
+		{% include currentApp.filePaths.includesDir + "footer.html" %}
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% set page = {
+  title: "Employee status"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Are they currently working?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="group" aria-required="true" class="inline">
+
+            <legend>
+              <span class="visuallyhidden">Are they currently working?</span>
+            </legend>
+
+            <div class="multiple-choice">
+              <input type="radio" name="employeeStatus[dontWork]" value="false" id="dontWork-yes">
+              <label for="employed">Yes</label>
+            </div>
+
+            <div class="multiple-choice">
+              <input type="radio" name="employeeStatus[dontWork]" value="true" id="dontWork-no">
+              <label for="dontWork">No</label>
+            </div>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

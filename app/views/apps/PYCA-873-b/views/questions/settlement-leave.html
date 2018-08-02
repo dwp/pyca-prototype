@@ -1,0 +1,48 @@
+{% set page = {
+  title: "British citizen"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Since the BRP was issued, have they been out of the UK for more than 2 years at a time?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Since the BRP was issued, have they been out of the UK for more than 2 years at a time?</span>
+            </legend>
+
+            {{
+              form.radio({
+                name: 'outOfUkTwoYears',
+                label: "Yes"
+              })
+            }}
+
+            {{
+              form.radio({
+                name: 'outOfUkTwoYears',
+                label: "No"
+              })
+            }}
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+{% endblock %}

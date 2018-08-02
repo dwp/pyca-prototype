@@ -1,0 +1,62 @@
+{% set page = {
+  title: "British citizen"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Which of the following words are shown under ‘type of permit’?
+        </h1>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Which of the following words are shown under ‘type of permit’?</span>
+            </legend>
+
+            {{
+              form.radio({
+                name: 'brpType',
+                label: "Leave to remain"
+              })
+            }}
+
+            {{
+              form.radio({
+                name: 'brpType',
+                label: "Leave to enter"
+              })
+            }}
+
+            {{
+              form.radio({
+                name: 'brpType',
+                label: "Settlement"
+              })
+            }}
+
+            {{
+              form.radio({
+                name: 'brpType',
+                label: "Residence"
+              })
+            }}
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% set page = {
+  title: "Biometric Residence Permit"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
+
+    <div class="column-full">
+
+    </div>
+
+    <div class="column-custom-question-image">
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          Have they brought a Biometric Residence Permit (BRP) or Residence Card with them?
+        </h1>
+
+        <div class="form-group">
+          <fieldset class="inline" role="radiogroup" aria-required="true"{{ attributes | safe }}>
+            <legend>
+              <span class="visuallyhidden">Have they brought a Biometric Residence Permit or Residence Card with them?</span>
+            </legend>
+
+            {{
+              form.radio({
+                name: 'brp',
+                label: "Yes"
+              })
+            }}
+
+            {{
+              form.radio({
+                name: 'brp',
+                label: "No"
+              })
+            }}
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
+    </div>
+
+    <div class="column-custom-question-image">
+        <figure class="figure figure--brc">
+            <img src="{{ currentApp.urlPaths.imagesPath }}brc-front-small.jpg" alt="Biometric residence card">
+            <p class="figure__caption" aria-hidden="true">Example of a biometric residence card</p>
+        </figure>
+        <figure class="figure figure--brp">
+            <img src="{{ currentApp.urlPaths.imagesPath }}brp-front-small.jpg" alt="Biometric residence permit">
+            <p class="figure__caption" aria-hidden="true">Example of a biometric residence permit</p>
+        </figure>
+    </div>
+
+
+
+  </div>
+{% endblock %}

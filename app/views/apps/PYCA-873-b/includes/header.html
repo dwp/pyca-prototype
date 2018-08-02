@@ -1,0 +1,23 @@
+<div class="govuk-box-highlight">
+  {% if currentApp.claimantStatus == 'Ineligible' %}
+    <h1 class="bold-large">Book a HRT for this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
+  {% elseif currentApp.claimantStatus == 'Fill in section 1 of the ALP' %}
+    <h1 class="bold-large">This person doesn’t need a HRT</h1>
+  {% elseif currentApp.claimantStatus == 'Fill in section 2 of the ALP' %}
+    <h1 class="bold-large">You can now make a decision</h1>
+  {% elseif currentApp.claimantStatus == 'You can now make a decision' %}
+    <h1 class="bold-large">You can now make a decision</h1>
+  {% else %}
+    <h1 class="bold-large">Fast-track this {{ 'couple' if currentApp.isPartnerFlow else 'person' }}</h1>
+  {% endif %}
+</div>
+
+{% if currentApp.claimantStatus == 'Ineligible' %}
+{% elseif currentApp.claimantStatus == 'Fill in section 1 of the ALP' %}
+{% elseif currentApp.claimantStatus == 'Fill in section 2 of the ALP' %}
+{% elseif currentApp.claimantStatus == 'You can now make a decision' %}
+
+{% else %}
+  <h2 class="heading-medium">Claimant status</h2>
+  <p>{{ currentApp.claimantStatus }} {{ 'with a qualifying partner' if isPartnerFlow}}</p>
+{% endif %}
