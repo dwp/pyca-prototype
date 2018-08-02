@@ -1,6 +1,6 @@
 // Use this file to change subapp configuration.
 module.exports = {
-	title: 'PYCA-873/859-b (split out employment question)',
+	title: 'PYCA-955 (split out employment question)',
 
 	// properties in here will override those in that affect the templates
 	// with in the global config file (app/config.js)
