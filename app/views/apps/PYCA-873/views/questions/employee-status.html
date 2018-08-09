@@ -1,42 +1,54 @@
-{% set page = { title: "Employee status" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
-<div class="grid-row">
+{% set page = {
+	title: "Employee status"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
     <div class="column-two-thirds">
-        <form method="post" class="form">
-            <h1 class="heading-large">
-          {{ 'Can their partner' if currentApp.isPartnerFlow else 'Can this person' }} provide evidence that they are currently working for someone else?
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+          {{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} currently have a job?
         </h1>
-            <!-- <p class="form-hint">They are employed by someone if they can produce evidence of being paid a regular salary in the last 3 months, even if they are on maternity leave.</p> -->
-            <div class="form-group">
-                <fieldset>
-                    <legend>
-                        <span class="visuallyhidden">{{ 'Can their partner' if currentApp.isPartnerFlow else 'Can this person' }} provide evidence that they are currently working for someone else?</span>
-                    </legend>
-                    <div class="multiple-choice">
-                        <input type="radio" name="employeeStatus" value="employed" id="employedPayslips">
-                        <label for="employedPayslips">Yes, they have payslips or bank statements for the last 3 months</label>
-                    </div>
-                    <div class="multiple-choice">
-                        <input type="radio" name="employeeStatus" value="employed" id="employedContract">
-                        <label for="employedContract">Yes, they have their most recent payslip and a contract of employment</label>
-                    </div>
-                    <div class="multiple-choice">
-                        <input type="radio" name="employeeStatus" value="selfEmployed" id="selfEmployed">
-                        <label for="selfEmployed">No, they’re self-employed</label>
-                    </div>
-                    <div class="multiple-choice">
-                        <input type="radio" name="employeeStatus" value="dontWork" id="noEvidence">
-                        <label for="noEvidence">No, they don’t have any evidence</label>
-                    </div>
-                    <div class="multiple-choice">
-                        <input type="radio" name="employeeStatus" value="dontWork" id="dontWork">
-                        <label for="dontWork">No, they’re not working at the moment</label>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="button">Continue</button>
-            </div>
-        </form>
+
+        <p class="form-hint">They are employed by someone if they can produce evidence of being paid a regular salary in the last 3 months, even if they are on maternity leave.</p>
+
+        <div class="form-group">
+          <fieldset role="group" aria-required="true">
+
+						<legend>
+              <span class="visuallyhidden">{{ 'Does their partner' if currentApp.isPartnerFlow else 'Does this person' }} currently have a job?</span>
+            </legend>
+
+						<div class="multiple-choice">
+				      <input type="checkbox" name="employeeStatus[employed]" value="true" id="employed" data-uncheck='["dontWork"]'>
+				      <label for="employed">Yes, they’re employed by someone</label>
+				    </div>
+
+						<div class="multiple-choice">
+	            <input type="checkbox" name="employeeStatus[selfEmployed]" value="true" id="selfEmployed" data-uncheck='["dontWork"]'>
+	            <label for="selfEmployed">Yes, they’re self-employed (work for themselves)</label>
+						</div>
+
+						<div class="multiple-choice">
+	            <input type="checkbox" name="employeeStatus[dontWork]" value="true" id="dontWork" data-uncheck='["employed", "selfEmployed"]'>
+	            <label for="dontWork">No, they don’t do any work at the moment</label>
+						</div>
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
     </div>
-</div>
+  </div>
+
 {% endblock %}

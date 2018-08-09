@@ -1,22 +1,60 @@
-{% set page = { title: "Employee status - don't work" } %} {% extends currentApp.filePaths.layoutsDir + "default.html" %} {% block main_content %}
-<div class="grid-row">
+{% set page = {
+	title: "Employee status - don't work"
+} %}
+
+{% extends currentApp.filePaths.layoutsDir + "default.html" %}
+
+{% block main_content %}
+
+  <div class="grid-row">
     <div class="column-two-thirds">
-        <form method="post" class="form">
-            <h1 class="heading-large">
-					Why {{ 'can’t their partner' if currentApp.isPartnerFlow else 'can’t this person' }} provide evidence that they're currently working for someone else?
+
+      <form method="post" class="form">
+
+        <h1 class="heading-large">
+					Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?
         </h1>
-            <div class="form-group">
-                <fieldset role="radiogroup" aria-required="true">
-                    <legend>
-                        <span class="visuallyhidden">Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?</span>
-                    </legend>
-                    {{ form.radio({ name: 'dontWorkReason', label: "They were recently made redundant", value: 'redundant' }) }} {{ form.radio({ name: 'dontWorkReason', label: "They recently stopped working due to an illness", value: 'sick' }) }} {{ form.radio({ name: 'dontWorkReason', label: "Other reason", value: 'other' }) }}
-                </fieldset>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="button">Continue</button>
-            </div>
-        </form>
+
+        <div class="form-group">
+          <fieldset role="radiogroup" aria-required="true">
+            <legend>
+              <span class="visuallyhidden">Why {{ 'isn’t their partner' if currentApp.isPartnerFlow else 'aren’t they' }} working?</span>
+            </legend>
+
+						{{
+							form.radio({
+								name: 'dontWorkReason',
+								label: "They were made redundant recently",
+								value: 'redundant'
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'dontWorkReason',
+								label: "They stopped working recently due to an illness",
+								value: 'sick'
+							})
+						}}
+
+						{{
+							form.radio({
+								name: 'dontWorkReason',
+								label: "Other reason",
+								value: 'other'
+							})
+						}}
+
+          </fieldset>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="button">Continue</button>
+        </div>
+
+      </form>
+
     </div>
-</div>
-{% endblock %}
+  </div>
+
+{% endblock %}﻿
