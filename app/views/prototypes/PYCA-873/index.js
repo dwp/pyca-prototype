@@ -299,7 +299,6 @@ router.all('/:type/questions/residence-permit', (req, res) => {
 router.all('/:type/questions/residence-permit-type', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
-  const saved = req.session.data[type]
 
   // Leave to remain/enter
   if (submitted.brpType === 'leave to remain' || submitted.brpType === 'leave to enter') {
@@ -313,11 +312,29 @@ router.all('/:type/questions/residence-permit-type', (req, res) => {
 
   // Residence
   if (submitted.brpType === 'residence') {
-    saved.familyMember = 'yes'
-    return res.redirect('./married-or-civil-partner')
+    return res.redirect('./residence-permit-sub-type')
   }
 
   res.render(`${__dirname}/views/questions/residence-permit-type`)
+})
+
+/**
+ * Question: Which other words are shown?
+ */
+router.all('/:type/questions/residence-permit-sub-type', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.brpSubType) {
+    // Full HRT required for permanent residents
+    if (submitted.brpSubType === 'residence-permanent') {
+      return res.redirect('../../outcome/END003')
+    }
+
+    return res.redirect('./married-or-civil-partner')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-permit-sub-type`)
 })
 
 /**
