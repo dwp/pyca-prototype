@@ -219,22 +219,56 @@ router.all('/:type/questions/residence-permit', (req, res) => {
   const submitted = req.body[type]
   const saved = req.session.data[type]
 
-  // Refugee with permit
-  if (submitted.brp === 'yes' && saved.refugee === 'yes') {
-    return res.redirect('./residence-permit-refugee')
+  // Refugee with/without permit
+  if (saved.refugee === 'yes') {
+    if (submitted.brp === 'yes') {
+      return res.redirect('./residence-permit-refugee')
+    }
+
+    if (submitted.brp === 'no') {
+      return res.redirect('../../outcome/END008')
+    }
   }
 
-  // Refugee without permit
-  if (submitted.brp === 'no' && saved.refugee === 'yes') {
-    return res.redirect('../../outcome/END008')
-  }
+  // Anyone else with/without permit
+  if (saved.refugee === 'no') {
+    if (submitted.brp === 'yes') {
+      return res.redirect('./residence-permit-type')
+    }
 
-  // Ignore answer if not refugee
-  if (submitted.brp) {
-    return res.redirect('./no-public-funds')
+    if (submitted.brp === 'no') {
+      return res.redirect('./no-public-funds')
+    }
   }
 
   res.render(`${__dirname}/views/questions/residence-permit`)
+})
+
+/**
+ * Question: Which of the following words are shown?
+ */
+router.all('/:type/questions/residence-permit-type', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  // Leave to remain/enter
+  if (submitted.brpType === 'leave to remain' || submitted.brpType === 'leave to enter') {
+    return res.redirect('./no-public-funds-residence-permit')
+  }
+
+  // Check for leave time for settlement
+  if (submitted.brpType === 'settlement') {
+    return res.redirect('./settlement-leave')
+  }
+
+  // Residence
+  if (submitted.brpType === 'residence') {
+    saved.familyMember = 'yes'
+    return res.redirect('./married-or-civil-partner')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-permit-type`)
 })
 
 /**
@@ -278,11 +312,32 @@ router.all('/:type/questions/residence-permit-expired', (req, res) => {
 })
 
 /**
- * Question: Visa says no public funds?
+ * Question: Out of the UK for more than 2 years
  */
-router.all('/:type/questions/no-public-funds', (req, res) => {
+router.all('/:type/questions/settlement-leave', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+
+  // Out of UK for 2 years?
+  if (submitted.outOfUkTwoYears === 'yes') {
+    return res.redirect('../../outcome/END003')
+  }
+
+  // Not out of UK for 2 years
+  if (submitted.outOfUkTwoYears === 'no') {
+    return res.redirect('../../outcome/END100')
+  }
+
+  res.render(`${__dirname}/views/questions/settlement-leave`)
+})
+
+/**
+ * Question: Visa says no public funds?
+ */
+router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Visa says "no public funds"
   if (submitted.noPublicFunds === 'yes') {
@@ -291,10 +346,21 @@ router.all('/:type/questions/no-public-funds', (req, res) => {
 
   // Visa doesn't say "no public funds"
   if (submitted.noPublicFunds === 'no') {
+    if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
+      return res.redirect('../../outcome/END009')
+    }
+
     return res.redirect('./family-member')
   }
 
-  res.render(`${__dirname}/views/questions/no-public-funds`)
+  let view = `${__dirname}/views/questions/no-public-funds`
+
+  // Change to BRP copy variant
+  if (req.originalUrl.includes('-residence-permit')) {
+    view = `${__dirname}/views/questions/no-public-funds-residence-permit`
+  }
+
+  res.render(view)
 })
 
 /**
@@ -470,6 +536,7 @@ router.all('/:type/questions/family-member', (req, res) => {
 router.all('/:type/questions/married-or-civil-partner', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Married or civil partner?
   if (submitted.partner === 'yes') {
@@ -478,6 +545,10 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
 
   // No partner
   if (submitted.partner === 'no') {
+    if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
+      return res.redirect('../../outcome/END009')
+    }
+
     return res.redirect('../../outcome/END003')
   }
 

@@ -8,11 +8,11 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "no-public-funds",
-        name: type + "[noPublicFunds]",
+        idPrefix: "out-of-uk-two-years",
+        name: type + "[outOfUkTwoYears]",
         fieldset: {
           legend: {
-            text: "Do they have a visa that’s stamped ‘no recourse to public funds’ or ‘no public funds’?",
+            text: "Since the card was issued, have they been out of the UK for more than 2 years at a time?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -21,12 +21,12 @@
           {
             value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].noPublicFunds", "yes")
+            checked: checked("['" + type + "'].outOfUkTwoYears", "yes")
           },
           {
             value: "no",
             text: "No",
-            checked: checked("['" + type + "'].noPublicFunds", "no")
+            checked: checked("['" + type + "'].outOfUkTwoYears", "no")
           }
         ]
       }) }}

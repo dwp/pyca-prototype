@@ -17,6 +17,8 @@ $govuk-global-styles: true;
 @import "components/outcome";
 @import "components/figure";
 @import "components/autocomplete";
+@import "components/residence-card";
+@import "components/column-image";
 
 .js-enabled select[data-source] {
   display: none;

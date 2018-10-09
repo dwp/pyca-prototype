@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-half">
+  <div class="govuk-grid-column govuk-grid-column--custom-image">
 
     <form method="post">
 
@@ -12,7 +12,7 @@
         name: type + "[brp]",
         fieldset: {
           legend: {
-            text: "Have they brought a biometric residence permit today?",
+            text: "Have they brought a Biometric Residence Permit (BRP) or Residence Card with them?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -39,12 +39,19 @@
 
   </div>
 
-  <div class="govuk-grid-column-one-half">
+  <div class="govuk-grid-column govuk-grid-column--custom-image">
 
-    <figure class="figure">
-      <img src="{{ basePath }}/assets/images/brp-front.jpg" alt="Photo of example biometric permit">
-      <figcaption aria-hidden="true">
-        Example of a biometric residence permit.
+    <figure class="figure residence-card residence-card--small">
+      <img src="{{ basePath }}/assets/images/brp-front-small.png" srcset="{{ basePath }}/assets/images/brp-front-small.png, {{ basePath }}/assets/images/brp-front-small@2x.png 1.5x" alt="Example biometric residence permit">
+      <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
+        Example biometric residence permit
+      </figcaption>
+    </figure>
+
+    <figure class="figure residence-card residence-card--small">
+      <img src="{{ basePath }}/assets/images/rc-front-small.png" srcset="{{ basePath }}/assets/images/rc-front-small.png, {{ basePath }}/assets/images/rc-front-small@2x.png 1.5x" alt="Example residence card">
+      <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
+        Example residence card
       </figcaption>
     </figure>
 

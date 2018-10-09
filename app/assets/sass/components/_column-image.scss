@@ -1,0 +1,24 @@
+.govuk-grid-column--custom-image {
+  box-sizing: border-box;
+  padding: 0 $govuk-gutter-half;
+  width: 100%;
+}
+
+@include govuk-media-query($from: tablet) {
+
+  .govuk-grid-column--custom-image {
+    width: grid-width(one-half);
+    float: left;
+  }
+}
+
+@include govuk-media-query($from: desktop) {
+
+  .govuk-grid-column--custom-image {
+    width: percentage(3/8);
+
+    & + & {
+      width: percentage(5/8);
+    }
+  }
+}
