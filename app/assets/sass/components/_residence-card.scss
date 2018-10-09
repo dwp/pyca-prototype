@@ -1,0 +1,63 @@
+.residence-card {
+  $block: &;
+  $image-width: 455;
+  $image-width-small: 285;
+
+  margin: 1em auto 1.8em;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__caption {
+    color: $govuk-secondary-text-colour;
+    @include govuk-responsive-margin(2, "top");
+    @include govuk-responsive-margin(5, "bottom");
+    @include govuk-font($size: 16);
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  &--small {
+    width: $image-width-small * 1px;
+  }
+
+  &--example {
+    $offset: percentage(122/$image-width);
+    max-width: $image-width * 1px;
+
+    #{$block}__caption {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 $offset 0 10px;
+    }
+  }
+
+  @include govuk-media-query($from: tablet) {
+    clear: both;
+    margin: 0 0 1em;
+
+    &--small {
+      float: left;
+      max-width: $image-width-small * 1px;
+    }
+  }
+
+  @include govuk-media-query($from: desktop) {
+    $column-width: 588;
+    $padding-width: 15;
+
+    &--small {
+      clear: none;
+      margin-right: ($padding-width / $column-width) * 100%;
+      width: ($image-width-small / $column-width) * 100%;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
