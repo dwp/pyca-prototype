@@ -83,20 +83,23 @@ router.all('/:type/questions/british-passport-nationality', (req, res) => {
 })
 
 /**
- * Question: Have they been out of the country?
+ * Question: Have they been out of the UK?
  */
 router.all('/:type/questions/out-of-country', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Out of country?
   if (submitted.outOfCountryMoreThan4Weeks === 'yes') {
-    return res.redirect('./out-of-country-return-date')
+    return res.redirect(saved.britishCitizen === 'yes'
+      ? './out-of-country-return-date' : './out-of-country-return-period')
   }
 
   // Not out of country
   if (submitted.outOfCountryMoreThan4Weeks === 'no') {
-    return res.redirect('../../outcome/END015')
+    return res.redirect(saved.britishCitizen === 'yes'
+      ? '../../outcome/END015' : '../../outcome/END100')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country`)
@@ -140,6 +143,26 @@ router.all('/:type/questions/out-of-country-return-date', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/out-of-country-return-date`)
+})
+
+/**
+ * Question: How long have they been back?
+ */
+router.all('/:type/questions/out-of-country-return-period', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  // Less than 1 month, between 1 and 6 months
+  if (['up-to-one-month', 'up-to-six-months'].includes(submitted.outOfUkReturnPeriod)) {
+    return res.redirect('../../outcome/END007')
+  }
+
+  // Over six months
+  if (submitted.outOfUkReturnPeriod === 'over-six-months') {
+    return res.redirect('../../outcome/END100')
+  }
+
+  res.render(`${__dirname}/views/questions/out-of-country-return-period`)
 })
 
 /**
@@ -351,7 +374,7 @@ router.all('/:type/questions/settlement-leave', (req, res) => {
 
   // Not out of UK for 2 years
   if (submitted.outOfUkTwoYears === 'no') {
-    return res.redirect('../../outcome/END100')
+    return res.redirect('./out-of-country')
   }
 
   res.render(`${__dirname}/views/questions/settlement-leave`)
