@@ -1,0 +1,24 @@
+{% extends "../outcome.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukPanel({
+      titleText: "Book an HRT interview for this person",
+      classes: "outcome"
+    }) }}
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">Go to the ‘prove you can apply (HRT)’ to-do</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>In the ‘Agent notes’ box type: ‘Not eligible for fast track’.</li>
+      <li>For the question ‘Does the ‘Prove you can apply’ service say you can record the decision?’, select ‘No’.</li>
+      <li>For the question ‘Is an HRT interview needed?’, select ‘Yes’.</li>
+      <li>Select ‘Done’.</li>
+    </ol>
+
+    <h2 class="govuk-heading-m">Now book an HRT interview</h2>
+
+  </div>
+</div>
+{% endblock %}

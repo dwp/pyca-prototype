@@ -1,0 +1,62 @@
+{% extends "../outcome.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukPanel({
+      titleText: "Fast-track this person",
+      text: "Refer to decision maker",
+      classes: "outcome"
+    }) }}
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">Claimant status</h2>
+    <p>Temporarily Sick EEA Citizen</p>
+
+    <h2 class="govuk-heading-m">Evidence to record in the ALP</h2>
+
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">All of the following:</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>details from current fit note – name of medical practice, start and end dates, type of sickness</li>
+      <li>date they stopped working</li>
+    </ul>
+
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">One of the following:</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>passport</li>
+      <li>national ID card</li>
+    </ul>
+
+    <p>Include number, nationality, issue date and expiry date</p>
+
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">Plus one from the following list:</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>payslips from their last 3 months of employment – name of employer and earnings (including pay frequency, date and amount)</li>
+      <li>bank statement showing earnings from the last 3 months (including pay dates and amounts)</li>
+      <li>most recent payslip and contract or letter from employer confirming type and duration of contract, start date, hours of work and earnings</li>
+    </ul>
+
+    {{ govukWarningText({
+      text: "If the claimant cannot provide the necessary evidence, book an HRT interview.",
+      iconFallbackText: "Important"
+    }) }}
+
+    <h2 class="govuk-heading-m">Go to the ‘prove you can apply (HRT)’ to-do</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>For the question ‘Does the ‘Prove you can apply’ service say you can record the decision?’, select ‘No’.</li>
+      <li>For the question ‘Is an HRT interview needed?’, select ‘No’.</li>
+      <li>Select ‘Done’.</li>
+    </ol>
+
+    <h2 class="govuk-heading-m">Complete the ‘refer to decision maker (HRT)’ to-do</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>Download the ALP.</li>
+      <li>Complete the appropriate section in the ALP using the necessary evidence.</li>
+      <li>Upload the ALP.</li>
+      <li>Enter the claimant’s nationality.</li>
+      <li>Select ‘Done’.</li>
+    </ol>
+
+  </div>
+</div>
+{% endblock %}
