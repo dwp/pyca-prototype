@@ -1,0 +1,38 @@
+{% extends "../outcome.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukPanel({
+      titleText: "You can now make a decision",
+      classes: "outcome"
+    }) }}
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">Evidence to record in the ALP</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>passport – number, nationality, date of issue and expiry date</li>
+      <li>date they left the UK and returned</li>
+      <li>reason they left the UK and returned</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Clear the Prove You Can Apply to-do</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>For the question ‘Is an HRT interview required?’, select ‘No’.</li>
+      <li>Click ‘Done’.</li>
+    </ol>
+
+    <h2 class="govuk-heading-m">Clear the Refer to Decision Maker to-do</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>Download the ALP.</li>
+      <li>Complete the appropriate section in the ALP using the necessary evidence.</li>
+      <li>Upload the ALP.</li>
+      <li>Enter the claimant’s nationality.</li>
+      <li>For the question ‘Is the claimant a refugee?’, select ‘No’.</li>
+      <li>For the question ‘Is this a fast-track HRT referral case?’, select ‘Yes’.</li>
+      <li>Click ‘Done’.</li>
+    </ol>
+
+  </div>
+</div>
+{% endblock %}
