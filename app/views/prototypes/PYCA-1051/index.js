@@ -99,7 +99,7 @@ router.all('/:type/questions/out-of-country', (req, res) => {
   // Not out of country
   if (submitted.outOfCountryMoreThan4Weeks === 'no') {
     return res.redirect(saved.britishCitizen === 'yes'
-      ? '../../outcome/END015' : '../../outcome/END100')
+      ? '../../outcome/END015' : '../../outcome/END007')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country`)
@@ -129,7 +129,7 @@ router.all('/:type/questions/out-of-country-return-date', (req, res) => {
     if (date.isValid() && date.isBefore(today)) {
       // More than six months ago
       if (date.isBefore(moment(today).subtract(6, 'months'))) {
-        return res.redirect('../../outcome/END101')
+        return res.redirect('../../outcome/END001')
       }
 
       // More than one month ago
@@ -159,7 +159,7 @@ router.all('/:type/questions/out-of-country-return-period', (req, res) => {
 
   // Over six months
   if (submitted.outOfUkReturnPeriod === 'over-six-months') {
-    return res.redirect('../../outcome/END100')
+    return res.redirect('../../outcome/END007')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country-return-period`)
@@ -510,7 +510,7 @@ router.all('/:type/questions/employment-status-yes-no', (req, res) => {
   // Working
   if ((submitted.employmentStatus || []).includes('employed')) {
     return res.redirect(saved.britishCitizen === 'yes'
-      ? '../../outcome/END101' : '../../outcome/END100')
+      ? '../../outcome/END001' : '../../outcome/END007')
   }
 
   // Not working
