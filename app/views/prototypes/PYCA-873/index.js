@@ -1,4 +1,5 @@
 const express = require('express')
+const moment = require('moment')
 const router = express.Router()
 
 // Local dependencies
@@ -90,7 +91,7 @@ router.all('/:type/questions/out-of-country', (req, res) => {
 
   // Out of country?
   if (submitted.outOfCountryMoreThan4Weeks === 'yes') {
-    return res.redirect('./out-of-country-back-six-months')
+    return res.redirect('./out-of-country-return-date')
   }
 
   // Not out of country
@@ -102,18 +103,43 @@ router.all('/:type/questions/out-of-country', (req, res) => {
 })
 
 /**
- * Question: Have they been back for six months?
+ * Question: What date did they return?
  */
-router.all('/:type/questions/out-of-country-back-six-months', (req, res) => {
+router.all('/:type/questions/out-of-country-return-date', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
-  // Fast track any answer
-  if (submitted.backSixMonths) {
-    return res.redirect('../../outcome/END001')
+  // Date components
+  const fields = submitted.outOfUkReturn || {}
+
+  // All three date fields provided
+  if (fields.day && fields.month && fields.year) {
+    const day = fields.day.padStart(2, '0')
+    const month = fields.month.padStart(2, '0')
+    const year = fields.year
+
+    // Parse date
+    const date = moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD', true)
+    const today = moment.utc().startOf('day')
+
+    // Is the date valid and in the past?
+    if (date.isValid() && date.isBefore(today)) {
+      // More than six months ago
+      if (date.isBefore(moment(today).subtract(6, 'months'))) {
+        return res.redirect('../../outcome/END101')
+      }
+
+      // More than one month ago
+      if (date.isBefore(moment(today).subtract(1, 'month'))) {
+        return res.redirect('./employment-status-yes-no')
+      }
+
+      // Less than or one month ago
+      return res.redirect('../../outcome/END001')
+    }
   }
 
-  res.render(`${__dirname}/views/questions/out-of-country-back-six-months`)
+  res.render(`${__dirname}/views/questions/out-of-country-return-date`)
 })
 
 /**
@@ -431,6 +457,29 @@ router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, r
   }
 
   res.render(view)
+})
+
+/**
+ * Question: Are they currently working?
+ */
+router.all('/:type/questions/employment-status-yes-no', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  // Working
+  if ((submitted.employmentStatus || []).includes('employed')) {
+    return res.redirect(saved.britishCitizen === 'yes'
+      ? '../../outcome/END101' : '../../outcome/END100')
+  }
+
+  // Not working
+  if ((submitted.employmentStatus || []).includes('dontWork')) {
+    return res.redirect(saved.britishCitizen === 'yes'
+      ? '../../outcome/END001' : '../../outcome/END007')
+  }
+
+  res.render(`${__dirname}/views/questions/employment-status-yes-no`)
 })
 
 /**
