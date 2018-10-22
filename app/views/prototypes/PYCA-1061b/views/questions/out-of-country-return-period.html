@@ -1,0 +1,46 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        idPrefix: "out-of-uk-two-years",
+        name: type + "[outOfUkReturnPeriod]",
+        fieldset: {
+          legend: {
+            text: "From this absence, how long ago did they return to the UK?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "up-to-one-month",
+            text: "Less than one month",
+            checked: checked("['" + type + "'].outOfUkReturnPeriod", "up-to-one-month")
+          },
+          {
+            value: "up-to-six-months",
+            text: "Between 1 to 6 months",
+            checked: checked("['" + type + "'].outOfUkReturnPeriod", "up-to-six-months")
+          },
+          {
+            value: "over-six-months",
+            text: "6 months or more",
+            checked: checked("['" + type + "'].outOfUkReturnPeriod", "over-six-months")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
