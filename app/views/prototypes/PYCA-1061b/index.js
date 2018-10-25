@@ -106,51 +106,6 @@ router.all('/:type/questions/out-of-country', (req, res) => {
 })
 
 /**
- * Question: Out of the UK since the card was issued?
- */
-router.all('/:type/questions/out-of-country-yes-no', (req, res) => {
-  const type = req.params.type
-  const submitted = req.body[type]
-
-  // Out of country since card was issued?
-  if (submitted.outOfCountry === 'yes') {
-    return res.redirect('./out-of-country-settlement')
-  }
-
-  // Not out of country since card was issued?
-  if (submitted.outOfCountry === 'no') {
-    return res.redirect('../../outcome/END007')
-  }
-
-  res.render(`${__dirname}/views/questions/out-of-country-yes-no`)
-})
-
-/**
- * Question: What is the longest period out of the UK?
- */
-router.all('/:type/questions/out-of-country-settlement', (req, res) => {
-  const type = req.params.type
-  const submitted = req.body[type]
-
-  // Out of country more than 2 years?
-  if (submitted.outOfCountry === 'over-two-years') {
-    return res.redirect('../../outcome/END003')
-  }
-
-  // Out of country more than 4 weeks?
-  if (submitted.outOfCountry === 'up-to-two-years') {
-    return res.redirect('./out-of-country-return-period')
-  }
-
-  // Out of country less than 4 weeks
-  if (submitted.outOfCountry === 'up-to-four-weeks') {
-    return res.redirect('../../outcome/END007')
-  }
-
-  res.render(`${__dirname}/views/questions/out-of-country-settlement`)
-})
-
-/**
  * Question: What date did they return?
  */
 router.all('/:type/questions/out-of-country-return-date', (req, res) => {
@@ -352,7 +307,7 @@ router.all('/:type/questions/residence-permit-type', (req, res) => {
 
   // Check for leave time for settlement
   if (submitted.brpType === 'settlement') {
-    return res.redirect('./out-of-country-yes-no')
+    return res.redirect('./out-of-country')
   }
 
   // Residence
