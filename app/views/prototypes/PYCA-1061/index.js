@@ -83,7 +83,7 @@ router.all('/:type/questions/british-passport-nationality', (req, res) => {
 })
 
 /**
- * Question: Have they been out of the UK?
+ * Question: Out of the UK for more than 4 weeks?
  */
 router.all('/:type/questions/out-of-country', (req, res) => {
   const type = req.params.type
@@ -91,18 +91,63 @@ router.all('/:type/questions/out-of-country', (req, res) => {
   const saved = req.session.data[type]
 
   // Out of country?
-  if (submitted.outOfCountryMoreThan4Weeks === 'yes') {
+  if (submitted.outOfCountry === 'up-to-two-years') {
     return res.redirect(saved.britishCitizen === 'yes'
       ? './out-of-country-return-date' : './out-of-country-return-period')
   }
 
   // Not out of country
-  if (submitted.outOfCountryMoreThan4Weeks === 'no') {
+  if (submitted.outOfCountry === 'up-to-four-weeks') {
     return res.redirect(saved.britishCitizen === 'yes'
       ? '../../outcome/END015' : '../../outcome/END100')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country`)
+})
+
+/**
+ * Question: Out of the UK since the card was issued?
+ */
+router.all('/:type/questions/out-of-country-yes-no', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  // Out of country since card was issued?
+  if (submitted.outOfCountry === 'yes') {
+    return res.redirect('./out-of-country-settlement')
+  }
+
+  // Not out of country since card was issued?
+  if (submitted.outOfCountry === 'no') {
+    return res.redirect('../../outcome/END100')
+  }
+
+  res.render(`${__dirname}/views/questions/out-of-country-yes-no`)
+})
+
+/**
+ * Question: What is the longest period out of the UK?
+ */
+router.all('/:type/questions/out-of-country-settlement', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  // Out of country more than 2 years?
+  if (submitted.outOfCountry === 'over-two-years') {
+    return res.redirect('../../outcome/END003')
+  }
+
+  // Out of country more than 4 weeks?
+  if (submitted.outOfCountry === 'up-to-two-years') {
+    return res.redirect('./out-of-country-return-period')
+  }
+
+  // Out of country less than 4 weeks
+  if (submitted.outOfCountry === 'up-to-four-weeks') {
+    return res.redirect('../../outcome/END100')
+  }
+
+  res.render(`${__dirname}/views/questions/out-of-country-settlement`)
 })
 
 /**
@@ -307,7 +352,7 @@ router.all('/:type/questions/residence-permit-type', (req, res) => {
 
   // Check for leave time for settlement
   if (submitted.brpType === 'settlement') {
-    return res.redirect('./settlement-leave')
+    return res.redirect('./out-of-country-yes-no')
   }
 
   // Residence
@@ -375,26 +420,6 @@ router.all('/:type/questions/residence-permit-expired', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/residence-permit-expired`)
-})
-
-/**
- * Question: Out of the UK for more than 2 years
- */
-router.all('/:type/questions/settlement-leave', (req, res) => {
-  const type = req.params.type
-  const submitted = req.body[type]
-
-  // Out of UK for 2 years?
-  if (submitted.outOfUkTwoYears === 'yes') {
-    return res.redirect('../../outcome/END003')
-  }
-
-  // Not out of UK for 2 years
-  if (submitted.outOfUkTwoYears === 'no') {
-    return res.redirect('./out-of-country')
-  }
-
-  res.render(`${__dirname}/views/questions/settlement-leave`)
 })
 
 /**

@@ -8,11 +8,11 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "out-of-uk-two-years",
-        name: type + "[outOfUkTwoYears]",
+        idPrefix: "out-of-country",
+        name: type + "[outOfCountry]",
         fieldset: {
           legend: {
-            text: "Since the card was issued, have they been out of the UK for more than 2 years at a time?",
+            text: "Since the card was issued, have they been out of the UK?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -21,12 +21,12 @@
           {
             value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].outOfUkTwoYears", "yes")
+            checked: checked("['" + type + "'].outOfCountry", "yes")
           },
           {
             value: "no",
             text: "No",
-            checked: checked("['" + type + "'].outOfUkTwoYears", "no")
+            checked: checked("['" + type + "'].outOfCountry", "no")
           }
         ]
       }) }}

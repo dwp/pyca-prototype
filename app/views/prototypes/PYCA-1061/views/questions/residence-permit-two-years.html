@@ -8,25 +8,25 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "out-of-country",
-        name: type + "[outOfCountry]",
+        idPrefix: "brp-over-two-years",
+        name: type + "[brpOverTwoYears]",
         fieldset: {
           legend: {
-            text: "Have they been out of the UK for more than 4 weeks at a time in the last 2 years?",
+            text: "Was the card issued more than 2 years ago?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
         },
         items: [
           {
-            value: "up-to-two-years",
+            value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].outOfCountry", "up-to-two-years")
+            checked: checked("['" + type + "'].brpOverTwoYears", "yes")
           },
           {
-            value: "up-to-four-weeks",
+            value: "no",
             text: "No",
-            checked: checked("['" + type + "'].outOfCountry", "up-to-four-weeks")
+            checked: checked("['" + type + "'].brpOverTwoYears", "no")
           }
         ]
       }) }}
