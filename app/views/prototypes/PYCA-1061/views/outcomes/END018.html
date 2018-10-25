@@ -4,8 +4,12 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
+    {% set titleText = "You can now record the decision" %}
+    {% set titleText = "This person has proved they can apply for Universal Credit" if variant == 'B' else titleText %}
+    {% set titleText = "A DM decision is not required" if variant == 'C' else titleText %}
+
     {{ govukPanel({
-      titleText: "You can now record the decision",
+      titleText: titleText,
       html: "Do not refer to decision maker",
       classes: "outcome"
     }) }}
