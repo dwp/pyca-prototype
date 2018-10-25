@@ -1,0 +1,52 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        idPrefix: "employee-status-evidence",
+        name: type + "[employmentStatusEvidence]",
+        fieldset: {
+          legend: {
+            text: "Can " + ("their partner" if type == 'partner' else "this person") + " provide the following from their previous employment:",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "three-months",
+            text: "Payslips or bank statements for the last 3 months",
+            checked: checked("['" + type + "'].employmentStatusEvidence", "three-months")
+          },
+          {
+            value: "most-recent",
+            text: "Most recent payslip and permanent contract of employment",
+            hint: {
+              text: "Not zero hours or fixed term"
+            },
+            checked: checked("['" + type + "'].employmentStatusEvidence", "most-recent")
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "none",
+            text: "None of the above",
+            checked: checked("['" + type + "'].employmentStatusEvidence", "none")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
