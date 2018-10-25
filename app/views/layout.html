@@ -39,10 +39,12 @@
 
 {% block header %}
   {% include "includes/cookie-banner.html" %}
+  {% set productName = ("Variant " + variant) if navigation else null %}
   {# Set serviceName in config.js. #}
   {{ govukHeader({
     homepageUrl: "/",
     serviceName: serviceName,
+    productName: productName,
     serviceUrl: basePath,
     containerClasses: "govuk-width-container"
   }) }}
@@ -64,7 +66,8 @@
             text: "Clear data"
           }
         ]
-      }
+      },
+      navigation: navigation
     }) }}
   {% endblock %}
 {% endif %}
