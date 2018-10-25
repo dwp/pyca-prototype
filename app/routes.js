@@ -14,6 +14,7 @@ router.all('/data/:data/source/:source', (req, res) => {
 router.use(require('./middleware/defaults'))
 router.use(require('./middleware/locals'))
 router.use(require('./middleware/nationality'))
+router.use(require('./middleware/variants'))
 
 // Data sources
 router.all('/data/:data/source/:source', (req, res) => {
