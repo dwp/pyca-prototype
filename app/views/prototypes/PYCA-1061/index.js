@@ -286,7 +286,7 @@ router.all('/:type/questions/nationality', (req, res) => {
     }
 
     if (claimant.isEEA) {
-      return res.redirect('./employment-status')
+      return res.redirect('./in-country-five-years')
     }
 
     if (!claimant.isEEA) {
@@ -330,6 +330,20 @@ router.all('/:type/questions/nationality', (req, res) => {
   res.render(`${__dirname}/views/questions/nationality`, {
     items: countries.list(saved.nationality)
   })
+})
+
+/**
+ * Question: Have they been living in the UK for the last 5 years?
+ */
+router.all('/:type/questions/in-country-five-years', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.inCountry) {
+    return res.redirect('./employment-status')
+  }
+
+  res.render(`${__dirname}/views/questions/in-country-five-years`)
 })
 
 /**
