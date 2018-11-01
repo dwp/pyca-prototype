@@ -233,6 +233,10 @@ Features:
 
 - [#713 Bump GOV.UK Frontend to v2.9.0](https://github.com/alphagov/govuk-prototype-kit/pull/713).
 
+New features:
+
+- [#627 Add static asset caching (with cache busting)](https://github.com/alphagov/govuk-prototype-kit/pull/627)
+
 Fixes:
 
 - [#697 Only ask for usage permission if TTY](https://github.com/alphagov/govuk-prototype-kit/pull/697). Thanks [zuzak](https://github.com/zuzak) for this contribution.
