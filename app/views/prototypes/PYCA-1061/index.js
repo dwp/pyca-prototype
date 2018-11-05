@@ -6,33 +6,6 @@ const router = express.Router()
 const countries = require('../../../data/location-autocomplete')
 
 /**
- * Variant navigation
- */
-router.all('/*', (req, res, next) => {
-  res.locals.navigation = [
-    {
-      title: 'Page variants',
-      items: [
-        {
-          href: '?variant=A',
-          text: 'Variant A'
-        },
-        {
-          href: '?variant=B',
-          text: 'Variant B'
-        },
-        {
-          href: '?variant=C',
-          text: 'Variant C'
-        }
-      ]
-    }
-  ]
-
-  next()
-})
-
-/**
  * Prototype index
  */
 router.all('/', (req, res) => {
