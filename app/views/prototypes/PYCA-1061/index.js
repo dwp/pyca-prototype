@@ -156,18 +156,14 @@ router.all('/:type/questions/out-of-country-settlement', (req, res) => {
 router.all('/:type/questions/out-of-country-return-date', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Date components
-  const fields = submitted.outOfUkReturn || {}
+  saved.outOfUkReturn = formatDate(saved.outOfUkReturn)
+  const { day, month, year, date } = saved.outOfUkReturn
 
   // All three date fields provided
-  if (fields.day && fields.month && fields.year) {
-    const day = fields.day.padStart(2, '0')
-    const month = fields.month.padStart(2, '0')
-    const year = fields.year
-
-    // Parse date
-    const date = moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD', true)
+  if (submitted.outOfUkReturn && day && month && year) {
     const today = moment.utc().startOf('day')
 
     // Is the date valid and in the past?
@@ -702,5 +698,26 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
 router.all('/outcome/:outcome', (req, res) => {
   res.render(`${__dirname}/views/outcomes/${req.params.outcome}`)
 })
+
+/**
+ * Format date for display
+ */
+function formatDate ({ day, month, year } = {}) {
+  day = day ? day.padStart(2, '0') : ''
+  month = month ? month.padStart(2, '0') : ''
+  year = year || ''
+
+  // Apply formatting
+  const date = moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD', true)
+  const formatted = date.isValid() ? date.format('D MMM YYYY') : ''
+
+  return {
+    day,
+    month,
+    year,
+    date,
+    formatted
+  }
+}
 
 module.exports = router
