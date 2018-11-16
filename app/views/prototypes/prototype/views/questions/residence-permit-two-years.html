@@ -1,0 +1,42 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "brp-over-two-years",
+        name: type + "[brpOverTwoYears]",
+        fieldset: {
+          legend: {
+            text: "Was the card issued more than 2 years ago?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            checked: checked("['" + type + "'].brpOverTwoYears", "yes")
+          },
+          {
+            value: "no",
+            text: "No",
+            checked: checked("['" + type + "'].brpOverTwoYears", "no")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
