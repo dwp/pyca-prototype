@@ -1,0 +1,47 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "dont-work-reason",
+        name: type + "[dontWorkReason]",
+        fieldset: {
+          legend: {
+            text: "Why " + ("isn’t their partner" if type == 'partner' else "aren’t they") + " working?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "redundant",
+            text: "They were made redundant recently",
+            checked: checked("['" + type + "'].dontWorkReason", "redundant")
+          },
+          {
+            value: "illness",
+            text: "They stopped working recently due to an illness",
+            checked: checked("['" + type + "'].dontWorkReason", "illness")
+          },
+          {
+            value: "other",
+            text: "Other reason",
+            checked: checked("['" + type + "'].dontWorkReason", "other")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
