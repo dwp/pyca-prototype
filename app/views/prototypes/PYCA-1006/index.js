@@ -99,7 +99,7 @@ router.all('/:type/questions/out-of-country', (req, res) => {
   // Not out of country
   if (submitted.outOfCountry === 'up-to-four-weeks') {
     return res.redirect(saved.britishCitizen === 'yes'
-      ? '../../outcome/END015' : '../../outcome/END007')
+      ? '../../outcome/END015' : '../../outcome/END006')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country`)
@@ -154,12 +154,12 @@ router.all('/:type/questions/out-of-country-return-period', (req, res) => {
 
   // Less than 1 month, between 1 and 6 months
   if (['up-to-one-month', 'up-to-six-months'].includes(submitted.outOfUkReturnPeriod)) {
-    return res.redirect('../../outcome/END007')
+    return res.redirect('../../outcome/END006')
   }
 
   // Over six months
   if (submitted.outOfUkReturnPeriod === 'over-six-months') {
-    return res.redirect('../../outcome/END007')
+    return res.redirect('../../outcome/END006')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country-return-period`)
@@ -387,13 +387,14 @@ router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) =>
 
   // Visa says "no public funds"
   if (submitted.noPublicFunds === 'yes') {
-    return res.redirect('../../outcome/END004')
+    return res.redirect(saved.brp === 'no'
+      ? '../../outcome/END005' : '../../outcome/END004')
   }
 
   // Visa doesn't say "no public funds"
   if (submitted.noPublicFunds === 'no') {
     if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
-      return res.redirect('../../outcome/END007')
+      return res.redirect('../../outcome/END006')
     }
 
     return res.redirect('./family-member')
@@ -487,16 +488,24 @@ router.all('/:type/questions/employment-status-yes-no', (req, res) => {
   const submitted = req.body[type]
   const saved = req.session.data[type]
 
+  let outcomeBritish = '../../outcome/END001'
+  let outcomeOther = '../../outcome/END006'
+
+  // BRP provided
+  if (saved.brp === 'no') {
+    outcomeOther = '../../outcome/END007'
+  }
+
   // Working
   if ((submitted.employmentStatus || []).includes('employed')) {
     return res.redirect(saved.britishCitizen === 'yes'
-      ? '../../outcome/END001' : '../../outcome/END007')
+      ? outcomeBritish : outcomeOther)
   }
 
   // Not working
   if ((submitted.employmentStatus || []).includes('dontWork')) {
     return res.redirect(saved.britishCitizen === 'yes'
-      ? '../../outcome/END001' : '../../outcome/END007')
+      ? outcomeBritish : outcomeOther)
   }
 
   res.render(`${__dirname}/views/questions/employment-status-yes-no`)
@@ -581,6 +590,7 @@ router.all('/:type/questions/employment-status-fit-note', (req, res) => {
 router.all('/:type/questions/family-member', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Visa says "family member"
   if (submitted.familyMember === 'yes') {
@@ -593,7 +603,8 @@ router.all('/:type/questions/family-member', (req, res) => {
 
   // Visa doesn't say "family member"
   if (submitted.familyMember === 'no') {
-    return res.redirect('../../outcome/END007')
+    return res.redirect(saved.brp === 'no'
+      ? '../../outcome/END007' : '../../outcome/END006')
   }
 
   res.render(`${__dirname}/views/questions/family-member`)
@@ -615,7 +626,7 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
   // No partner
   if (submitted.partner === 'no') {
     if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
-      return res.redirect('../../outcome/END007')
+      return res.redirect('../../outcome/END006')
     }
 
     return res.redirect('../../outcome/END003')
