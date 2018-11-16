@@ -1,0 +1,42 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "out-of-country",
+        name: type + "[outOfCountry]",
+        fieldset: {
+          legend: {
+            text: "Have they been out of the UK for more than 4 weeks at a time in the last 2 years?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "up-to-two-years",
+            text: "Yes",
+            checked: checked("['" + type + "'].outOfCountry", "up-to-two-years")
+          },
+          {
+            value: "up-to-four-weeks",
+            text: "No",
+            checked: checked("['" + type + "'].outOfCountry", "up-to-four-weeks")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
