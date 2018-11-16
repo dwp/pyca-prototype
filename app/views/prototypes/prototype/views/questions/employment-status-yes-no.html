@@ -8,25 +8,25 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "back-six-months",
-        name: type + "[backSixMonths]",
+        idPrefix: "employee-status",
+        name: type + "[employmentStatus]",
         fieldset: {
           legend: {
-            text: "Have they been back in the country for the last six months?",
+            text: "Are they currently working?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
         },
         items: [
           {
-            value: "yes",
+            value: "employed",
             text: "Yes",
-            checked: checked("['" + type + "'].backSixMonths", "yes")
+            checked: checked("['" + type + "'].employmentStatus", "employed")
           },
           {
-            value: "no",
+            value: "dontWork",
             text: "No",
-            checked: checked("['" + type + "'].backSixMonths", "no")
+            checked: checked("['" + type + "'].employmentStatus", "dontWork")
           }
         ]
       }) }}

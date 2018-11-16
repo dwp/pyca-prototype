@@ -23,7 +23,7 @@
         {%- set classes = "" -%}
         {%- set items = (items.push({
           value: "dontKnow",
-          text: "I don’t know",
+          text: "I do not know",
           checked: checked("['" + type + "'].fitNote", "dontKnow")
         }), items) -%}
       {% endif -%}
@@ -34,7 +34,7 @@
         name: type + "[fitNote]",
         fieldset: {
           legend: {
-            text: ("Has their partner" if type == 'partner' else "Have they") + " had fit notes constantly since they stopped working?",
+            text: ("Does their partner" if type == 'partner' else "Do they") + " have consecutive fit notes covering the entire period since they last worked?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
