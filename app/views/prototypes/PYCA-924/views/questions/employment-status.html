@@ -11,18 +11,18 @@
         name: type + "[employmentStatus]",
         fieldset: {
           legend: {
-            text: "Is " + ("their partner" if type == 'partner' else "this person") + " working?",
+            text: "Does " + ("their partner" if type == 'partner' else "this person") + " currently have a job?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
         },
         hint: {
-          text: "Select all that apply"
+          text: "They are employed by someone if they can produce evidence of being paid a regular salary in the last 3 months, even if they are on maternity leave."
         },
         items: [
           {
             value: "employed",
-            text: "Yes, they’re employed",
+            text: "Yes, they’re employed by someone",
             checked: checked("['" + type + "'].employmentStatus", "employed"),
             attributes: {
               "data-uncheck": '["employment-status-3"]'
@@ -30,7 +30,7 @@
           },
           {
             value: "selfEmployed",
-            text: "Yes, they’re self-employed",
+            text: "Yes, they’re self-employed (work for themselves)",
             checked: checked("['" + type + "'].employmentStatus", "selfEmployed"),
             attributes: {
               "data-uncheck": '["employment-status-3"]'
