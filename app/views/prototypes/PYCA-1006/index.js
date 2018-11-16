@@ -393,7 +393,7 @@ router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) =>
   // Visa doesn't say "no public funds"
   if (submitted.noPublicFunds === 'no') {
     if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
-      return res.redirect('../../outcome/END009')
+      return res.redirect('../../outcome/END007')
     }
 
     return res.redirect('./family-member')
@@ -593,7 +593,7 @@ router.all('/:type/questions/family-member', (req, res) => {
 
   // Visa doesn't say "family member"
   if (submitted.familyMember === 'no') {
-    return res.redirect('../../outcome/END009')
+    return res.redirect('../../outcome/END007')
   }
 
   res.render(`${__dirname}/views/questions/family-member`)
@@ -615,7 +615,7 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
   // No partner
   if (submitted.partner === 'no') {
     if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
-      return res.redirect('../../outcome/END009')
+      return res.redirect('../../outcome/END007')
     }
 
     return res.redirect('../../outcome/END003')
