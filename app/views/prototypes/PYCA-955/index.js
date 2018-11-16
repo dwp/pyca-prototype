@@ -327,10 +327,44 @@ router.all('/:type/questions/employment-status', (req, res) => {
       return res.redirect('../../outcome/END013')
     }
 
-    return res.redirect('../../outcome/END002')
+    return res.redirect('./employment-status-evidence')
   }
 
   res.render(`${__dirname}/views/questions/employment-status`)
+})
+
+/**
+ * Question: Can they provide the following?
+ */
+router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  if (['most-recent', 'three-months'].includes(submitted.employmentStatusEvidence)) {
+    if (saved.dontWorkReason === 'redundant') {
+      return res.redirect('../../outcome/END010')
+    }
+
+    if (saved.dontWorkReason === 'illness') {
+      return res.redirect('../../outcome/END011')
+    }
+
+    return res.redirect('../../outcome/END002')
+  }
+
+  if (submitted.employmentStatusEvidence === 'none') {
+    return res.redirect('../../outcome/END003')
+  }
+
+  let view = `${__dirname}/views/questions/employment-status-evidence`
+
+  // Change to not working copy variant
+  if (req.originalUrl.includes('-not-working')) {
+    view = `${__dirname}/views/questions/employment-status-not-working-evidence`
+  }
+
+  res.render(view)
 })
 
 /**
@@ -353,7 +387,7 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
       return res.redirect('../../outcome/END013')
     }
 
-    return res.redirect('../../outcome/END010')
+    return res.redirect('./employment-status-not-working-evidence')
   }
 
   // Not working because ill
@@ -392,7 +426,7 @@ router.all('/:type/questions/employment-status-fit-note', (req, res) => {
       return res.redirect('../../outcome/END013')
     }
 
-    return res.redirect('../../outcome/END011')
+    return res.redirect('./employment-status-not-working-evidence')
   }
 
   if (submitted.fitNote === 'no' || submitted.fitNote === 'dontKnow') {
