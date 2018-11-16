@@ -1,4 +1,5 @@
 const express = require('express')
+const moment = require('moment')
 const router = express.Router()
 
 // Local dependencies
@@ -82,38 +83,86 @@ router.all('/:type/questions/british-passport-nationality', (req, res) => {
 })
 
 /**
- * Question: Have they been out of the country?
+ * Question: Out of the UK for more than 4 weeks?
  */
 router.all('/:type/questions/out-of-country', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Out of country?
-  if (submitted.outOfCountryMoreThan4Weeks === 'yes') {
-    return res.redirect('./out-of-country-back-six-months')
+  if (submitted.outOfCountry === 'up-to-two-years') {
+    return res.redirect(saved.britishCitizen === 'yes'
+      ? './out-of-country-return-date' : './out-of-country-return-period')
   }
 
   // Not out of country
-  if (submitted.outOfCountryMoreThan4Weeks === 'no') {
-    return res.redirect('../../outcome/END015')
+  if (submitted.outOfCountry === 'up-to-four-weeks') {
+    return res.redirect(saved.britishCitizen === 'yes'
+      ? '../../outcome/END015' : '../../outcome/END007')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country`)
 })
 
 /**
- * Question: Have they been back for six months?
+ * Question: What date did they return?
  */
-router.all('/:type/questions/out-of-country-back-six-months', (req, res) => {
+router.all('/:type/questions/out-of-country-return-date', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
-  // Fast track any answer
-  if (submitted.backSixMonths) {
-    return res.redirect('../../outcome/END001')
+  // Date components
+  const fields = submitted.outOfUkReturn || {}
+
+  // All three date fields provided
+  if (fields.day && fields.month && fields.year) {
+    const day = fields.day.padStart(2, '0')
+    const month = fields.month.padStart(2, '0')
+    const year = fields.year
+
+    // Parse date
+    const date = moment.utc(`${year}-${month}-${day}`, 'YYYY-MM-DD', true)
+    const today = moment.utc().startOf('day')
+
+    // Is the date valid and in the past?
+    if (date.isValid() && date.isBefore(today)) {
+      // More than six months ago
+      if (date.isBefore(moment(today).subtract(6, 'months'))) {
+        return res.redirect('../../outcome/END001')
+      }
+
+      // More than one month ago
+      if (date.isBefore(moment(today).subtract(1, 'month'))) {
+        return res.redirect('./employment-status-yes-no')
+      }
+
+      // Less than or one month ago
+      return res.redirect('../../outcome/END001')
+    }
   }
 
-  res.render(`${__dirname}/views/questions/out-of-country-back-six-months`)
+  res.render(`${__dirname}/views/questions/out-of-country-return-date`)
+})
+
+/**
+ * Question: How long have they been back?
+ */
+router.all('/:type/questions/out-of-country-return-period', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  // Less than 1 month, between 1 and 6 months
+  if (['up-to-one-month', 'up-to-six-months'].includes(submitted.outOfUkReturnPeriod)) {
+    return res.redirect('../../outcome/END007')
+  }
+
+  // Over six months
+  if (submitted.outOfUkReturnPeriod === 'over-six-months') {
+    return res.redirect('../../outcome/END007')
+  }
+
+  res.render(`${__dirname}/views/questions/out-of-country-return-period`)
 })
 
 /**
@@ -219,22 +268,73 @@ router.all('/:type/questions/residence-permit', (req, res) => {
   const submitted = req.body[type]
   const saved = req.session.data[type]
 
-  // Refugee with permit
-  if (submitted.brp === 'yes' && saved.refugee === 'yes') {
-    return res.redirect('./residence-permit-refugee')
+  // Refugee with/without permit
+  if (saved.refugee === 'yes') {
+    if (submitted.brp === 'yes') {
+      return res.redirect('./residence-permit-refugee')
+    }
+
+    if (submitted.brp === 'no') {
+      return res.redirect('../../outcome/END008')
+    }
   }
 
-  // Refugee without permit
-  if (submitted.brp === 'no' && saved.refugee === 'yes') {
-    return res.redirect('../../outcome/END008')
-  }
+  // Anyone else with/without permit
+  if (saved.refugee === 'no') {
+    if (submitted.brp === 'yes') {
+      return res.redirect('./residence-permit-type')
+    }
 
-  // Ignore answer if not refugee
-  if (submitted.brp) {
-    return res.redirect('./no-public-funds')
+    if (submitted.brp === 'no') {
+      return res.redirect('./no-public-funds')
+    }
   }
 
   res.render(`${__dirname}/views/questions/residence-permit`)
+})
+
+/**
+ * Question: Which of the following words are shown?
+ */
+router.all('/:type/questions/residence-permit-type', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  // Leave to remain/enter
+  if (submitted.brpType === 'leave to remain' || submitted.brpType === 'leave to enter') {
+    return res.redirect('./no-public-funds-residence-permit')
+  }
+
+  // Check for leave time for settlement
+  if (submitted.brpType === 'settlement') {
+    return res.redirect('./out-of-country')
+  }
+
+  // Residence
+  if (submitted.brpType === 'residence') {
+    return res.redirect('./residence-permit-sub-type')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-permit-type`)
+})
+
+/**
+ * Question: Which other words are shown?
+ */
+router.all('/:type/questions/residence-permit-sub-type', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.brpSubType) {
+    // Full HRT required for permanent residents
+    if (submitted.brpSubType === 'residence-permanent') {
+      return res.redirect('../../outcome/END003')
+    }
+
+    return res.redirect('./married-or-civil-partner')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-permit-sub-type`)
 })
 
 /**
@@ -280,9 +380,10 @@ router.all('/:type/questions/residence-permit-expired', (req, res) => {
 /**
  * Question: Visa says no public funds?
  */
-router.all('/:type/questions/no-public-funds', (req, res) => {
+router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Visa says "no public funds"
   if (submitted.noPublicFunds === 'yes') {
@@ -291,10 +392,21 @@ router.all('/:type/questions/no-public-funds', (req, res) => {
 
   // Visa doesn't say "no public funds"
   if (submitted.noPublicFunds === 'no') {
+    if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
+      return res.redirect('../../outcome/END009')
+    }
+
     return res.redirect('./family-member')
   }
 
-  res.render(`${__dirname}/views/questions/no-public-funds`)
+  let view = `${__dirname}/views/questions/no-public-funds`
+
+  // Change to BRP copy variant
+  if (req.originalUrl.includes('-residence-permit')) {
+    view = `${__dirname}/views/questions/no-public-funds-residence-permit`
+  }
+
+  res.render(view)
 })
 
 /**
@@ -365,6 +477,29 @@ router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, r
   }
 
   res.render(view)
+})
+
+/**
+ * Question: Are they currently working?
+ */
+router.all('/:type/questions/employment-status-yes-no', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  // Working
+  if ((submitted.employmentStatus || []).includes('employed')) {
+    return res.redirect(saved.britishCitizen === 'yes'
+      ? '../../outcome/END001' : '../../outcome/END007')
+  }
+
+  // Not working
+  if ((submitted.employmentStatus || []).includes('dontWork')) {
+    return res.redirect(saved.britishCitizen === 'yes'
+      ? '../../outcome/END001' : '../../outcome/END007')
+  }
+
+  res.render(`${__dirname}/views/questions/employment-status-yes-no`)
 })
 
 /**
@@ -470,6 +605,7 @@ router.all('/:type/questions/family-member', (req, res) => {
 router.all('/:type/questions/married-or-civil-partner', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Married or civil partner?
   if (submitted.partner === 'yes') {
@@ -478,6 +614,10 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
 
   // No partner
   if (submitted.partner === 'no') {
+    if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
+      return res.redirect('../../outcome/END009')
+    }
+
     return res.redirect('../../outcome/END003')
   }
 
