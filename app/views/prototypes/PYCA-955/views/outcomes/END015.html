@@ -1,0 +1,37 @@
+{% extends "../outcome.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukPanel({
+      titleText: "This person doesn’t need a HRT",
+      classes: "outcome"
+    }) }}
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">Clear the Prove You Can Apply to-do</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>For the question ‘Is a HRT interview required?’, select ‘No’.</li>
+      <li>Click ‘Done’.</li>
+    </ol>
+
+    <h2 class="govuk-heading-m">Create a claimant to-do:</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>Select template ‘Update information about your nationality’.</li>
+      <li>Copy the following into the ‘Why does the claimant need to update their nationality information?’ box:
+        <p class="govuk-!-margin-top-2">‘Claimant nationality is British Citizen and has not been out of the country for more than 4 weeks in the last 2 years’.</p>
+      </li>
+      <li>Set the deadline date to the end of the first two assessment periods.</li>
+      <li>Select ‘create to-do’.</li>
+    </ol>
+
+    <h2 class="govuk-heading-m">Advise the person claiming, to sign into their account and clear this to-do:</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>For the question ‘Are you a British Citizen?’, tell them to select ‘Yes’.</li>
+      <li>For the question ‘In the last 2 years, have you been out of the UK for more than 4 weeks at a time?’, tell them to select ‘No’.</li>
+      <li>Remind the person claiming, to check their UC account for updates on their claim.</li>
+    </ol>
+
+  </div>
+</div>
+{% endblock %}
