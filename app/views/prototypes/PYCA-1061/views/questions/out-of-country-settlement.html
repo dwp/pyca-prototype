@@ -5,13 +5,15 @@
   <div class="govuk-grid-column-two-thirds">
 
     <form method="post">
+      {% set brpIssueDate = "the card was issued," %}
+      {% set brpIssueDate = "‘" + data[type].brpIssueDate.formatted + "’" if data[type].brpIssueDate.formatted else brpIssueDate %}
 
       {{ govukRadios({
         idPrefix: "out-of-country",
         name: type + "[outOfCountry]",
         fieldset: {
           legend: {
-            text: "Since the card was issued, what is the longest period they spent out of the UK?",
+            text: "Since " + brpIssueDate + " what is the longest period they spent out of the UK?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -24,13 +26,8 @@
           },
           {
             value: "up-to-two-years",
-            text: "4 weeks or more, but less than 2 years",
+            text: "Less than 2 years",
             checked: checked("['" + type + "'].outOfCountry", "up-to-two-years")
-          },
-          {
-            value: "up-to-four-weeks",
-            text: "Less than 4 weeks",
-            checked: checked("['" + type + "'].outOfCountry", "up-to-four-weeks")
           }
         ]
       }) }}

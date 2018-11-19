@@ -5,14 +5,16 @@
   <div class="govuk-grid-column-two-thirds">
 
     <form method="post">
+      {% set brpIssueDate = "the card was issued," %}
+      {% set brpIssueDate = "‘" + data[type].brpIssueDate.formatted + "’" if data[type].brpIssueDate.formatted else brpIssueDate %}
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "out-of-country",
-        name: type + "[outOfCountry]",
+        idPrefix: "out-of-country-yes-no",
+        name: type + "[outOfCountryYesNo]",
         fieldset: {
           legend: {
-            text: "Since the card was issued, have they been out of the UK?",
+            text: "Since " + brpIssueDate + " have they been out of the UK?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -21,12 +23,12 @@
           {
             value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].outOfCountry", "yes")
+            checked: checked("['" + type + "'].outOfCountryYesNo", "yes")
           },
           {
             value: "no",
             text: "No",
-            checked: checked("['" + type + "'].outOfCountry", "no")
+            checked: checked("['" + type + "'].outOfCountryYesNo", "no")
           }
         ]
       }) }}

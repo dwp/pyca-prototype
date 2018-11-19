@@ -91,13 +91,13 @@ router.all('/:type/questions/out-of-country', (req, res) => {
   const saved = req.session.data[type]
 
   // Out of country?
-  if (submitted.outOfCountry === 'up-to-two-years') {
+  if (submitted.outOfCountryFourWeeks === 'yes') {
     return res.redirect(saved.britishCitizen === 'yes'
       ? './out-of-country-return-date' : './out-of-country-return-period')
   }
 
   // Not out of country
-  if (submitted.outOfCountry === 'up-to-four-weeks') {
+  if (submitted.outOfCountryFourWeeks === 'no') {
     return res.redirect(saved.britishCitizen === 'yes'
       ? '../../outcome/END015' : '../../outcome/END100')
   }
@@ -108,21 +108,33 @@ router.all('/:type/questions/out-of-country', (req, res) => {
 /**
  * Question: Out of the UK since the card was issued?
  */
-router.all('/:type/questions/out-of-country-yes-no', (req, res) => {
+router.all('/:type/questions/out-of-country-since-date', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  // Date components
+  saved.brpIssueDate = formatDate(saved.brpIssueDate)
+  const { day, month, year, date } = saved.brpIssueDate
 
   // Out of country since card was issued?
-  if (submitted.outOfCountry === 'yes') {
-    return res.redirect('./out-of-country-settlement')
+  if (submitted.outOfCountryYesNo === 'yes' && day && month && year) {
+    const twoYearsAgo = moment.utc().startOf('day').subtract(2, 'years')
+
+    // Is the date valid but less than 2 years ago
+    if (date.isValid() && date.isSameOrBefore(twoYearsAgo)) {
+      return res.redirect('./out-of-country-settlement')
+    }
+
+    return res.redirect('./out-of-country-since-date')
   }
 
   // Not out of country since card was issued?
-  if (submitted.outOfCountry === 'no') {
+  if (submitted.outOfCountryYesNo === 'no') {
     return res.redirect('../../outcome/END100')
   }
 
-  res.render(`${__dirname}/views/questions/out-of-country-yes-no`)
+  res.render(`${__dirname}/views/questions/out-of-country-since-date`)
 })
 
 /**
@@ -131,6 +143,11 @@ router.all('/:type/questions/out-of-country-yes-no', (req, res) => {
 router.all('/:type/questions/out-of-country-settlement', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  // Date components
+  saved.brpIssueDate = formatDate(saved.brpIssueDate)
+  const { date } = saved.brpIssueDate
 
   // Out of country more than 2 years?
   if (submitted.outOfCountry === 'over-two-years') {
@@ -139,7 +156,16 @@ router.all('/:type/questions/out-of-country-settlement', (req, res) => {
 
   // Out of country more than 4 weeks?
   if (submitted.outOfCountry === 'up-to-two-years') {
-    return res.redirect('./out-of-country-return-period')
+    const today = moment.utc().startOf('day')
+    const oneMonthAgo = moment(today).subtract(1, 'month')
+
+    // Permit issued on or less than one month ago? Skip return date check
+    if (date.isValid() && date.isAfter(oneMonthAgo)) {
+      saved.outOfUkReturnPeriod = 'up-to-one-month'
+      return res.redirect('../../outcome/END006')
+    }
+
+    return res.redirect('./out-of-country')
   }
 
   // Out of country less than 4 weeks
@@ -193,9 +219,14 @@ router.all('/:type/questions/out-of-country-return-period', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
-  // Less than 1 month, between 1 and 6 months
-  if (['up-to-one-month', 'up-to-six-months'].includes(submitted.outOfUkReturnPeriod)) {
+  // Less than 1 month
+  if (submitted.outOfUkReturnPeriod === 'up-to-one-month') {
     return res.redirect('../../outcome/END006')
+  }
+
+  // Between 1 and 6 months
+  if (submitted.outOfUkReturnPeriod === 'up-to-six-months') {
+    return res.redirect('./employment-status-yes-no')
   }
 
   // Over six months
@@ -337,7 +368,7 @@ router.all('/:type/questions/residence-permit', (req, res) => {
   // Anyone else with/without permit
   if (saved.refugee === 'no') {
     if (submitted.brp === 'yes') {
-      return res.redirect('./residence-permit-type')
+      return res.redirect('./residence-permit-expired')
     }
 
     if (submitted.brp === 'no') {
@@ -362,7 +393,7 @@ router.all('/:type/questions/residence-permit-type', (req, res) => {
 
   // Check for leave time for settlement
   if (submitted.brpType === 'settlement') {
-    return res.redirect('./out-of-country-yes-no')
+    return res.redirect('./residence-permit-issue-date')
   }
 
   // Residence
@@ -371,6 +402,43 @@ router.all('/:type/questions/residence-permit-type', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/residence-permit-type`)
+})
+
+/**
+ * Question: What's the permit issue date?
+ */
+router.all('/:type/questions/residence-permit-issue-date', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  // Date components
+  saved.brpIssueDate = formatDate(saved.brpIssueDate)
+  const { day, month, year, date } = saved.brpIssueDate
+
+  // All three date fields provided
+  if (submitted.brpIssueDate && day && month && year) {
+    const today = moment.utc().startOf('day')
+    const fourWeeksAgo = moment(today).subtract(4, 'weeks')
+    const twoYearsAgo = moment(today).subtract(2, 'years')
+
+    // Is the date valid but less than 4 weeks ago?
+    if (date.isValid() && date.isSameOrAfter(fourWeeksAgo)) {
+      return res.redirect('../../outcome/END100')
+    }
+
+    // Is the date valid and two or more years ago
+    if (date.isValid() && date.isSameOrBefore(twoYearsAgo)) {
+      return res.redirect('./out-of-country-since-date')
+    }
+
+    // Is the date valid and in the past?
+    if (date.isValid() && date.isBefore(today)) {
+      return res.redirect('./out-of-country')
+    }
+  }
+
+  res.render(`${__dirname}/views/questions/residence-permit-issue-date`)
 })
 
 /**
@@ -418,6 +486,7 @@ router.all('/:type/questions/residence-permit-refugee', (req, res) => {
 router.all('/:type/questions/residence-permit-expired', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Card expired?
   if (submitted.permitExpired === 'yes') {
@@ -426,7 +495,12 @@ router.all('/:type/questions/residence-permit-expired', (req, res) => {
 
   // Card hasn't expired
   if (submitted.permitExpired === 'no') {
-    return res.redirect('../../outcome/END018')
+    // Refugee with permit
+    if (saved.refugee === 'yes') {
+      return res.redirect('../../outcome/END018')
+    }
+
+    return res.redirect('./residence-permit-type')
   }
 
   res.render(`${__dirname}/views/questions/residence-permit-expired`)

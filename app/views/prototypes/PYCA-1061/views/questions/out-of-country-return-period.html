@@ -11,7 +11,7 @@
         name: type + "[outOfUkReturnPeriod]",
         fieldset: {
           legend: {
-            text: "From this absence, how long ago did they return to the UK?",
+            text: "When did they return to the UK from their most recent trip of 4 weeks or more?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -19,17 +19,17 @@
         items: [
           {
             value: "up-to-one-month",
-            text: "Less than one month",
+            text: "Less than one month ago",
             checked: checked("['" + type + "'].outOfUkReturnPeriod", "up-to-one-month")
           },
           {
             value: "up-to-six-months",
-            text: "Between 1 to 6 months",
+            text: "Between 1 and 6 months ago",
             checked: checked("['" + type + "'].outOfUkReturnPeriod", "up-to-six-months")
           },
           {
             value: "over-six-months",
-            text: "6 months or more",
+            text: "6 months ago or more",
             checked: checked("['" + type + "'].outOfUkReturnPeriod", "over-six-months")
           }
         ]
