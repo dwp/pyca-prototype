@@ -1,0 +1,16 @@
+.outcome {
+  text-align: left;
+}
+
+.outcome .govuk-panel__title {
+  margin-bottom: govuk-spacing(4);
+  @include govuk-font($size: 36, $weight: bold);
+}
+
+.outcome .govuk-panel__title:last-child {
+  margin-bottom: 0;
+}
+
+.outcome .govuk-panel__body {
+  @include govuk-font($size: 27);
+}

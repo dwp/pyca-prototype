@@ -1,0 +1,15 @@
+figure {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+figcaption {
+  color: $govuk-secondary-text-colour;
+  @include govuk-font($size: 16);
+  @include govuk-responsive-margin(5, "bottom");
+}

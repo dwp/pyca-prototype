@@ -1,0 +1,54 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "brp",
+        name: type + "[brp]",
+        fieldset: {
+          legend: {
+            text: "Have they brought a biometric residence permit today?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            checked: checked("['" + type + "'].brp", "yes")
+          },
+          {
+            value: "no",
+            text: "No",
+            checked: checked("['" + type + "'].brp", "no")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+
+  <div class="govuk-grid-column-one-half">
+
+    <figure class="figure">
+      <img src="{{ basePath }}/assets/images/brp-front.jpg" alt="Photo of example biometric permit">
+      <figcaption aria-hidden="true">
+        Example of a biometric residence permit.
+      </figcaption>
+    </figure>
+
+  </div>
+
+</div>
+{% endblock %}
