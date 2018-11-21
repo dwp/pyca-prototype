@@ -95,6 +95,11 @@ var appViews = extensions.getAppViews([
   path.join(__dirname, '/lib/')
 ])
 
+// Allow views in nested prototypes
+for (const directory of fs.readdirSync(path.join(__dirname, '/app/views/prototypes'))) {
+  appViews.push(path.join(__dirname, '/app/views/prototypes', directory, '/views'))
+}
+
 var nunjucksConfig = {
   autoescape: true,
   noCache: true,

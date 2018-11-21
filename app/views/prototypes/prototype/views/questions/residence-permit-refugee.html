@@ -1,0 +1,42 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "permit-type-refugee",
+        name: type + "[permitTypeRefugee]",
+        fieldset: {
+          legend: {
+            text: "Does the permit type state REFUGEE?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            checked: checked("['" + type + "'].permitTypeRefugee", "yes")
+          },
+          {
+            value: "no",
+            text: "No",
+            checked: checked("['" + type + "'].permitTypeRefugee", "no")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}

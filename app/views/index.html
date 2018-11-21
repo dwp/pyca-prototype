@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 
-{% block pageTitle %}
-  GOV.UK prototype kit
-{% endblock %}
+{% block pageTitle -%}
+  {{ serviceName }}
+{%- endblock %}
 
 {% block header %}
   {% include "includes/cookie-banner.html" %}
@@ -33,53 +33,37 @@
           <div class="govuk-grid-column-one-third">
             <dl>
               <dt class="govuk-heading-s">Date of release</dt>
-              <dd class="govuk-body">1 January 2018</dd>
+              <dd class="govuk-body">5 September 2018</dd>
             </dl>
           </div>
 
           <div class="govuk-grid-column-one-third">
             <dl>
               <dt class="govuk-heading-s">Feature</dt>
-              <dd class="govuk-body">Payment details</dd>
+              <dd class="govuk-body">Treaty changes require full HRT</dd>
             </dl>
           </div>
 
           <div class="govuk-grid-column-one-third">
             <dl>
               <dt class="govuk-heading-s">Related stories</dt>
-              <dd class="govuk-body">JIRA-123</dd>
+              <dd class="govuk-body">PYCA-924</dd>
             </dl>
           </div>
         </div>
 
         <h3 class="govuk-heading-s">Changes</h3>
-        <p>
-          In this version, we added the option to pay into a building society
-          account, on the payment details page.
-        </p>
+        <p>Due to recent treaty changes (CESC and ECSMA) claimants from countries including Macedonia, Turkey, Croatia and Norway require a full HRT.</p>
 
         <h3 class="govuk-heading-s">Hypothesis</h3>
-        <p>
-          If we add the ability to pay into building society accounts,
-          then we will see an increase in successful claims and a reduction in complaints,
-          because users with building society accounts will be able to complete the online journey.
-        </p>
+        <p>None.</p>
 
         <h3 class="govuk-heading-s">Research notes</h3>
-        <p>
-          Users did not see the button to switch to a building society account.
-        </p>
-        <p>
-          When asked what they would do next, 3 out of 4 users said they would
-          phone up to complete their claim.
-        </p>
-        <p>
-          More work is needed to improve the design of this feature.
-        </p>
+        <p>None.</p>
 
         {{ govukButton({
           text: "View prototype",
-          href: "/link-to-prototype",
+          href: "/prototype",
           classes: "govuk-button--start"
         }) }}
       </div>
@@ -87,118 +71,6 @@
 
     </div>
     {# End of most recent box #}
-
-    <h2 class="govuk-heading-l">All versions</h2>
-    {# Start of hidden panel #}
-    <details class="govuk-details all-versions">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          Show all versions
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-
-        {# Start of prototype write up #}
-        <div class="prototype-write-up">
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-third">
-              <dl>
-                <dt class="govuk-heading-s">Date of release</dt>
-                <dd class="govuk-body">14 December 2017</dd>
-              </dl>
-            </div>
-
-            <div class="govuk-grid-column-one-third">
-              <dl>
-                <dt class="govuk-heading-s">Feature</dt>
-                <dd class="govuk-body">Eligibility knockout</dd>
-              </dl>
-            </div>
-
-            <div class="govuk-grid-column-one-third">
-              <dl>
-                <dt class="govuk-heading-s">Related stories</dt>
-                <dd class="govuk-body">JIRA-122</dd>
-              </dl>
-            </div>
-          </div>
-
-          <h3 class="govuk-heading-s">Changes</h3>
-          <p>
-            ...
-          </p>
-
-          <h3 class="govuk-heading-s">Hypothesis</h3>
-          <p>
-            If... then... because.
-          </p>
-
-          <h3 class="govuk-heading-s">Research notes</h3>
-          <p>
-            ...
-          </p>
-
-          {{ govukButton({
-            text: "View prototype",
-            href: "/link-to-prototype",
-            classes: "govuk-button--start"
-          }) }}
-        </div>
-        {# End of prototype write up #}
-
-
-        {# Start of prototype write up #}
-        <div class="prototype-write-up">
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-third">
-              <dl>
-                <dt class="govuk-heading-s">Date of release</dt>
-                <dd class="govuk-body">1 December 2017</dd>
-              </dl>
-            </div>
-
-            <div class="govuk-grid-column-one-third">
-              <dl>
-                <dt class="govuk-heading-s">Feature</dt>
-                <dd class="govuk-body">Payment details</dd>
-              </dl>
-            </div>
-
-            <div class="govuk-grid-column-one-third">
-              <dl>
-                <dt class="govuk-heading-s">Related stories</dt>
-                <dd class="govuk-body">JIRA-121</dd>
-              </dl>
-            </div>
-          </div>
-
-          <h3 class="govuk-heading-s">Changes</h3>
-          <p>
-            ...
-          </p>
-
-          <h3 class="govuk-heading-s">Hypothesis</h3>
-          <p>
-            If... then... because.
-          </p>
-
-          <h3 class="govuk-heading-s">Research notes</h3>
-          <p>
-            ...
-          </p>
-
-          {{ govukButton({
-            text: "View prototype",
-            href: "/link-to-prototype",
-            classes: "govuk-button--start"
-          }) }}
-        </div>
-        {# End of prototype write up #}
-
-      </div>
-    </details>
-    {# End of hidden panel #}
-
 
   </div>
 </div>
