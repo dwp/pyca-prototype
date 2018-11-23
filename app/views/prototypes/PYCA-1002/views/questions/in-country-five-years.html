@@ -1,0 +1,42 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "in-country",
+        name: type + "[inCountry]",
+        fieldset: {
+          legend: {
+            text: ("Has their partner" if type == 'partner' else "Have they") + " been living in the UK for the last 5 years?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "over-five-years",
+            text: "Yes",
+            checked: checked("['" + type + "'].inCountry", "over-five-years")
+          },
+          {
+            value: "up-to-five-years",
+            text: "No",
+            checked: checked("['" + type + "'].inCountry", "up-to-five-years")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
