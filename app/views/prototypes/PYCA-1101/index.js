@@ -326,9 +326,9 @@ router.all('/:type/questions/residence-permit-sub-type', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.brpSubType) {
-    // Full HRT required for permanent residents
+    // Fast-track permanent residents
     if (submitted.brpSubType === 'residence-permanent') {
-      return res.redirect('../../outcome/END003')
+      return res.redirect('../../outcome/END009')
     }
 
     return res.redirect('./married-or-civil-partner')
