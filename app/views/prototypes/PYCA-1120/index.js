@@ -296,7 +296,7 @@ router.all('/:type/questions/residence-permit', (req, res) => {
   // Anyone else with/without permit
   if (saved.refugee === 'no') {
     if (submitted.brp === 'yes') {
-      return res.redirect('./residence-permit-type')
+      return res.redirect('./residence-permit-expired')
     }
 
     if (submitted.brp === 'no') {
@@ -377,6 +377,7 @@ router.all('/:type/questions/residence-permit-refugee', (req, res) => {
 router.all('/:type/questions/residence-permit-expired', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
   // Card expired?
   if (submitted.permitExpired === 'yes') {
@@ -385,7 +386,12 @@ router.all('/:type/questions/residence-permit-expired', (req, res) => {
 
   // Card hasn't expired
   if (submitted.permitExpired === 'no') {
-    return res.redirect('../../outcome/END018')
+    // Refugee with permit
+    if (saved.refugee === 'yes') {
+      return res.redirect('../../outcome/END018')
+    }
+
+    return res.redirect('./residence-permit-type')
   }
 
   res.render(`${__dirname}/views/questions/residence-permit-expired`)
