@@ -99,7 +99,7 @@ router.all('/:type/questions/out-of-country', (req, res) => {
   // Not out of country
   if (submitted.outOfCountryFourWeeks === 'no') {
     return res.redirect(saved.britishCitizen === 'yes'
-      ? '../../outcome/END015' : '../../outcome/END100')
+      ? '../../outcome/END015' : '../../outcome/END102')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country`)
@@ -131,7 +131,7 @@ router.all('/:type/questions/out-of-country-since-date', (req, res) => {
 
   // Not out of country since card was issued?
   if (submitted.outOfCountryYesNo === 'no') {
-    return res.redirect('../../outcome/END100')
+    return res.redirect('../../outcome/END102')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country-since-date`)
