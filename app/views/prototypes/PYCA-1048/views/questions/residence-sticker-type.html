@@ -1,0 +1,68 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        idPrefix: "residence-sticker-type",
+        name: type + "[residenceStickerType]",
+        fieldset: {
+          legend: {
+            text: "Which of these words are shown under ‘type of document’?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "permanent",
+            text: "Permanent Residence Card",
+            checked: checked("['" + type + "'].residenceStickerType", "permanent")
+          },
+          {
+            value: "regCert",
+            text: "Registration Certificate",
+            checked: checked("['" + type + "'].residenceStickerType", "regCert")
+          },
+          {
+            value: "accession",
+            text: "Accession Worker",
+            checked: checked("['" + type + "'].residenceStickerType", "accession")
+          },
+          {
+            value: "regDoc",
+            text: "Registration Document",
+            checked: checked("['" + type + "'].residenceStickerType", "regDoc")
+          },
+          {
+            value: "elsewhere",
+            text: "Something else",
+            checked: checked("['" + type + "'].residenceStickerType", "elsewhere")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+
+    <figure class="figure residence-card">
+      <img src="{{ basePath }}/assets/images/residence-document-type.png" srcset="{{ basePath }}/assets/images/residence-document-type.png, {{ basePath }}/assets/images/residence-document-type@2x.png 1.5x" alt="Example residence document">
+      <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
+        Example residence document
+      </figcaption>
+    </figure>
+
+  </div>
+
+</div>
+{% endblock %}
