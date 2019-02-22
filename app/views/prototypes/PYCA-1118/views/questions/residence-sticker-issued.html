@@ -1,0 +1,63 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        idPrefix: "residence-sticker-issued",
+        name: type + "[residenceStickerIssued]",
+        fieldset: {
+          legend: {
+            text: "Where was the document issued?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "croydon",
+            text: "Croydon",
+            checked: checked("['" + type + "'].residenceStickerIssued", "croydon")
+          },
+          {
+            value: "liverpool",
+            text: "Liverpool",
+            checked: checked("['" + type + "'].residenceStickerIssued", "liverpool")
+          },
+          {
+            value: "sheffield",
+            text: "Sheffield",
+            checked: checked("['" + type + "'].residenceStickerIssued", "sheffield")
+          },
+          {
+            value: "elsewhere",
+            text: "Somewhere else",
+            checked: checked("['" + type + "'].residenceStickerIssued", "elsewhere")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+
+    <figure class="figure residence-card">
+      <img src="{{ basePath }}/assets/images/residence-document-issued.png" srcset="{{ basePath }}/assets/images/residence-document-issued.png, {{ basePath }}/assets/images/residence-document-issued@2x.png 1.5x" alt="Example residence document">
+      <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
+        Example residence document
+      </figcaption>
+    </figure>
+
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+      {% set brpIssueDate = "the card was issued," %}
+      {% set brpIssueDate = "‘" + data[type].brpIssueDate.formatted + "’" if data[type].brpIssueDate.formatted else brpIssueDate %}
+
+      {{ govukRadios({
+        idPrefix: "out-of-country",
+        name: type + "[outOfCountry]",
+        fieldset: {
+          legend: {
+            text: "Since " + brpIssueDate + " what is the longest period they spent out of the UK?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "over-two-years",
+            text: "2 years or more",
+            checked: checked("['" + type + "'].outOfCountry", "over-two-years")
+          },
+          {
+            value: "up-to-two-years",
+            text: "Less than 2 years",
+            checked: checked("['" + type + "'].outOfCountry", "up-to-two-years")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
