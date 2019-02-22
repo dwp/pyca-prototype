@@ -1,0 +1,54 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "residence-sticker-yellow",
+        name: type + "[residenceStickerYellow]",
+        fieldset: {
+          legend: {
+            text: "Have they brought a yellow card with a residence sticker in it?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            checked: checked("['" + type + "'].residenceStickerYellow", "yes")
+          },
+          {
+            value: "no",
+            text: "No",
+            checked: checked("['" + type + "'].residenceStickerYellow", "no")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+
+    <figure class="figure residence-card">
+      <img src="{{ basePath }}/assets/images/residence-document.png" srcset="{{ basePath }}/assets/images/residence-document.png, {{ basePath }}/assets/images/residence-document@2x.png 1.5x" alt="Example residence document">
+      <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
+        Example residence document
+      </figcaption>
+    </figure>
+
+  </div>
+
+</div>
+{% endblock %}
