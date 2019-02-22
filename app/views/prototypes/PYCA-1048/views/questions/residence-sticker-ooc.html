@@ -1,0 +1,42 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        idPrefix: "residence-sticker-ooc",
+        name: type + "[residenceStickerOOC]",
+        fieldset: {
+          legend: {
+            text: "Since the card was issued, what’s the longest period they’ve spent out of the UK?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "up-to-two-years",
+            text: "Less than 2 years",
+            checked: checked("['" + type + "'].residenceStickerOOC", "up-to-two-years")
+          },
+          {
+            value: "over-two-years",
+            text: "2 years or more",
+            checked: checked("['" + type + "'].residenceStickerOOC", "over-two-years")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+
+</div>
+{% endblock %}
