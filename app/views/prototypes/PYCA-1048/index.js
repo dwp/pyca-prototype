@@ -424,7 +424,7 @@ router.all('/:type/questions/residence-sticker-issued', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerIssued) {
-    if (submitted.residenceStickerIssued === 'elsewhere') {
+    if (submitted.residenceStickerIssued === 'none') {
       return res.redirect('./in-country-five-years')
     }
 
@@ -442,7 +442,7 @@ router.all('/:type/questions/residence-sticker-type', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerType) {
-    if (submitted.residenceStickerType === 'permanent') {
+    if (['certDoc', 'permanent'].includes(submitted.residenceStickerType)) {
       return res.redirect('./residence-sticker-ooc')
     }
 
