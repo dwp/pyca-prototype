@@ -18,6 +18,16 @@
         },
         items: [
           {
+            value: "accession",
+            text: "Accession Worker",
+            checked: checked("['" + type + "'].residenceStickerType", "accession")
+          },
+          {
+            value: "certDoc",
+            text: "Document Certifying Permanent Residence",
+            checked: checked("['" + type + "'].residenceStickerType", "certDoc")
+          },
+          {
             value: "permanent",
             text: "Permanent Residence Card",
             checked: checked("['" + type + "'].residenceStickerType", "permanent")
@@ -28,19 +38,17 @@
             checked: checked("['" + type + "'].residenceStickerType", "regCert")
           },
           {
-            value: "accession",
-            text: "Accession Worker",
-            checked: checked("['" + type + "'].residenceStickerType", "accession")
-          },
-          {
             value: "regDoc",
             text: "Registration Document",
             checked: checked("['" + type + "'].residenceStickerType", "regDoc")
           },
           {
-            value: "elsewhere",
-            text: "Something else",
-            checked: checked("['" + type + "'].residenceStickerType", "elsewhere")
+            divider: "or"
+          },
+          {
+            value: "none",
+            text: "None of the above",
+            checked: checked("['" + type + "'].residenceStickerType", "none")
           }
         ]
       }) }}
