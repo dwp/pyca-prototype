@@ -95,66 +95,108 @@
         </span>
       </summary>
       <div class="govuk-details__text">
- {# Start of prototype write up #}
-  <div class="prototype-write-up">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-one-third">
-            <dl>
-              <dt class="govuk-heading-s">Date of release</dt>
-              <dd class="govuk-body">V6 and V7</dd>
-            </dl>
+
+        {# Start of prototype write up #}
+        <div class="prototype-write-up">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+              <dl>
+                <dt class="govuk-heading-s">Date of release</dt>
+                <dd class="govuk-body">TBC</dd>
+              </dl>
+            </div>
+
+            <div class="govuk-grid-column-one-third">
+              <dl>
+                <dt class="govuk-heading-s">Feature</dt>
+                <dd class="govuk-body">Quick wins – Improve copy on outcome page</dd>
+              </dl>
+            </div>
+
+            <div class="govuk-grid-column-one-third">
+              <dl>
+                <dt class="govuk-heading-s">Related stories</dt>
+                <dd class="govuk-body">
+                  PYCA-1266
+                </dd>
+              </dl>
+            </div>
           </div>
 
-          <div class="govuk-grid-column-one-third">
-            <dl>
-              <dt class="govuk-heading-s">Feature</dt>
-              <dd class="govuk-body">Multiple “out of UK” questions are confusing work coaches</dd>
-            </dl>
-          </div>
+          <h3 class="govuk-heading-s">Changes</h3>
+          <p>Changes the wording of the outcome pages to prevent them being misinterpreted by work coaches.</p>
 
-          <div class="govuk-grid-column-one-third">
-            <dl>
-              <dt class="govuk-heading-s">Related stories</dt>
-              <dd class="govuk-body">
-                PYCA-1061<br>
-                PYCA-1063<br>
-                PYCA-1074<br>
-                PYCA-1114<br>
-                PYCA-1156<br>
-                PYCA-1138
-              </dd>
-            </dl>
-          </div>
+          <h3 class="govuk-heading-s">Hypothesis</h3>
+          <p>None.</p>
+
+          <h3 class="govuk-heading-s">Research notes</h3>
+          <p>The outcome pages are not being followed accurately and the wrong steps are being taken on UC build – the wording appears to be unclear and deemed as ambiguous. This has been leading to incorrect decisions being made and numerous incident tickets raised as a result.</p>
+
+          {{ govukButton({
+            text: "View prototype",
+            href: "/PYCA-1266",
+            classes: "govuk-button--start"
+          }) }}
         </div>
+        {# End of prototype write up #}
 
-        <h3 class="govuk-heading-s">Changes</h3>
-        <p>Includes the following tickets:</p>
+        {# Start of prototype write up #}
+        <div class="prototype-write-up">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+              <dl>
+                <dt class="govuk-heading-s">Date of release</dt>
+                <dd class="govuk-body">V6 and V7</dd>
+              </dl>
+            </div>
 
-        <ul class="govuk-list govuk-list--bullet">
-          <li>PYCA-1061: Multiple “out of UK” questions are confusing work coaches</li>
-          <li>PYCA-1063: Amended outcome pages to match revised ALP</li>
-          <li>PYCA-1074: Add new variant for “You can now record the decision” outcome</li>
-          <li>PYCA-1114: Update content in END015 to match updated claimant todo</li>
-          <li>PYCA-1156: Additional END102 outcome for simple decision without time out of UK</li>
-          <li>PYCA-1138: Improve content in outcome screens</li>
-        </ul>
+            <div class="govuk-grid-column-one-third">
+              <dl>
+                <dt class="govuk-heading-s">Feature</dt>
+                <dd class="govuk-body">Multiple “out of UK” questions are confusing work coaches</dd>
+              </dl>
+            </div>
 
-        <h3 class="govuk-heading-s">Hypothesis</h3>
-        <p>We think work coaches read the “2 years out of the UK” question the same as the “4 weeks in the last 2 years” question, picking the wrong answer.</p>
+            <div class="govuk-grid-column-one-third">
+              <dl>
+                <dt class="govuk-heading-s">Related stories</dt>
+                <dd class="govuk-body">
+                  PYCA-1061<br>
+                  PYCA-1063<br>
+                  PYCA-1074<br>
+                  PYCA-1114<br>
+                  PYCA-1156<br>
+                  PYCA-1138
+                </dd>
+              </dl>
+            </div>
+          </div>
 
-        <h3 class="govuk-heading-s">Research notes</h3>
-        <p>Three work coaches in Rusholme all read the new question wrong. One work coach corrected themselves after a pause.</p>
+          <h3 class="govuk-heading-s">Changes</h3>
+          <p>Includes the following tickets:</p>
 
-        {{ govukButton({
-          text: "View prototype",
-          href: "/PYCA-1061",
-          classes: "govuk-button--start"
-        }) }}
-      </div>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>PYCA-1061: Multiple “out of UK” questions are confusing work coaches</li>
+            <li>PYCA-1063: Amended outcome pages to match revised ALP</li>
+            <li>PYCA-1074: Add new variant for “You can now record the decision” outcome</li>
+            <li>PYCA-1114: Update content in END015 to match updated claimant todo</li>
+            <li>PYCA-1156: Additional END102 outcome for simple decision without time out of UK</li>
+            <li>PYCA-1138: Improve content in outcome screens</li>
+          </ul>
 
+          <h3 class="govuk-heading-s">Hypothesis</h3>
+          <p>We think work coaches read the “2 years out of the UK” question the same as the “4 weeks in the last 2 years” question, picking the wrong answer.</p>
 
-{# End of prototype write up #}
+          <h3 class="govuk-heading-s">Research notes</h3>
+          <p>Three work coaches in Rusholme all read the new question wrong. One work coach corrected themselves after a pause.</p>
 
+          {{ govukButton({
+            text: "View prototype",
+            href: "/PYCA-1061",
+            classes: "govuk-button--start"
+          }) }}
+        </div>
+        {# End of prototype write up #}
 
         {# Start of prototype write up #}
         <div class="prototype-write-up">
