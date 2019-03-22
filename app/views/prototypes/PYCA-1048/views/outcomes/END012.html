@@ -5,32 +5,13 @@
   <div class="govuk-grid-column-two-thirds">
 
     {{ govukPanel({
-      titleText: "Fast-track this person",
-      text: "Refer to decision maker",
+      titleText: "Select ‘No’ in the to-do",
+      text: "Then select ‘Fast-track this person’",
       classes: "outcome"
     }) }}
 
     <h2 class="govuk-heading-m govuk-!-margin-top-7">Claimant status</h2>
-    <p>Spouse of EEA Citizen</p>
-
-    <h2 class="govuk-heading-m">Evidence to record in the ALP</h2>
-
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">One of the following:</h3>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>passport – number, nationality, issue date, expiry date and visa status</li>
-      <li>national ID card – number, nationality, issue date and expiry date</li>
-      <li>residence card – card number (right hand corner), nationality, place of issue, issue date, expiry date, permit type, remarks on the front and back of the card</li>
-    </ul>
-
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">All of the following:</h3>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>marriage or civil partnership certificate – both names, date of marriage and country of marriage</li>
-    </ul>
-
-    {{ govukWarningText({
-      text: "If the claimant cannot provide the necessary evidence, book an HRT interview.",
-      iconFallbackText: "Important"
-    }) }}
+    <p>Spouse of EEA citizen</p>
 
     <h2 class="govuk-heading-m">Go to the ‘check if HRT interview is needed’ to-do</h2>
     <ol class="govuk-list govuk-list--number">
@@ -47,6 +28,27 @@
       <li>Enter the claimant’s nationality.</li>
       <li>Select ‘Done’.</li>
     </ol>
+
+    <h2 class="govuk-heading-m">Evidence to record in the ALP</h2>
+
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">One of the following:</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>residence card – card number (right hand corner), nationality, place of issue, issue date, expiry date, permit type, remarks on the front and back of the card</li>
+      <li>passport – number, nationality, issue date, expiry date and visa status</li>
+      <li>national ID card – number, nationality, issue date and expiry date</li>
+    </ul>
+
+    <p>If they have a residence card, you must record it in the ALP.</p>
+
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">All of the following:</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>marriage or civil partnership certificate – both names, date of marriage and country of marriage</li>
+    </ul>
+
+    {{ govukWarningText({
+      text: "If the claimant cannot provide the necessary evidence, book an HRT interview.",
+      iconFallbackText: "Important"
+    }) }}
 
   </div>
 </div>
