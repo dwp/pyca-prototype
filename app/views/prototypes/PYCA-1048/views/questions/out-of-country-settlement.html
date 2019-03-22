@@ -5,7 +5,7 @@
   <div class="govuk-grid-column-two-thirds">
 
     <form method="post">
-      {% set brpIssueDate = "the card was issued," %}
+      {% set brpIssueDate = "‘No date provided’" %}
       {% set brpIssueDate = "‘" + data[type].brpIssueDate.formatted + "’" if data[type].brpIssueDate.formatted else brpIssueDate %}
 
       {{ govukRadios({
@@ -13,7 +13,7 @@
         name: type + "[outOfCountry]",
         fieldset: {
           legend: {
-            text: "Since " + brpIssueDate + " what is the longest period they spent out of the UK?",
+            text: "Since " + brpIssueDate + " what’s the longest period they’ve spent out of the UK?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }

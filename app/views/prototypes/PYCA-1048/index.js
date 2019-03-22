@@ -138,7 +138,7 @@ router.all('/:type/questions/out-of-country-since-date', (req, res) => {
 })
 
 /**
- * Question: What is the longest period out of the UK?
+ * Question: Since date, what is the longest period out of the UK?
  */
 router.all('/:type/questions/out-of-country-settlement', (req, res) => {
   const type = req.params.type
@@ -174,6 +174,24 @@ router.all('/:type/questions/out-of-country-settlement', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/out-of-country-settlement`)
+})
+
+/**
+ * Question: What is the longest period out of the UK?
+ */
+router.all('/:type/questions/out-of-country-longest-period', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.outOfCountry === 'up-to-two-years') {
+    return res.redirect('../../outcome/END014')
+  }
+
+  if (submitted.outOfCountry === 'over-two-years') {
+    return res.redirect('./employment-status')
+  }
+
+  res.render(`${__dirname}/views/questions/out-of-country-longest-period`)
 })
 
 /**
@@ -443,31 +461,13 @@ router.all('/:type/questions/residence-sticker-type', (req, res) => {
 
   if (submitted.residenceStickerType) {
     if (['certDoc', 'permanent'].includes(submitted.residenceStickerType)) {
-      return res.redirect('./residence-sticker-ooc')
+      return res.redirect('./out-of-country-longest-period')
     }
 
     return res.redirect('./in-country-five-years')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-type`)
-})
-
-/**
- * Question: Since the card was issued, what’s the longest period they’ve spend out of the UK?
- */
-router.all('/:type/questions/residence-sticker-ooc', (req, res) => {
-  const type = req.params.type
-  const submitted = req.body[type]
-
-  if (submitted.residenceStickerOOC === 'up-to-two-years') {
-    return res.redirect('../../outcome/END014')
-  }
-
-  if (submitted.residenceStickerOOC === 'over-two-years') {
-    return res.redirect('./employment-status')
-  }
-
-  res.render(`${__dirname}/views/questions/residence-sticker-ooc`)
 })
 
 /**
