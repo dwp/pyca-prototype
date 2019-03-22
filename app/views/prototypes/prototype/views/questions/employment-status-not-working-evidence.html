@@ -11,7 +11,7 @@
         name: type + "[employmentStatusEvidence]",
         fieldset: {
           legend: {
-            text: "Can this person provide the following from their previous employment:",
+            text: "What evidence can they provide from their previous employment?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -19,7 +19,7 @@
         items: [
           {
             value: "three-months",
-            text: "Payslips or bank statements for the last 3 months",
+            text: "Payslips or bank statements from the final 3 months of their employment",
             checked: checked("['" + type + "'].employmentStatusEvidence", "three-months")
           },
           {
