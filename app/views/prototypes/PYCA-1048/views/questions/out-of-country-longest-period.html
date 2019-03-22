@@ -7,8 +7,8 @@
     <form method="post">
 
       {{ govukRadios({
-        idPrefix: "residence-sticker-ooc",
-        name: type + "[residenceStickerOOC]",
+        idPrefix: "out-of-country",
+        name: type + "[outOfCountry]",
         fieldset: {
           legend: {
             text: "Since the card was issued, what’s the longest period they’ve spent out of the UK?",
@@ -18,14 +18,14 @@
         },
         items: [
           {
-            value: "up-to-two-years",
-            text: "Less than 2 years",
-            checked: checked("['" + type + "'].residenceStickerOOC", "up-to-two-years")
-          },
-          {
             value: "over-two-years",
             text: "2 years or more",
-            checked: checked("['" + type + "'].residenceStickerOOC", "over-two-years")
+            checked: checked("['" + type + "'].outOfCountry", "over-two-years")
+          },
+          {
+            value: "up-to-two-years",
+            text: "Less than 2 years",
+            checked: checked("['" + type + "'].outOfCountry", "up-to-two-years")
           }
         ]
       }) }}
