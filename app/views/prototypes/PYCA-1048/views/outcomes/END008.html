@@ -5,26 +5,13 @@
   <div class="govuk-grid-column-two-thirds">
 
     {{ govukPanel({
-      titleText: "Fast-track this person",
-      text: "Refer to decision maker",
+      titleText: "Select ‘No’ in the to-do",
+      text: "Then select ‘Fast-track this person’",
       classes: "outcome"
     }) }}
 
     <h2 class="govuk-heading-m govuk-!-margin-top-7">Claimant status</h2>
     <p>Refugee</p>
-
-    <h2 class="govuk-heading-m">Evidence to record in the ALP</h2>
-
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">One of the following:</h3>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>visa page within their passport – number, nationality, place of issue, issue date, expiry date and permit or visa type</li>
-      <li>travel document or Home Office letter stating they’re a refugee, including dates</li>
-    </ul>
-
-    {{ govukWarningText({
-      text: "If the claimant cannot provide the necessary evidence, book an HRT interview.",
-      iconFallbackText: "Important"
-    }) }}
 
     <h2 class="govuk-heading-m">Go to the ‘check if HRT interview is needed’ to-do</h2>
     <ol class="govuk-list govuk-list--number">
@@ -41,6 +28,19 @@
       <li>Enter the claimant’s nationality.</li>
       <li>Select ‘Done’.</li>
     </ol>
+
+    <h2 class="govuk-heading-m">Evidence to record in the ALP</h2>
+
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-2">One of the following:</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>visa page within their passport – number, nationality, place of issue, issue date, expiry date and permit or visa type</li>
+      <li>travel document or Home Office letter stating they’re a refugee, including dates</li>
+    </ul>
+
+    {{ govukWarningText({
+      text: "If the claimant cannot provide the necessary evidence, book an HRT interview.",
+      iconFallbackText: "Important"
+    }) }}
 
   </div>
 </div>
