@@ -1,0 +1,61 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+
+    <form method="post">
+
+      {{ govukRadios({
+        idPrefix: "brp-sub-type",
+        name: type + "[brpSubType]",
+        fieldset: {
+          legend: {
+            text: "What else is shown under ‘type of permit’?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+          text: "Refer to the example on this page"
+        },
+        items: [
+          {
+            value: "residence-permanent",
+            text: "Permanent",
+            checked: checked("['" + type + "'].brpSubType", "residence-permanent")
+          },
+          {
+            value: "residence-derivative",
+            text: "Derivative",
+            checked: checked("['" + type + "'].brpSubType", "residence-derivative")
+          },
+          {
+            value: "residence-family-member-eu",
+            text: "Family Member – EU",
+            checked: checked("['" + type + "'].brpSubType", "residence-family-member-eu")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+
+  <div class="govuk-grid-column-one-half">
+
+    <figure class="figure residence-card residence-card--example">
+      <img src="{{ basePath }}/assets/images/residence-focus.png" srcset="{{ basePath }}/assets/images/residence-focus.png, {{ basePath }}/assets/images/residence-focus@2x.png 1.5x" alt="Example residence permit showing “Residence”">
+      <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
+        Example of where these words can be found
+      </figcaption>
+    </figure>
+
+  </div>
+
+</div>
+{% endblock %}
