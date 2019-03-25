@@ -1,0 +1,54 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukDateInput({
+        id: "out-of-uk-return",
+        fieldset: {
+          legend: {
+            text: "What date did they most recently return to the UK?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+          text: "For example, 31 3 2018"
+        },
+        items: [
+          {
+            classes: "govuk-input--width-2",
+            id: "out-of-uk-return-day",
+            label: "Day",
+            name: type + "[outOfUkReturn][day]",
+            value: data[type].outOfUkReturn.day
+          },
+          {
+            classes: "govuk-input--width-2",
+            id: "out-of-uk-return-month",
+            label: "Month",
+            name: type + "[outOfUkReturn][month]",
+            value: data[type].outOfUkReturn.month
+          },
+          {
+            classes: "govuk-input--width-4",
+            id: "out-of-uk-return-year",
+            label: "Year",
+            name: type + "[outOfUkReturn][year]",
+            value: data[type].outOfUkReturn.year
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
