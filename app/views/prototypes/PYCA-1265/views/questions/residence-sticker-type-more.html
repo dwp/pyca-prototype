@@ -8,29 +8,24 @@
 
       {{ govukRadios({
         idPrefix: "residence-sticker-type",
-        name: type + "[residenceStickerType]",
+        name: type + "[residenceStickerTypeMore]",
         fieldset: {
           legend: {
-            text: "What’s under ‘type of document’?",
+            text: "Do either of these appear under ‘type of document’?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
         },
         items: [
           {
-            value: "accession",
-            text: "Accession Worker",
-            checked: checked("['" + type + "'].residenceStickerType", "accession")
+            value: "certDoc",
+            text: "Document Certifying Permanent Residence",
+            checked: checked("['" + type + "'].residenceStickerTypeMore", "certDoc")
           },
           {
-            value: "regCert",
-            text: "Registration Certificate",
-            checked: checked("['" + type + "'].residenceStickerType", "regCert")
-          },
-          {
-            value: "regDoc",
-            text: "Registration Document",
-            checked: checked("['" + type + "'].residenceStickerType", "regDoc")
+            value: "permanent",
+            text: "Permanent Residence Card",
+            checked: checked("['" + type + "'].residenceStickerTypeMore", "permanent")
           },
           {
             divider: "or"
@@ -38,7 +33,7 @@
           {
             value: "none",
             text: "None of the above",
-            checked: checked("['" + type + "'].residenceStickerType", "none")
+            checked: checked("['" + type + "'].residenceStickerTypeMore", "none")
           }
         ]
       }) }}
@@ -54,7 +49,7 @@
   <div class="govuk-grid-column-one-half">
 
     <figure class="figure residence-card residence-card--example">
-      <img src="{{ basePath }}/assets/images/residence-document-certificate-focus.png" srcset="{{ basePath }}/assets/images/residence-document-certificate-focus.png, {{ basePath }}/assets/images/residence-document-certificate-focus@2x.png 1.5x" alt="Example residence document showing “Type of document”">
+      <img src="{{ basePath }}/assets/images/residence-document-permanent-focus.png" srcset="{{ basePath }}/assets/images/residence-document-permanent-focus.png, {{ basePath }}/assets/images/residence-document-permanent-focus@2x.png 1.5x" alt="Example residence document showing “Type of document”">
       <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
         Example of where these words can be found
       </figcaption>

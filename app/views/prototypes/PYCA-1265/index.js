@@ -453,21 +453,39 @@ router.all('/:type/questions/residence-sticker-issued', (req, res) => {
 })
 
 /**
- * Question: Which of these words are shown under ‘type of document’?
+ * Question: What’s under ‘type of document’?
  */
 router.all('/:type/questions/residence-sticker-type', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
   if (submitted.residenceStickerType) {
-    if (['certDoc', 'permanent'].includes(submitted.residenceStickerType)) {
-      return res.redirect('./out-of-country-longest-period')
+    if (submitted.residenceStickerType === 'none') {
+      return res.redirect('./residence-sticker-type-more')
     }
 
     return res.redirect('./in-country-five-years')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-type`)
+})
+
+/**
+ * Question: Do either of these appear under ‘type of document’?
+ */
+router.all('/:type/questions/residence-sticker-type-more', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerTypeMore) {
+    if (['certDoc', 'permanent'].includes(submitted.residenceStickerTypeMore)) {
+      return res.redirect('./out-of-country-longest-period')
+    }
+
+    return res.redirect('./in-country-five-years')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-type-more`)
 })
 
 /**
