@@ -36,7 +36,8 @@
 
 {% block header %}
   {% include "includes/cookie-banner.html" %}
-  {% set productName = ("Variant " + variant) if navigation else null %}
+  {% set productName = release if release else null %}
+  {% set productName = ("Variant " + variant) if navigation else productName %}
   {# Set serviceName in config.js. #}
   {{ govukHeader({
     homepageUrl: "/",
