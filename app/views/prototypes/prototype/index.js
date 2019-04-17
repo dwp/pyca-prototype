@@ -138,7 +138,7 @@ router.all('/:type/questions/out-of-country-since-date', (req, res) => {
 })
 
 /**
- * Question: What is the longest period out of the UK?
+ * Question: Since date, what is the longest period out of the UK?
  */
 router.all('/:type/questions/out-of-country-settlement', (req, res) => {
   const type = req.params.type
@@ -174,6 +174,24 @@ router.all('/:type/questions/out-of-country-settlement', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/out-of-country-settlement`)
+})
+
+/**
+ * Question: What is the longest period out of the UK?
+ */
+router.all('/:type/questions/out-of-country-longest-period', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.outOfCountry === 'up-to-two-years') {
+    return res.redirect('../../outcome/END014')
+  }
+
+  if (submitted.outOfCountry === 'over-two-years') {
+    return res.redirect('./employment-status')
+  }
+
+  res.render(`${__dirname}/views/questions/out-of-country-longest-period`)
 })
 
 /**
@@ -281,12 +299,24 @@ router.all('/:type/questions/nationality', (req, res) => {
       return res.redirect('../../outcome/END001')
     }
 
+    if (claimant.nationality === 'country:CH') {
+      return res.redirect('./residence-sticker-pink')
+    }
+
+    if (claimant.nationality === 'country:BG') {
+      return res.redirect('./residence-sticker-yellow')
+    }
+
+    if (claimant.nationality === 'country:HR' || claimant.nationality === 'country:RO') {
+      return res.redirect('./residence-sticker-purple-or-yellow')
+    }
+
     if (claimant.isCESC || claimant.isECSMA) {
       return res.redirect('../../outcome/END003')
     }
 
     if (claimant.isEEA) {
-      return res.redirect('./in-country-five-years')
+      return res.redirect('./residence-sticker-blue')
     }
 
     if (!claimant.isEEA) {
@@ -330,6 +360,132 @@ router.all('/:type/questions/nationality', (req, res) => {
   res.render(`${__dirname}/views/questions/nationality`, {
     items: countries.list(saved.nationality)
   })
+})
+
+/**
+ * Question: Have they brought a pink card with a residence sticker in it?
+ */
+router.all('/:type/questions/residence-sticker-pink', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerPink === 'yes') {
+    return res.redirect('./residence-sticker-issued')
+  }
+
+  if (submitted.residenceStickerPink === 'no') {
+    return res.redirect('./in-country-five-years')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-pink`)
+})
+
+/**
+ * Question: Have they brought a yellow card with a residence sticker in it?
+ */
+router.all('/:type/questions/residence-sticker-yellow', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerYellow === 'yes') {
+    return res.redirect('./residence-sticker-issued')
+  }
+
+  if (submitted.residenceStickerYellow === 'no') {
+    return res.redirect('./in-country-five-years')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-yellow`)
+})
+
+/**
+ * Question: Have they brought a purple or yellow card with a residence sticker in it?
+ */
+router.all('/:type/questions/residence-sticker-purple-or-yellow', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerPurpleYellow === 'yes') {
+    return res.redirect('./residence-sticker-issued')
+  }
+
+  if (submitted.residenceStickerPurpleYellow === 'no') {
+    return res.redirect('./in-country-five-years')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-purple-or-yellow`)
+})
+
+/**
+ * Question: Have they brought a blue card with a residence sticker in it?
+ */
+router.all('/:type/questions/residence-sticker-blue', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerBlue === 'yes') {
+    return res.redirect('./residence-sticker-issued')
+  }
+
+  if (submitted.residenceStickerBlue === 'no') {
+    return res.redirect('./in-country-five-years')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-blue`)
+})
+
+/**
+ * Question: Where was the document issued?
+ */
+router.all('/:type/questions/residence-sticker-issued', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerIssued) {
+    if (submitted.residenceStickerIssued === 'none') {
+      return res.redirect('./in-country-five-years')
+    }
+
+    return res.redirect('./residence-sticker-type')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-issued`)
+})
+
+/**
+ * Question: What’s under ‘type of document’?
+ */
+router.all('/:type/questions/residence-sticker-type', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerType) {
+    if (submitted.residenceStickerType === 'none') {
+      return res.redirect('./residence-sticker-type-more')
+    }
+
+    return res.redirect('./in-country-five-years')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-type`)
+})
+
+/**
+ * Question: Do either of these appear under ‘type of document’?
+ */
+router.all('/:type/questions/residence-sticker-type-more', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerTypeMore) {
+    if (['certDoc', 'permanent'].includes(submitted.residenceStickerTypeMore)) {
+      return res.redirect('./out-of-country-longest-period')
+    }
+
+    return res.redirect('./in-country-five-years')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-type-more`)
 })
 
 /**
