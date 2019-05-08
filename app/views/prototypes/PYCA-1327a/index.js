@@ -316,7 +316,7 @@ router.all('/:type/questions/nationality', (req, res) => {
     }
 
     if (claimant.isEEA) {
-      return res.redirect('./settled')
+      return res.redirect('./settled-status')
     }
 
     if (!claimant.isEEA) {
@@ -324,8 +324,66 @@ router.all('/:type/questions/nationality', (req, res) => {
     }
   }
 
-/**
+  /**
  * Question: EU Settled Status?
+ */
+router.all('/:type/questions/settled-status', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.settledStatus === 'yes') {
+    return res.redirect('./settled-type')
+  }
+
+  if (submitted.settledStatus === 'no') {
+    return res.redirect('./residence-sticker-blue')
+  }
+
+  res.render(`${__dirname}/views/questions/settled-status`)
+})
+
+/**
+ * Question: EU Settled Type?
+ */
+router.all('/:type/questions/settled-type', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.settledType === 'settled') {
+    return res.redirect('./share-code')
+  }
+
+  if (submitted.settledType === 'pre-settled') {
+    return res.redirect('./residence-sticker-blue')
+  }
+
+  if (submitted.settledType === 'none') {
+    return res.redirect('./residence-sticker-blue')
+  }
+
+  res.render(`${__dirname}/views/questions/settled-type`)
+})
+
+/**
+ * Question: Share code?
+ */
+router.all('/:type/questions/share-code', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.shareCode === 'yes') {
+    return res.redirect('./settlement-status')
+  }
+
+  if (submitted.shareCode === 'no') {
+    return res.redirect('../../outcome/END016')
+  }
+
+  res.render(`${__dirname}/views/questions/share-code`)
+})
+
+/**
+ * Question: EU Settled Type?
  */
 router.all('/:type/questions/settled', (req, res) => {
   const type = req.params.type
@@ -344,25 +402,6 @@ router.all('/:type/questions/settled', (req, res) => {
   res.render(`${__dirname}/views/questions/settled`)
 })
 
-/**
- * Question: Share code?
- */
-router.all('/:type/questions/share-code', (req, res) => {
-  const type = req.params.type
-  const submitted = req.body[type]
-
-  // UK national
-  if (submitted.shareCode === 'yes') {
-    return res.redirect('./settlement-status')
-  }
-
-  // Non-UK national
-  if (submitted.shareCode === 'no') {
-    return res.redirect('./settled')
-  }
-
-  res.render(`${__dirname}/views/questions/share-code`)
-})
 
 /**
  * Question: Settlement Status online?

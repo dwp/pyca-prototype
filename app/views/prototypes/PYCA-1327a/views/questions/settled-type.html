@@ -1,0 +1,49 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        idPrefix: "settled-type",
+        name: type + "[settledType]",
+        fieldset: {
+          legend: {
+            text: "What status does this person have under the EU Settlement Scheme?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "settled",
+            text: "Settled",
+            checked: checked("['" + type + "'].SettledType", "settled")
+          },
+          {
+            value: "pre-settled",
+            text: "Pre-settled",
+            checked: checked("['" + type + "'].SettledType", "pre-settled")
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "none",
+            text: "None of the above",
+            checked: checked("['" + type + "'].SettledType", "none")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}

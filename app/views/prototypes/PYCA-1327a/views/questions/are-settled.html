@@ -8,28 +8,25 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "share-code",
-        name: type + "[shareCode]",
+        idPrefix: "settled",
+        name: type + "[settled]",
         fieldset: {
           legend: {
-            text: "Have they brought their share code?",
+            text: "Does this person have EU settled Status?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
-        },
-        hint: {
-          text: "The code is a 9 digits long. For example, M2124228Y"
         },
         items: [
           {
             value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].shareCode", "yes")
+            checked: checked("['" + type + "'].settled", "yes")
           },
           {
             value: "no",
             text: "No",
-            checked: checked("['" + type + "'].shareCode", "no")
+            checked: checked("['" + type + "'].settled", "no")
           }
         ]
       }) }}
