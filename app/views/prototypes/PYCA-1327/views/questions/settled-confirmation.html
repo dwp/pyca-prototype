@@ -7,11 +7,11 @@
     <form method="post">
 
       {{ govukRadios({
-        idPrefix: "settled-type",
-        name: type + "[settledType]",
+        idPrefix: "settled-confirmation",
+        name: type + "[settledConfirmation]",
         fieldset: {
           legend: {
-            text: "What status does this person have under the EU Settlement Scheme?",
+            text: "What status does the tool say this person has?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -20,20 +20,20 @@
           {
             value: "settled",
             text: "Settled",
-            checked: checked("['" + type + "'].settledType", "settled")
+            checked: checked("['" + type + "'].settledConfirmation", "settled")
           },
           {
             value: "pre-settled",
             text: "Pre-settled",
-            checked: checked("['" + type + "'].settledType", "pre-settled")
+            checked: checked("['" + type + "'].settledConfirmation", "pre-settled")
           },
           {
             divider: "or"
           },
           {
-            value: "none",
-            text: "None of the above",
-            checked: checked("['" + type + "'].settledType", "none")
+            value: "couldnt-confirm",
+            text: "Couldn't confirm this person's status",
+            checked: checked("['" + type + "'].settledConfirmation", "couldnt-confirm")
           }
         ]
       }) }}

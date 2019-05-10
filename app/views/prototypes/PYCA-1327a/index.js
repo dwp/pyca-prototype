@@ -383,7 +383,7 @@ router.all('/:type/questions/share-code', (req, res) => {
 })
 
 /**
- * Question: EU Settled Type?
+ * Question: Check Settled Status?
  */
 router.all('/:type/questions/settled', (req, res) => {
   const type = req.params.type
@@ -412,7 +412,7 @@ router.all('/:type/questions/settlement-status', (req, res) => {
 
   // UK national
   if (submitted.settlementStatus === 'yes') {
-    return res.redirect('./settled')
+    return res.redirect('./settled-confirmation')
   }
 
   // Non-UK national
@@ -421,6 +421,28 @@ router.all('/:type/questions/settlement-status', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/settlement-status`)
+})
+
+/**
+ * Question: EU Settled Confirmation?
+ */
+router.all('/:type/questions/settled-confirmation', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.settledConfirmation === 'settled') {
+    return res.redirect('./out-of-country')
+  }
+
+  if (submitted.settledConfirmation === 'pre-settled') {
+    return res.redirect('./residence-sticker-blue')
+  }
+
+  if (submitted.settledConfirmation === 'couldnt-confirm') {
+    return res.redirect('./residence-sticker-blue')
+  }
+
+  res.render(`${__dirname}/views/questions/settled-confirmation`)
 })
 
   // Partner submitted answers
