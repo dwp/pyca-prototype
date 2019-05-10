@@ -372,7 +372,7 @@ router.all('/:type/questions/share-code', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.shareCode === 'yes') {
-    return res.redirect('./settlement-status')
+    return res.redirect('./settled-verified')
   }
 
   if (submitted.shareCode === 'no') {
@@ -406,21 +406,21 @@ router.all('/:type/questions/settled', (req, res) => {
 /**
  * Question: Settlement Status online?
  */
-router.all('/:type/questions/settlement-status', (req, res) => {
+router.all('/:type/questions/settled-verified', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
   // UK national
-  if (submitted.settlementStatus === 'yes') {
+  if (submitted.settledVerified === 'yes') {
     return res.redirect('./settled-confirmation')
   }
 
   // Non-UK national
-  if (submitted.settlementStatus === 'no') {
+  if (submitted.settledVerified === 'no') {
     return res.redirect('./settled')
   }
 
-  res.render(`${__dirname}/views/questions/settlement-status`)
+  res.render(`${__dirname}/views/questions/settled-verified`)
 })
 
 /**

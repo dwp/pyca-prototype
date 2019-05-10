@@ -6,33 +6,20 @@
 
     <form method="post">
 
-      {{ govukRadios({
-        classes: "govuk-radios--inline",
-        idPrefix: "settlement-status",
-        name: type + "[settlementStatus]",
-        fieldset: {
-          legend: {
-            text: "Check this person's settlement status online",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-          }
-        },
-        items: [
-          {
-            value: "yes",
-            text: "Yes",
-            checked: checked("['" + type + "'].settlementStatus", "yes")
-          },
-          {
-            value: "no",
-            text: "No",
-            checked: checked("['" + type + "'].settlementStatus", "no")
-          }
-        ]
-      }) }}
+    <h1 class="govuk-heading-l">Check this person's settlement status online</h1>
+
+      <p class="govuk-body">To confirm that this person has settled status:</p>
+
+      <ol class="govuk-list govuk-list--number">
+        <li>Go to <a class="govuk-link" target="_blank" href="#">Check someone's status in the UK</a> (this will open in a new window)</li>
+        <li>Follow the steps on the tool to view this person's settled status</li>
+        <li>Once you've seen the status, you can click continue on this page</li>
+      </ol>
 
       {{ govukButton({
-        text: "Continue"
+        text: "Continue",
+        href: "./settled-confirmation",
+        classes: "govuk-!-margin-top-8 govuk-!-margin-bottom-2"
       }) }}
 
     </form>

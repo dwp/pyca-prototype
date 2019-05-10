@@ -1,0 +1,25 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+    <h1 class="govuk-heading-l">Verify this person's Status</h1>
+
+      <p class="govuk-body">The checker tool will appear below. Follow the steps in the tool window and then click continue on this page once you've seen the status.</p>
+
+      <iframe src="https://pyca.herokuapp.com/" height="500" width="700"></iframe>
+
+      {{ govukButton({
+        text: "Continue",
+        href: "./settled-confirmation",
+        classes: "govuk-!-margin-top-8 govuk-!-margin-bottom-2"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
