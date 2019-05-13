@@ -239,7 +239,7 @@ router.all('/:type/questions/out-of-country-return-period', (req, res) => {
 
   // Less than 1 month
   if (submitted.outOfUkReturnPeriod === 'up-to-one-month') {
-    return res.redirect('../../outcome/END006')
+    return res.redirect('../../outcome/END019')
   }
 
   // Between 1 and 6 months
@@ -249,7 +249,7 @@ router.all('/:type/questions/out-of-country-return-period', (req, res) => {
 
   // Over six months
   if (submitted.outOfUkReturnPeriod === 'over-six-months') {
-    return res.redirect('../../outcome/END100')
+    return res.redirect('../../outcome/END009')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country-return-period`)
@@ -895,9 +895,9 @@ router.all('/:type/questions/employment-status-yes-no', (req, res) => {
   const saved = req.session.data[type]
 
   let outcomeDecisionBritish = '../../outcome/END101'
-  let outcomeDecisionOther = '../../outcome/END100'
+  let outcomeDecisionOther = '../../outcome/END009'
   let outcomeBritish = '../../outcome/END001'
-  let outcomeOther = '../../outcome/END006'
+  let outcomeOther = '../../outcome/END019'
 
   // BRP provided
   if (saved.brp === 'no') {
