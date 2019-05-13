@@ -99,7 +99,7 @@ router.all('/:type/questions/out-of-country', (req, res) => {
   // Not out of country
   if (submitted.outOfCountryFourWeeks === 'no') {
     return res.redirect(saved.britishCitizen === 'yes'
-      ? '../../outcome/END015' : '../../outcome/END102')
+      ? '../../outcome/END015' : '../../outcome/END009')
   }
 
   res.render(`${__dirname}/views/questions/out-of-country`)
@@ -376,7 +376,7 @@ router.all('/:type/questions/share-code', (req, res) => {
   }
 
   if (submitted.shareCode === 'no') {
-    return res.redirect('../../outcome/END016')
+    return res.redirect('../../outcome/END017')
   }
 
   res.render(`${__dirname}/views/questions/share-code`)
