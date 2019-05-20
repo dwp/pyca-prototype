@@ -1,0 +1,54 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukDateInput({
+        id: "brp-issue-date",
+        fieldset: {
+          legend: {
+            text: "What is the issue date on the Biometric Residence Permit (BRP)?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+          text: "For example, 31 3 2018"
+        },
+        items: [
+          {
+            classes: "govuk-input--width-2",
+            id: "brp-issue-date-day",
+            label: "Day",
+            name: type + "[brpIssueDate][day]",
+            value: data[type].brpIssueDate.day
+          },
+          {
+            classes: "govuk-input--width-2",
+            id: "brp-issue-date-month",
+            label: "Month",
+            name: type + "[brpIssueDate][month]",
+            value: data[type].brpIssueDate.month
+          },
+          {
+            classes: "govuk-input--width-4",
+            id: "brp-issue-date-year",
+            label: "Year",
+            name: type + "[brpIssueDate][year]",
+            value: data[type].brpIssueDate.year
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
