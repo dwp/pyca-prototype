@@ -316,7 +316,7 @@ router.all('/:type/questions/nationality', (req, res) => {
     }
 
     if (claimant.isEEA) {
-      return res.redirect('./settled-status')
+      return res.redirect('./residence-sticker-blue')
     }
 
     if (!claimant.isEEA) {
@@ -324,7 +324,45 @@ router.all('/:type/questions/nationality', (req, res) => {
     }
   }
 
-  /**
+  // Partner submitted answers
+  if (type === 'partner' && submitted.nationality) {
+    // Claimant and partner from Isle of Man
+    if (claimant.nationality === 'territory:IM' && partner.nationality === 'territory:IM') {
+      return res.redirect('../../outcome/END012')
+    }
+
+    // Claimant is ill
+    if (claimant.dontWorkReason === 'illness') {
+      if (partner.nationality === 'country:GB') {
+        return res.redirect('../../outcome/END012')
+      }
+    }
+
+    // Claimant is unemployed
+    if (claimant.dontWorkReason === 'other') {
+      if (['country:IE', 'territory:IM'].includes(claimant.nationality)) {
+        return res.redirect('../../outcome/END003')
+      }
+    }
+
+    // Partner from UK, Ireland or Isle of Man
+    if (['country:GB', 'country:IE', 'territory:IM'].includes(partner.nationality)) {
+      return res.redirect('../../outcome/END003')
+    }
+
+    if (partner.isEEA) {
+      return res.redirect('./employment-status')
+    }
+
+    return res.redirect('../../outcome/END003')
+  }
+
+  res.render(`${__dirname}/views/questions/nationality`, {
+    items: countries.list(saved.nationality)
+  })
+})
+
+/**
  * Question: EU Settled Status?
  */
 router.all('/:type/questions/settled-status', (req, res) => {
@@ -402,7 +440,6 @@ router.all('/:type/questions/settled', (req, res) => {
   res.render(`${__dirname}/views/questions/settled`)
 })
 
-
 /**
  * Question: Settlement Status online?
  */
@@ -443,44 +480,6 @@ router.all('/:type/questions/settled-confirmation', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/settled-confirmation`)
-})
-
-  // Partner submitted answers
-  if (type === 'partner' && submitted.nationality) {
-    // Claimant and partner from Isle of Man
-    if (claimant.nationality === 'territory:IM' && partner.nationality === 'territory:IM') {
-      return res.redirect('../../outcome/END012')
-    }
-
-    // Claimant is ill
-    if (claimant.dontWorkReason === 'illness') {
-      if (partner.nationality === 'country:GB') {
-        return res.redirect('../../outcome/END012')
-      }
-    }
-
-    // Claimant is unemployed
-    if (claimant.dontWorkReason === 'other') {
-      if (['country:IE', 'territory:IM'].includes(claimant.nationality)) {
-        return res.redirect('../../outcome/END003')
-      }
-    }
-
-    // Partner from UK, Ireland or Isle of Man
-    if (['country:GB', 'country:IE', 'territory:IM'].includes(partner.nationality)) {
-      return res.redirect('../../outcome/END003')
-    }
-
-    if (partner.isEEA) {
-      return res.redirect('./employment-status')
-    }
-
-    return res.redirect('../../outcome/END003')
-  }
-
-  res.render(`${__dirname}/views/questions/nationality`, {
-    items: countries.list(saved.nationality)
-  })
 })
 
 /**
