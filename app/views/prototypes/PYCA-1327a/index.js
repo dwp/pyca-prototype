@@ -362,7 +362,7 @@ router.all('/:type/questions/nationality', (req, res) => {
   })
 })
 
-/**
+/**e
  * Question: EU Settled Status?
  */
 router.all('/:type/questions/settled-status', (req, res) => {
@@ -392,11 +392,11 @@ router.all('/:type/questions/settled-type', (req, res) => {
   }
 
   if (submitted.settledType === 'pre-settled') {
-    return res.redirect('./residence-sticker-blue')
+    return res.redirect('./nationality')
   }
 
   if (submitted.settledType === 'none') {
-    return res.redirect('./residence-sticker-blue')
+    return res.redirect('./nationality')
   }
 
   res.render(`${__dirname}/views/questions/settled-type`)
@@ -473,11 +473,11 @@ router.all('/:type/questions/settled-confirmation', (req, res) => {
   }
 
   if (submitted.settledConfirmation === 'pre-settled') {
-    return res.redirect('./residence-sticker-blue')
+    return res.redirect('./nationality')
   }
 
   if (submitted.settledConfirmation === 'couldnt-confirm') {
-    return res.redirect('./residence-sticker-blue')
+    return res.redirect('./nationality')
   }
 
   res.render(`${__dirname}/views/questions/settled-confirmation`)
