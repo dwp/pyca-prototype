@@ -758,15 +758,7 @@ router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, r
   const saved = req.session.data[type]
 
   if (['most-recent', 'three-months'].includes(submitted.employmentStatusEvidence)) {
-    if (saved.dontWorkReason === 'redundant') {
-      return res.redirect('../../outcome/END010')
-    }
-
-    if (saved.dontWorkReason === 'illness') {
-      return res.redirect('./brought-evidence')
-    }
-
-    return res.redirect('../../outcome/END002')
+    return res.redirect('./employment-status-confirm')
   }
 
   if (submitted.employmentStatusEvidence === 'none') {
@@ -781,6 +773,42 @@ router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, r
   }
 
   res.render(view)
+})
+
+/**
+ * Question: Evidence brought to show they aren’t working??
+ */
+router.all('/:type/questions/employment-status-confirm', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  if (submitted.employmentStatusConfirm) {
+
+    // Yes they have evidence
+    if (submitted.employmentStatusConfirm === 'yes') {
+      if (saved.dontWorkReason === 'redundant') {
+        return res.redirect('../../outcome/END010')
+      }
+  
+      if (saved.dontWorkReason === 'illness') {
+        return res.redirect('../../outcome/END011')
+      }
+
+      return res.redirect('../../outcome/END002')
+    }
+
+    // No they don't have evidence
+    if (submitted.employmentStatusConfirm === 'no') {
+      if (['redundant', 'illness'].includes(saved.dontWorkReason)) {
+        return res.redirect('../../outcome/END103')
+      }
+
+      return res.redirect('../../outcome/END105')
+    }
+  }
+
+  res.render(`${__dirname}/views/questions/employment-status-confirm`)
 })
 
 /**
@@ -888,50 +916,6 @@ router.all('/:type/questions/employment-status-fit-note', (req, res) => {
 
   res.render(`${__dirname}/views/questions/employment-status-fit-note`)
 })
-
-/**
- * Question: Evidence brought to show they aren’t working??
- */
-router.all('/:type/questions/employment-evidence', (req, res) => {
-  const type = req.params.type
-  const submitted = req.body[type]
-  const saved = req.session.data[type]
-
-  // Married or civil partner?
-  if (submitted.employmentEvidence === 'yes') {
-    return res.redirect('../../outcome/END002')
-  }
-
-  // No partner
-  if (submitted.employmentEvidence === 'no') {
-      return res.redirect('../../outcome/END105')
-    }
-
-  res.render(`${__dirname}/views/questions/employment-evidence`)
-})
-
-
-/**
- * Question: Evidence brought to show they aren’t working??
- */
-router.all('/:type/questions/brought-evidence', (req, res) => {
-  const type = req.params.type
-  const submitted = req.body[type]
-  const saved = req.session.data[type]
-
-  // Married or civil partner?
-  if (submitted.broughtEvidence === 'yes') {
-    return res.redirect('../../outcome/END011')
-  }
-
-  // No partner
-  if (submitted.broughtEvidence === 'no') {
-      return res.redirect('../../outcome/END103')
-    }
-
-  res.render(`${__dirname}/views/questions/brought-evidence`)
-})
-
 
 /**
  * Question: Visa says family member?
