@@ -363,6 +363,24 @@ router.all('/:type/questions/nationality', (req, res) => {
 })
 
 /**
+ * Question: Have they brought their residence document today?
+ */
+router.all('/:type/questions/residence-sticker-confirmation', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerConfirmation === 'yes') {
+    return res.redirect('./residence-sticker-issued')
+  }
+
+  if (submitted.residenceStickerConfirmation === 'no') {
+    return res.redirect('../../outcome/END104')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-confirmation`)
+})
+
+/**
  * Question: Have they brought a pink card with a residence sticker in it?
  */
 router.all('/:type/questions/residence-sticker-pink', (req, res) => {
@@ -424,11 +442,11 @@ router.all('/:type/questions/residence-sticker-blue', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerBlue === 'yes') {
-    return res.redirect('./residence-sticker-issued')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   if (submitted.residenceStickerBlue === 'no') {
-    return res.redirect('./in-country-five-years')
+    return res.redirect('../../outcome/END104')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-blue`)
