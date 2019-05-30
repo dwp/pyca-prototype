@@ -892,6 +892,28 @@ router.all('/:type/questions/employment-status-fit-note', (req, res) => {
 /**
  * Question: Evidence brought to show they aren’t working??
  */
+router.all('/:type/questions/employment-evidence', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  // Married or civil partner?
+  if (submitted.employmentEvidence === 'yes') {
+    return res.redirect('../../outcome/END002')
+  }
+
+  // No partner
+  if (submitted.employmentEvidence === 'no') {
+      return res.redirect('../../outcome/END105')
+    }
+
+  res.render(`${__dirname}/views/questions/employment-evidence`)
+})
+
+
+/**
+ * Question: Evidence brought to show they aren’t working??
+ */
 router.all('/:type/questions/brought-evidence', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
