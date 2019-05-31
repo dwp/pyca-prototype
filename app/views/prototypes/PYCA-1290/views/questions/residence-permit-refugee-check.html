@@ -8,11 +8,11 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "permit-type-refugee",
-        name: type + "[permitTypeRefugee]",
+        idPrefix: "permit-type-refugee-check",
+        name: type + "[permitTypeRefugeeCheck]",
         fieldset: {
           legend: {
-            text: "Have they got a Biometric Residence Permit (BRP)?",
+            text: "Have they brought their Biometric Residence Permit (BRP) today?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -21,12 +21,12 @@
           {
             value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].permitTypeRefugee", "yes")
+            checked: checked("['" + type + "'].permitTypeRefugeeCheck", "yes")
           },
           {
             value: "no",
             text: "No",
-            checked: checked("['" + type + "'].permitTypeRefugee", "no")
+            checked: checked("['" + type + "'].permitTypeRefugeeCheck", "no")
           }
         ]
       }) }}

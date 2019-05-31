@@ -264,7 +264,7 @@ router.all('/:type/questions/refugee', (req, res) => {
 
   // Refugee?
   if (submitted.refugee === 'yes') {
-    return res.redirect('./residence-permit')
+    return res.redirect('./residence-permit-refugee')
   }
 
   // Not a refugee
@@ -531,7 +531,7 @@ router.all('/:type/questions/residence-permit', (req, res) => {
   // Refugee with/without permit
   if (saved.refugee === 'yes') {
     if (submitted.brp === 'yes') {
-      return res.redirect('./residence-permit-refugee')
+      return res.redirect('./residence-permit-type-refugee')
     }
 
     if (submitted.brp === 'no') {
@@ -637,7 +637,7 @@ router.all('/:type/questions/residence-permit-sub-type', (req, res) => {
 /**
  * Question: Does the permit type state REFUGEE?
  */
-router.all('/:type/questions/residence-permit-refugee', (req, res) => {
+router.all('/:type/questions/residence-permit-type-refugee', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
@@ -651,7 +651,47 @@ router.all('/:type/questions/residence-permit-refugee', (req, res) => {
     return res.redirect('./no-public-funds')
   }
 
+  res.render(`${__dirname}/views/questions/residence-permit-type-refugee`)
+})
+
+/**
+ * Question: Have they got a Biometric Residence Permit (BRP)?
+ */
+router.all('/:type/questions/residence-permit-refugee', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  // Permit says refugee?
+  if (submitted.permitTypeRefugee === 'yes') {
+    return res.redirect('./residence-permit-refugee-check')
+  }
+
+  // Permit doesn't say refugee
+  if (submitted.permitTypeRefugee === 'no') {
+    return res.redirect('../../outcome/END008')
+  }
+
   res.render(`${__dirname}/views/questions/residence-permit-refugee`)
+})
+
+/**
+ * Question: Have they brought their Biometric Residence Permit (BRP) today?
+ */
+router.all('/:type/questions/residence-permit-refugee-check', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  // Permit says refugee?
+  if (submitted.permitTypeRefugeeCheck === 'yes') {
+    return res.redirect('./residence-permit-type-refugee')
+  }
+
+  // Permit doesn't say refugee
+  if (submitted.permitTypeRefugeeCheck === 'no') {
+    return res.redirect('../../outcome/END106')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-permit-refugee-check`)
 })
 
 /**
