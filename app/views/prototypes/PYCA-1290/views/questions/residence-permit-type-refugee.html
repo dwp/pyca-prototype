@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column govuk-grid-column--custom-image">
+  <div class="govuk-grid-column-two-thirds">
 
     <form method="post">
 
@@ -12,7 +12,7 @@
         name: type + "[permitTypeRefugee]",
         fieldset: {
           legend: {
-            text: "Have they got a Biometric Residence Permit (BRP)?",
+            text: "Does the permit type state REFUGEE?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -38,16 +38,5 @@
     </form>
 
   </div>
-<div class="govuk-grid-column govuk-grid-column--custom-image">
-
-    <figure class="figure residence-card residence-card--large">
-      <img src="{{ basePath }}/assets/images/brp-front-small.png" srcset="{{ basePath }}/assets/images/brp-front-small.png, {{ basePath }}/assets/images/brp-front-small@2x.png 1.5x" alt="Example biometric residence permit">
-      <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
-        Example biometric residence permit
-      </figcaption>
-    </figure>
-
-  </div>
-
 </div>
 {% endblock %}
