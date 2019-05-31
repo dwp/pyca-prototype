@@ -446,7 +446,7 @@ router.all('/:type/questions/residence-sticker-blue', (req, res) => {
   }
 
   if (submitted.residenceStickerBlue === 'no') {
-    return res.redirect('../../outcome/END104')
+    return res.redirect('./in-country-five-years')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-blue`)
