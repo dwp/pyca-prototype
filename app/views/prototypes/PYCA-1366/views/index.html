@@ -1,0 +1,31 @@
+{% extends "./question.html" %}
+
+{% block pageTitle -%}
+  Start – {{ serviceName }}
+{%- endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      Prove you can apply for benefits in the UK
+    </h1>
+
+    <p>Use this service to find out:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>if you can record the claimant’s decision or if they need to be fast-tracked or booked for HRT</li>
+      <li>what evidence you need to collect</li>
+      <li>how to fast-track or book HRT</li>
+    </ul>
+
+    {{ govukButton({
+      text: "Start now",
+      href: basePath + "/claimant/questions",
+      classes: "govuk-button--start"
+    }) }}
+
+  </div>
+</div>
+{% endblock %}
