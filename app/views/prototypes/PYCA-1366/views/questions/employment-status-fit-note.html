@@ -1,0 +1,53 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+      {%- set classes = "govuk-radios--inline" -%}
+      {%- set items = [
+        {
+          value: "yes",
+          text: "Yes",
+          checked: checked("['" + type + "'].fitNote", "yes")
+        },
+        {
+          value: "no",
+          text: "No",
+          checked: checked("['" + type + "'].fitNote", "no")
+        }
+      ] -%}
+
+      {%- if type == 'partner' -%}
+        {%- set classes = "" -%}
+        {%- set items = (items.push({
+          value: "dontKnow",
+          text: "I do not know",
+          checked: checked("['" + type + "'].fitNote", "dontKnow")
+        }), items) -%}
+      {% endif -%}
+
+      {{ govukRadios({
+        classes: classes,
+        idPrefix: "fit-note",
+        name: type + "[fitNote]",
+        fieldset: {
+          legend: {
+            text: ("Does their partner" if type == 'partner' else "Do they") + " have consecutive fit notes covering the entire period since they last worked?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: items
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
