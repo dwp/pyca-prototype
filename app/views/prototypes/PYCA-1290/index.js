@@ -388,7 +388,7 @@ router.all('/:type/questions/residence-sticker-pink', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerPink === 'yes') {
-    return res.redirect('./residence-sticker-issued')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   if (submitted.residenceStickerPink === 'no') {
@@ -406,7 +406,7 @@ router.all('/:type/questions/residence-sticker-yellow', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerYellow === 'yes') {
-    return res.redirect('./residence-sticker-issued')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   if (submitted.residenceStickerYellow === 'no') {
@@ -424,7 +424,7 @@ router.all('/:type/questions/residence-sticker-purple-or-yellow', (req, res) => 
   const submitted = req.body[type]
 
   if (submitted.residenceStickerPurpleYellow === 'yes') {
-    return res.redirect('./residence-sticker-issued')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   if (submitted.residenceStickerPurpleYellow === 'no') {
