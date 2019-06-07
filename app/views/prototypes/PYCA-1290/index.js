@@ -643,7 +643,7 @@ router.all('/:type/questions/residence-permit-type-refugee', (req, res) => {
 
   // Permit says refugee?
   if (submitted.permitTypeRefugee === 'yes') {
-    return res.redirect('./residence-permit-expired')
+    return res.redirect('./residence-permit-expired-refugee')
   }
 
   // Permit doesn't say refugee
@@ -688,7 +688,7 @@ router.all('/:type/questions/residence-permit-refugee-check', (req, res) => {
 
   // Permit doesn't say refugee
   if (submitted.permitTypeRefugeeCheck === 'no') {
-    return res.redirect('../../outcome/END106')
+    return res.redirect('../../outcome/END020')
   }
 
   res.render(`${__dirname}/views/questions/residence-permit-refugee-check`)
@@ -718,6 +718,32 @@ router.all('/:type/questions/residence-permit-expired', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/residence-permit-expired`)
+})
+
+/**
+ * Question: Has the permit expired?
+ */
+router.all('/:type/questions/residence-permit-expired-refugee', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  // Card expired?
+  if (submitted.permitExpiredRefugee === 'yes') {
+    return res.redirect('../../outcome/END003')
+  }
+
+  // Card hasn't expired
+  if (submitted.permitExpiredRefugee === 'no') {
+    // Refugee with permit
+    if (saved.refugee === 'yes') {
+      return res.redirect('../../outcome/END018')
+    }
+
+    return res.redirect('./residence-permit-type')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-permit-expired-refugee`)
 })
 
 /**

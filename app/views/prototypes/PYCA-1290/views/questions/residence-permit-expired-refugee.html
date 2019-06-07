@@ -8,11 +8,11 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "permit-type-expired",
-        name: type + "[permitExpired]",
+        idPrefix: "permit-type-expired-refugee",
+        name: type + "[permitExpiredRefugee]",
         fieldset: {
           legend: {
-            text: "Has the card expired?",
+            text: "Has the permit expired?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -21,12 +21,12 @@
           {
             value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].permitExpired", "yes")
+            checked: checked("['" + type + "'].permitExpiredRefugee", "yes")
           },
           {
             value: "no",
             text: "No",
-            checked: checked("['" + type + "'].permitExpired", "no")
+            checked: checked("['" + type + "'].permitExpiredRefugee", "no")
           }
         ]
       }) }}
