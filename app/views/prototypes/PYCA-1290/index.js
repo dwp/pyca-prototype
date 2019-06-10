@@ -374,7 +374,7 @@ router.all('/:type/questions/residence-sticker-confirmation', (req, res) => {
   }
 
   if (submitted.residenceStickerConfirmation === 'no') {
-    return res.redirect('../../outcome/END104')
+    return res.redirect('../../outcome/END022')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-confirmation`)
@@ -870,7 +870,7 @@ router.all('/:type/questions/employment-status-confirm', (req, res) => {
         return res.redirect('../../outcome/END103')
       }
 
-      return res.redirect('../../outcome/END105')
+      return res.redirect('../../outcome/END021')
     }
   }
 
