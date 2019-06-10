@@ -69,13 +69,13 @@
   }
 
   @include govuk-media-query($from: desktop) {
-    width: grid-width(two-thirds);
+    width: govuk-grid-width(two-thirds);
   }
 }
 
 .all-versions {
   @include govuk-media-query($from: desktop) {
-    width: grid-width(two-thirds);
+    width: govuk-grid-width(two-thirds);
   }
 }
 

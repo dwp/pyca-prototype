@@ -7,7 +7,7 @@
 @include govuk-media-query($from: tablet) {
 
   .govuk-grid-column--custom-image {
-    width: grid-width(one-half);
+    width: govuk-grid-width(one-half);
     float: left;
   }
 }

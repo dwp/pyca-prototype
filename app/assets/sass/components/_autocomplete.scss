@@ -29,9 +29,18 @@
   padding: 5px;
 }
 
+.autocomplete__input--error {
+  border: $govuk-border-width-form-element-error solid $govuk-error-colour;
+}
+
 .autocomplete__input--focused {
+  outline: $govuk-focus-width solid $govuk-focus-colour;
   outline-offset: 0;
-  outline: 3px solid $govuk-focus-colour;
+  box-shadow: inset 0 0 0 $govuk-border-width-form-element;
+
+  @include govuk-if-ie8 {
+    border-width: $govuk-border-width-form-element * 2;
+  }
 }
 
 .autocomplete__input--show-all-values {
@@ -105,7 +114,7 @@
 }
 
 .autocomplete__option--odd {
-  background-color: govuk-colour("grey-4");
+  background-color: govuk-tint(govuk-colour("light-grey"), 46%);
 }
 
 .autocomplete__option--focused,
@@ -117,8 +126,8 @@
 }
 
 .autocomplete__option--no-results {
-  background-color: govuk-colour("grey-4");
-  color: govuk-colour("grey-1");
+  background-color: govuk-tint(govuk-colour("light-grey"), 46%);
+  color: govuk-colour("dark-grey");
   cursor: not-allowed;
 }
 
