@@ -8,11 +8,11 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "employment-status-confirm",
-        name: type + "[employmentStatusConfirm]",
+        idPrefix: "employment-status-fit-note-confirm",
+        name: type + "[employmentStatusFitNoteConfirm]",
         fieldset: {
           legend: {
-            text: "Have they brought this evidence today?",
+            text: "Can they bring their fit notes to another appointment?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -21,12 +21,12 @@
           {
             value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].employmentStatusConfirm", "yes")
+            checked: checked("['" + type + "'].employmentStatusFitNoteConfirm", "yes")
           },
           {
             value: "no",
             text: "No",
-            checked: checked("['" + type + "'].employmentStatusConfirm", "no")
+            checked: checked("['" + type + "'].employmentStatusFitNoteConfirm", "no")
           }
         ]
       }) }}
