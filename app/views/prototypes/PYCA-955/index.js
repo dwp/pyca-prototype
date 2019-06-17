@@ -108,7 +108,7 @@ router.all('/:type/questions/out-of-country-back-six-months', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
-  // Fast track any answer
+  // Fast-track any answer
   if (submitted.backSixMonths) {
     return res.redirect('../../outcome/END001')
   }
