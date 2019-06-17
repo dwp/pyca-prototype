@@ -54,7 +54,7 @@ router.all('/:type/questions/british-passport-today', (req, res) => {
 
   // Not brought their passport
   if (submitted.passportToday === 'no') {
-    return res.redirect('../../outcome/END003')
+    return res.redirect('../../outcome/END009')
   }
 
   res.render(`${__dirname}/views/questions/british-passport-today`)
@@ -264,7 +264,7 @@ router.all('/:type/questions/refugee', (req, res) => {
 
   // Refugee?
   if (submitted.refugee === 'yes') {
-    return res.redirect('./residence-permit')
+    return res.redirect('./residence-permit-refugee')
   }
 
   // Not a refugee
@@ -363,6 +363,24 @@ router.all('/:type/questions/nationality', (req, res) => {
 })
 
 /**
+ * Question: Have they brought their residence document today?
+ */
+router.all('/:type/questions/residence-sticker-confirmation', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.residenceStickerConfirmation === 'yes') {
+    return res.redirect('./residence-sticker-issued')
+  }
+
+  if (submitted.residenceStickerConfirmation === 'no') {
+    return res.redirect('../../outcome/END022')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-sticker-confirmation`)
+})
+
+/**
  * Question: Have they brought a pink card with a residence sticker in it?
  */
 router.all('/:type/questions/residence-sticker-pink', (req, res) => {
@@ -370,7 +388,7 @@ router.all('/:type/questions/residence-sticker-pink', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerPink === 'yes') {
-    return res.redirect('./residence-sticker-issued')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   if (submitted.residenceStickerPink === 'no') {
@@ -388,7 +406,7 @@ router.all('/:type/questions/residence-sticker-yellow', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerYellow === 'yes') {
-    return res.redirect('./residence-sticker-issued')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   if (submitted.residenceStickerYellow === 'no') {
@@ -406,7 +424,7 @@ router.all('/:type/questions/residence-sticker-purple-or-yellow', (req, res) => 
   const submitted = req.body[type]
 
   if (submitted.residenceStickerPurpleYellow === 'yes') {
-    return res.redirect('./residence-sticker-issued')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   if (submitted.residenceStickerPurpleYellow === 'no') {
@@ -424,7 +442,7 @@ router.all('/:type/questions/residence-sticker-blue', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerBlue === 'yes') {
-    return res.redirect('./residence-sticker-issued')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   if (submitted.residenceStickerBlue === 'no') {
@@ -513,7 +531,7 @@ router.all('/:type/questions/residence-permit', (req, res) => {
   // Refugee with/without permit
   if (saved.refugee === 'yes') {
     if (submitted.brp === 'yes') {
-      return res.redirect('./residence-permit-refugee')
+      return res.redirect('./residence-permit-type-refugee')
     }
 
     if (submitted.brp === 'no') {
@@ -619,13 +637,13 @@ router.all('/:type/questions/residence-permit-sub-type', (req, res) => {
 /**
  * Question: Does the permit type state REFUGEE?
  */
-router.all('/:type/questions/residence-permit-refugee', (req, res) => {
+router.all('/:type/questions/residence-permit-type-refugee', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
   // Permit says refugee?
   if (submitted.permitTypeRefugee === 'yes') {
-    return res.redirect('./residence-permit-expired')
+    return res.redirect('./residence-permit-expired-refugee')
   }
 
   // Permit doesn't say refugee
@@ -633,7 +651,47 @@ router.all('/:type/questions/residence-permit-refugee', (req, res) => {
     return res.redirect('./no-public-funds')
   }
 
+  res.render(`${__dirname}/views/questions/residence-permit-type-refugee`)
+})
+
+/**
+ * Question: Have they got a Biometric Residence Permit (BRP)?
+ */
+router.all('/:type/questions/residence-permit-refugee', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  // Permit says refugee?
+  if (submitted.permitTypeRefugee === 'yes') {
+    return res.redirect('./residence-permit-refugee-check')
+  }
+
+  // Permit doesn't say refugee
+  if (submitted.permitTypeRefugee === 'no') {
+    return res.redirect('../../outcome/END008')
+  }
+
   res.render(`${__dirname}/views/questions/residence-permit-refugee`)
+})
+
+/**
+ * Question: Have they brought their Biometric Residence Permit (BRP) today?
+ */
+router.all('/:type/questions/residence-permit-refugee-check', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  // Permit says refugee?
+  if (submitted.permitTypeRefugeeCheck === 'yes') {
+    return res.redirect('./residence-permit-type-refugee')
+  }
+
+  // Permit doesn't say refugee
+  if (submitted.permitTypeRefugeeCheck === 'no') {
+    return res.redirect('../../outcome/END020')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-permit-refugee-check`)
 })
 
 /**
@@ -660,6 +718,32 @@ router.all('/:type/questions/residence-permit-expired', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/residence-permit-expired`)
+})
+
+/**
+ * Question: Has the permit expired?
+ */
+router.all('/:type/questions/residence-permit-expired-refugee', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+  const saved = req.session.data[type]
+
+  // Card expired?
+  if (submitted.permitExpiredRefugee === 'yes') {
+    return res.redirect('../../outcome/END003')
+  }
+
+  // Card hasn't expired
+  if (submitted.permitExpiredRefugee === 'no') {
+    // Refugee with permit
+    if (saved.refugee === 'yes') {
+      return res.redirect('../../outcome/END018')
+    }
+
+    return res.redirect('./residence-permit-type')
+  }
+
+  res.render(`${__dirname}/views/questions/residence-permit-expired-refugee`)
 })
 
 /**
@@ -748,7 +832,7 @@ router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, r
       return res.redirect('../../outcome/END011')
     }
 
-    return res.redirect('../../outcome/END002')
+    return res.redirect('./employment-status-confirm')
   }
 
   if (submitted.employmentStatusEvidence === 'none') {
@@ -763,6 +847,24 @@ router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, r
   }
 
   res.render(view)
+})
+
+/**
+ * Question: Have they brought this evidence today?
+ */
+router.all('/:type/questions/employment-status-confirm', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.employmentStatusConfirm === 'yes') {
+    return res.redirect('../../outcome/END010')
+  }
+
+  if (submitted.employmentStatusConfirm === 'no') {
+    return res.redirect('../../outcome/END103')
+  }
+
+  res.render(`${__dirname}/views/questions/employment-status-confirm`)
 })
 
 /**

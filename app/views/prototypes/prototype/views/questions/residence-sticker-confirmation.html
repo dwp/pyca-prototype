@@ -8,11 +8,11 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "residence-sticker-purple-or-yellow",
-        name: type + "[residenceStickerPurpleYellow]",
+        idPrefix: "residence-sticker-confirmation",
+        name: type + "[residenceStickerConfirmation]",
         fieldset: {
           legend: {
-            text: "Have they got a purple or yellow card with a residence document in it?",
+            text: "Have they brought their residence document today?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -21,12 +21,12 @@
           {
             value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].residenceStickerPurpleYellow", "yes")
+            checked: checked("['" + type + "'].residenceStickerConfirmation", "yes")
           },
           {
             value: "no",
             text: "No",
-            checked: checked("['" + type + "'].residenceStickerPurpleYellow", "no")
+            checked: checked("['" + type + "'].residenceStickerConfirmation", "no")
           }
         ]
       }) }}
