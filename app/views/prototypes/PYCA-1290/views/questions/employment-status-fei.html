@@ -7,11 +7,11 @@
     <form method="post">
 
       {{ govukRadios({
-        idPrefix: "employee-status-evidence",
-        name: type + "[employmentStatusEvidence]",
+        idPrefix: "employment-status-fei",
+        name: type + "[employmentStatusFEI]",
         fieldset: {
           legend: {
-            text: "What evidence have they brought of their previous employment?",
+            text: "What evidence of their previous employment can they bring to another appointment?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -20,7 +20,7 @@
           {
             value: "three-months",
             text: "Payslips or bank statements covering their final 3 months of employment",
-            checked: checked("['" + type + "'].employmentStatusEvidence", "three-months")
+            checked: checked("['" + type + "'].employmentStatusFEI", "three-months")
           },
           {
             value: "most-recent",
@@ -28,7 +28,7 @@
             hint: {
               text: "Not zero hours or fixed term"
             },
-            checked: checked("['" + type + "'].employmentStatusEvidence", "most-recent")
+            checked: checked("['" + type + "'].employmentStatusFEI", "most-recent")
           },
           {
             divider: "or"
@@ -36,7 +36,7 @@
           {
             value: "none",
             text: "None of the above",
-            checked: checked("['" + type + "'].employmentStatusEvidence", "none")
+            checked: checked("['" + type + "'].employmentStatusFEI", "none")
           }
         ]
       }) }}
