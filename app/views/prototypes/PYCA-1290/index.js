@@ -873,9 +873,16 @@ router.all('/:type/questions/employment-status-fit-note-confirm', (req, res) => 
 router.all('/:type/questions/employment-evidence-fei', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
+  const saved = req.session.data[type]
 
-  if (submitted.employmentEvidenceFEI === 'yes') {
-    return res.redirect('../../outcome/END025')
+  if (['yes'].includes(submitted.employmentEvidenceFEI)) {
+    if (saved.dontWorkReason === 'redundant') {
+      return res.redirect('../../outcome/END026')
+    }
+
+    if (saved.dontWorkReason === 'illness') {
+      return res.redirect('../../outcome/END025')
+    }
   }
 
   if (submitted.employmentEvidenceFEI === 'no') {
