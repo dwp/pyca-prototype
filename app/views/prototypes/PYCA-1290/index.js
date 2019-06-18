@@ -883,6 +883,9 @@ router.all('/:type/questions/employment-evidence-fei', (req, res) => {
     if (saved.dontWorkReason === 'illness') {
       return res.redirect('../../outcome/END025')
     }
+
+    return res.redirect('../../outcome/END103')
+    
   }
 
   if (submitted.employmentEvidenceFEI === 'no') {
@@ -893,7 +896,7 @@ router.all('/:type/questions/employment-evidence-fei', (req, res) => {
 })
 
 /**
- * Question: What evidence of their previous employment can they bring to another appointment?
+ * Question: Can they bring their employment evidence to another appointment?
  */
 router.all('/:type/questions/employment-status-fei', (req, res) => {
   const type = req.params.type
