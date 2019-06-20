@@ -1,0 +1,42 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "brought-evidence",
+        name: type + "[broughtEvidence]",
+        fieldset: {
+          legend: {
+            text: "Have they bought their evidence with them today?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            checked: checked("['" + type + "'].broughtEvidence", "yes")
+          },
+          {
+            value: "no",
+            text: "No",
+            checked: checked("['" + type + "'].broughtEvidence", "no")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
