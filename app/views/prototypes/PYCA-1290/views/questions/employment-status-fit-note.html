@@ -34,7 +34,7 @@
         name: type + "[fitNote]",
         fieldset: {
           legend: {
-            text: ("Has their partner" if type == 'partner' else "Have they") + " brought consecutive fit notes covering the entire period since they last worked?",
+            text: ("Does their partner have consecutive fit notes covering the entire period since they last worked" if type == 'partner' else "Have they brought consecutive fit notes covering the entire period since they last worked") + "?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
