@@ -392,7 +392,7 @@ router.all('/:type/questions/residence-sticker-pink', (req, res) => {
   }
 
   if (submitted.residenceStickerPink === 'no') {
-    return res.redirect('./in-country-five-years')
+    return res.redirect('./employment-status')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-pink`)
@@ -410,7 +410,7 @@ router.all('/:type/questions/residence-sticker-yellow', (req, res) => {
   }
 
   if (submitted.residenceStickerYellow === 'no') {
-    return res.redirect('./in-country-five-years')
+    return res.redirect('./employment-status')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-yellow`)
@@ -428,7 +428,7 @@ router.all('/:type/questions/residence-sticker-purple-or-yellow', (req, res) => 
   }
 
   if (submitted.residenceStickerPurpleYellow === 'no') {
-    return res.redirect('./in-country-five-years')
+    return res.redirect('./employment-status')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-purple-or-yellow`)
@@ -446,7 +446,7 @@ router.all('/:type/questions/residence-sticker-blue', (req, res) => {
   }
 
   if (submitted.residenceStickerBlue === 'no') {
-    return res.redirect('./in-country-five-years')
+    return res.redirect('./employment-status')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-blue`)
@@ -461,7 +461,7 @@ router.all('/:type/questions/residence-sticker-issued', (req, res) => {
 
   if (submitted.residenceStickerIssued) {
     if (submitted.residenceStickerIssued === 'none') {
-      return res.redirect('./in-country-five-years')
+      return res.redirect('./employment-status')
     }
 
     return res.redirect('./residence-sticker-type')
@@ -482,7 +482,7 @@ router.all('/:type/questions/residence-sticker-type', (req, res) => {
       return res.redirect('./residence-sticker-type-more')
     }
 
-    return res.redirect('./in-country-five-years')
+    return res.redirect('./employment-status')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-type`)
@@ -500,7 +500,7 @@ router.all('/:type/questions/residence-sticker-type-more', (req, res) => {
       return res.redirect('./out-of-country-longest-period')
     }
 
-    return res.redirect('./in-country-five-years')
+    return res.redirect('./employment-status')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-type-more`)
