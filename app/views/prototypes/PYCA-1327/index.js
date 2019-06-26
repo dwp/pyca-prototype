@@ -269,7 +269,7 @@ router.all('/:type/questions/refugee', (req, res) => {
 
   // Not a refugee
   if (submitted.refugee === 'no') {
-    return res.redirect('./nationality')
+    return res.redirect('./settled-status')
   }
 
   res.render(`${__dirname}/views/questions/refugee`)
@@ -362,7 +362,7 @@ router.all('/:type/questions/nationality', (req, res) => {
   })
 })
 
-/**
+/**e
  * Question: EU Settled Status?
  */
 router.all('/:type/questions/settled-status', (req, res) => {
@@ -374,7 +374,7 @@ router.all('/:type/questions/settled-status', (req, res) => {
   }
 
   if (submitted.settledStatus === 'no') {
-    return res.redirect('./residence-sticker-blue')
+    return res.redirect('./nationality')
   }
 
   res.render(`${__dirname}/views/questions/settled-status`)
@@ -392,11 +392,11 @@ router.all('/:type/questions/settled-type', (req, res) => {
   }
 
   if (submitted.settledType === 'pre-settled') {
-    return res.redirect('./residence-sticker-blue')
+    return res.redirect('./nationality')
   }
 
   if (submitted.settledType === 'none') {
-    return res.redirect('./residence-sticker-blue')
+    return res.redirect('./nationality')
   }
 
   res.render(`${__dirname}/views/questions/settled-type`)
@@ -410,7 +410,7 @@ router.all('/:type/questions/share-code', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.shareCode === 'yes') {
-    return res.redirect('./settlement-status')
+    return res.redirect('./settled-verified')
   }
 
   if (submitted.shareCode === 'no') {
@@ -440,24 +440,25 @@ router.all('/:type/questions/settled', (req, res) => {
   res.render(`${__dirname}/views/questions/settled`)
 })
 
+
 /**
  * Question: Settlement Status online?
  */
-router.all('/:type/questions/settlement-status', (req, res) => {
+router.all('/:type/questions/settled-verified', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
   // UK national
-  if (submitted.settlementStatus === 'yes') {
+  if (submitted.settledVerified === 'yes') {
     return res.redirect('./settled-confirmation')
   }
 
   // Non-UK national
-  if (submitted.settlementStatus === 'no') {
+  if (submitted.settledVerified === 'no') {
     return res.redirect('./settled')
   }
 
-  res.render(`${__dirname}/views/questions/settlement-status`)
+  res.render(`${__dirname}/views/questions/settled-verified`)
 })
 
 /**
@@ -472,11 +473,11 @@ router.all('/:type/questions/settled-confirmation', (req, res) => {
   }
 
   if (submitted.settledConfirmation === 'pre-settled') {
-    return res.redirect('./residence-sticker-blue')
+    return res.redirect('./nationality')
   }
 
   if (submitted.settledConfirmation === 'couldnt-confirm') {
-    return res.redirect('./residence-sticker-blue')
+    return res.redirect('./nationality')
   }
 
   res.render(`${__dirname}/views/questions/settled-confirmation`)
