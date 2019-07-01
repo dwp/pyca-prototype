@@ -2,26 +2,37 @@
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-one-half">
 
     <form method="post">
 
-      <h1 class="govuk-heading-l">Check this person’s status online</h1>
+      <h1 class="govuk-heading-l">Check this person’s status online</h1>
 
       <ol class="govuk-list govuk-list--number">
-        <li>Go to <a href="http://www.gov.uk" target="_blank">Check someone’s status in the UK</a> (this will open in a new tab).</li>
+        <li>Go to <a class="govuk-link govuk-link--no-visited-state" href="https://settlement-status-prototype.herokuapp.com/jasmine/MVP/checker/share-code" target="_blank">Check someone’s status in the UK</a> (this will open in a new tab).</li>
         <li>Follow the steps to view this person’s settled status.</li>
         <li>Come back to this page and click continue.</li>
       </ol>
 
       {{ govukButton({
         text: "Continue",
-        href: "./settled-confirmation",
-        classes: "govuk-!-margin-top-8 govuk-!-margin-bottom-2"
+        href: "settled-confirmation"
       }) }}
 
     </form>
 
   </div>
+
+  <div class="govuk-grid-column-one-half">
+
+    <figure class="figure residence-card residence-card--large">
+      <img src="{{ basePath }}/assets/images/status-settled.png" srcset="{{ basePath }}/assets/images/status-settled.png, {{ basePath }}/assets/images/status-settled@2x.png 1.5x" alt="Example status showing “Settled”">
+      <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
+        Example settled status
+      </figcaption>
+    </figure>
+
+  </div>
+
 </div>
 {% endblock %}

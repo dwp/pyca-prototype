@@ -10,15 +10,14 @@
       <p class="govuk-body-l">The EU Settlement Scheme gives people a digital status that you can check online.</p>
 
       <ol class="govuk-list govuk-list--number">
-        <li>Go to <a href="http://www.gov.uk" target="_blank">Check someone's status in the UK</a> (this will open in a new tab).</li>
-        <li>Follow the steps to view this person's settled status.</li>
+        <li>Go to <a class="govuk-link govuk-link--no-visited-state" href="https://settlement-status-prototype.herokuapp.com/jasmine/MVP/checker/share-code" target="_blank">Check someone’s status in the UK</a> (this will open in a new tab).</li>
+        <li>Follow the steps to view this person’s settled status.</li>
         <li>Come back to this page and click continue.</li>
       </ol>
 
       {{ govukButton({
         text: "Continue",
-        href: "./settled-confirmation",
-        classes: "govuk-!-margin-top-8 govuk-!-margin-bottom-2"
+        href: "settled-confirmation"
       }) }}
 
     </form>
