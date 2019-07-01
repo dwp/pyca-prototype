@@ -661,13 +661,13 @@ router.all('/:type/questions/residence-permit-refugee', (req, res) => {
   const type = req.params.type
   const submitted = req.body[type]
 
-  // Permit says refugee?
-  if (submitted.permitTypeRefugee === 'yes') {
+  // Refugee with a BRP
+  if (submitted.brp === 'yes') {
     return res.redirect('./residence-permit-refugee-check')
   }
 
-  // Permit doesn't say refugee
-  if (submitted.permitTypeRefugee === 'no') {
+  // Refugee without a BRP
+  if (submitted.brp === 'no') {
     return res.redirect('../../outcome/END008')
   }
 
