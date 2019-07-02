@@ -1,0 +1,23 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      <h1 class="govuk-heading-l">Check this person’s status online</h1>
+      <p class="govuk-body-l">Check their EU Settlement Scheme digital status. Then come back to 'Prove you can apply' and click continue.</p>
+
+    <p><a class="govuk-link govuk-link--no-visited-state" href="https://settlement-status-prototype.herokuapp.com/jasmine/MVP/checker/share-code" target="_blank">Check someone’s status in the UK</a> (this will open in a new tab).</p>
+
+      {{ govukButton({
+        text: "Continue",
+        href: "settled-confirmation"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
