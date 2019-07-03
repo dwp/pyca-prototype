@@ -1,0 +1,34 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+
+    <form method="post">
+
+      <h1 class="govuk-heading-l">Check this person’s status online</h1>
+      <p class="govuk-body-l">Check their digital status. Then come back to this page and click continue to complete 'Prove you can apply'.</p>
+      <p><a class="govuk-link govuk-link--no-visited-state" href="https://settlement-status-prototype.herokuapp.com/jasmine/MVP/checker/share-code" target="_blank">Check someone’s status in the UK</a> (this will open in a new tab).</p>
+
+      {{ govukButton({
+        text: "Continue",
+        href: "settled-confirmation"
+      }) }}
+
+    </form>
+
+  </div>
+
+  <div class="govuk-grid-column-one-half">
+
+    <figure class="figure residence-card residence-card--large">
+      <img src="{{ basePath }}/assets/images/status-settled.png" srcset="{{ basePath }}/assets/images/status-settled.png, {{ basePath }}/assets/images/status-settled@2x.png 1.5x" alt="Example status showing “Settled”">
+      <figcaption class="figure__caption residence-card__caption" aria-hidden="true">
+        Example settled status
+      </figcaption>
+    </figure>
+
+  </div>
+
+</div>
+{% endblock %}
