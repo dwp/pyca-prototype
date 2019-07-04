@@ -15,30 +15,20 @@
     <h2 class="govuk-heading-m govuk-!-margin-top-7">Go to ‘Appointments’</h2>
     <ol class="govuk-list govuk-list--number">
       <li>Book a further evidence appointment - choose the duration you think will be needed.</li>
-      <li>Copy the following into the ‘Any further agent notes about this appointment’ box: </li>
+      <li>Copy the following into the ‘Any further agent notes about this appointment’ box.</li>
 
       {% set appointments1 %}
-      <p>Claimant to bring either:
-        <br><br>
-        - payslips or bank statements covering their final 3 months of employment
-        <br><br>
-        - payslips or bank statements covering their final month of employment, and permanent employment contract
-        <br><br>
-        At the appointment, use the ‘prove you can apply’ service and complete the ‘check if HRT interview is needed’ to-do.</p>
+      <p>The claimant needs to bring either payslips or bank statements covering their final 3 months of employment, or payslips or bank statements covering their final month of employment and a permanent employment contract. At the appointment, use the ‘prove you can apply’ service and complete the ‘check if HRT interview is needed’ to-do.</p>
       {% endset %}
 
       {{ govukInsetText({
         html: appointments1
       }) }}
 
-      <li>Copy the following into the ‘Extra information for the claimant’ box: </li>
+      <li>Copy the following into the ‘Extra information for the claimant’ box.</li>
 
       {% set appointments2 %}
-        <p>Bring either:</p>
-        <p>&nbsp;</p>
-        <p>- payslips or bank statements covering your final 3 months of employment</p>
-        <p>&nbsp;</p>
-        <p>- payslips or bank statements covering your final month of employment, and permanent employment contract</p>
+        <p>Bring either payslips or bank statements covering your final 3 months of employment, or payslips or bank statements covering your final month of employment and permanent employment contract.</p>
       {% endset %}
 
       {{ govukInsetText({
