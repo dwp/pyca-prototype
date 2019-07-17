@@ -857,7 +857,7 @@ router.all('/:type/questions/employment-status-confirm', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.employmentStatusConfirm === 'yes') {
-    return res.redirect('../../outcome/END010')
+    return res.redirect('../../outcome/END002')
   }
 
   if (submitted.employmentStatusConfirm === 'no') {
