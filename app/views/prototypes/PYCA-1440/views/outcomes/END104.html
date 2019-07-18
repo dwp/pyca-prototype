@@ -1,5 +1,7 @@
 {% extends "../outcome.html" %}
 
+{% from "inset-text/macro.njk" import govukInsetText %}
+
 {% block content %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -16,7 +18,7 @@
     <h2 class="govuk-heading-m govuk-!-margin-top-7">2. Say what the appointment is for</h2>
     <p>Copy this into the ‘Any further agent notes about this appointment’ box:</p>
       {% set appointments1 %}
-      <p>The claimant needs to bring payslips or bank statements covering the last 3 months. At the appointment, use the ‘prove you can apply’ service and complete the ‘check if HRT interview is needed’ to-do.</p>
+      <p>The claimant should bring payslips or bank statements covering the last 3 months. If they do not have these, they should bring payslips or bank statements covering the last month, and a permanent employment contract. At the appointment, use the ‘prove you can apply’ service and complete the ‘check if HRT interview is needed’ to-do.</p>
       {% endset %}
 
       {{ govukInsetText({
@@ -26,14 +28,13 @@
       <h2 class="govuk-heading-m govuk-!-margin-top-7">3. Tell the claimant what to bring</h2>
       <p>Copy this into the ‘Extra information for the claimant’ box:</p>
       {% set appointments2 %}
-        <p>Bring payslips or bank statements covering the last 3 months.</p>
+        <p>Bring payslips or bank statements covering the last 3 months. If you do not have there, bring payslips or bank statements covering your the last month, and a permanent employment contract.</p>
       {% endset %}
 
       {{ govukInsetText({
         html: appointments2
       }) }}
     <h2 class="govuk-heading-m govuk-!-margin-top-7">4. Select 'Done'</h2>
-
 
 
   </div>

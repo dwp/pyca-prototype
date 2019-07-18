@@ -780,7 +780,7 @@ router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) =>
 })
 
 /**
- * Question: Does this person have a job?
+ * Question: Is this person working?
  */
 router.all('/:type/questions/employment-status', (req, res) => {
   const type = req.params.type
@@ -809,7 +809,7 @@ router.all('/:type/questions/employment-status', (req, res) => {
       return res.redirect('../../outcome/END013')
     }
 
-    return res.redirect('./employment-status-evidence')
+    return res.redirect('./employment-payslips-confirm')
   }
 
   res.render(`${__dirname}/views/questions/employment-status`)
@@ -898,6 +898,65 @@ router.all('/:type/questions/employment-status-yes-no', (req, res) => {
   }
 
   res.render(`${__dirname}/views/questions/employment-status-yes-no`)
+})
+
+/**
+ * Question: Have they brought payslips or bank statements covering the last 3 months?
+ */
+router.all('/:type/questions/employment-payslips-confirm', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.employmentPayslipsConfirm === 'yes') {
+    return res.redirect('../../outcome/END002')
+  }
+
+  if (submitted.employmentPayslipsConfirm === 'no') {
+    return res.redirect('./employment-payslips-evidence')
+  }
+
+  res.render(`${__dirname}/views/questions/employment-payslips-confirm`)
+})
+
+/**
+ * Question: Have they brought payslips or bank statements covering the last month, and a permanent contract?
+ */
+router.all('/:type/questions/employment-payslips-evidence', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  if (submitted.employmentPayslipsEvidence === 'yes') {
+    return res.redirect('../../outcome/END002')
+  }
+
+  if (submitted.employmentPayslipsEvidence === 'no') {
+    return res.redirect('./employment-evidence-fei')
+  }
+
+  res.render(`${__dirname}/views/questions/employment-payslips-evidence`)
+})
+
+/**
+ * Question: What evidence can they bring to another appointment?
+ */
+router.all('/:type/questions/employment-evidence-fei', (req, res) => {
+  const type = req.params.type
+  const submitted = req.body[type]
+
+  
+    if (submitted.employmentEvidenceFei === 'three-months') {
+      return res.redirect('../../outcome/END103')
+    }
+
+    if (submitted.employmentEvidenceFei === 'most-recent') {
+      return res.redirect('../../outcome/END104')
+    }
+
+    if (submitted.employmentEvidenceFei === 'none') {
+      return res.redirect('./married-or-civil-partner')
+    }
+
+  res.render(`${__dirname}/views/questions/employment-evidence-fei`)
 })
 
 /**
