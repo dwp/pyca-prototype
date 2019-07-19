@@ -1,0 +1,58 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukCheckboxes({
+        idPrefix: "employment-status",
+        name: type + "[employmentStatus]",
+        fieldset: {
+          legend: {
+            text: "Is " + ("their partner" if type == 'partner' else "this person") + " working?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+          text: "Select all that apply"
+        },
+        items: [
+          {
+            value: "employed",
+            text: "Yes, they’re employed",
+            checked: checked("['" + type + "'].employmentStatus", "employed"),
+            attributes: {
+              "data-uncheck": '["employment-status-3"]'
+            }
+          },
+          {
+            value: "selfEmployed",
+            text: "Yes, they’re self-employed",
+            checked: checked("['" + type + "'].employmentStatus", "selfEmployed"),
+            attributes: {
+              "data-uncheck": '["employment-status-3"]'
+            }
+          },
+          {
+            value: "dontWork",
+            text: "No, they’re not doing any work at the moment",
+            checked: checked("['" + type + "'].employmentStatus", "dontWork"),
+            attributes: {
+              "data-uncheck": '["employment-status-1", "employment-status-2"]'
+            }
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
