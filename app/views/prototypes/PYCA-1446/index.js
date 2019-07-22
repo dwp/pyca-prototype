@@ -54,7 +54,7 @@ router.all('/:type/questions/british-passport-today', (req, res) => {
 
   // Not brought their passport
   if (submitted.passportToday === 'no') {
-    return res.redirect('../../outcome/END009')
+    return res.redirect('../../outcome/END016')
   }
 
   res.render(`${__dirname}/views/questions/british-passport-today`)

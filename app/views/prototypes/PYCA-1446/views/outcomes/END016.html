@@ -1,0 +1,41 @@
+{% extends "../outcome.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukPanel({
+      titleText: "Do not complete the to-do",
+      text: "Book a further evidence appointment",
+      classes: "outcome"
+    }) }}
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">1. Book a further evidence appointment</h2>
+    <p>Choose the duration you think will be needed.</p>
+
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">2. Say what the appointment is for</h2>
+    <p>Copy this into the ‘Any further agent notes about this appointment’ box:</p>
+
+
+    {{ govukInsetText({
+  text: "The claimant needs to bring their British passport. At the appointment, use the ‘prove you can apply’ service and complete the ‘check if HRT interview is needed’ to-do."
+    }) }}
+
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">3. Tell the claimant what to bring</h2>
+    <p>Copy this into the ‘Extra information for the claimant’ box:</p>
+
+    {{ govukInsetText({
+  text: "Bring your British passport to the appointment."
+    }) }}
+
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">4. Select ‘Done’</h2>
+
+
+  
+
+  </div>
+</div>
+{% endblock %}
