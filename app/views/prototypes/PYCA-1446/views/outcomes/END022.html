@@ -10,15 +10,28 @@
       classes: "outcome"
     }) }}
 
-    <h2 class="govuk-heading-m govuk-!-margin-top-7">Go to ‘Appointments’</h2>
-    <ol class="govuk-list govuk-list--number">
-      <li>Book a further evidence appointment.</li>
-      <li>Copy the following into the ‘Any further agent notes about this appointment’ box: </li>
-      <p>“Claimant to bring their Home Office residence document. At the appointment, use the ‘prove you can apply’ service and complete the ‘check if HRT interview is needed’ to-do.”</p>
-      <li>Copy the following into the ‘Extra information for the claimant’ box: </li>
-      <p>“Bring your Home Office residence document to the appointment.”</p>
-      <li>Select ‘Done’.</li>
-    </ol>
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">1. Book a further evidence appointment</h2>
+    <p>Choose the duration you think will be needed.</p>
+
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">2. Say what the appointment is for</h2>
+    <p>Copy this into the ‘Any further agent notes about this appointment’ box:</p>
+
+
+    {{ govukInsetText({
+    text: "The claimant needs to bring their Home Office residence document. At the appointment, use the ‘prove you can apply’ service and complete the ‘check if HRT interview is needed’ to-do."
+    }) }}
+
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">3. Tell the claimant what to bring</h2>
+    <p>Copy this into the ‘Extra information for the claimant’ box:</p>
+
+    {{ govukInsetText({
+    text: "Bring your Home Office residence document to the appointment."
+    }) }}
+
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">4. Select ‘Done’</h2>
 
 
   </div>
