@@ -388,11 +388,11 @@ router.all('/:type/questions/residence-sticker-pink', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerPink === 'yes') {
-    return res.redirect('./residence-sticker-confirmation')
+    return res.redirect('./residence-sticker-issued')
   }
 
   if (submitted.residenceStickerPink === 'no') {
-    return res.redirect('./employment-status')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-pink`)
@@ -406,11 +406,11 @@ router.all('/:type/questions/residence-sticker-yellow', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerYellow === 'yes') {
-    return res.redirect('./residence-sticker-confirmation')
+    return res.redirect('./residence-sticker-issued')
   }
 
   if (submitted.residenceStickerYellow === 'no') {
-    return res.redirect('./employment-status')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-yellow`)
@@ -424,11 +424,11 @@ router.all('/:type/questions/residence-sticker-purple-or-yellow', (req, res) => 
   const submitted = req.body[type]
 
   if (submitted.residenceStickerPurpleYellow === 'yes') {
-    return res.redirect('./residence-sticker-confirmation')
+    return res.redirect('./residence-sticker-issued')
   }
 
   if (submitted.residenceStickerPurpleYellow === 'no') {
-    return res.redirect('./employment-status')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-purple-or-yellow`)
@@ -442,11 +442,11 @@ router.all('/:type/questions/residence-sticker-blue', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerBlue === 'yes') {
-    return res.redirect('./residence-sticker-confirmation')
+    return res.redirect('./residence-sticker-issued')
   }
 
   if (submitted.residenceStickerBlue === 'no') {
-    return res.redirect('./employment-status')
+    return res.redirect('./residence-sticker-confirmation')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-blue`)
