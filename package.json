@@ -8,8 +8,9 @@
   },
   "scripts": {
     "start": "node start.js",
-    "lint": "standard",
-    "test": "npm run lint && gulp generate-assets && jest"
+    "lint": "standard",                                 
+    "test": "npm run lint && gulp generate-assets && jest",
+    "test:performance": "lighthouse http://localhost:3000 --chrome-flags='--headless --no-sandbox' --no-enable-error-reporting --quiet --headless"
   },
   "dependencies": {
     "acorn": "^6.0.5",
