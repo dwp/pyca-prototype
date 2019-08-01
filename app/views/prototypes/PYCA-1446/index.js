@@ -370,11 +370,11 @@ router.all('/:type/questions/residence-sticker-confirmation', (req, res) => {
   const submitted = req.body[type]
 
   if (submitted.residenceStickerConfirmation === 'yes') {
-    return res.redirect('./residence-sticker-issued')
+    return res.redirect('../../outcome/END022')
   }
 
   if (submitted.residenceStickerConfirmation === 'no') {
-    return res.redirect('../../outcome/END022')
+    return res.redirect('./employment-status')
   }
 
   res.render(`${__dirname}/views/questions/residence-sticker-confirmation`)
