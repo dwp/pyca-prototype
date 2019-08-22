@@ -10,15 +10,30 @@
       classes: "outcome"
     }) }}
 
-    <h2 class="govuk-heading-m govuk-!-margin-top-7">Go to ‘Appointments’</h2>
-    <ol class="govuk-list govuk-list--number">
-      <li>Book a further evidence appointment.</li>
-      <li>Copy the following into the ‘Any further agent notes about this appointment’ box: </li>
-      <p>“Claimant to bring either their payslips or bank statements for the last 3 months, or their payslips or bank statements for the last month and permanent employment contract. At the appointment, use the ‘prove you can apply’ service and complete the ‘check if HRT interview is needed’ to-do.”</p>
-      <li>Copy the following into the ‘Extra information for the claimant’ box: </li>
-      <p>“Bring either your payslips or bank statements for the last 3 months, or your payslips or bank statements for the last month and permanent employment contract.”</p>
-      <li>Select ‘Done’.</li>
-    </ol>
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">1. Book a further evidence appointment</h2>
+    <p>Choose the duration you think will be needed. Do not download the ALP or complete the to-do. The agent will do this at the further evidence appointment.</p>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">2. Say what the appointment is for</h2>
+    <p>Copy this into the ‘Any further agent notes about this appointment’ box:</p>
+      {% set appointments1 %}
+      <p>Go to the ‘check if HRT interview is needed’ to-do, use the ‘prove you can apply’ service from the beginning, download and fill in the ALP, then complete the to-do. The claimant should have brought payslips or bank statements covering the last 3 months. They should also have their passport or national ID card.</p>
+      {% endset %}
+
+      {{ govukInsetText({
+        html: appointments1
+      }) }}
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-7">3. Tell the claimant what to bring</h2>
+      <p>Copy this into the ‘Extra information for the claimant’ box:</p>
+      {% set appointments2 %}
+        <p>Bring payslips or bank statements covering the last 3 months. You must also bring your passport or national ID card.</p>
+      {% endset %}
+
+      {{ govukInsetText({
+        html: appointments2
+      }) }}
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">4. Select 'Done'</h2>
+
 
 
   </div>
