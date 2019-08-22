@@ -430,7 +430,6 @@ router.all('/:type/questions/residence-sticker-confirmation-purple', (req, res) 
     if (submitted.residenceStickerConfirmationPurple === 'no') {
         return res.redirect('./employment-status')
     }
-
     res.render(`${__dirname}/views/questions/residence-sticker-confirmation-purple`)
 })
 
