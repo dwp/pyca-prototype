@@ -822,33 +822,33 @@ router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, r
     const type = req.params.type
     const submitted = req.body[type]
     const saved = req.session.data[type]
-
+  
     if (['most-recent', 'three-months'].includes(submitted.employmentStatusEvidence)) {
-        if (saved.dontWorkReason === 'redundant') {
-            return res.redirect('../../outcome/END010')
-        }
-
-        if (saved.dontWorkReason === 'illness') {
-            return res.redirect('../../outcome/END011')
-        }
-
-        return res.redirect('./employment-status-confirm')
+      if (saved.dontWorkReason === 'redundant') {
+        return res.redirect('../../outcome/END010')
+      }
+  
+      if (saved.dontWorkReason === 'illness') {
+        return res.redirect('../../outcome/END011')
+      }
+  
+      return res.redirect('./employment-status-confirm')
     }
-
+  
     if (submitted.employmentStatusEvidence === 'none') {
-        return res.redirect('../../outcome/END003')
+      return res.redirect('./employment-evidence-fei')
     }
-
+  
     let view = `${__dirname}/views/questions/employment-status-evidence`
-
+  
     // Change to not working copy variant
     if (req.originalUrl.includes('-not-working')) {
-        view = `${__dirname}/views/questions/employment-status-not-working-evidence`
+      view = `${__dirname}/views/questions/employment-status-not-working-evidence`
     }
-
+  
     res.render(view)
-})
-
+  })
+  
 /**
  * Question: Have they brought this evidence today?
  */
@@ -906,72 +906,103 @@ router.all('/:type/questions/employment-status-yes-no', (req, res) => {
 router.all('/:type/questions/employment-status-not-working', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-
+  
     // Saved data by type
     const claimant = req.session.data.claimant
-
-    // Not working because redundant
+  
+    // Not working because redundant + partner 
     if (submitted.dontWorkReason === 'redundant') {
-        if (type === 'partner' && claimant.isEEA) {
-            return res.redirect('../../outcome/END012')
-        }
-
-        if (type === 'partner' && !claimant.isEEA) {
-            return res.redirect('../../outcome/END013')
-        }
-
-        return res.redirect('./employment-status-not-working-evidence')
+      if (type === 'partner' && claimant.isEEA) {
+        return res.redirect('../../outcome/END012')
+      }
+  
+      if (type === 'partner' && !claimant.isEEA) {
+        return res.redirect('../../outcome/END013')
+      }
+  
+      // Not working because redundant
+      return res.redirect('./employment-status-not-working-evidence')
     }
-
+  
     // Not working because ill
     if (submitted.dontWorkReason === 'illness') {
-        return res.redirect('./employment-status-fit-note')
+      return res.redirect('./employment-status-fit-note')
     }
-
-    // Not working because of other reason
+  
+    // Not working because of other reason + partner 
     if (submitted.dontWorkReason === 'other') {
-        if (type === 'partner') {
-            return res.redirect('../../outcome/END003')
-        }
-
-        return res.redirect('./married-or-civil-partner')
+      if (type === 'partner') {
+        return res.redirect('../../outcome/END003')
+      }
+  
+      // Not working because of other reason
+      return res.redirect('./married-or-civil-partner')
     }
-
+  
     res.render(`${__dirname}/views/questions/employment-status-not-working`)
-})
-
-/**
- * Question: Have they had constant fit notes?
- */
-router.all('/:type/questions/employment-status-fit-note', (req, res) => {
+  })
+  
+  /**
+   * Question: Have they had constant fit notes?
+   */
+  router.all('/:type/questions/employment-status-fit-note', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-
+  
     // Saved data by type
     const claimant = req.session.data.claimant
-
+  
     if (submitted.fitNote === 'yes') {
-        if (type === 'partner' && claimant.isEEA) {
-            return res.redirect('../../outcome/END012')
-        }
-
-        if (type === 'partner' && !claimant.isEEA) {
-            return res.redirect('../../outcome/END013')
-        }
-
-        return res.redirect('./employment-status-not-working-evidence')
+      if (type === 'partner' && claimant.isEEA) {
+        return res.redirect('../../outcome/END012')
+      }
+  
+      if (type === 'partner' && !claimant.isEEA) {
+        return res.redirect('../../outcome/END013')
+      }
+  
+      return res.redirect('./employment-status-not-working-evidence')
     }
-
+  
     if (submitted.fitNote === 'no' || submitted.fitNote === 'dontKnow') {
-        if (type === 'partner') {
-            return res.redirect('../../outcome/END003')
-        }
-
-        return res.redirect('./married-or-civil-partner')
+      if (type === 'partner') {
+        return res.redirect('../../outcome/END003')
+      }
+  
+      return res.redirect('./employment-status-fit-note-confirm')
     }
-
+  
     res.render(`${__dirname}/views/questions/employment-status-fit-note`)
-})
+  })
+
+/**
+ * Question: Can they bring their employment evidence to another appointment?
+ */
+router.all('/:type/questions/employment-evidence-fei', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+    const saved = req.session.data[type]
+  
+    if (['yes'].includes(submitted.employmentEvidenceFEI)) {
+      if (saved.dontWorkReason === 'redundant') {
+        return res.redirect('../../outcome/END026')
+      }
+  
+      if (saved.dontWorkReason === 'illness') {
+        return res.redirect('../../outcome/END025')
+      }
+  
+      return res.redirect('../../outcome/END103')
+      
+    }
+  
+    if (submitted.employmentEvidenceFEI === 'no') {
+      return res.redirect('./married-or-civil-partner')
+    }
+  
+    res.render(`${__dirname}/views/questions/employment-evidence-fei`)
+  })
+  
 
 /**
  * Question: Visa says family member?

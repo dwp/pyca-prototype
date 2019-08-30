@@ -11,7 +11,7 @@
         name: type + "[employmentStatusEvidence]",
         fieldset: {
           legend: {
-            text: "What evidence can they provide from their previous employment?",
+            text: "What evidence have they brought of their previous employment?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -19,14 +19,14 @@
         items: [
           {
             value: "three-months",
-            text: "Payslips or bank statements from the final 3 months of their employment",
+            text: "Payslips or bank statements covering their final 3 months of employment",
             checked: checked("['" + type + "'].employmentStatusEvidence", "three-months")
           },
           {
             value: "most-recent",
-            text: "Payslips or bank statements for the final month of their employment, and permanent employment contract",
+            text: "Payslips or bank statements covering their final month of employment, and permanent employment contract",
             hint: {
-              text: "Not zero hours or fixed term"
+              text: "Not zero hours or fixed term."
             },
             checked: checked("['" + type + "'].employmentStatusEvidence", "most-recent")
           },
