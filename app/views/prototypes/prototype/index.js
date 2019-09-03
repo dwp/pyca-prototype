@@ -848,6 +848,46 @@ router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, r
   
     res.render(view)
   })
+
+ /**
+ * Question: Can they bring their fit notes to another appointment?
+ */
+router.all('/:type/questions/employment-status-fit-note-confirm', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+  
+    if (submitted.employmentStatusFitNoteConfirm === 'yes') {
+      return res.redirect('./employment-status-fei')
+    }
+  
+    if (submitted.employmentStatusFitNoteConfirm === 'no') {
+      return res.redirect('./married-or-civil-partner')
+    }
+  
+    res.render(`${__dirname}/views/questions/employment-status-fit-note-confirm`)
+  })
+
+ /**
+ * Question: Can they bring their employment evidence to another appointment?
+ */
+router.all('/:type/questions/employment-status-fei', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+  
+    if (submitted.employmentStatusFEI === 'three-months') {
+      return res.redirect('../../outcome/END025')
+    }
+  
+    if (submitted.employmentStatusFEI === 'most-recent') {
+      return res.redirect('../../outcome/END025')
+    }
+  
+    if (submitted.employmentStatusFEI === 'none') {
+      return res.redirect('./married-or-civil-partner')
+    }
+  
+    res.render(`${__dirname}/views/questions/employment-status-fei`)
+  })
   
 /**
  * Question: Have they brought this evidence today?
