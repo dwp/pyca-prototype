@@ -7,26 +7,36 @@
     <form method="post">
 
       {{ govukRadios({
-        classes: "govuk-radios--inline",
         idPrefix: "employment-evidence-fei",
-        name: type + "[employmentEvidenceFEI]",
+        name: type + "[employmentEvidenceFei]",
         fieldset: {
           legend: {
-            text: "Can they bring their employment evidence to another appointment?",
+            text: "What evidence can they bring to another appointment?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
         },
         items: [
           {
-            value: "yes",
-            text: "Yes",
-            checked: checked("['" + type + "'].employmentEvidenceFEI", "yes")
+            value: "three-months",
+            text: "Payslips or bank statements covering the last 3 months",
+            checked: checked("['" + type + "'].employmentEvidenceFei", "three-months")
           },
           {
-            value: "no",
-            text: "No",
-            checked: checked("['" + type + "'].employmentEvidenceFEI", "no")
+            value: "most-recent",
+            text: "A permanent contract, and payslips or bank statements covering the last month",
+            hint: {
+              text: "Not zero hours or fixed term"
+            },
+            checked: checked("['" + type + "'].employmentEvidenceFei", "most-recent")
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "none",
+            text: "None of the above",
+            checked: checked("['" + type + "'].employmentEvidenceFei", "none")
           }
         ]
       }) }}

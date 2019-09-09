@@ -492,7 +492,7 @@ router.all('/:type/questions/residence-sticker-purple-or-yellow', (req, res) => 
 /**
  * Question: Have they brought a blue card with a residence sticker in it?
  */
-outer.all('/:type/questions/residence-sticker-blue', (req, res) => {
+router.all('/:type/questions/residence-sticker-blue', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
 
@@ -864,11 +864,48 @@ router.all('/:type/questions/employment-status', (req, res) => {
             return res.redirect('../../outcome/END013')
         }
 
-        return res.redirect('./employment-status-evidence')
+        return res.redirect('./employment-payslips-confirm')
     }
 
     res.render(`${__dirname}/views/questions/employment-status`)
 })
+
+/**
+ * Question: Have they brought payslips or bank statements covering the last 3 months?
+ */
+router.all('/:type/questions/employment-payslips-confirm', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    if (submitted.employmentPayslipsConfirm === 'yes') {
+        return res.redirect('../../outcome/END002')
+    }
+
+    if (submitted.employmentPayslipsConfirm === 'no') {
+        return res.redirect('./employment-payslips-evidence')
+    }
+
+    res.render(`${__dirname}/views/questions/employment-payslips-confirm`)
+})
+
+/**
+ * Question: Have they brought payslips or bank statements covering the last month, and a permanent contract?
+ */
+router.all('/:type/questions/employment-payslips-evidence', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    if (submitted.employmentPayslipsEvidence === 'yes') {
+        return res.redirect('../../outcome/END002')
+    }
+
+    if (submitted.employmentPayslipsEvidence === 'no') {
+        return res.redirect('./employment-evidence-fei')
+    }
+
+    res.render(`${__dirname}/views/questions/employment-payslips-evidence`)
+})
+
 
 /**
  * Question: Can they provide the following?
@@ -1071,32 +1108,27 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
   })
 
 /**
- * Question: Can they bring their employment evidence to another appointment?
+ * Question: What evidence can they bring to another appointment?
  */
 router.all('/:type/questions/employment-evidence-fei', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-    const saved = req.session.data[type]
-  
-    if (['yes'].includes(submitted.employmentEvidenceFEI)) {
-      if (saved.dontWorkReason === 'redundant') {
-        return res.redirect('../../outcome/END026')
-      }
-  
-      if (saved.dontWorkReason === 'illness') {
-        return res.redirect('../../outcome/END025')
-      }
-  
-      return res.redirect('../../outcome/END103')
-      
+
+
+    if (submitted.employmentEvidenceFei === 'three-months') {
+        return res.redirect('../../outcome/END021')
     }
-  
-    if (submitted.employmentEvidenceFEI === 'no') {
-      return res.redirect('./married-or-civil-partner')
+
+    if (submitted.employmentEvidenceFei === 'most-recent') {
+        return res.redirect('../../outcome/END104')
     }
-  
+
+    if (submitted.employmentEvidenceFei === 'none') {
+        return res.redirect('./married-or-civil-partner')
+    }
+
     res.render(`${__dirname}/views/questions/employment-evidence-fei`)
-  })
+})
   
 
 /**
