@@ -663,12 +663,12 @@ router.all('/:type/questions/residence-permit-refugee', (req, res) => {
 
     // Refugee with a BRP
     if (submitted.brp === 'yes') {
-        return res.redirect('./residence-permit-refugee-check')
+        return res.redirect('./residence-permit-type-refugee')
     }
 
     // Refugee without a BRP
     if (submitted.brp === 'no') {
-        return res.redirect('../../outcome/END008')
+        return res.redirect('residence-permit-refugee-check')
     }
 
     res.render(`${__dirname}/views/questions/residence-permit-refugee`)
@@ -683,12 +683,12 @@ router.all('/:type/questions/residence-permit-refugee-check', (req, res) => {
 
     // Permit says refugee?
     if (submitted.permitTypeRefugeeCheck === 'yes') {
-        return res.redirect('./residence-permit-type-refugee')
+        return res.redirect('../../outcome/END020')
     }
 
     // Permit doesn't say refugee
     if (submitted.permitTypeRefugeeCheck === 'no') {
-        return res.redirect('../../outcome/END020')
+        return res.redirect('../../outcome/END008')
     }
 
     res.render(`${__dirname}/views/questions/residence-permit-refugee-check`)
