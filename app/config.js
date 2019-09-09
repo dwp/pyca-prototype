@@ -7,7 +7,7 @@ module.exports = {
   serviceName: 'Prove you can apply',
 
   // Latest release number
-  productName: 'v16.0.0',
+  productName: 'v17.0.0',
 
   // Default port that prototype runs on
   port: '3000',
