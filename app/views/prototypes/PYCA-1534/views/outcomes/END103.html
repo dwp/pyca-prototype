@@ -1,0 +1,26 @@
+{% extends "../outcome.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukPanel({
+      titleText: "Do not complete the to-do",
+      text: "Book a further evidence appointment",
+      classes: "outcome"
+    }) }}
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">Go to ‘Appointments’</h2>
+    <ol class="govuk-list govuk-list--number">
+      <li>Book a further evidence appointment.</li>
+      <li>Copy the following into the ‘Any further agent notes about this appointment’ box: </li>
+      <p>“Claimant to bring either their payslips or bank statements for the final 3 months of their employment, or their payslips or bank statements for the final month and permanent employment contract. At the appointment, use the ‘prove you can apply’ service and complete the ‘check if HRT interview is needed’ to-do.”</p>
+      <li>Copy the following into the ‘Extra information for the claimant’ box: </li>
+      <p>“Bring either your payslips or bank statements for the final 3 months of your employment, or your payslips or bank statements for the last month and permanent employment contract.”</p>
+      <li>Select ‘Done’.</li>
+    </ol>
+
+
+  </div>
+</div>
+{% endblock %}

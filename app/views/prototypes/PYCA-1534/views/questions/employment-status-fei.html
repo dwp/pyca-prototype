@@ -1,0 +1,52 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        idPrefix: "employment-status-fei",
+        name: type + "[employmentStatusFEI]",
+        fieldset: {
+          legend: {
+            text: "What evidence of their previous employment can they bring to another appointment?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "three-months",
+            text: "Payslips or bank statements covering their final 3 months of employment",
+            checked: checked("['" + type + "'].employmentStatusFEI", "three-months")
+          },
+          {
+            value: "most-recent",
+            text: "Payslips or bank statements covering their final month of employment, and permanent employment contract",
+            hint: {
+              text: "Not zero hours or fixed term."
+            },
+            checked: checked("['" + type + "'].employmentStatusFEI", "most-recent")
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "none",
+            text: "None of the above",
+            checked: checked("['" + type + "'].employmentStatusFEI", "none")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
