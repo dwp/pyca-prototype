@@ -76,7 +76,7 @@ router.all('/:type/questions/british-passport-nationality', (req, res) => {
 
     // Not British citizen
     if (submitted.britishCitizen === 'no') {
-        return res.redirect('../../outcome/END003')
+        return res.redirect('../../outcome/END300')
     }
 
     res.render(`${__dirname}/views/questions/british-passport-nationality`)
@@ -151,7 +151,7 @@ router.all('/:type/questions/out-of-country-settlement', (req, res) => {
 
     // Out of country more than 2 years?
     if (submitted.outOfCountry === 'over-two-years') {
-        return res.redirect('../../outcome/END003')
+        return res.redirect('../../outcome/END306')
     }
 
     // Out of country more than 4 weeks?
@@ -312,7 +312,7 @@ router.all('/:type/questions/nationality', (req, res) => {
         }
 
         if (claimant.isCESC || claimant.isECSMA) {
-            return res.redirect('../../outcome/END003')
+            return res.redirect('../../outcome/END307')
         }
 
         if (claimant.isEEA) {
@@ -341,20 +341,20 @@ router.all('/:type/questions/nationality', (req, res) => {
         // Claimant is unemployed
         if (claimant.dontWorkReason === 'other') {
             if (['country:IE', 'territory:IM'].includes(claimant.nationality)) {
-                return res.redirect('../../outcome/END003')
+                return res.redirect('../../outcome/END303')
             }
         }
 
         // Partner from UK, Ireland or Isle of Man
         if (['country:GB', 'country:IE', 'territory:IM'].includes(partner.nationality)) {
-            return res.redirect('../../outcome/END003')
+            return res.redirect('../../outcome/END303')
         }
 
         if (partner.isEEA) {
             return res.redirect('./employment-status')
         }
 
-        return res.redirect('../../outcome/END003')
+        return res.redirect('../../outcome/END303')
     }
 
     res.render(`${__dirname}/views/questions/nationality`, {
@@ -680,7 +680,7 @@ router.all('/:type/questions/residence-permit-sub-type', (req, res) => {
     if (submitted.brpSubType) {
         // Full HRT required for permanent residents
         if (submitted.brpSubType === 'residence-permanent') {
-            return res.redirect('../../outcome/END003')
+            return res.redirect('../../outcome/END306')
         }
 
         return res.redirect('./married-or-civil-partner')
@@ -759,7 +759,7 @@ router.all('/:type/questions/residence-permit-expired', (req, res) => {
 
     // Card expired?
     if (submitted.permitExpired === 'yes') {
-        return res.redirect('../../outcome/END003')
+        return res.redirect('../../outcome/END306')
     }
 
     // Card hasn't expired
@@ -785,7 +785,7 @@ router.all('/:type/questions/residence-permit-expired-refugee', (req, res) => {
 
     // Card expired?
     if (submitted.permitExpiredRefugee === 'yes') {
-        return res.redirect('../../outcome/END003')
+        return res.redirect('../../outcome/END301')
     }
 
     // Card hasn't expired
@@ -851,7 +851,7 @@ router.all('/:type/questions/employment-status', (req, res) => {
 
     // Self employed
     if ((submitted.employmentStatus || []).includes('selfEmployed')) {
-        return res.redirect('../../outcome/END003')
+        return res.redirect('../../outcome/END302')
     }
 
     // Employed
@@ -1064,7 +1064,7 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
     // Not working because of other reason + partner 
     if (submitted.dontWorkReason === 'other') {
       if (type === 'partner') {
-        return res.redirect('../../outcome/END003')
+        return res.redirect('../../outcome/END303')
       }
   
       // Not working because of other reason
@@ -1098,7 +1098,7 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
   
     if (submitted.fitNote === 'no' || submitted.fitNote === 'dontKnow') {
       if (type === 'partner') {
-        return res.redirect('../../outcome/END003')
+        return res.redirect('../../outcome/END303')
       }
   
       return res.redirect('./employment-status-fit-note-confirm')
@@ -1142,7 +1142,7 @@ router.all('/:type/questions/family-member', (req, res) => {
     // Visa says "family member"
     if (submitted.familyMember === 'yes') {
         if (type === 'partner') {
-            return res.redirect('../../outcome/END003')
+            return res.redirect('../../outcome/END304')
         }
 
         return res.redirect('./married-or-civil-partner')
@@ -1176,7 +1176,7 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
             return res.redirect('../../outcome/END006')
         }
 
-        return res.redirect('../../outcome/END003')
+        return res.redirect('../../outcome/END305')
     }
 
     res.render(`${__dirname}/views/questions/married-or-civil-partner`)
