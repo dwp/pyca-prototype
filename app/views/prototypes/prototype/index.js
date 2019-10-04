@@ -695,6 +695,7 @@ router.all('/:type/questions/residence-permit-sub-type', (req, res) => {
 router.all('/:type/questions/residence-permit-type-refugee', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
+    const saved = req.session.data[type]
 
     // Permit says refugee?
     if (submitted.permitTypeRefugee === 'yes') {
@@ -840,17 +841,28 @@ router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) =>
 router.all('/:type/questions/employment-status', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
+    const saved = req.session.data[type]
 
     // Saved data by type
     const claimant = req.session.data.claimant
 
     // Not working
-    if ((submitted.employmentStatus || []).includes('dontWork')) {
+    if ((submitted.employmentStatus || []).includes('dontWork')) 
+    {
+        if (type === 'partner' && saved.refugee === 'yes') {
+            return res.redirect('../../outcome/END301')
+        }
+
         return res.redirect('./employment-status-not-working')
     }
 
     // Self employed
     if ((submitted.employmentStatus || []).includes('selfEmployed')) {
+        
+        if (type === 'partner' && saved.refugee === 'yes') {
+            return res.redirect('../../outcome/END301')
+        }
+
         return res.redirect('../../outcome/END302')
     }
 
@@ -862,6 +874,10 @@ router.all('/:type/questions/employment-status', (req, res) => {
 
         if (type === 'partner' && !claimant.isEEA) {
             return res.redirect('../../outcome/END013')
+        }
+
+        if (type === 'partner' && claimant.isEEA || saved.refugee === 'yes') {
+            return res.redirect('../../outcome/END301')
         }
 
         return res.redirect('./employment-payslips-confirm')
@@ -1016,9 +1032,14 @@ router.all('/:type/questions/employment-status-yes-no', (req, res) => {
     if (saved.brp === 'no') {
         outcomeOther = '../../outcome/END007'
     }
+    
 
     // Working
     if ((submitted.employmentStatus || []).includes('employed')) {
+        if (saved.refugee === 'yes') {
+            outcomeOther = '../../outcome/END301'
+        }
+
         return res.redirect(saved.britishCitizen === 'yes' ?
             outcomeDecisionBritish : outcomeDecisionOther)
     }
