@@ -219,7 +219,7 @@ router.all('/:type/questions/out-of-country-return-date', (req, res) => {
 
             // More than one month ago
             if (date.isBefore(moment(today).subtract(1, 'month'))) {
-                return res.redirect('./employment-status-yes-no')
+                return res.redirect('./is-currently-employed')
             }
 
             // Less than or one month ago
@@ -244,7 +244,7 @@ router.all('/:type/questions/out-of-country-return-period', (req, res) => {
 
     // Between 1 and 6 months
     if (submitted.outOfUkReturnPeriod === 'up-to-six-months') {
-        return res.redirect('./employment-status-yes-no')
+        return res.redirect('./is-currently-employed')
     }
 
     // Over six months
@@ -365,7 +365,7 @@ router.all('/:type/questions/nationality', (req, res) => {
 /**
  * Question: Have they brought their residence document today?
  */
-router.all('/:type/questions/residence-sticker-confirmation', (req, res) => {
+router.all('/:type/questions/residence-document-check-blue', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
 
@@ -377,13 +377,13 @@ router.all('/:type/questions/residence-sticker-confirmation', (req, res) => {
         return res.redirect('./employment-status')
     }
 
-    res.render(`${__dirname}/views/questions/residence-sticker-confirmation`)
+    res.render(`${__dirname}/views/questions/residence-document-check-blue`)
 })
 
 /**
  * Question: Have they brought their residence document today?
  */
-router.all('/:type/questions/residence-sticker-confirmation-pink', (req, res) => {
+router.all('/:type/questions/residence-document-check-pink', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
 
@@ -395,13 +395,13 @@ router.all('/:type/questions/residence-sticker-confirmation-pink', (req, res) =>
         return res.redirect('./employment-status')
     }
 
-    res.render(`${__dirname}/views/questions/residence-sticker-confirmation-pink`)
+    res.render(`${__dirname}/views/questions/residence-document-check-pink`)
 })
 
 /**
  * Question: Have they brought their residence document today?
  */
-router.all('/:type/questions/residence-sticker-confirmation-yellow', (req, res) => {
+router.all('/:type/questions/residence-document-check-yellow', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
 
@@ -413,13 +413,13 @@ router.all('/:type/questions/residence-sticker-confirmation-yellow', (req, res) 
         return res.redirect('./employment-status')
     }
 
-    res.render(`${__dirname}/views/questions/residence-sticker-confirmation-yellow`)
+    res.render(`${__dirname}/views/questions/residence-document-check-yellow`)
 })
 
 /**
  * Question: Have they brought their residence document today?
  */
-router.all('/:type/questions/residence-sticker-confirmation-purple', (req, res) => {
+router.all('/:type/questions/residence-document-check-purple', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
 
@@ -430,7 +430,7 @@ router.all('/:type/questions/residence-sticker-confirmation-purple', (req, res) 
     if (submitted.residenceStickerConfirmationPurple === 'no') {
         return res.redirect('./employment-status')
     }
-    res.render(`${__dirname}/views/questions/residence-sticker-confirmation-purple`)
+    res.render(`${__dirname}/views/questions/residence-document-check-purple`)
 })
 
 
@@ -446,7 +446,7 @@ router.all('/:type/questions/residence-sticker-pink', (req, res) => {
     }
 
     if (submitted.residenceStickerPink === 'no') {
-        return res.redirect('./residence-sticker-confirmation-pink')
+        return res.redirect('./residence-document-check-pink')
     }
 
     res.render(`${__dirname}/views/questions/residence-sticker-pink`)
@@ -464,7 +464,7 @@ router.all('/:type/questions/residence-sticker-yellow', (req, res) => {
     }
 
     if (submitted.residenceStickerYellow === 'no') {
-        return res.redirect('./residence-sticker-confirmation-yellow')
+        return res.redirect('./residence-document-check-yellow')
     }
 
     res.render(`${__dirname}/views/questions/residence-sticker-yellow`)
@@ -482,7 +482,7 @@ router.all('/:type/questions/residence-sticker-purple-or-yellow', (req, res) => 
     }
 
     if (submitted.residenceStickerPurpleYellow === 'no') {
-        return res.redirect('./residence-sticker-confirmation-purple')
+        return res.redirect('./residence-document-check-purple')
     }
 
     res.render(`${__dirname}/views/questions/residence-sticker-purple-or-yellow`)
@@ -501,7 +501,7 @@ router.all('/:type/questions/residence-sticker-blue', (req, res) => {
     }
 
     if (submitted.residenceStickerBlue === 'no') {
-        return res.redirect('./residence-sticker-confirmation')
+        return res.redirect('./residence-document-check-blue')
     }
 
     res.render(`${__dirname}/views/questions/residence-sticker-blue`)
@@ -1018,7 +1018,7 @@ router.all('/:type/questions/employment-status-confirm', (req, res) => {
 /**
  * Question: Are they currently working?
  */
-router.all('/:type/questions/employment-status-yes-no', (req, res) => {
+router.all('/:type/questions/is-currently-employed', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
     const saved = req.session.data[type]
@@ -1050,7 +1050,7 @@ router.all('/:type/questions/employment-status-yes-no', (req, res) => {
             outcomeBritish : outcomeOther)
     }
 
-    res.render(`${__dirname}/views/questions/employment-status-yes-no`)
+    res.render(`${__dirname}/views/questions/is-currently-employed`)
 })
 
 /**
