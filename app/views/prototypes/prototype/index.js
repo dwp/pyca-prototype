@@ -348,6 +348,14 @@ router.all('/:type/questions/nationality', (req, res) => {
 
     // Partner submitted answers
     if (type === 'partner' && submitted.nationality) {
+
+        if (claimant.isEEA && claimant.dontWorkReason === 'other' && !partner.isEEA ) {
+            return res.redirect('../../outcome/END306')
+        }
+        if (claimant.isEEA && claimant.dontWorkReason === 'illness' && !partner.isEEA ) {
+            return res.redirect('../../outcome/END306')
+        }
+
         // Claimant and partner from Isle of Man
         if (claimant.nationality === 'territory:IM' && partner.nationality === 'territory:IM') {
             return res.redirect('../../outcome/END012')
@@ -364,7 +372,7 @@ router.all('/:type/questions/nationality', (req, res) => {
         if (claimant.dontWorkReason === 'other') {
 
             if (['country:IE', 'territory:IM'].includes(claimant.nationality)) {
-                return res.redirect('../../outcome/END303')
+                return res.redirect('../../outcome/END30')
             }
         }
 
@@ -378,7 +386,7 @@ router.all('/:type/questions/nationality', (req, res) => {
             return res.redirect('./employment-status')
         }
 
-        return res.redirect('../../outcome/END303')
+        return res.redirect('../../outcome/END306')
     }
 
     res.render(`${__dirname}/views/questions/nationality`, {
@@ -1214,6 +1222,10 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
     const saved = req.session.data[type]
+
+    // Saved data by type
+    const claimant = req.session.data.claimant
+    const partner = req.session.data.partner
 
     // Married or civil partner?
     if (submitted.partner === 'yes') {
