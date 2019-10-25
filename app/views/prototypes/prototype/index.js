@@ -356,6 +356,26 @@ router.all('/:type/questions/nationality', (req, res) => {
             return res.redirect('../../outcome/END306')
         }
 
+        if (!claimant.isEEA && partner.nationality === 'country:GB' ) {
+            return res.redirect('../../outcome/END304')
+        }
+
+        if (!claimant.isEEA && partner.nationality === 'territory:IM' ) {
+            return res.redirect('../../outcome/END304')
+        }
+
+        if (!claimant.isEEA && partner.nationality === 'country:IE' ) {
+            return res.redirect('../../outcome/END304')
+        }
+
+        if (!claimant.isEEA && !partner.isEEA ) {
+            return res.redirect('../../outcome/END304')
+        }
+
+        if (claimant.isEEA && !partner.isEEA ) {
+            return res.redirect('../../outcome/END304')
+        }
+
         // Claimant and partner from Isle of Man
         if (claimant.nationality === 'territory:IM' && partner.nationality === 'territory:IM') {
             return res.redirect('../../outcome/END012')
@@ -1217,7 +1237,7 @@ router.all('/:type/questions/family-member', (req, res) => {
     // Visa says "family member"
     if (submitted.familyMember === 'yes') {
         if (type === 'partner') {
-            return res.redirect('../../outcome/END304')
+            return res.redirect('../../outcome/END303')
         }
 
         return res.redirect('./married-or-civil-partner')
