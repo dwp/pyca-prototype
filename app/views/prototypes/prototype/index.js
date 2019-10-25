@@ -54,10 +54,30 @@ router.all('/:type/questions/british-passport-today', (req, res) => {
 
     // Not brought their passport
     if (submitted.passportToday === 'no') {
-        return res.redirect('../../outcome/END016')
+        return res.redirect('./british-passport-fei')
     }
 
     res.render(`${__dirname}/views/questions/british-passport-today`)
+})
+
+/**
+ * Question: Can they bring their passport to another appionyment?
+ */
+router.all('/:type/questions/british-passport-fei', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    // Yes
+    if (submitted.passportFei === 'yes') {
+        return res.redirect('../../outcome/END016')
+    }
+
+    // No
+    if (submitted.passportFei === 'no') {
+        return res.redirect('../../outcome/END300')
+    }
+
+    res.render(`${__dirname}/views/questions/british-passport-fei`)
 })
 
 /**
@@ -261,6 +281,8 @@ router.all('/:type/questions/out-of-country-return-period', (req, res) => {
 router.all('/:type/questions/refugee', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
+    const saved = req.session.data[type]
+    
 
     // Refugee?
     if (submitted.refugee === 'yes') {
@@ -340,6 +362,7 @@ router.all('/:type/questions/nationality', (req, res) => {
 
         // Claimant is unemployed
         if (claimant.dontWorkReason === 'other') {
+
             if (['country:IE', 'territory:IM'].includes(claimant.nationality)) {
                 return res.redirect('../../outcome/END303')
             }
@@ -351,6 +374,7 @@ router.all('/:type/questions/nationality', (req, res) => {
         }
 
         if (partner.isEEA) {
+
             return res.redirect('./employment-status')
         }
 
@@ -695,7 +719,6 @@ router.all('/:type/questions/residence-permit-sub-type', (req, res) => {
 router.all('/:type/questions/residence-permit-type-refugee', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-    const saved = req.session.data[type]
 
     // Permit says refugee?
     if (submitted.permitTypeRefugee === 'yes') {
@@ -845,21 +868,18 @@ router.all('/:type/questions/employment-status', (req, res) => {
 
     // Saved data by type
     const claimant = req.session.data.claimant
+    const partner = req.session.data.partner
 
     // Not working
     if ((submitted.employmentStatus || []).includes('dontWork')) 
     {
-        if (type === 'partner' && saved.refugee === 'yes') {
-            return res.redirect('../../outcome/END301')
-        }
-
         return res.redirect('./employment-status-not-working')
     }
 
     // Self employed
     if ((submitted.employmentStatus || []).includes('selfEmployed')) {
         
-        if (type === 'partner' && saved.refugee === 'yes') {
+        if (type === 'partner' && partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
             return res.redirect('../../outcome/END301')
         }
 
@@ -868,16 +888,17 @@ router.all('/:type/questions/employment-status', (req, res) => {
 
     // Employed
     if ((submitted.employmentStatus || []).includes('employed')) {
+        
+        if (type === 'partner' && partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
+            return res.redirect('../../outcome/END301')
+        }
+
         if (type === 'partner' && claimant.isEEA) {
             return res.redirect('../../outcome/END012')
         }
 
         if (type === 'partner' && !claimant.isEEA) {
             return res.redirect('../../outcome/END013')
-        }
-
-        if (type === 'partner' && claimant.isEEA || saved.refugee === 'yes') {
-            return res.redirect('../../outcome/END301')
         }
 
         return res.redirect('./employment-payslips-confirm')
@@ -1036,9 +1057,6 @@ router.all('/:type/questions/employment-status-yes-no', (req, res) => {
 
     // Working
     if ((submitted.employmentStatus || []).includes('employed')) {
-        if (saved.refugee === 'yes') {
-            outcomeOther = '../../outcome/END301'
-        }
 
         return res.redirect(saved.britishCitizen === 'yes' ?
             outcomeDecisionBritish : outcomeDecisionOther)
@@ -1062,6 +1080,7 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
   
     // Saved data by type
     const claimant = req.session.data.claimant
+    const partner = req.session.data.partner
   
     // Not working because redundant + partner 
     if (submitted.dontWorkReason === 'redundant') {
@@ -1085,6 +1104,10 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
     // Not working because of other reason + partner 
     if (submitted.dontWorkReason === 'other') {
       if (type === 'partner') {
+
+        if (partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
+            return res.redirect('../../outcome/END301')
+        }
         return res.redirect('../../outcome/END303')
       }
   
@@ -1104,6 +1127,7 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
   
     // Saved data by type
     const claimant = req.session.data.claimant
+    const partner = req.session.data.partner
   
     if (submitted.fitNote === 'yes') {
       if (type === 'partner' && claimant.isEEA) {
@@ -1118,6 +1142,11 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
     }
   
     if (submitted.fitNote === 'no' || submitted.fitNote === 'dontKnow') {
+
+      if (type === 'partner' && partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
+            return res.redirect('../../outcome/END301')
+      }
+
       if (type === 'partner') {
         return res.redirect('../../outcome/END303')
       }
@@ -1195,6 +1224,10 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
     if (submitted.partner === 'no') {
         if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
             return res.redirect('../../outcome/END006')
+        }
+
+        if (saved.refugee === 'yes' && saved.permitTypeRefugee === 'no') {
+            return res.redirect('../../outcome/END301')
         }
 
         return res.redirect('../../outcome/END305')
