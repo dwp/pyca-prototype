@@ -8,8 +8,8 @@
 
       {{ govukRadios({
         classes: "govuk-radios--inline",
-        idPrefix: "residence-sticker-confirmation-yellow",
-        name: type + "[residenceStickerConfirmationYellow]",
+        idPrefix: "residence-document-check-purple",
+        name: type + "[residenceStickerConfirmationPurple]",
         fieldset: {
           legend: {
             text: "Can they bring a Home Office residence document to another appointment?",
@@ -18,18 +18,18 @@
           }
         },
         hint: {
-          text: "This will be in a yellow card"
+          text: "This will be in a purple or yellow card"
         },
         items: [
           {
             value: "yes",
             text: "Yes",
-            checked: checked("['" + type + "'].residenceStickerConfirmationYellow", "yes")
+            checked: checked("['" + type + "'].residenceStickerConfirmationPurple", "yes")
           },
           {
             value: "no",
             text: "No",
-            checked: checked("['" + type + "'].residenceStickerConfirmationYellow", "no")
+            checked: checked("['" + type + "'].residenceStickerConfirmationPurple", "no")
           }
         ]
       }) }}
