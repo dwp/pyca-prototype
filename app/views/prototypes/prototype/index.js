@@ -1242,7 +1242,19 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
             return res.redirect('../../outcome/END301')
         }
 
-        return res.redirect('../../outcome/END305')
+        if (claimant.isEEA && claimant.dontWorkReason === 'redundant') {
+            return res.redirect('../../outcome/END305')
+        }
+
+        if (claimant.isEEA && claimant.dontWorkReason === 'illness') {
+            return res.redirect('../../outcome/END305')
+        }
+
+        if (claimant.isEEA && claimant.dontWorkReason === 'other') {
+            return res.redirect('../../outcome/END305')
+        }
+
+        return res.redirect('../../outcome/END302')
     }
 
     res.render(`${__dirname}/views/questions/married-or-civil-partner`)
