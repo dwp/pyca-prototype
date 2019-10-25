@@ -372,7 +372,7 @@ router.all('/:type/questions/nationality', (req, res) => {
         if (claimant.dontWorkReason === 'other') {
 
             if (['country:IE', 'territory:IM'].includes(claimant.nationality)) {
-                return res.redirect('../../outcome/END30')
+                return res.redirect('../../outcome/END303')
             }
         }
 
@@ -891,6 +891,10 @@ router.all('/:type/questions/employment-status', (req, res) => {
             return res.redirect('../../outcome/END301')
         }
 
+        if (type === 'partner' && partner.isEEA && claimant.isEEA) {
+            return res.redirect('../../outcome/END303')
+        }
+
         return res.redirect('../../outcome/END302')
     }
 
@@ -1092,6 +1096,10 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
   
     // Not working because redundant + partner 
     if (submitted.dontWorkReason === 'redundant') {
+
+    if (type === 'partner' && partner.isEEA && claimant.isEEA) {
+        return res.redirect('../../outcome/END303')
+    }
       if (type === 'partner' && claimant.isEEA) {
         return res.redirect('../../outcome/END012')
       }
@@ -1116,6 +1124,11 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
         if (partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
             return res.redirect('../../outcome/END301')
         }
+
+        if (partner.isEEA && claimant.isEEA) {
+            return res.redirect('../../outcome/END303')
+        }
+
         return res.redirect('../../outcome/END303')
       }
   
@@ -1153,6 +1166,10 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
 
       if (type === 'partner' && partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
             return res.redirect('../../outcome/END301')
+      }
+
+      if (type === 'partner' && partner.isEEA && claimant.isEEA) {
+            return res.redirect('../../outcome/END303')
       }
 
       if (type === 'partner') {
