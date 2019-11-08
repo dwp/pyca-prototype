@@ -653,11 +653,30 @@ router.all('/:type/questions/residence-permit', (req, res) => {
         }
 
         if (submitted.brp === 'no') {
-            return res.redirect('./no-public-funds')
+            return res.redirect('./residence-permit-fei')
         }
     }
 
     res.render(`${__dirname}/views/questions/residence-permit`)
+})
+
+
+/**
+ * Question: Can they bring a Biometric Residence Permit (BRP) or Residence Card to another appointment?
+ */
+router.all('/:type/questions/residence-permit-fei', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+   
+        if (submitted.residencePermitFei === 'yes') {
+            return res.redirect('../../outcome/END027')
+        }
+
+        if (submitted.residencePermitFei === 'no') {
+            return res.redirect('./no-public-funds')
+        }
+
+    res.render(`${__dirname}/views/questions/residence-permit-fei`)
 })
 
 /**
