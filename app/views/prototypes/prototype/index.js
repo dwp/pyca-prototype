@@ -1310,6 +1310,14 @@ router.all('/:type/questions/married-or-civil-partner', (req, res) => {
             return res.redirect('../../outcome/END305')
         }
 
+        if (!claimant.isEEA && saved.brpSubType === 'residence-derivative') {
+            return res.redirect('../../outcome/END306')
+        }
+
+        if (!claimant.isEEA && saved.brpSubType === 'residence-family-member-eu') {
+            return res.redirect('../../outcome/END306')
+        }
+
         return res.redirect('../../outcome/END302')
     }
 
