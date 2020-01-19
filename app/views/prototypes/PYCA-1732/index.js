@@ -403,7 +403,7 @@ router.all('/:type/questions/nationality', (req, res) => {
 
         if (partner.isEEA) {
 
-            return res.redirect('./employment-status')
+            return res.redirect('./partnership-household')
         }
 
         return res.redirect('../../outcome/END306')
@@ -1242,6 +1242,27 @@ router.all('/:type/questions/employment-evidence-fei', (req, res) => {
     }
 
     res.render(`${__dirname}/views/questions/employment-evidence-fei`)
+})
+
+/**
+ * Question: Is this person living in the same household as their partner?
+ */
+router.all('/:type/questions/partnership-household', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+
+    if (submitted.partnershipHousehold === 'yes') {
+        return res.redirect('./employment-status')
+    }
+
+    if (submitted.partnershipHousehold === 'no') {
+        return res.redirect('../../outcome/END305')
+    }
+
+    
+
+    res.render(`${__dirname}/views/questions/partnership-household`)
 })
   
 
