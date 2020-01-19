@@ -1047,6 +1047,65 @@ router.all('/:type/questions/employment-status-fit-note-confirm', (req, res) => 
     res.render(`${__dirname}/views/questions/employment-status-fit-note-confirm`)
   })
 
+/**
+ * Question: Does this person have a letter stating that they have been made redundant from their most recent job?
+ */
+router.all('/:type/questions/redundancy-letter', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+  
+    if (submitted.redundancyLetter === 'yes') {
+      return res.redirect('./type-of-redundancy')
+    }
+  
+    if (submitted.redundancyLetter === 'no') {
+      return res.redirect('../../outcome/END303')
+    }
+  
+    res.render(`${__dirname}/views/questions/redundancy-letter`)
+  })
+
+/**
+ * Question: Does this person have a letter stating that they have been made redundant from their most recent job?
+ */
+router.all('/:type/questions/redundancy-a-month', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+  
+    if (submitted.redundancyAMonth === 'yes') {
+      return res.redirect('./employment-status-not-working-evidence')
+    }
+  
+    if (submitted.redundancyAMonth === 'no') {
+      return res.redirect('../../outcome/END303')
+    }
+  
+    res.render(`${__dirname}/views/questions/redundancy-a-month`)
+  })
+
+  /**
+ * Question: What type of redundancy did this person take?
+ */
+router.all('/:type/questions/type-of-redundancy', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+  
+    if (submitted.typeOfRedundancy === 'compulsory') {
+      return res.redirect('./redundancy-a-month')
+    }
+  
+    if (submitted.typeOfRedundancy === 'voluntary') {
+      return res.redirect('../../outcome/END303')
+    }
+
+    if (submitted.typeOfRedundancy === 'no') {
+        return res.redirect('../../outcome/END303')
+      }
+  
+    res.render(`${__dirname}/views/questions/type-of-redundancy`)
+  })
+
+
  /**
  * Question: Can they bring their employment evidence to another appointment?
  */
@@ -1148,7 +1207,7 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
       }
   
       // Not working because redundant
-      return res.redirect('./employment-status-not-working-evidence')
+      return res.redirect('./redundancy-letter')
     }
   
     // Not working because ill
