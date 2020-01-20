@@ -1059,7 +1059,7 @@ router.all('/:type/questions/redundancy-letter', (req, res) => {
     }
   
     if (submitted.redundancyLetter === 'no') {
-      return res.redirect('../../outcome/END303')
+      return res.redirect('../../outcome/END305')
     }
   
     res.render(`${__dirname}/views/questions/redundancy-letter`)
@@ -1077,7 +1077,7 @@ router.all('/:type/questions/redundancy-a-month', (req, res) => {
     }
   
     if (submitted.redundancyAMonth === 'no') {
-      return res.redirect('../../outcome/END303')
+      return res.redirect('../../outcome/END305')
     }
   
     res.render(`${__dirname}/views/questions/redundancy-a-month`)
@@ -1095,7 +1095,7 @@ router.all('/:type/questions/type-of-redundancy', (req, res) => {
     }
   
     if (submitted.typeOfRedundancy === 'voluntary') {
-      return res.redirect('../../outcome/END303')
+      return res.redirect('../../outcome/END305')
     }
 
     if (submitted.typeOfRedundancy === 'no') {
@@ -1316,7 +1316,7 @@ router.all('/:type/questions/partnership-household', (req, res) => {
     }
 
     if (submitted.partnershipHousehold === 'no') {
-        return res.redirect('../../outcome/END305')
+        return res.redirect('../../outcome/END303')
     }
 
     
