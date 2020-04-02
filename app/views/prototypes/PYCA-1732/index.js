@@ -1099,7 +1099,7 @@ router.all('/:type/questions/type-of-redundancy', (req, res) => {
     }
 
     if (submitted.typeOfRedundancy === 'no') {
-        return res.redirect('../../outcome/END303')
+        return res.redirect('../../outcome/END305')
       }
   
     res.render(`${__dirname}/views/questions/type-of-redundancy`)
