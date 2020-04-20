@@ -338,7 +338,7 @@ router.all('/:type/questions/nationality', (req, res) => {
         }
 
         if (claimant.isEEA) {
-            return res.redirect('./residence-sticker-blue')
+            return res.redirect('./in-uk-since-2014')
         }
 
         if (!claimant.isEEA) {
@@ -412,6 +412,51 @@ router.all('/:type/questions/nationality', (req, res) => {
     res.render(`${__dirname}/views/questions/nationality`, {
         items: countries.list(saved.nationality)
     })
+})
+
+/**
+ * Question: Has this person been continuously living in the UK since 2014?
+ */
+router.all('/:type/questions/in-uk-since-2014', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    // in UK
+    if (submitted.ukContinuously === 'yes') {
+        return res.redirect('./applied-to-EU-settlement-scheme')
+    }
+
+    // out of UK
+    if (submitted.ukContinuously === 'no') {
+        return res.redirect('./residence-sticker-blue')
+    }
+
+    res.render(`${__dirname}/views/questions/in-uk-since-2014`)
+})
+
+/**
+ * Question: Has this person applied to the EU Settlement Scheme?
+ */
+router.all('/:type/questions/applied-to-EU-settlement-scheme', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    // Yes, but they haven't received their status
+    if (submitted.euSettlement === 'one') {
+        return res.redirect('../../outcome/END009')
+    }
+
+    // Yes, but they can't provide a share code to check status
+    if (submitted.euSettlement === 'two') {
+        return res.redirect('./residence-sticker-blue')
+    }
+
+    // No, they have not applied
+    if (submitted.euSettlement === 'three') {
+        return res.redirect('./residence-sticker-blue')
+    }
+
+    res.render(`${__dirname}/views/questions/applied-to-EU-settlement-scheme`)
 })
 
 /**
