@@ -951,6 +951,42 @@ router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) =>
 })
 
 /**
+ * Question: Were they employed for 3 months or more before they stopped working?
+ */
+router.all('/:type/questions/previously-employed-for-3-months-or-more', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+   
+    if (submitted.threeMonthsStopped === 'yes') {
+        return res.redirect('../../outcome/END002')
+    }
+
+    if (submitted.threeMonthsStopped === 'no') {
+        return res.redirect('./eea-worker-with-permanent-employment-contract')
+    }
+
+    res.render(`${__dirname}/views/questions/previously-employed-for-3-months-or-more`)
+})
+
+/**
+ * Question: Have they got a permanent employment contract?
+ */
+router.all('/:type/questions/eea-worker-with-permanent-employment-contract', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+   
+    if (submitted.permanentContract === 'yes') {
+        return res.redirect('../../outcome/END002')
+    }
+
+    if (submitted.permanentContract === 'no') {
+        return res.redirect('./married-or-civil-partner')
+    }
+
+    res.render(`${__dirname}/views/questions/eea-worker-with-permanent-employment-contract`)
+})
+
+/**
  * Question: Does this person have a job?
  */
 router.all('/:type/questions/employment-status', (req, res) => {
@@ -1253,12 +1289,16 @@ router.all('/:type/questions/employment-status-not-working', (req, res) => {
       }
   
       // Not working because redundant
-      return res.redirect('./redundancy-letter')
+      return res.redirect('./previously-employed-for-3-months-or-more')
     }
+
+    if (submitted.dontWorkReason === 'corona') {
+        return res.redirect('./previously-employed-for-3-months-or-more')
+      }
   
     // Not working because ill
     if (submitted.dontWorkReason === 'illness') {
-      return res.redirect('./employment-status-fit-note')
+      return res.redirect('./previously-employed-for-3-months-or-more')
     }
   
     // Not working because of other reason + partner 
