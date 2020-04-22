@@ -951,6 +951,24 @@ router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) =>
 })
 
 /**
+ * Question: Have they been employed for 3 months or more?
+ */
+router.all('/:type/questions/eea-worker-employed-three-months-or-more', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+   
+    if (submitted.employedThreeMonths === 'yes') {
+        return res.redirect('../../outcome/END002')
+    }
+
+    if (submitted.employedThreeMonths === 'no') {
+        return res.redirect('./eea-worker-with-permanent-employment-contract')
+    }
+
+    res.render(`${__dirname}/views/questions/eea-worker-employed-three-months-or-more`)
+})
+
+/**
  * Question: Were they employed for 3 months or more before they stopped working?
  */
 router.all('/:type/questions/previously-employed-for-3-months-or-more', (req, res) => {
