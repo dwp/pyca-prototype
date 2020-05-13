@@ -118,6 +118,11 @@ router.all('/:type/questions/out-of-country', (req, res) => {
 
     // Not out of country
     if (submitted.outOfCountryFourWeeks === 'no') {
+
+        if (saved.noPublicFunds === 'no') {
+            return res.redirect('../../outcome/END103')
+        }
+
         return res.redirect(saved.britishCitizen === 'yes' ?
             '../../outcome/END015' : '../../outcome/END102')
     }
@@ -934,7 +939,7 @@ router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) =>
     // Visa doesn't say "no public funds"
     if (submitted.noPublicFunds === 'no') {
         if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter') {
-            return res.redirect('../../outcome/END006')
+            return res.redirect('./out-of-country')
         }
 
         return res.redirect('./family-member')
