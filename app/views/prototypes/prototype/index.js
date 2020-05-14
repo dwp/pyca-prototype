@@ -261,6 +261,7 @@ router.all('/:type/questions/out-of-country-return-date', (req, res) => {
 router.all('/:type/questions/out-of-country-return-period', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
+    const saved = req.session.data[type]
 
     // Less than 1 month
     if (submitted.outOfUkReturnPeriod === 'up-to-one-month') {
@@ -274,6 +275,9 @@ router.all('/:type/questions/out-of-country-return-period', (req, res) => {
 
     // Over six months
     if (submitted.outOfUkReturnPeriod === 'over-six-months') {
+        if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter' && saved.noPublicFunds === 'no') {
+            return res.redirect('../../outcome/END103')
+        }
         return res.redirect('../../outcome/END100')
     }
 
@@ -1272,6 +1276,10 @@ router.all('/:type/questions/is-currently-employed', (req, res) => {
 
     // Working
     if ((submitted.employmentStatus || []).includes('employed')) {
+        
+        if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter' && saved.outOfUkReturnPeriod === 'up-to-six-months') {
+            return res.redirect('../../outcome/END103')
+        }
 
         return res.redirect(saved.britishCitizen === 'yes' ?
             outcomeDecisionBritish : outcomeDecisionOther)
