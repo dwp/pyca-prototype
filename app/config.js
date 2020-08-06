@@ -4,7 +4,7 @@
 
 module.exports = {
   // Service name used in header. Eg: 'Renew your passport'
-  serviceName: 'Prove you can apply',
+  serviceName: 'Prove you can apply for benefits in the UK',
 
   // Latest release number
   productName: 'V30.0.0',
