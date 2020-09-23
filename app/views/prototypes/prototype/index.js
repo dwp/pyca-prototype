@@ -1059,7 +1059,16 @@ router.all('/:type/questions/employment-status', (req, res) => {
         if (type === 'partner' && partner.nationality === 'country:IE' && !claimant.isEEA) {
             return res.redirect('../../outcome/END304')
         }
+    }
+    // Employed and self-employed
+    if ((submitted.employmentStatus || []).includes('employedAndSelfEmployed')) {
 
+        if (type === 'partner' && partner.nationality === 'country:IE' && !claimant.isEEA) {
+            return res.redirect('../../outcome/END304')
+        }
+        
+        return res.redirect('../../outcome/END302')
+       
     }
 
     // Employed

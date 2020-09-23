@@ -6,7 +6,7 @@
 
     <form method="post">
 
-      {{ govukCheckboxes({
+      {{ govukRadios  ({
         idPrefix: "employment-status",
         name: type + "[employmentStatus]",
         fieldset: {
@@ -34,6 +34,14 @@
             checked: checked("['" + type + "'].employmentStatus", "selfEmployed"),
             attributes: {
               "data-uncheck": '["employment-status-3"]'
+            }
+          },
+          {
+            value: "employedAndSelfEmployed",
+            text: "Yes, they're employed and self employed",
+            checked: checked("['" + type + "'].employmentStatus", "employedAndSelfEmployed"),
+            attributes: {
+              "data-uncheck": '["employment-status-1", "employment-status-2"]'
             }
           },
           {
