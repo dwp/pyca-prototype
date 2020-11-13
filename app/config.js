@@ -7,7 +7,7 @@ module.exports = {
   serviceName: 'Prove you can apply for benefits in the UK',
 
   // Latest release number
-  productName: 'V31.1.0',
+  productName: 'V32.0.0',
 
   // Default port that prototype runs on
   port: '3000',
