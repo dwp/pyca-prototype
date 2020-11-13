@@ -1,0 +1,45 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+      {{ govukRadios({
+        idPrefix: "return-to-uk",
+        name: type + "[returnToUk]",
+        fieldset: {
+          legend: {
+            text: "When did they return to the UK from their most recent trip of 4 weeks or more?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "less than one month ago",
+            text: "Less than one month ago",
+            checked: checked("['" + type + "'].returnToUk", "less than one month ago")
+          },
+          {
+            value: "between 1 and 6 months ago",
+            text: "Between 1 and 6 months ago",
+            checked: checked("['" + type + "'].returnToUk", "between 1 and 6 months ago")
+          },
+          {
+            value: "6 months ago or more",
+            text: "6 months ago or more",
+            checked: checked("['" + type + "'].returnToUk", "6 months ago or more")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
