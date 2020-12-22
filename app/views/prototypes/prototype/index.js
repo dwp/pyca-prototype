@@ -316,10 +316,14 @@ router.all('/:type/questions/refugee', (req, res) => {
 router.all('/:type/questions/residence-pre-settled-status', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-   
+    const claimant = req.session.data.claimant;
+
     if (submitted.preSettledStatus === 'yes') {
- 
-        return res.redirect('./residence-sticker-blue')
+        if (claimant.isEEA) {
+            return res.redirect('./residence-sticker-blue')
+        } else {
+            return res.redirect('./residence-permit');
+        }
     }
 
     if (submitted.preSettledStatus === 'no') {
@@ -335,13 +339,16 @@ router.all('/:type/questions/residence-pre-settled-status', (req, res) => {
 router.all('/:type/questions/uk-december-2020-claimant', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-
+    const claimant = req.session.data.claimant;
     // UK national
     if (submitted.claimantUkDecember2020 === 'yes') {
-        return res.redirect('./residence-sticker-blue')
+        if (claimant.isEEA) {
+            return res.redirect('./residence-sticker-blue')
+        } else {
+            return res.redirect('./uk-december-2020-partner')
+        }
     }
 
-    // Non-UK national
     if (submitted.claimantUkDecember2020 === 'no') {
         return res.redirect('./uk-december-2020-partner')
     }
@@ -373,13 +380,18 @@ router.all('/:type/questions/uk-december-2020-partner', (req, res) => {
 router.all('/:type/questions/uk-december-2020-family-member', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
+    const claimant = req.session.data.claimant;
 
     if (submitted.familyMemberUkDecember2020 === 'yes') {
         return res.redirect('./nationality-family-member')
     }
 
     if (submitted.familyMemberUkDecember2020 === 'no') {
-        return res.redirect('../../outcome/END029')
+        if (claimant.isEEA) {
+            return res.redirect('../../outcome/END029')
+        } else {
+            return res.redirect('./residence-permit')
+        }
     }
 
     res.render(`${__dirname}/views/questions/uk-december-2020-family-member`)
@@ -515,16 +527,24 @@ router.all('/:type/questions/nationality', (req, res) => {
 router.all('/:type/questions/nationality-partner', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
+    const claimant = req.session.data.claimant
 
     if (submitted.nationality) {
-        console.log(submitted.nationality);
         const isEEA = countries.isEEA(submitted.nationality);
         if (submitted.nationality === 'country:GB') {
-            return res.redirect('../../outcome/END303');
+            if (claimant.isEEA) {
+                return res.redirect('../../outcome/END303');
+            } else {
+                return res.redirect('../../outcome/END304');
+            }
         } else if (isEEA) {
             return res.redirect('../../outcome/END030')
         }
-        return res.redirect('../../outcome/END029')
+        if (claimant.isEEA) {
+            return res.redirect('../../outcome/END029')
+        } else {
+            return res.redirect('./residence-permit')
+        }
     }
     res.render(`${__dirname}/views/questions/nationality-partner`, {
         items: countries.list(submitted.nationality || "")
@@ -537,15 +557,24 @@ router.all('/:type/questions/nationality-partner', (req, res) => {
 router.all('/:type/questions/nationality-family-member', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
+    const claimant = req.session.data.claimant
 
     if (submitted.nationality) {
         const isEEA = countries.isEEA(submitted.nationality);
         if (submitted.nationality === 'country:GB') {
-            return res.redirect('../../outcome/END031');
+            if (claimant.isEEA) {
+                return res.redirect('../../outcome/END031');
+            } else {
+                return res.redirect('../../outcome/END032')
+            }
         } else if (isEEA) {
             return res.redirect('../../outcome/END030')
         }
-        return res.redirect('../../outcome/END029')
+        if (claimant.isEEA) {
+            return res.redirect('../../outcome/END029')
+        } else {
+            return res.redirect('./residence-permit')
+        }
     }
 
     res.render(`${__dirname}/views/questions/nationality-family-member`, {
