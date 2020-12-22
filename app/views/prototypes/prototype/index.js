@@ -341,19 +341,54 @@ router.all('/:type/questions/uk-december-2020-claimant', (req, res) => {
     const submitted = req.body[type]
     const claimant = req.session.data.claimant;
     // UK national
-    if (submitted.claimantUkDecember2020 === 'yes') {
+    if (submitted.claimantUkDecember2020) {
+        req.session.data.claimant.ukDecember2020 = submitted.claimantUkDecember2020;
+
+        if (submitted.claimantUkDecember2020 === 'yes') {
+
+            if (claimant.isEEA) {
+                return res.redirect('./residence-sticker-blue')
+            } else {
+                return res.redirect('./family-permit')
+            }
+        }
+
+        if (submitted.claimantUkDecember2020 === 'no') {
+            if (claimant.isEEA) {
+                return res.redirect('./family-permit')
+            } else {
+                return res.redirect('./uk-december-2020-partner')
+            }
+        }
+    }
+    res.render(`${__dirname}/views/questions/uk-december-2020-claimant`)
+})
+
+/**
+ * Question: Does this person have a family permit?
+ */
+router.all('/:type/questions/family-permit', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+    const claimant = req.session.data.claimant;
+    // UK national
+    if (submitted.claimantFamilyPermit === 'yes') {
         if (claimant.isEEA) {
-            return res.redirect('./residence-sticker-blue')
+            return res.redirect('../../outcome/END030')
         } else {
-            return res.redirect('./uk-december-2020-partner')
+            if (claimant.ukDecember2020 === 'yes') {
+                return res.redirect('../../outcome/END030')
+            } else {
+                return res.redirect('../../outcome/END032')
+            }
         }
     }
 
-    if (submitted.claimantUkDecember2020 === 'no') {
+    if (submitted.claimantFamilyPermit === 'no') {
         return res.redirect('./uk-december-2020-partner')
     }
 
-    res.render(`${__dirname}/views/questions/uk-december-2020-claimant`)
+    res.render(`${__dirname}/views/questions/family-permit`)
 })
 
 /**
@@ -390,7 +425,11 @@ router.all('/:type/questions/uk-december-2020-family-member', (req, res) => {
         if (claimant.isEEA) {
             return res.redirect('../../outcome/END029')
         } else {
-            return res.redirect('./residence-permit')
+            if (claimant.ukDecember2020 === 'yes') {
+                return res.redirect('./residence-permit')
+            } else {
+                return res.redirect('../../outcome/END029')
+            }
         }
     }
 
@@ -440,14 +479,6 @@ router.all('/:type/questions/nationality', (req, res) => {
         if (claimant.isEEA || !claimant.isEEA) {
             return res.redirect('./residence-pre-settled-status')
         }
-
-        // if (claimant.isEEA) {
-        //     return res.redirect('./residence-sticker-blue')
-        // }    
-
-        // if (!claimant.isEEA) {
-        //     return res.redirect('./residence-permit')
-        // }
     }
 
     // Partner submitted answers
@@ -573,7 +604,11 @@ router.all('/:type/questions/nationality-family-member', (req, res) => {
         if (claimant.isEEA) {
             return res.redirect('../../outcome/END029')
         } else {
-            return res.redirect('./residence-permit')
+            if (claimant.ukDecember2020 === 'yes') {
+                return res.redirect('./residence-permit')
+            } else {
+                return res.redirect('../../outcome/END029')
+            }
         }
     }
 

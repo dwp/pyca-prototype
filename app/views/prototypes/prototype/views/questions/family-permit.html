@@ -1,0 +1,43 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "claimant-family-permit",
+        name: type + "[claimantFamilyPermit]",
+        fieldset: {
+          legend: {
+            text: "Does this person have a family permit?",
+            hint: "If they have one, it will say either 'family member of an EEA national' or 'EU Settlement Scheme family permit' in their passport"
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            checked: checked("['" + type + "'].claimantFamilyPermit", "yes")
+          },
+          {
+            value: "no",
+            text: "No",
+            checked: checked("['" + type + "'].claimantFamilyPermit", "no")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
