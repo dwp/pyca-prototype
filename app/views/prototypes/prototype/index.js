@@ -295,7 +295,7 @@ router.all('/:type/questions/refugee', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
     const saved = req.session.data[type]
-    
+
 
     // Refugee?
     if (submitted.refugee === 'yes') {
@@ -308,6 +308,81 @@ router.all('/:type/questions/refugee', (req, res) => {
     }
 
     res.render(`${__dirname}/views/questions/refugee`)
+})
+
+/**
+ * Question: Pre-settled status?
+ */
+router.all('/:type/questions/residence-pre-settled-status', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+   
+    if (submitted.preSettledStatus === 'yes') {
+ 
+        return res.redirect('./residence-sticker-blue')
+    }
+
+    if (submitted.preSettledStatus === 'no') {
+        return res.redirect('./uk-december-2020-claimant')
+    }
+
+    res.render(`${__dirname}/views/questions/residence-pre-settled-status`)
+})
+
+/**
+ * Question: claimant in UK December 2020?
+ */
+router.all('/:type/questions/uk-december-2020-claimant', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    // UK national
+    if (submitted.claimantUkDecember2020 === 'yes') {
+        return res.redirect('./residence-sticker-blue')
+    }
+
+    // Non-UK national
+    if (submitted.claimantUkDecember2020 === 'no') {
+        return res.redirect('./uk-december-2020-partner')
+    }
+
+    res.render(`${__dirname}/views/questions/uk-december-2020-claimant`)
+})
+
+/**
+ * Question: claimant partner in UK December 2020?
+ */
+router.all('/:type/questions/uk-december-2020-partner', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    if (submitted.partnerUkDecember2020 === 'yes') {
+        return res.redirect('./nationality-partner')
+    }
+
+    if (submitted.partnerUkDecember2020 === 'no') {
+        return res.redirect('./uk-december-2020-family-member')
+    }
+
+    res.render(`${__dirname}/views/questions/uk-december-2020-partner`)
+})
+
+/**
+ * Question: claimant family member in UK December 2020?
+ */
+router.all('/:type/questions/uk-december-2020-family-member', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    if (submitted.familyMemberUkDecember2020 === 'yes') {
+        return res.redirect('./nationality-family-member')
+    }
+
+    if (submitted.familyMemberUkDecember2020 === 'no') {
+        return res.redirect('../../outcome/END029')
+    }
+
+    res.render(`${__dirname}/views/questions/uk-december-2020-family-member`)
 })
 
 /**
@@ -350,43 +425,47 @@ router.all('/:type/questions/nationality', (req, res) => {
             return res.redirect('../../outcome/END307')
         }
 
-        if (claimant.isEEA) {
-            return res.redirect('./residence-sticker-blue')
+        if (claimant.isEEA || !claimant.isEEA) {
+            return res.redirect('./residence-pre-settled-status')
         }
 
-        if (!claimant.isEEA) {
-            return res.redirect('./residence-permit')
-        }
+        // if (claimant.isEEA) {
+        //     return res.redirect('./residence-sticker-blue')
+        // }    
+
+        // if (!claimant.isEEA) {
+        //     return res.redirect('./residence-permit')
+        // }
     }
 
     // Partner submitted answers
     if (type === 'partner' && submitted.nationality) {
 
-        if (claimant.isEEA && claimant.dontWorkReason === 'other' && !partner.isEEA ) {
+        if (claimant.isEEA && claimant.dontWorkReason === 'other' && !partner.isEEA) {
             return res.redirect('../../outcome/END306')
         }
-        if (claimant.isEEA && claimant.dontWorkReason === 'illness' && !partner.isEEA ) {
+        if (claimant.isEEA && claimant.dontWorkReason === 'illness' && !partner.isEEA) {
             return res.redirect('../../outcome/END306')
         }
 
-        if (!claimant.isEEA && partner.nationality === 'country:GB' ) {
+        if (!claimant.isEEA && partner.nationality === 'country:GB') {
             return res.redirect('../../outcome/END304')
         }
 
-        if (!claimant.isEEA && partner.nationality === 'territory:IM' ) {
+        if (!claimant.isEEA && partner.nationality === 'territory:IM') {
             return res.redirect('../../outcome/END304')
         }
 
-        if (!claimant.isEEA && partner.nationality === 'country:IE' ) {
-            return res.redirect( './employment-status')
-          
+        if (!claimant.isEEA && partner.nationality === 'country:IE') {
+            return res.redirect('./employment-status')
+
         }
 
-        if (!claimant.isEEA && !partner.isEEA ) {
+        if (!claimant.isEEA && !partner.isEEA) {
             return res.redirect('../../outcome/END304')
         }
 
-        if (claimant.isEEA && !partner.isEEA ) {
+        if (claimant.isEEA && !partner.isEEA) {
             return res.redirect('../../outcome/END304')
         }
 
@@ -423,8 +502,54 @@ router.all('/:type/questions/nationality', (req, res) => {
         return res.redirect('../../outcome/END306')
     }
 
+
+
     res.render(`${__dirname}/views/questions/nationality`, {
         items: countries.list(saved.nationality)
+    })
+})
+
+/**
+ * Question: Partner nationality?
+ */
+router.all('/:type/questions/nationality-partner', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    if (submitted.nationality) {
+        console.log(submitted.nationality);
+        const isEEA = countries.isEEA(submitted.nationality);
+        if (submitted.nationality === 'country:GB') {
+            return res.redirect('../../outcome/END303');
+        } else if (isEEA) {
+            return res.redirect('../../outcome/END030')
+        }
+        return res.redirect('../../outcome/END029')
+    }
+    res.render(`${__dirname}/views/questions/nationality-partner`, {
+        items: countries.list(submitted.nationality || "")
+    })
+})
+
+/**
+ * Question: Family member nationality?
+ */
+router.all('/:type/questions/nationality-family-member', (req, res) => {
+    const type = req.params.type
+    const submitted = req.body[type]
+
+    if (submitted.nationality) {
+        const isEEA = countries.isEEA(submitted.nationality);
+        if (submitted.nationality === 'country:GB') {
+            return res.redirect('../../outcome/END031');
+        } else if (isEEA) {
+            return res.redirect('../../outcome/END030')
+        }
+        return res.redirect('../../outcome/END029')
+    }
+
+    res.render(`${__dirname}/views/questions/nationality-family-member`, {
+        items: countries.list(submitted.nationality || "")
     })
 })
 
@@ -681,14 +806,14 @@ router.all('/:type/questions/residence-permit', (req, res) => {
 router.all('/:type/questions/residence-permit-fei', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-   
-        if (submitted.residencePermitFei === 'yes') {
-            return res.redirect('../../outcome/END027')
-        }
 
-        if (submitted.residencePermitFei === 'no') {
-            return res.redirect('./no-public-funds')
-        }
+    if (submitted.residencePermitFei === 'yes') {
+        return res.redirect('../../outcome/END027')
+    }
+
+    if (submitted.residencePermitFei === 'no') {
+        return res.redirect('./no-public-funds')
+    }
 
     res.render(`${__dirname}/views/questions/residence-permit-fei`)
 })
@@ -729,11 +854,11 @@ router.all('/:type/questions/residence-out-of-uk', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
     console.log(submitted)
-    if(submitted.outOfUk === 'yes') {
+    if (submitted.outOfUk === 'yes') {
         return res.redirect('./residence-return-to-uk')
     }
 
-    if(submitted.outOfUk === 'no') {
+    if (submitted.outOfUk === 'no') {
         return res.redirect('../../outcome/END105')
     }
 
@@ -747,20 +872,20 @@ router.all('/:type/questions/residence-return-to-uk', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
 
-    if(submitted.returnToUk === 'less than one month ago') {
+    if (submitted.returnToUk === 'less than one month ago') {
         return res.redirect('../../outcome/END028')
     }
 
-    if(submitted.returnToUk === 'between 1 and 6 months ago') {
+    if (submitted.returnToUk === 'between 1 and 6 months ago') {
         return res.redirect('./residence-currently-working')
     }
 
-    if(submitted.returnToUk === '6 months ago or more') {
+    if (submitted.returnToUk === '6 months ago or more') {
         return res.redirect('../../outcome/END105')
     }
 
     res.render(`${__dirname}/views/questions/residence-return-to-uk`);
-}); 
+});
 
 /**
  * Question: Are they currently working?
@@ -769,11 +894,11 @@ router.all('/:type/questions/residence-currently-working', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
 
-    if(submitted.currentlyWorking === 'yes') {
+    if (submitted.currentlyWorking === 'yes') {
         return res.redirect('../../outcome/END105')
     }
 
-    if(submitted.currentlyWorking === 'no') {
+    if (submitted.currentlyWorking === 'no') {
         return res.redirect('../../outcome/END028')
     }
 
@@ -987,7 +1112,7 @@ router.all('/:type/questions/no-public-funds(-residence-permit)?', (req, res) =>
 router.all('/:type/questions/eea-worker-employed-three-months-or-more', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-   
+
     if (submitted.employedThreeMonths === 'yes') {
         return res.redirect('../../outcome/END002')
     }
@@ -1005,7 +1130,7 @@ router.all('/:type/questions/eea-worker-employed-three-months-or-more', (req, re
 router.all('/:type/questions/previously-employed-for-3-months-or-more', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-   
+
     if (submitted.threeMonthsStopped === 'yes') {
         return res.redirect('../../outcome/END002')
     }
@@ -1023,7 +1148,7 @@ router.all('/:type/questions/previously-employed-for-3-months-or-more', (req, re
 router.all('/:type/questions/eea-worker-with-permanent-employment-contract', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-   
+
     if (submitted.permanentContract === 'yes') {
         return res.redirect('../../outcome/END002')
     }
@@ -1048,18 +1173,17 @@ router.all('/:type/questions/employment-status', (req, res) => {
     const partner = req.session.data.partner
 
     // Not working
-    if ((submitted.employmentStatus || []).includes('dontWork')) 
-    {
+    if ((submitted.employmentStatus || []).includes('dontWork')) {
         if (type === 'partner' && partner.nationality === 'country:IE' && !claimant.isEEA) {
             return res.redirect('./employment-status-not-working-partner')
         }
-        
+
         return res.redirect('./employment-status-not-working')
     }
 
     // Self employed
     if ((submitted.employmentStatus || []).includes('selfEmployed')) {
-        
+
         if (type === 'partner' && partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
             return res.redirect('../../outcome/END301')
         }
@@ -1087,14 +1211,14 @@ router.all('/:type/questions/employment-status', (req, res) => {
         if (type === 'partner' && partner.nationality === 'country:IE' && !claimant.isEEA) {
             return res.redirect('../../outcome/END304')
         }
-        
+
         return res.redirect('../../outcome/END302')
-       
+
     }
 
     // Employed
     if ((submitted.employmentStatus || []).includes('employed')) {
-        
+
         if (type === 'partner' && partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
             return res.redirect('../../outcome/END301')
         }
@@ -1157,69 +1281,69 @@ router.all('/:type/questions/employment-status(-not-working)?-evidence', (req, r
     const type = req.params.type
     const submitted = req.body[type]
     const saved = req.session.data[type]
-  
+
     if (['most-recent', 'three-months'].includes(submitted.employmentStatusEvidence)) {
-      if (saved.dontWorkReason === 'redundant') {
-        return res.redirect('../../outcome/END010')
-      }
-  
-      if (saved.dontWorkReason === 'illness') {
-        return res.redirect('../../outcome/END011')
-      }
-  
-      return res.redirect('./employment-status-confirm')
+        if (saved.dontWorkReason === 'redundant') {
+            return res.redirect('../../outcome/END010')
+        }
+
+        if (saved.dontWorkReason === 'illness') {
+            return res.redirect('../../outcome/END011')
+        }
+
+        return res.redirect('./employment-status-confirm')
     }
-  
+
     if (submitted.employmentStatusEvidence === 'none') {
-      return res.redirect('./employment-evidence-fei')
+        return res.redirect('./employment-evidence-fei')
     }
-  
+
     let view = `${__dirname}/views/questions/employment-status-evidence`
-  
+
     // Change to not working copy variant
     if (req.originalUrl.includes('-not-working')) {
-      view = `${__dirname}/views/questions/employment-status-not-working-evidence`
+        view = `${__dirname}/views/questions/employment-status-not-working-evidence`
     }
-  
-    res.render(view)
-  })
 
- /**
- * Question: Can they bring their fit notes to another appointment?
- */
+    res.render(view)
+})
+
+/**
+* Question: Can they bring their fit notes to another appointment?
+*/
 router.all('/:type/questions/employment-status-fit-note-confirm', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-  
+
     if (submitted.employmentStatusFitNoteConfirm === 'yes') {
-      return res.redirect('./employment-status-fei')
+        return res.redirect('./employment-status-fei')
     }
-  
+
     if (submitted.employmentStatusFitNoteConfirm === 'no') {
-      return res.redirect('./married-or-civil-partner')
+        return res.redirect('./married-or-civil-partner')
     }
-  
+
     res.render(`${__dirname}/views/questions/employment-status-fit-note-confirm`)
-  })
+})
 
 
-  /**
- * Question: Does this person have a letter stating that they have been made redundant from their most recent job?
- */
+/**
+* Question: Does this person have a letter stating that they have been made redundant from their most recent job?
+*/
 router.all('/:type/questions/redundancy-letter', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-  
+
     if (submitted.redundancyLetter === 'yes') {
-      return res.redirect('./type-of-redundancy')
+        return res.redirect('./type-of-redundancy')
     }
-  
+
     if (submitted.redundancyLetter === 'no') {
-      return res.redirect('../../outcome/END305')
+        return res.redirect('../../outcome/END305')
     }
-  
+
     res.render(`${__dirname}/views/questions/redundancy-letter`)
-  })
+})
 
 /**
  * Question: Does this person have a letter stating that they have been made redundant from their most recent job?
@@ -1227,63 +1351,63 @@ router.all('/:type/questions/redundancy-letter', (req, res) => {
 router.all('/:type/questions/redundancy-a-month', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-  
-    if (submitted.redundancyAMonth === 'yes') {
-      return res.redirect('./employment-status-not-working-evidence')
-    }
-  
-    if (submitted.redundancyAMonth === 'no') {
-      return res.redirect('../../outcome/END305')
-    }
-  
-    res.render(`${__dirname}/views/questions/redundancy-a-month`)
-  })
 
-  /**
- * Question: What type of redundancy did this person take?
- */
+    if (submitted.redundancyAMonth === 'yes') {
+        return res.redirect('./employment-status-not-working-evidence')
+    }
+
+    if (submitted.redundancyAMonth === 'no') {
+        return res.redirect('../../outcome/END305')
+    }
+
+    res.render(`${__dirname}/views/questions/redundancy-a-month`)
+})
+
+/**
+* Question: What type of redundancy did this person take?
+*/
 router.all('/:type/questions/type-of-redundancy', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-  
+
     if (submitted.typeOfRedundancy === 'compulsory') {
-      return res.redirect('./redundancy-a-month')
+        return res.redirect('./redundancy-a-month')
     }
-  
+
     if (submitted.typeOfRedundancy === 'voluntary') {
-      return res.redirect('../../outcome/END305')
+        return res.redirect('../../outcome/END305')
     }
 
     if (submitted.typeOfRedundancy === 'no') {
         return res.redirect('../../outcome/END305')
-      }
-  
+    }
+
     res.render(`${__dirname}/views/questions/type-of-redundancy`)
-  })
+})
 
 
- /**
- * Question: Can they bring their employment evidence to another appointment?
- */
+/**
+* Question: Can they bring their employment evidence to another appointment?
+*/
 router.all('/:type/questions/employment-status-fei', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-  
+
     if (submitted.employmentStatusFEI === 'three-months') {
-      return res.redirect('../../outcome/END025')
+        return res.redirect('../../outcome/END025')
     }
-  
+
     if (submitted.employmentStatusFEI === 'most-recent') {
-      return res.redirect('../../outcome/END025')
+        return res.redirect('../../outcome/END025')
     }
-  
+
     if (submitted.employmentStatusFEI === 'none') {
-      return res.redirect('./married-or-civil-partner')
+        return res.redirect('./married-or-civil-partner')
     }
-  
+
     res.render(`${__dirname}/views/questions/employment-status-fei`)
-  })
-  
+})
+
 /**
  * Question: Have they brought this evidence today?
  */
@@ -1319,11 +1443,11 @@ router.all('/:type/questions/is-currently-employed', (req, res) => {
     if (saved.brp === 'no') {
         outcomeOther = '../../outcome/END007'
     }
-    
+
 
     // Working
     if ((submitted.employmentStatus || []).includes('employed')) {
-        
+
         if (saved.brpType === 'leave to remain' || saved.brpType === 'leave to enter' && saved.outOfUkReturnPeriod === 'up-to-six-months') {
             return res.redirect('../../outcome/END103')
         }
@@ -1347,158 +1471,158 @@ router.all('/:type/questions/is-currently-employed', (req, res) => {
 router.all('/:type/questions/employment-status-not-working', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-  
+
     // Saved data by type
     const claimant = req.session.data.claimant
     const partner = req.session.data.partner
-  
+
     // Not working because redundant + partner 
     if (submitted.dontWorkReason === 'redundant') {
 
-    if (type === 'partner' && partner.isEEA && claimant.isEEA) {
-        return res.redirect('../../outcome/END303')
-    }
-      if (type === 'partner' && claimant.isEEA) {
-        return res.redirect('../../outcome/END012')
-      }
-  
-      if (type === 'partner' && !claimant.isEEA) {
-        return res.redirect('../../outcome/END013')
-      }
-  
-      // Not working because redundant
-      return res.redirect('./previously-employed-for-3-months-or-more')
+        if (type === 'partner' && partner.isEEA && claimant.isEEA) {
+            return res.redirect('../../outcome/END303')
+        }
+        if (type === 'partner' && claimant.isEEA) {
+            return res.redirect('../../outcome/END012')
+        }
+
+        if (type === 'partner' && !claimant.isEEA) {
+            return res.redirect('../../outcome/END013')
+        }
+
+        // Not working because redundant
+        return res.redirect('./previously-employed-for-3-months-or-more')
     }
 
     if (submitted.dontWorkReason === 'corona') {
         return res.redirect('./previously-employed-for-3-months-or-more')
-      }
-  
+    }
+
     // Not working because ill
     if (submitted.dontWorkReason === 'illness') {
-      return res.redirect('./previously-employed-for-3-months-or-more')
+        return res.redirect('./previously-employed-for-3-months-or-more')
     }
-  
+
     // Not working because of other reason + partner 
     if (submitted.dontWorkReason === 'other') {
-      if (type === 'partner') {
+        if (type === 'partner') {
 
-        if (partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
-            return res.redirect('../../outcome/END301')
-        }
+            if (partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
+                return res.redirect('../../outcome/END301')
+            }
 
-        if (partner.isEEA && claimant.isEEA) {
+            if (partner.isEEA && claimant.isEEA) {
+                return res.redirect('../../outcome/END303')
+            }
+
             return res.redirect('../../outcome/END303')
         }
 
-        return res.redirect('../../outcome/END303')
-      }
-  
-      // Not working because of other reason
-      return res.redirect('./married-or-civil-partner')
+        // Not working because of other reason
+        return res.redirect('./married-or-civil-partner')
     }
-  
+
     res.render(`${__dirname}/views/questions/employment-status-not-working`)
-  })
-  
-  /**
- * Question: Why aren’t they working? (Partner)
- */
+})
+
+/**
+* Question: Why aren’t they working? (Partner)
+*/
 router.all('/:type/questions/employment-status-not-working-partner', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-  
+
     // Saved data by type
     const claimant = req.session.data.claimant
     const partner = req.session.data.partner
-  
+
     // Not working because redundant + partner 
     if (submitted.dontWorkReason === 'redundant') {
 
-    if (type === 'partner' && partner.isEEA && claimant.isEEA) {
-        return res.redirect('../../outcome/END303')
-    }
-      if (type === 'partner' && claimant.isEEA) {
-        return res.redirect('../../outcome/END012')
-      }
-  
-      if (type === 'partner' && !claimant.isEEA) {
-        return res.redirect('../../outcome/END013')
-      }
-  
-      // Not working because redundant
-      return res.redirect('./previously-employed-for-3-months-or-more')
-    }
-  
-    // Not working because ill
-    if (submitted.dontWorkReason === 'illness') {
-      return res.redirect('./employment-status-fit-note')
-    }
-  
-    // Not working because of other reason + partner 
-    if (submitted.dontWorkReason === 'other') {
-      if (type === 'partner') {
-
-        if (partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
-            return res.redirect('../../outcome/END301')
+        if (type === 'partner' && partner.isEEA && claimant.isEEA) {
+            return res.redirect('../../outcome/END303')
+        }
+        if (type === 'partner' && claimant.isEEA) {
+            return res.redirect('../../outcome/END012')
         }
 
-        if (partner.isEEA && claimant.isEEA) {
+        if (type === 'partner' && !claimant.isEEA) {
+            return res.redirect('../../outcome/END013')
+        }
+
+        // Not working because redundant
+        return res.redirect('./previously-employed-for-3-months-or-more')
+    }
+
+    // Not working because ill
+    if (submitted.dontWorkReason === 'illness') {
+        return res.redirect('./employment-status-fit-note')
+    }
+
+    // Not working because of other reason + partner 
+    if (submitted.dontWorkReason === 'other') {
+        if (type === 'partner') {
+
+            if (partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
+                return res.redirect('../../outcome/END301')
+            }
+
+            if (partner.isEEA && claimant.isEEA) {
+                return res.redirect('../../outcome/END303')
+            }
+
             return res.redirect('../../outcome/END303')
         }
 
-        return res.redirect('../../outcome/END303')
-      }
-  
-      // Not working because of other reason
-      return res.redirect('./married-or-civil-partner')
+        // Not working because of other reason
+        return res.redirect('./married-or-civil-partner')
     }
-  
-    res.render(`${__dirname}/views/questions/employment-status-not-working-partner`)
-  })
 
-  /**
-   * Question: Have they had constant fit notes?
-   */
-  router.all('/:type/questions/employment-status-fit-note', (req, res) => {
+    res.render(`${__dirname}/views/questions/employment-status-not-working-partner`)
+})
+
+/**
+ * Question: Have they had constant fit notes?
+ */
+router.all('/:type/questions/employment-status-fit-note', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
-  
+
     // Saved data by type
     const claimant = req.session.data.claimant
     const partner = req.session.data.partner
-  
+
     if (submitted.fitNote === 'yes') {
-      if (type === 'partner' && claimant.isEEA) {
-        return res.redirect('../../outcome/END012')
-      }
-  
-      if (type === 'partner' && !claimant.isEEA) {
-        return res.redirect('../../outcome/END013')
-      }
-  
-      return res.redirect('./employment-status-not-working-evidence')
+        if (type === 'partner' && claimant.isEEA) {
+            return res.redirect('../../outcome/END012')
+        }
+
+        if (type === 'partner' && !claimant.isEEA) {
+            return res.redirect('../../outcome/END013')
+        }
+
+        return res.redirect('./employment-status-not-working-evidence')
     }
-  
+
     if (submitted.fitNote === 'no' || submitted.fitNote === 'dontKnow') {
 
-      if (type === 'partner' && partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
+        if (type === 'partner' && partner.isEEA && claimant.refugee === 'yes' && claimant.permitTypeRefugee === 'no') {
             return res.redirect('../../outcome/END301')
-      }
+        }
 
-      if (type === 'partner' && partner.isEEA && claimant.isEEA) {
+        if (type === 'partner' && partner.isEEA && claimant.isEEA) {
             return res.redirect('../../outcome/END303')
-      }
+        }
 
-      if (type === 'partner') {
-        return res.redirect('../../outcome/END303')
-      }
-  
-      return res.redirect('./employment-status-fit-note-confirm')
+        if (type === 'partner') {
+            return res.redirect('../../outcome/END303')
+        }
+
+        return res.redirect('./employment-status-fit-note-confirm')
     }
-  
+
     res.render(`${__dirname}/views/questions/employment-status-fit-note`)
-  })
+})
 
 /**
  * Question: What evidence can they bring to another appointment?
@@ -1539,11 +1663,11 @@ router.all('/:type/questions/partnership-household', (req, res) => {
         return res.redirect('../../outcome/END303')
     }
 
-    
+
 
     res.render(`${__dirname}/views/questions/partnership-household`)
 })
-  
+
 
 /**
  * Question: Visa says family member?

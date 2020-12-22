@@ -1,0 +1,31 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukSelect({
+        id: "nationality",
+        name: type + "[nationality]",
+        attributes: {
+          "data-source": "/data/location-autocomplete/source/location-autocomplete-graph.json"
+        },
+        label: {
+          text: "What nationality is the claimant's partner?",
+          isPageHeading: true,
+          classes: "govuk-label govuk-label--l"
+        },
+        items: items
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
