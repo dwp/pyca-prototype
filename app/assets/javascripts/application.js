@@ -11,12 +11,30 @@ $(document).ready(function () {
 
 // Country picker
 var nationality = document.getElementById('nationality')
+var nationalityPartner = document.getElementById('nationalityPartner');
+var nationalityFamilyMember = document.getElementById('nationalityFamilyMember');
 
 if (nationality) {
   openregisterLocationPicker({
     defaultValue: '',
     selectElement: nationality,
     url: nationality.dataset.source
+  })
+}
+
+if (nationalityPartner) {
+  openregisterLocationPicker({
+    defaultValue: '',
+    selectElement: nationalityPartner,
+    url: nationalityPartner.dataset.source
+  })
+}
+
+if (nationalityFamilyMember) {
+  openregisterLocationPicker({
+    defaultValue: '',
+    selectElement: nationalityFamilyMember,
+    url: nationalityFamilyMember.dataset.source
   })
 }
 

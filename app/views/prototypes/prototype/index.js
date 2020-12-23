@@ -357,7 +357,8 @@ router.all('/:type/questions/uk-december-2020-claimant', (req, res) => {
             if (claimant.isEEA) {
                 return res.redirect('./family-permit')
             } else {
-                return res.redirect('./uk-december-2020-partner')
+                
+                return res.redirect('./family-permit')
             }
         }
     }
@@ -428,7 +429,7 @@ router.all('/:type/questions/uk-december-2020-family-member', (req, res) => {
             if (claimant.ukDecember2020 === 'yes') {
                 return res.redirect('./residence-permit')
             } else {
-                return res.redirect('../../outcome/END029')
+                return res.redirect('../../outcome/END033')
             }
         }
     }
@@ -559,10 +560,9 @@ router.all('/:type/questions/nationality-partner', (req, res) => {
     const type = req.params.type
     const submitted = req.body[type]
     const claimant = req.session.data.claimant
-
-    if (submitted.nationality) {
-        const isEEA = countries.isEEA(submitted.nationality);
-        if (submitted.nationality === 'country:GB') {
+    if (submitted.nationalityPartner) {
+        const isEEA = countries.isEEA(submitted.nationalityPartner);
+        if (submitted.nationalityPartner === 'country:GB') {
             if (claimant.isEEA) {
                 return res.redirect('../../outcome/END303');
             } else {
@@ -570,15 +570,22 @@ router.all('/:type/questions/nationality-partner', (req, res) => {
             }
         } else if (isEEA) {
             return res.redirect('../../outcome/END030')
+        } else if (!isEEA) {
+            if (claimant.isEEA) {
+                return res.redirect('../../outcome/END029')
+            } else {
+                if(claimant.ukDecember2020 === 'yes') {
+                return res.redirect('./residence-permit')
+                } else {
+                    return res.redirect('../../outcome/END033')
+                }
+            }
         }
-        if (claimant.isEEA) {
-            return res.redirect('../../outcome/END029')
-        } else {
-            return res.redirect('./residence-permit')
-        }
+
+       
     }
     res.render(`${__dirname}/views/questions/nationality-partner`, {
-        items: countries.list(submitted.nationality || "")
+        items: countries.list(submitted.nationalityPartner || "")
     })
 })
 
@@ -590,13 +597,13 @@ router.all('/:type/questions/nationality-family-member', (req, res) => {
     const submitted = req.body[type]
     const claimant = req.session.data.claimant
 
-    if (submitted.nationality) {
-        const isEEA = countries.isEEA(submitted.nationality);
-        if (submitted.nationality === 'country:GB') {
+    if (submitted.nationalityFamilyMember) {
+        const isEEA = countries.isEEA(submitted.nationalityFamilyMember);
+        if (submitted.nationalityFamilyMember === 'country:GB') {
             if (claimant.isEEA) {
-                return res.redirect('../../outcome/END031');
+                return res.redirect('../../outcome/END303');
             } else {
-                return res.redirect('../../outcome/END032')
+                return res.redirect('../../outcome/END303')
             }
         } else if (isEEA) {
             return res.redirect('../../outcome/END030')
@@ -607,7 +614,7 @@ router.all('/:type/questions/nationality-family-member', (req, res) => {
             if (claimant.ukDecember2020 === 'yes') {
                 return res.redirect('./residence-permit')
             } else {
-                return res.redirect('../../outcome/END029')
+                return res.redirect('../../outcome/END033')
             }
         }
     }
