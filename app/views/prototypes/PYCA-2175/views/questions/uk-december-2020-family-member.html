@@ -1,0 +1,43 @@
+{% extends "../question.html" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form method="post">
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "claimant-uk-december-2020",
+        name: type + "[familyMemberUkDecember2020]",
+        fieldset: {
+          legend: {
+            text: "Does the claimant have a family member who was in the UK in December 2020?",
+            hint: "Family members include parents, grandparents, great-grandparents or children under 21 of the claimant or their partner. Or anyone they're related to who relies on them for money.",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            checked: checked("['" + type + "'].familyMemberUkDecember2020", "yes")
+          },
+          {
+            value: "no",
+            text: "No",
+            checked: checked("['" + type + "'].familyMemberUkDecember2020", "no")
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
